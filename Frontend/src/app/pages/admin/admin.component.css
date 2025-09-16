@@ -1,0 +1,79 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+#logo-div {
+  text-align: center;
+}
+.logo {
+  width: 50%;
+}
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #a7e2e4;
+  color: #4e4fa8;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+.menu-item {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-weight: bold;
+}
+
+.sidebar li {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.sidebar li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul ul {
+  margin-left: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.active {
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+.logout-btn {
+  position: fixed; /* Fixe par rapport à l'écran */
+  top: 10px; /* Distance du haut */
+  right: 10px; /* Distance de la droite */
+  z-index: 1000; /* Au-dessus de tout */
+  background-color: #ff4d4f;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #cc0000;
+}

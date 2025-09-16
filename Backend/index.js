@@ -1,12 +1,55 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./db");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+// --- LOGIN process ---
+app.post("/login", async (req, res) => {
+  const { name, password } = req.body;
+
+  try {
+    // 1️⃣ On récupère l'utilisateur par son identifiant
+    const result = await pool.query("SELECT * FROM users WHERE name = $1", [
+      name,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: "Identifiants incorrects" });
+    }
+
+    const user = result.rows[0];
+
+    // 2️⃣ Vérifier le mot de passe avec crypt
+    const verify = await pool.query("SELECT crypt($1, $2) = $2 AS match", [
+      password,
+      user.password,
+    ]);
+
+    if (!verify.rows[0].match) {
+      return res.status(401).json({ error: "Identifiants incorrects" });
+    }
+
+    // 3️⃣ Si tout va bien, renvoyer l'utilisateur (sans le mot de passe)
+    delete user.password;
+    res.json({ message: "Connexion réussie", user });
+  } catch (err) {
+    console.error("Erreur lors de la connexion :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
 
 // --- GET all users ---
 app.get("/users", async (req, res) => {

@@ -1,0 +1,86 @@
+<div class="dashboard-container">
+  <!-- Sidebar à droite -->
+  <button class="logout-btn" (click)="logout()">Déconnexion</button>
+  <aside class="sidebar">
+    <div class="menu">
+      <div id="logo-div">
+        <img class="logo" src="img/logo-blankBackground.png" alt="Logo" />
+      </div>
+      <br />
+      <h2>Admin</h2>
+      <br />
+      <ul>
+        <li routerLink="/admin" routerLinkActive="active">🏠 Dashboard</li>
+
+        <!-- Gestion des QCM -->
+        <!-- Gestion des QCM -->
+        <li>
+          <div class="menu-item" (click)="toggleQcm()">📋 Gestion des QCM</div>
+          <ul *ngIf="showQcm">
+            <li routerLink="admin/ajout_qcm" routerLinkActive="active">
+              ➕ Ajout QCM
+            </li>
+            <li routerLink="admin/modification_qcm" routerLinkActive="active">
+              ✏️ Modification QCM
+            </li>
+            <li routerLink="admin/suppression_qcm" routerLinkActive="active">
+              🗑️ Suppression QCM
+            </li>
+
+            <!-- Gestion des questions -->
+            <li>
+              <div class="menu-item" (click)="toggleQuestions()">
+                ❓ Gestion des questions
+              </div>
+              <ul *ngIf="showQuestions">
+                <li routerLink="admin/ajout_question" routerLinkActive="active">
+                  ➕ Ajout question
+                </li>
+                <li
+                  routerLink="admin/modification_question"
+                  routerLinkActive="active"
+                >
+                  ✏️ Modification question
+                </li>
+                <li
+                  routerLink="admin/suppression_question"
+                  routerLinkActive="active"
+                >
+                  🗑️ Suppression question
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Gestion des stagiaires -->
+        <li>
+          <div class="menu-item" (click)="toggleStagiaires()">
+            👨‍🎓 Gestion des stagiaires
+          </div>
+          <ul *ngIf="showStagiaires">
+            <li routerLink="admin/ajout_stagiaire" routerLinkActive="active">
+              ➕ Ajout stagiaire
+            </li>
+            <li
+              routerLink="admin/modification_stagiaire"
+              routerLinkActive="active"
+            >
+              ✏️ Modification stagiaire
+            </li>
+            <li
+              routerLink="admin/suppression_stagiaire"
+              routerLinkActive="active"
+            >
+              🗑️ Suppression stagiaire
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </aside>
+  <!-- Zone principale -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
