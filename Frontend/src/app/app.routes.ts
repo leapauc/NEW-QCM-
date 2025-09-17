@@ -6,7 +6,7 @@ import { ModificationQcmComponent } from './pages/admin/modification-qcm/modific
 import { SuppressionQcmComponent } from './pages/admin/suppression-qcm/suppression-qcm.component';
 import { AjoutUtilisateurComponent } from './pages/admin/ajout-utilisateur/ajout-utilisateur.component';
 import { ModificationUtilisateurComponent } from './pages/admin/modification-utilisateur/modification-utilisateur.component';
-import { SuppressionStagiaireComponent } from './pages/admin/suppression-stagiaire/suppression-stagiaire.component';
+import { SuppressionUtilisateurComponent } from './pages/admin/suppression-utilisateur/suppression-utilisateur.component';
 import { ChoixQcmComponent } from './pages/stagiaire/choix-qcm/choix-qcm.component';
 import { AffichageResultsComponent } from './pages/stagiaire/affichage-results/affichage-results.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -44,7 +44,7 @@ export const routes: Routes = [
       },
       {
         path: 'admin/suppression_stagiaire',
-        component: SuppressionStagiaireComponent,
+        component: SuppressionUtilisateurComponent,
       },
       { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
     ],

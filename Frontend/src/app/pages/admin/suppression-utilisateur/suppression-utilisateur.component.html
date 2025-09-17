@@ -1,0 +1,93 @@
+<br />
+<br />
+<div class="center">
+  <h1>Suppression d'utilisateur</h1>
+
+  <br /><br />
+
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Société</th>
+        <th>Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td class="text-center">
+          <i
+            class="bi bi-trash text-danger fs-5"
+            style="cursor: pointer"
+            (click)="selectUser(user)"
+          ></i>
+        </td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.society }}</td>
+        <td>{{ user.admin ? "Oui" : "Non" }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+  </div>
+</div>
+
+<!-- Modal de confirmation -->
+<div
+  class="modal fade"
+  id="confirmModal"
+  tabindex="-1"
+  aria-labelledby="confirmModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">
+          Confirmer la suppression
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h6>Utilisateur sélectionné :</h6>
+        <pre>
+          Nom: {{ selectedUser?.name }}
+          Prénom: {{ selectedUser?.firstname }}
+          Email: {{ selectedUser?.email }}
+          Société: {{ selectedUser?.society }}
+          Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}
+        </pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteUser()"
+          data-bs-dismiss="modal"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
+  {{ message }}
+</div>

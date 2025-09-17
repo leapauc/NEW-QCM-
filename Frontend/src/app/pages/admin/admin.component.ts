@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 export class AdminComponent {
   showQcm = false;
   showQuestions = false;
-  showStagiaires = false;
+  showUtilisateur = false;
 
   constructor(private authService: AuthService, private router: Router) {}
   toggleQcm() {
@@ -28,8 +28,8 @@ export class AdminComponent {
     this.showQuestions = !this.showQuestions;
   }
 
-  toggleStagiaires() {
-    this.showStagiaires = !this.showStagiaires;
+  toggleUtilisateur() {
+    this.showUtilisateur = !this.showUtilisateur;
   }
 
   logout() {

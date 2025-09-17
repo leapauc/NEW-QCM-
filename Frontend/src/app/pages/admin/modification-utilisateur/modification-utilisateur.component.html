@@ -21,7 +21,7 @@
       <tr *ngFor="let user of paginatedUsers">
         <td class="text-center">
           <i
-            class="bi bi-pencil-square"
+            class="bi bi-pencil-square text-primary fs-5"
             style="cursor: pointer"
             (click)="selectUser(user)"
           ></i>
@@ -133,4 +133,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
+  {{ message }}
 </div>

@@ -55,24 +55,24 @@
 
         <!-- Gestion des stagiaires -->
         <li>
-          <div class="menu-item" (click)="toggleStagiaires()">
-            👨‍🎓 Gestion des stagiaires
+          <div class="menu-item" (click)="toggleUtilisateur()">
+            👨‍🎓 Gestion des utilisateurs
           </div>
-          <ul *ngIf="showStagiaires">
+          <ul *ngIf="showUtilisateur">
             <li routerLink="admin/ajout_utilisateur" routerLinkActive="active">
-              ➕ Ajout stagiaire
+              ➕ Ajout utilisateur
             </li>
             <li
               routerLink="admin/modification_utilisateur"
               routerLinkActive="active"
             >
-              ✏️ Modification stagiaire
+              ✏️ Modification utilisateur
             </li>
             <li
               routerLink="admin/suppression_stagiaire"
               routerLinkActive="active"
             >
-              🗑️ Suppression stagiaire
+              🗑️ Suppression utilisateur
             </li>
           </ul>
         </li>
