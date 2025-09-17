@@ -1,6 +1,8 @@
 .dashboard-container {
+  margin: 0;
+  padding: 0;
   display: flex;
-  height: 100vh;
+  height: 100%;
 }
 #logo-div {
   text-align: center;

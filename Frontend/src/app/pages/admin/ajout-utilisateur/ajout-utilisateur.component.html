@@ -1,0 +1,173 @@
+<br />
+<br />
+<div class="center">
+  <h1>Ajout d'un utilisateur</h1>
+
+  <br /><br />
+  <p>
+    Ce formulaire permet d'ajouter des utilisateurs aussi bien administrateurs
+    que stagiaire.
+  </p>
+  <br />
+  <br />
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Nom et Prénom -->
+    <div class="row mb-3">
+      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
+        <label for="name">Nom</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+        />
+        <div
+          *ngIf="form.get('name')?.touched && form.get('name')?.invalid"
+          class="text-danger"
+        >
+          Le nom est requis.
+        </div>
+      </div>
+      <div class="col-lg-3 col-m-4 col-sm-5">
+        <label for="firstname">Prénom</label>
+        <input
+          type="text"
+          id="firstname"
+          formControlName="firstname"
+          class="form-control"
+        />
+        <div
+          *ngIf="
+            form.get('firstname')?.touched && form.get('firstname')?.invalid
+          "
+          class="text-danger"
+        >
+          Le prénom est requis.
+        </div>
+      </div>
+    </div>
+
+    <!-- Email et Society -->
+    <div class="row mb-3">
+      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+        />
+        <div
+          *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+          class="text-danger"
+        >
+          <div *ngIf="form.get('email')?.errors?.['required']">
+            Email requis.
+          </div>
+          <div *ngIf="form.get('email')?.errors?.['email']">
+            Email invalide.
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-m-4 col-sm-5">
+        <label for="society">Société</label>
+        <input
+          type="text"
+          id="society"
+          formControlName="society"
+          class="form-control"
+        />
+        <div
+          *ngIf="form.get('society')?.touched && form.get('society')?.invalid"
+          class="text-danger"
+        >
+          La société est requise.
+        </div>
+      </div>
+    </div>
+
+    <!-- Mot de passe et confirmation -->
+    <div class="row mb-3">
+      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+        />
+        <div
+          *ngIf="
+          form.get('password')?.touched &&
+          form.get('password')?.errors?.['minlength']
+        "
+          class="text-danger"
+        >
+          Le mot de passe doit contenir au moins 8 caractères.
+        </div>
+      </div>
+      <div class="col-lg-3 col-m-4 col-sm-5">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+        />
+        <div
+          *ngIf="form.errors?.['notMatching'] && form.get('confirmPassword')?.touched"
+          class="text-danger"
+        >
+          Les mots de passe ne correspondent pas.
+        </div>
+      </div>
+    </div>
+
+    <!-- Case à cocher Admin -->
+    <div class="row mb-3">
+      <div class="col-1 offset-3">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            id="admin"
+            formControlName="admin"
+            class="form-check-input"
+          />
+          <label for="admin" class="form-check-label">Administrateur</label>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- Bouton submit -->
+    <div class="row">
+      <div class="col-m-6 offset-m-3 col-sm-10 offset-sm-1">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="successModal"
+  tabindex="-1"
+  aria-labelledby="successModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem; color: green">✔️</span>
+        </div>
+        <h5 class="modal-title mb-3" id="successModalLabel">
+          Utilisateur ajouté avec succès !
+        </h5>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

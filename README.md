@@ -1,4 +1,5 @@
-##Database
+## Database
+
 En local :
 sudo -i -u postgres
 psql -U postgres -p 5432 -f createDB.sql
@@ -16,6 +17,12 @@ docker compose up -d
 Pour vérifier le fonctionnement:
 docker exec -it my-postgres psql -U postgres -d webdev
 
-##Backend NodeJS
+## Backend NodeJS
 
 npm install express pg dotenv body-parser cors
+
+## Frontend
+
+npm install bootstrap
+npm i --save-dev @types/bootstrap
+npm install bootstrap-icons

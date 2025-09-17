@@ -1,19 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body,
-html {
-  height: 100%;
-  width: 100%;
-}
-
 .container {
   display: flex;
-  height: 100svb;
+  height: 100%;
 }
 
 /* Partie gauche - image */

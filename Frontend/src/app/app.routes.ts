@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { DashboardAdminComponent } from './pages/admin/dashboard-admin/dashboard-admin.component';
 import { DashboardStagiaireComponent } from './pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component';
 import { AjoutQcmComponent } from './pages/admin/ajout-qcm/ajout-qcm.component';
 import { ModificationQcmComponent } from './pages/admin/modification-qcm/modification-qcm.component';
 import { SuppressionQcmComponent } from './pages/admin/suppression-qcm/suppression-qcm.component';
-import { AjoutStagiaireComponent } from './pages/admin/ajout-stagiaire/ajout-stagiaire.component';
-import { ModificationStagiaireComponent } from './pages/admin/modification-stagiaire/modification-stagiaire.component';
+import { AjoutUtilisateurComponent } from './pages/admin/ajout-utilisateur/ajout-utilisateur.component';
+import { ModificationUtilisateurComponent } from './pages/admin/modification-utilisateur/modification-utilisateur.component';
 import { SuppressionStagiaireComponent } from './pages/admin/suppression-stagiaire/suppression-stagiaire.component';
 import { ChoixQcmComponent } from './pages/stagiaire/choix-qcm/choix-qcm.component';
 import { AffichageResultsComponent } from './pages/stagiaire/affichage-results/affichage-results.component';
@@ -38,10 +37,10 @@ export const routes: Routes = [
         component: SuppressionQuestionComponent,
       },
       { path: 'admin/suppression_qcm', component: SuppressionQcmComponent },
-      { path: 'admin/ajout_stagiaire', component: AjoutStagiaireComponent },
+      { path: 'admin/ajout_utilisateur', component: AjoutUtilisateurComponent },
       {
-        path: 'admin/modification_stagiaire',
-        component: ModificationStagiaireComponent,
+        path: 'admin/modification_utilisateur',
+        component: ModificationUtilisateurComponent,
       },
       {
         path: 'admin/suppression_stagiaire',

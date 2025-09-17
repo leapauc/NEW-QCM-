@@ -1,0 +1,136 @@
+<br />
+<br />
+<div class="center">
+  <h1>Modifier un utilisateur</h1>
+
+  <br /><br />
+
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Société</th>
+        <th>Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td class="text-center">
+          <i
+            class="bi bi-pencil-square"
+            style="cursor: pointer"
+            (click)="selectUser(user)"
+          ></i>
+        </td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.society }}</td>
+        <td>{{ user.admin ? "Oui" : "Non" }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+  </div>
+
+  <!-- Formulaire d'édition -->
+  <div *ngIf="selectedUser" class="mt-4">
+    <h4>
+      Modifier l'utilisateur : {{ selectedUser.name }}
+      {{ selectedUser.firstname }}
+    </h4>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row mb-3">
+        <div
+          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
+        >
+          <label>Nom</label>
+          <input formControlName="name" class="form-control" />
+        </div>
+        <div class="col-lg-3 col-m-4 col-sm-5">
+          <label>Prénom</label>
+          <input formControlName="firstname" class="form-control" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div
+          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
+        >
+          <label>Email</label>
+          <input formControlName="email" class="form-control" />
+        </div>
+        <div class="col-lg-3 col-m-4 col-sm-5">
+          <label>Société</label>
+          <input formControlName="society" class="form-control" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div
+          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
+        >
+          <label>Mot de passe (laisser vide pour ne pas changer)</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+          />
+        </div>
+        <div class="col-3 d-flex align-items-center">
+          <div class="form-check mt-4">
+            <input
+              type="checkbox"
+              formControlName="admin"
+              class="form-check-input"
+              id="adminCheck"
+            />
+            <label for="adminCheck" class="form-check-label"
+              >Administrateur</label
+            >
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+        Valider
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal de confirmation -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer la mise à jour</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+          <div class="col-6">
+            <h6>Avant :</h6>
+            <pre>{{ selectedUserBefore | json }}</pre>
+          </div>
+          <div class="col-6">
+            <h6>Après :</h6>
+            <pre>{{ selectedUserAfter | json }}</pre>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button type="button" class="btn btn-success" (click)="confirmUpdate()">
+          Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
