@@ -11,18 +11,50 @@
     <!-- QCM -->
     <div class="mb-3">
       <div class="row">
+        <!-- Sélection QCM -->
         <div class="col-5 offset-1">
           <label for="id_qcm" class="form-label">QCM</label>
           <br />
-          <select></select>
+          <select
+            class="form-select"
+            id="id_qcm"
+            (change)="onQcmChange($event)"
+          >
+            <option value="" disabled selected>
+              -- Sélectionner un QCM --
+            </option>
+            <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
+              {{ qcm.title }}
+            </option>
+          </select>
         </div>
+
+        <!-- Sélection Question -->
         <div class="col-5">
-          <label for="id_qcm" class="form-label">Question</label>
+          <label for="id_question" class="form-label">Question</label>
           <br />
-          <select></select>
+          <select
+            class="form-select"
+            id="id_question"
+            (change)="onQuestionChange($event)"
+          >
+            <option value="" disabled selected>
+              -- Sélectionner une question --
+            </option>
+            <option
+              *ngFor="let question of questions"
+              [value]="question.id_question"
+            >
+              {{ question.question }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
-    <app-form-question></app-form-question>
+
+    <!-- Formulaire de modification -->
+    <app-form-question [questionId]="selectedQuestionId"></app-form-question>
+
+    <!-- <app-form-question></app-form-question> -->
   </form>
 </div>

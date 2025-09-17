@@ -1,1 +1,88 @@
-<p>suppression-question works!</p>
+<br />
+<br />
+<div class="center">
+  <h1>Suppression de question</h1>
+
+  <br /><br />
+  <p>Cette page permet de supprimer une/des question/s.</p>
+  <br />
+  <br />
+
+  <div class="table-responsive-custom">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Question</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let question of paginatedQuestions">
+          <td class="text-center">
+            <i class="bi bi-trash text-danger fs-5" style="cursor: pointer"></i>
+          </td>
+          <td>{{ question.question }}</td>
+          <td>{{ question.type }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="questions.length === 0" class="text-center text-muted mt-3">
+      Aucune question disponible.
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between mt-2">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+  </div>
+</div>
+
+<!-- Modal de confirmation -->
+<!-- <div
+  class="modal fade"
+  id="confirmModal"
+  tabindex="-1"
+  aria-labelledby="confirmModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">
+          Confirmer la suppression
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h6>QCM sélectionné :</h6>
+        <pre>
+          Title: {{ selectedQcm?.title }}
+          Description: {{ selectedQcm?.description }}
+          Créé par: {{ selectedQcm?.created_by }}
+        </pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteQcm()"
+          data-bs-dismiss="modal"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
+  {{ message }}
+</div> -->

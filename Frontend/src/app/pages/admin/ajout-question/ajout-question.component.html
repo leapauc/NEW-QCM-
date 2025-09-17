@@ -14,10 +14,22 @@
         <div class="col-10 offset-1">
           <label for="id_qcm" class="form-label">QCM</label>
           <br />
-          <select></select>
+          <select
+            class="form-select"
+            id="id_qcm"
+            (change)="onQcmChange($event)"
+          >
+            <option value="" disabled selected>
+              -- Sélectionner un QCM --
+            </option>
+            <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
+              {{ qcm.title }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
+
     <app-form-question></app-form-question>
   </form>
 </div>

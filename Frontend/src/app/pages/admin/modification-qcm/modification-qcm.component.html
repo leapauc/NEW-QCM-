@@ -1,1 +1,56 @@
-<p>modification-qcm works!</p>
+<br />
+<br />
+<div class="center">
+  <h1>Modifier d'un questionnaire</h1>
+
+  <br /><br />
+  <p>
+    Ce formulaire permet de modifier un questionnaire.Aucun ajout ou suppression
+    possible via cette page.
+  </p>
+  <p>
+    Elle est dédiée uniquement à la modification du contenu d'un questionnaire
+    existant.
+  </p>
+  <br />
+  <!-- Tableau des qcm -->
+  <div class="table-responsive-custom">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Créé par</th>
+          <th>Créé le</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let qcm of paginatedQCM">
+          <td class="text-center">
+            <i
+              class="bi bi-pencil-square text-primary fs-5"
+              style="cursor: pointer"
+              (click)="editQCM(qcm)"
+            ></i>
+          </td>
+          <td>{{ qcm.title }}</td>
+          <td>{{ qcm.description }}</td>
+          <td>{{ qcm.created_by }}</td>
+          <td>{{ qcm.created_at | date : "short" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+  </div>
+
+  <app-qcm-form
+    *ngIf="selectedQcm"
+    [qcm]="selectedQcm"
+    (qcmUpdated)="onQcmUpdated()"
+  ></app-qcm-form>
+</div>

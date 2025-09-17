@@ -25,51 +25,116 @@ exports.getAllQCM = async (req, res) => {
 //   }
 // };
 
-// exports.createQCM = async (req, res) => {
-//   const { name, firstname, society, password, email, admin } = req.body;
-//   try {
-//     const result = await pool.query(
-//       `INSERT INTO users (name, firstname, society, password, email, admin)
-//        VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5, $6) RETURNING *`,
-//       [name, firstname, society, password, email, admin]
-//     );
-//     res.status(201).json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Erreur serveur" });
-//   }
-// };
-
-// exports.updateQCM = async (req, res) => {
-//   const { id } = req.params;
-//   const { name, firstname, society, password, email, admin } = req.body;
-//   try {
-//     const result = await pool.query(
-//       `UPDATE users SET name=$1, firstname=$2, society=$3, password=crypt($4, gen_salt('bf')),
-//        email=$5, admin=$6, updated_at=CURRENT_TIMESTAMP
-//        WHERE id_user=$7 RETURNING *`,
-//       [name, firstname, society, password, email, admin, id]
-//     );
-//     if (result.rows.length === 0)
-//       return res.status(404).json({ error: "Utilisateur non trouvé" });
-//     res.json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Erreur serveur" });
-//   }
-// };
-
-exports.deleteQCM = async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  if (isNaN(id)) {
-    return res.status(400).json({ error: "ID invalide" });
-  }
-
+exports.createQCM = async (req, res) => {
   const client = await pool.connect();
-
   try {
+    const { title, description, created_by, questions } = req.body;
+
+    if (!title || !Array.isArray(questions) || questions.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Titre et questions sont obligatoires" });
+    }
+
     await client.query("BEGIN");
 
+    // 1️⃣ Insérer le QCM
+    const qcmResult = await client.query(
+      `INSERT INTO qcm (title, description, created_by)
+       VALUES ($1, $2, $3)
+       RETURNING id_qcm`,
+      [title, description, created_by]
+    );
+    const qcmId = qcmResult.rows[0].id_qcm;
+
+    // 2️⃣ Insérer les questions + réponses
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      const questionResult = await client.query(
+        `INSERT INTO question_qcm (id_qcm, question, type, position)
+         VALUES ($1, $2, $3, $4)
+         RETURNING id_question`,
+        [qcmId, q.question, q.type || "single", i + 1]
+      );
+      const questionId = questionResult.rows[0].id_question;
+
+      // 3️⃣ Insérer les réponses
+      for (let j = 0; j < q.responses.length; j++) {
+        const r = q.responses[j];
+        await client.query(
+          `INSERT INTO response_question (id_question, response, is_correct, position)
+           VALUES ($1, $2, $3, $4)`,
+          [questionId, r.response, r.is_correct, j + 1]
+        );
+      }
+    }
+
+    await client.query("COMMIT");
+    res.status(201).json({ message: "QCM créé avec succès", qcmId });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur", details: err.message });
+  } finally {
+    client.release();
+  }
+};
+
+exports.updateQCM = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const qcmId = req.params.id;
+    const { title, description, questions } = req.body;
+
+    await client.query("BEGIN");
+
+    // 1️⃣ Update du QCM
+    await client.query(
+      `UPDATE qcm 
+       SET title=$1, description=$2, updated_at=NOW() 
+       WHERE id_qcm=$3`,
+      [title, description, qcmId]
+    );
+
+    // 2️⃣ Update des questions existantes
+    for (const q of questions) {
+      await client.query(
+        `UPDATE question_qcm
+         SET question=$1, type=$2
+         WHERE id_question=$3 AND id_qcm=$4`,
+        [q.question, q.type, q.id_question, qcmId]
+      );
+
+      // 3️⃣ Update des réponses existantes
+      for (const r of q.responses) {
+        await client.query(
+          `UPDATE response_question
+           SET response=$1, is_correct=$2, position=$3
+           WHERE id_response=$4 AND id_question=$5`,
+          [r.response, r.is_correct, r.position, r.id_response, q.id_question]
+        );
+      }
+    }
+
+    await client.query("COMMIT");
+    res.json({ message: "QCM et questions/réponses mis à jour avec succès" });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur", details: err.message });
+  } finally {
+    client.release();
+  }
+};
+
+exports.deleteQCM = async (req, res) => {
+  const id = req.params.id;
+
+  const client = await pool.connect();
+  console.log("test1");
+  try {
+    await client.query("BEGIN");
+    console.log("test2");
     // Supprimer les réponses associées
     await client.query(
       `DELETE FROM response_question 
@@ -109,10 +174,11 @@ exports.getQuestionResponseOfQCMById = async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT qq.*,STRING_AGG(rq.response::text,'|') as response,
-                                    STRING_AGG(rq.is_correct::text,'|') as is_correct,
-                                    STRING_AGG(rq.position::text,'|') as position FROM question_qcm qq 
-                                    JOIN response_question rq ON rq.id_question=qq.id_question
-                                    WHERE qq.id_qcm = $1 GROUP BY qq.id_question`,
+       STRING_AGG(rq.is_correct::text,'|') as is_correct,
+       STRING_AGG(rq.position::text,'|') as position FROM question_qcm qq 
+       JOIN response_question rq ON rq.id_question=qq.id_question
+       WHERE qq.id_qcm = $1 
+       GROUP BY qq.id_question`,
       [id]
     );
     if (result.rows.length === 0)
@@ -163,3 +229,9 @@ exports.getAllQuestion = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+
+exports.createQuestionForAQCM = async (req, res) => {};
+
+exports.updateQuestionForAQCM = async (req, res) => {};
+
+exports.deleteQuestionForAQCM = async (req, res) => {};

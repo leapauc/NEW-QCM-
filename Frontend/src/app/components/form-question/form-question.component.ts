@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { QcmService } from '../../services/qcm.service';
 
 @Component({
   selector: 'app-form-question',
@@ -16,12 +17,17 @@ import {
   styleUrl: './form-question.component.css',
 })
 export class FormQuestionComponent {
+  @Input() questionId: number | null = null;
   questionForm!: FormGroup;
   maxResponses = 5;
   minResponses = 2;
 
-  constructor(private fb: FormBuilder) {}
-
+  constructor(private fb: FormBuilder, private qcmService: QcmService) {
+    this.questionForm = this.fb.group({
+      question: ['', Validators.required],
+      responses: this.fb.array([]),
+    });
+  }
   ngOnInit(): void {
     this.questionForm = this.fb.group({
       question: ['', Validators.required],
@@ -31,6 +37,12 @@ export class FormQuestionComponent {
     // Ajoute les 2 premières réponses par défaut
     this.addResponse();
     this.addResponse();
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['questionId'] && this.questionId !== null) {
+      // charger les détails de la question depuis ton service
+      console.log('Nouvelle question sélectionnée :', this.questionId);
+    }
   }
 
   get responses(): FormArray {
