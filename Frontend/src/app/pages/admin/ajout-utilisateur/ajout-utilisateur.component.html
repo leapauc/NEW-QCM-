@@ -12,9 +12,9 @@
   <br />
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- Nom et Prénom -->
-    <div class="row mb-3">
-      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
-        <label for="name">Nom</label>
+    <div class="row g-3 mb-3">
+      <div class="col-lg-5 offset-lg-1">
+        <label for="name" class="form-label">Nom</label>
         <input
           type="text"
           id="name"
@@ -23,13 +23,14 @@
         />
         <div
           *ngIf="form.get('name')?.touched && form.get('name')?.invalid"
-          class="text-danger"
+          class="text-danger mt-1"
         >
           Le nom est requis.
         </div>
       </div>
-      <div class="col-lg-3 col-m-4 col-sm-5">
-        <label for="firstname">Prénom</label>
+
+      <div class="col-lg-5">
+        <label for="firstname" class="form-label">Prénom</label>
         <input
           type="text"
           id="firstname"
@@ -40,7 +41,7 @@
           *ngIf="
             form.get('firstname')?.touched && form.get('firstname')?.invalid
           "
-          class="text-danger"
+          class="text-danger mt-1"
         >
           Le prénom est requis.
         </div>
@@ -49,7 +50,7 @@
 
     <!-- Email et Society -->
     <div class="row mb-3">
-      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
+      <div class="col-lg-5 offset-lg-1">
         <label for="email">Email</label>
         <input
           type="email"
@@ -69,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-m-4 col-sm-5">
+      <div class="col-lg-5">
         <label for="society">Société</label>
         <input
           type="text"
@@ -88,7 +89,7 @@
 
     <!-- Mot de passe et confirmation -->
     <div class="row mb-3">
-      <div class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1">
+      <div class="col-lg-5 offset-lg-1">
         <label for="password">Mot de passe</label>
         <input
           type="password"
@@ -106,7 +107,7 @@
           Le mot de passe doit contenir au moins 8 caractères.
         </div>
       </div>
-      <div class="col-lg-3 col-m-4 col-sm-5">
+      <div class="col-lg-5">
         <label for="confirmPassword">Confirmer le mot de passe</label>
         <input
           type="password"
@@ -125,7 +126,7 @@
 
     <!-- Case à cocher Admin -->
     <div class="row mb-3">
-      <div class="col-1 offset-3">
+      <div class="col-1 offset-1">
         <div class="form-check">
           <input
             type="checkbox"

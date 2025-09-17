@@ -2,3 +2,10 @@
   text-align: center;
   color: #4e4fa8;
 }
+.table-responsive-custom {
+  display: block;
+  width: 100%;
+  overflow-x: auto; /* scroll horizontal seulement */
+  overflow-y: hidden; /* pas de scroll vertical */
+  white-space: nowrap; /* empêche la table de se casser sur plusieurs lignes */
+}

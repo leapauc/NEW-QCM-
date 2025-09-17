@@ -1,0 +1,75 @@
+<div class="container mt-4">
+  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="form">
+    <!-- Question -->
+    <div class="mb-3">
+      <label for="question" class="form-label">Question</label>
+      <textarea
+        id="question"
+        class="form-control"
+        formControlName="question"
+      ></textarea>
+      <div
+        *ngIf="
+          questionForm.get('question')?.touched &&
+          questionForm.get('question')?.invalid
+        "
+        class="text-danger"
+      >
+        Le titre est requis.
+      </div>
+    </div>
+
+    <!-- Réponses -->
+    <div formArrayName="responses">
+      <h5>Réponses :</h5>
+
+      <div
+        *ngFor="let response of responses.controls; let i = index"
+        [formGroupName]="i"
+        class="row g-2 align-items-center mb-2"
+      >
+        <div class="col-8">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Réponse {{ i + 1 }}"
+            formControlName="text"
+          />
+        </div>
+        <div class="col-2 text-center">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="isCorrect"
+          />
+          <label class="form-check-label">Correct</label>
+        </div>
+        <div class="col-2 text-end">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            (click)="removeResponse(i)"
+            [disabled]="responses.length <= minResponses"
+          >
+            ❌
+          </button>
+        </div>
+      </div>
+
+      <!-- Bouton + pour ajouter -->
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        (click)="addResponse()"
+        [disabled]="responses.length >= maxResponses"
+      >
+        ➕ Ajouter une réponse
+      </button>
+    </div>
+
+    <!-- Bouton submit -->
+    <div class="mt-4 text-center">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </form>
+</div>

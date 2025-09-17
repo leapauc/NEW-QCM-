@@ -4,37 +4,43 @@
   <h1>Suppression d'utilisateur</h1>
 
   <br /><br />
-
+  <p>
+    Ce formulaire permet de supprimer des utilisateurs aussi bien
+    administrateurs que stagiaire.
+  </p>
+  <br />
+  <br />
   <!-- Tableau des utilisateurs -->
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Société</th>
-        <th>Admin</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of paginatedUsers">
-        <td class="text-center">
-          <i
-            class="bi bi-trash text-danger fs-5"
-            style="cursor: pointer"
-            (click)="selectUser(user)"
-          ></i>
-        </td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.firstname }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.society }}</td>
-        <td>{{ user.admin ? "Oui" : "Non" }}</td>
-      </tr>
-    </tbody>
-  </table>
-
+  <div class="table-responsive-custom">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Société</th>
+          <th>Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td class="text-center">
+            <i
+              class="bi bi-trash text-danger fs-5"
+              style="cursor: pointer"
+              (click)="selectUser(user)"
+            ></i>
+          </td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.society }}</td>
+          <td>{{ user.admin ? "Oui" : "Non" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <!-- Pagination -->
   <div class="d-flex justify-content-between">
     <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>

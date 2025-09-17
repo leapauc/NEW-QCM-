@@ -4,36 +4,43 @@
   <h1>Modifier un utilisateur</h1>
 
   <br /><br />
-
+  <p>
+    Ce formulaire permet de modifier des utilisateurs aussi bien administrateurs
+    que stagiaire.
+  </p>
+  <br />
+  <br />
   <!-- Tableau des utilisateurs -->
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Société</th>
-        <th>Admin</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of paginatedUsers">
-        <td class="text-center">
-          <i
-            class="bi bi-pencil-square text-primary fs-5"
-            style="cursor: pointer"
-            (click)="selectUser(user)"
-          ></i>
-        </td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.firstname }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.society }}</td>
-        <td>{{ user.admin ? "Oui" : "Non" }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive-custom">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Société</th>
+          <th>Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td class="text-center">
+            <i
+              class="bi bi-pencil-square text-primary fs-5"
+              style="cursor: pointer"
+              (click)="selectUser(user)"
+            ></i>
+          </td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.society }}</td>
+          <td>{{ user.admin ? "Oui" : "Non" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- Pagination -->
   <div class="d-flex justify-content-between">
@@ -42,40 +49,35 @@
   </div>
 
   <!-- Formulaire d'édition -->
-  <div *ngIf="selectedUser" class="mt-4">
+  <div *ngIf="selectedUser" class="mt-4 form">
     <h4>
       Modifier l'utilisateur : {{ selectedUser.name }}
       {{ selectedUser.firstname }}
     </h4>
+    <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="row mb-3">
-        <div
-          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
-        >
+        <div class="col-lg-5 offset-lg-1">
           <label>Nom</label>
           <input formControlName="name" class="form-control" />
         </div>
-        <div class="col-lg-3 col-m-4 col-sm-5">
+        <div class="col-lg-5">
           <label>Prénom</label>
           <input formControlName="firstname" class="form-control" />
         </div>
       </div>
       <div class="row mb-3">
-        <div
-          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
-        >
+        <div class="col-lg-5 offset-lg-1">
           <label>Email</label>
           <input formControlName="email" class="form-control" />
         </div>
-        <div class="col-lg-3 col-m-4 col-sm-5">
+        <div class="col-lg-5">
           <label>Société</label>
           <input formControlName="society" class="form-control" />
         </div>
       </div>
       <div class="row mb-3">
-        <div
-          class="col-lg-3 offset-lg-3 col-m-4 offset-m-2 col-sm-5 offset-sm-1"
-        >
+        <div class="col-lg-5 offset-lg-1">
           <label>Mot de passe (laisser vide pour ne pas changer)</label>
           <input
             type="password"

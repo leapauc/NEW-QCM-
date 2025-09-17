@@ -2,3 +2,24 @@
   text-align: center;
   color: #4e4fa8;
 }
+form {
+  margin: 0 20%;
+  padding: 2% 0;
+  background-color: #dafafe;
+  border-radius: 20px;
+  box-shadow: 4px 4px 4px gray;
+}
+/* Écrans moyens (tablettes) */
+@media (max-width: 992px) {
+  form {
+    margin: 0 10%;
+  }
+}
+
+/* Écrans petits (smartphones) */
+@media (max-width: 576px) {
+  form {
+    margin: 0 5%;
+    padding: 5% 3%; /* plus d'espace intérieur pour respirer */
+  }
+}

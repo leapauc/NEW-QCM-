@@ -1,0 +1,25 @@
+.center {
+  text-align: center;
+  color: #4e4fa8;
+}
+
+.card_3 {
+  background-color: #dafafe;
+  border-radius: 20px;
+  height: 225px;
+  align-items: center;
+}
+.card_3 img {
+  height: 100px;
+  width: 100px;
+}
+.card_6 {
+  background-color: #dafafe;
+  border-radius: 20px;
+  height: 225px;
+  justify-content: center;
+}
+.card_6 img {
+  height: 150px;
+  width: 150px;
+}

@@ -1,6 +1,6 @@
 .dashboard-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh; /* occupe tout l'écran mais peut s'agrandir */
 }
 #logo-div {
   text-align: center;
@@ -12,9 +12,11 @@
   flex: 1;
   padding: 2rem;
   background-color: #f9f9f9;
-  overflow-y: auto;
 }
-
+.center {
+  text-align: center;
+  color: #4e4fa8;
+}
 .sidebar {
   width: 20%;
   background-color: #a7e2e4;
@@ -22,6 +24,7 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  min-height: 100%; /* prend la même hauteur que .dashboard-container */
 }
 
 .sidebar h2 {

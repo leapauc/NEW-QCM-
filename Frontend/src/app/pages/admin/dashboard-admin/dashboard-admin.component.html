@@ -1,1 +1,77 @@
-<h2>DASHBOARD - Administrateur $name</h2>
+<br />
+<br />
+<div class="center">
+  <h1>DASHBOARD - Administrateur $name</h1>
+
+  <br /><br />
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/icon_1_dashboard_admin.jpg" /><br /><br />
+        <h2 class="fw-bold">{{ nbStagiaires }}</h2>
+        <h4>stagiaires</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />
+        <h2 class="fw-bold">{{ nbQuestionnaires }}</h2>
+        <h4>questionnaires</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/icon_3_dashboard_admin.png" /><br /><br />
+        <h2 class="fw-bold">{{ nbQuestionnairesComplets }}</h2>
+        <h4>questionnaires complets</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/icon_4_dashboard_admin.png" /><br /><br />
+        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>
+        <h4>questionnaires réalisés</h4>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row text-center">
+    <div class="col-6 d-flex justify-content-center">
+      <div
+        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"
+      >
+        <div class="row w-100">
+          <div class="col-5 d-flex justify-content-center align-items-center">
+            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />
+          </div>
+          <div
+            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"
+          >
+            <h4>Questionnaire le plus populaire :</h4>
+            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 d-flex justify-content-center">
+      <div
+        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"
+      >
+        <div class="row w-100">
+          <div class="col-5 d-flex justify-content-center align-items-center">
+            <img src="img/icon_6_dashboard_admin.png" class="img-fluid" />
+          </div>
+          <div
+            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"
+          >
+            <h4>Utilisateur le plus actif :</h4>
+            <h2 class="fw-bold">
+              {{ stagiaireActif.firstname }} {{ stagiaireActif.name }}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
