@@ -75,12 +75,14 @@ export class ModificationUtilisateurComponent implements OnInit {
       modal.show();
     }
   }
+
   message: string | null = null;
   messageClass: string = '';
   confirmUpdate() {
     if (!this.selectedUser) {
       this.message = 'Impossible de modifier cet utilisateur.';
       this.messageClass = 'alert alert-danger';
+      setTimeout(() => (this.message = null), 2000);
       return;
     }
 
@@ -103,6 +105,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       });
     this.message = `Utilisateur "${this.selectedUser?.name}" modifié avec succès !`;
     this.messageClass = 'alert alert-success'; // vert
+    setTimeout(() => (this.message = null), 2000);
   }
 
   selectedUserBefore!: User;

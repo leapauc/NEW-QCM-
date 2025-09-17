@@ -90,14 +90,14 @@ export class SuppressionUtilisateurComponent implements OnInit {
         this.loadUsers();
         this.selectedUser = null;
 
-        // faire disparaître le message après 3 secondes
-        setTimeout(() => (this.message = null), 3000);
+        // faire disparaître le message après 2 secondes
+        setTimeout(() => (this.message = null), 2000);
       },
       error: (err) => {
         console.error('Erreur lors de la suppression', err);
         this.message = 'Impossible de supprimer cet utilisateur.';
         this.messageClass = 'alert alert-danger'; // rouge
-        setTimeout(() => (this.message = null), 3000);
+        setTimeout(() => (this.message = null), 2000);
       },
     });
   }
