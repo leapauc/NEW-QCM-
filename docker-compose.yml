@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres
+    container_name: my-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0zaIySyzZro1qeSbe8aQ
+      POSTGRES_DB: webdev
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./Database:/docker-entrypoint-initdb.d:ro # monte tout le dossier Database
+
+volumes:
+  pgdata:

@@ -15,13 +15,14 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AjoutQuestionComponent } from './pages/admin/ajout-question/ajout-question.component';
 import { ModificationQuestionComponent } from './pages/admin/modification-question/modification-question.component';
 import { SuppressionQuestionComponent } from './pages/admin/suppression-question/suppression-question.component';
+import { StagiaireComponent } from './pages/stagiaire/stagiaire.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'admin',
-    component: AdminComponent, // ← layout parent
+    component: AdminComponent,
     children: [
       { path: 'admin/dashboard', component: DashboardAdminComponent },
       { path: 'admin/ajout_qcm', component: AjoutQcmComponent },
@@ -49,7 +50,17 @@ export const routes: Routes = [
       { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
     ],
   },
-  { path: 'stagiaire/dashboard', component: DashboardStagiaireComponent },
-  { path: 'stagiaire/choix_qcm', component: ChoixQcmComponent },
-  { path: 'stagiaire/affichage_results', component: AffichageResultsComponent },
+  {
+    path: 'stagiaire',
+    component: StagiaireComponent,
+    children: [
+      { path: 'stagiaire/dashboard', component: DashboardStagiaireComponent },
+      { path: 'stagiaire/choix_qcm', component: ChoixQcmComponent },
+      {
+        path: 'stagiaire/affichage_results',
+        component: AffichageResultsComponent,
+      },
+      { path: '', redirectTo: 'stagiaire/dashboard', pathMatch: 'full' },
+    ],
+  },
 ];
