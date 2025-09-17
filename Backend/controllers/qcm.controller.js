@@ -10,20 +10,20 @@ exports.getAllQCM = async (req, res) => {
   }
 };
 
-exports.getQCMById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const result = await pool.query("SELECT * FROM qcm WHERE id_qcm = $1", [
-      id,
-    ]);
-    if (result.rows.length === 0)
-      return res.status(404).json({ error: "Utilisateur non trouvé" });
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erreur serveur" });
-  }
-};
+// exports.getQCMById = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const result = await pool.query("SELECT * FROM qcm WHERE id_qcm = $1", [
+//       id,
+//     ]);
+//     if (result.rows.length === 0)
+//       return res.status(404).json({ error: "Utilisateur non trouvé" });
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Erreur serveur" });
+//   }
+// };
 
 // exports.createQCM = async (req, res) => {
 //   const { name, firstname, society, password, email, admin } = req.body;
@@ -60,7 +60,10 @@ exports.getQCMById = async (req, res) => {
 // };
 
 exports.deleteQCM = async (req, res) => {
-  const { id } = req.params;
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
 
   const client = await pool.connect();
 
@@ -68,6 +71,12 @@ exports.deleteQCM = async (req, res) => {
     await client.query("BEGIN");
 
     // Supprimer les réponses associées
+    await client.query(
+      `DELETE FROM response_question 
+       WHERE id_question in 
+       (SELECT id_question FROM question_qcm WHERE id_qcm = $1)`,
+      [id]
+    );
     await client.query("DELETE FROM question_qcm WHERE id_qcm = $1", [id]);
 
     // Supprimer le QCM
@@ -92,8 +101,11 @@ exports.deleteQCM = async (req, res) => {
   }
 };
 
-exports.getQuestionOfQCMById = async (req, res) => {
-  const { id } = req.params;
+exports.getQuestionResponseOfQCMById = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
   try {
     const result = await pool.query(
       `SELECT qq.*,STRING_AGG(rq.response::text,'|') as response,
@@ -104,8 +116,48 @@ exports.getQuestionOfQCMById = async (req, res) => {
       [id]
     );
     if (result.rows.length === 0)
+      return res
+        .status(404)
+        .json({ error: "Le QCM comporte aucune question." });
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+exports.getQuestionOfQCMById = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
+  try {
+    const result = await pool.query(
+      `SELECT qq.*,qcm.title FROM question_qcm qq 
+      JOIN qcm ON qcm.id_qcm=qq.id_qcm 
+      WHERE qq.id_qcm = $1`,
+      [id]
+    );
+    if (result.rows.length === 0)
+      return res
+        .status(404)
+        .json({ error: "Le QCM comporte aucune question." });
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+exports.getAllQuestion = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT qq.*,qcm.title FROM question_qcm qq 
+      JOIN qcm ON qcm.id_qcm=qq.id_qcm`
+    );
+    if (result.rows.length === 0)
       return res.status(404).json({ error: "Utilisateur non trouvé" });
-    res.json(result.rows[0]);
+    res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });
