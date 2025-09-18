@@ -23,6 +23,16 @@ html {
   border-radius: 10px;
   box-shadow: 4px 4px 4px gray;
 }
+
+.form-l {
+  width: 85%;
+  margin: auto;
+  background: #dafafe;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px gray;
+}
+
 .logout-btn img {
   position: fixed; /* Fixe par rapport à l'écran */
   top: 10px; /* Distance du haut */

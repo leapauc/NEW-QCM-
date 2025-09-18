@@ -242,13 +242,14 @@ CREATE TABLE quiz_attempts (
     started_at TIMESTAMPTZ,
     ended_at TIMESTAMPTZ,
     completed BOOLEAN,
+    score FLOAT,
     FOREIGN KEY (id_qcm) REFERENCES qcm(id_qcm),
     FOREIGN KEY (id_user) REFERENCES users(id_user)
 );
-INSERT INTO quiz_attempts (id_qcm,id_user,started_at,ended_at,completed)
-VALUES (1,4,'2025-09-16 17:24:42.02395+02','2025-09-16 17:24:52.00425+02',false),
-       (3,3,'2025-09-16 17:14:15.45213+02','2025-09-16 17:27:17.14528+02',false),
-       (3,4,'2025-09-16 16:45:18.45276+02','2025-09-16 16:55:35.45722+02',true);
+INSERT INTO quiz_attempts (id_qcm,id_user,started_at,ended_at,completed,score)
+VALUES (1,4,'2025-09-16 17:24:42.02395+02','2025-09-16 17:24:52.00425+02',false,0),
+       (3,3,'2025-09-16 17:14:15.45213+02','2025-09-16 17:27:17.14528+02',false,30),
+       (3,4,'2025-09-16 16:45:18.45276+02','2025-09-16 16:55:35.45722+02',true,100);
 
 CREATE TABLE user_answers (
     id_attempt INTEGER,
