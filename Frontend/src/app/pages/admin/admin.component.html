@@ -12,41 +12,45 @@
       <h2>Admin</h2>
       <br />
       <ul>
-        <li routerLink="/admin" routerLinkActive="active">🏠 Dashboard</li>
+        <li routerLink="/admin" routerLinkActive="active">
+          <i class="bi bi-house-door"></i> Dashboard
+        </li>
         <!-- Gestion des QCM -->
         <li>
-          <div class="menu-item" (click)="toggleQcm()">📋 Gestion des QCM</div>
+          <div class="menu-item" (click)="toggleQcm()">
+            <i class="bi bi-card-checklist"></i> Gestion des QCM
+          </div>
           <ul *ngIf="showQcm">
             <li routerLink="admin/ajout_qcm" routerLinkActive="active">
-              ➕ Ajout QCM
+              <i class="bi bi-plus-circle"></i> Ajout QCM
             </li>
             <li routerLink="admin/modification_qcm" routerLinkActive="active">
-              ✏️ Modification QCM
+              <i class="bi bi-pencil-square"></i> Modification QCM
             </li>
             <li routerLink="admin/suppression_qcm" routerLinkActive="active">
-              🗑️ Suppression QCM
+              <i class="bi bi-trash"></i> Suppression QCM
             </li>
 
             <!-- Gestion des questions -->
             <li>
               <div class="menu-item" (click)="toggleQuestions()">
-                ❓ Gestion des questions
+                <i class="bi bi-question-circle"></i> Gestion des questions
               </div>
               <ul *ngIf="showQuestions">
                 <li routerLink="admin/ajout_question" routerLinkActive="active">
-                  ➕ Ajout question
+                  <i class="bi bi-plus-circle"></i> Ajout question
                 </li>
                 <li
                   routerLink="admin/modification_question"
                   routerLinkActive="active"
                 >
-                  ✏️ Modification question
+                  <i class="bi bi-pencil-square"></i> Modification question
                 </li>
                 <li
                   routerLink="admin/suppression_question"
                   routerLinkActive="active"
                 >
-                  🗑️ Suppression question
+                  <i class="bi bi-trash"></i> Suppression question
                 </li>
               </ul>
             </li>
@@ -56,23 +60,23 @@
         <!-- Gestion des stagiaires -->
         <li>
           <div class="menu-item" (click)="toggleUtilisateur()">
-            👨‍🎓 Gestion des utilisateurs
+            <i class="bi bi-person-badge"></i> Gestion des utilisateurs
           </div>
           <ul *ngIf="showUtilisateur">
             <li routerLink="admin/ajout_utilisateur" routerLinkActive="active">
-              ➕ Ajout utilisateur
+              <i class="bi bi-plus-circle"></i> Ajout utilisateur
             </li>
             <li
               routerLink="admin/modification_utilisateur"
               routerLinkActive="active"
             >
-              ✏️ Modification utilisateur
+              <i class="bi bi-pencil-square"></i> Modification utilisateur
             </li>
             <li
               routerLink="admin/suppression_stagiaire"
               routerLinkActive="active"
             >
-              🗑️ Suppression utilisateur
+              <i class="bi bi-trash"></i> Suppression utilisateur
             </li>
           </ul>
         </li>
