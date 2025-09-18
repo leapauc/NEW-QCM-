@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getAllQuestion,
   getQuestionById,
+  getQuestionResponseById,
   createQuestionForAQCM,
   updateQuestionForAQCM,
   deleteQuestionForAQCM,
@@ -241,6 +242,8 @@ router.post("/", createQuestionForAQCM);
  *                   example: "Erreur serveur"
  */
 router.get("/:id_question", getQuestionById);
+
+router.get("/response/:id_question", getQuestionResponseById);
 /**
  * @swagger
  * /questions/{id_question}:

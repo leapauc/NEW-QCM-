@@ -6,14 +6,19 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  FormsModule,
 } from '@angular/forms';
 import { QcmService } from '../../../services/qcm.service';
-import { QuestionService } from '../../../services/question.service';
+import {
+  QuestionResponse,
+  QuestionService,
+} from '../../../services/question.service';
+import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 
 @Component({
   selector: 'app-modification-question',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modification-question.component.html',
 })
 export class ModificationQuestionComponent implements OnInit {
@@ -80,11 +85,24 @@ export class ModificationQuestionComponent implements OnInit {
 
   onQcmChange(event: any) {
     this.selectedQcmId = +event.target.value;
-    if (this.selectedQcmId) this.loadQuestionsByQcm(this.selectedQcmId);
+
+    // Réinitialiser la sélection de la question
+    this.selectedQuestionId = null;
+
+    // Vider le formulaire
+    this.questionForm.reset();
+    while (this.responses.length) {
+      this.responses.removeAt(0);
+    }
+
+    // Charger les questions du nouveau QCM
+    if (this.selectedQcmId) {
+      this.loadQuestionsByQcm(this.selectedQcmId);
+    }
   }
 
   loadQuestionsByQcm(qcmId: number) {
-    this.qcmService.getQcmQuestionsWithResponses(qcmId).subscribe({
+    this.qcmService.getQcmQuestions(qcmId).subscribe({
       next: (data) => (this.questions = data),
       error: (err) => {
         console.error('Erreur chargement questions', err);
@@ -100,24 +118,52 @@ export class ModificationQuestionComponent implements OnInit {
   }
 
   loadQuestionDetails(questionId: number) {
-    this.questionService.getQuestionById(questionId).subscribe({
-      next: (data) => {
+    this.questionService.getQuestionReponseById(questionId).subscribe({
+      next: (data: QuestionResponse[]) => {
+        // ✅ correspond maintenant au type Observable<>
+        if (!data || data.length === 0) return;
+
+        const first = data[0];
+
         this.questionForm.patchValue({
-          question: data.question,
+          question: first.question,
         });
 
         // Clear old responses
         while (this.responses.length) this.responses.removeAt(0);
 
         // Add responses from backend
-        (data.responses ?? []).forEach(
-          (r: { response: string; is_correct: boolean }) => {
-            this.addResponse(r.response, r.is_correct);
-          }
-        );
+        data.forEach((r: QuestionResponse) => {
+          this.addResponse(r.response, r.is_correct);
+        });
       },
       error: (err) => console.error('Erreur chargement détails question', err),
     });
+  }
+
+  resetForm() {
+    if (!this.selectedQuestionId) return;
+
+    // Recharger les valeurs originales depuis le service
+    this.questionService
+      .getQuestionReponseById(this.selectedQuestionId)
+      .subscribe({
+        next: (data: QuestionResponse[]) => {
+          if (!data || data.length === 0) return;
+
+          const first = data[0];
+
+          // Remettre le titre
+          this.questionForm.patchValue({ question: first.question });
+
+          // Vider les réponses existantes
+          while (this.responses.length) this.responses.removeAt(0);
+
+          // Remettre les réponses originales
+          data.forEach((r) => this.addResponse(r.response, r.is_correct));
+        },
+        error: (err) => console.error('Erreur réinitialisation question', err),
+      });
   }
 
   // -------- Submit Form --------
@@ -167,11 +213,17 @@ export class ModificationQuestionComponent implements OnInit {
       .updateQuestion(this.selectedQuestionId, dataToUpdate)
       .subscribe({
         next: (res) => {
-          alert('✅ Question modifiée avec succès !');
+          // Afficher le modal Bootstrap
+          const modalEl = document.getElementById('successModal');
+          const modal = new bootstrap.Modal(modalEl!);
+          modal.show();
         },
         error: (err) => {
           console.error(err);
-          alert('❌ Erreur lors de la modification de la question');
+          // Afficher le modal Bootstrap
+          const modalEl = document.getElementById('failedModal');
+          const modal = new bootstrap.Modal(modalEl!);
+          modal.show();
         },
       });
   }

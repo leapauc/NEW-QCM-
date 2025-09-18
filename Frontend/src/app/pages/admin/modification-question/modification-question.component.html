@@ -1,63 +1,71 @@
 <div class="center">
   <br /><br />
-  <h1>Modification question</h1>
+  <h1 class="text-center my-4">Modification question</h1>
   <br /><br />
   <p>Ce formulaire permet de modifier une question d'un questionnaire.</p>
   <br />
+  <!-- Sélection QCM et Question -->
+  <div class="row mb-4 form">
+    <div class="col-5 offset-1">
+      <label for="id_qcm" class="form-label">QCM</label>
+      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">
+        <option value="" disabled selected>-- Sélectionner un QCM --</option>
+        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
+          {{ qcm.title }}
+        </option>
+      </select>
+    </div>
 
-  <!-- Formulaire -->
-  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="mt-4 form">
-    <!-- Sélection QCM et Question -->
-    <div class="mb-3 row">
-      <div class="col-5 offset-1">
-        <label for="id_qcm">QCM</label>
-        <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">
-          <option value="" disabled selected>-- Sélectionner un QCM --</option>
-          <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
-            {{ qcm.title }}
-          </option>
-        </select>
-      </div>
-
-      <div class="col-5">
-        <label for="id_question">Question</label>
-        <select
-          class="form-select"
-          id="id_question"
-          (change)="onQuestionChange($event)"
+    <div class="col-5">
+      <label for="id_question" class="form-label">Question</label>
+      <select
+        class="form-select"
+        id="id_question"
+        [(ngModel)]="selectedQuestionId"
+        (change)="onQuestionChange($event)"
+      >
+        <option
+          *ngFor="let question of questions"
+          [value]="question.id_question"
         >
-          <option value="" disabled selected>
-            -- Sélectionner une question --
-          </option>
-          <option
-            *ngFor="let question of questions"
-            [value]="question.id_question"
-          >
-            {{ question.question }}
-          </option>
-        </select>
+          {{ question.question }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Formulaire affiché seulement si une question est sélectionnée -->
+  <form
+    *ngIf="selectedQuestionId"
+    [formGroup]="questionForm"
+    (ngSubmit)="submitForm()"
+    class="form"
+  >
+    <div class="mb-3">
+      <h4 class="fw-bold">MODIFICATION</h4>
+      <br />
+      <label for="question" class="form-label fw-bold"
+        >Intitulé de la question</label
+      >
+      <textarea
+        id="question"
+        class="form-control"
+        formControlName="question"
+      ></textarea>
+      <div
+        *ngIf="
+          questionForm.get('question')?.touched &&
+          questionForm.get('question')?.invalid
+        "
+        class="text-danger"
+      >
+        Le titre est requis.
       </div>
     </div>
 
-    <div *ngIf="selectedQuestionId" formArrayName="responses">
-      <div class="mb-3">
-        <label for="question">Question</label>
-        <textarea
-          id="question"
-          class="form-control"
-          formControlName="question"
-        ></textarea>
-        <div
-          *ngIf="
-            questionForm.get('question')?.touched &&
-            questionForm.get('question')?.invalid
-          "
-          class="text-danger"
-        >
-          Le titre est requis.
-        </div>
-      </div>
-      <h5>Réponses :</h5>
+    <!-- Réponses -->
+    <h5 class="mt-4">Réponses :</h5>
+    <div formArrayName="responses">
       <div
         *ngFor="let response of responses.controls; let i = index"
         [formGroupName]="i"
@@ -90,20 +98,75 @@
           </button>
         </div>
       </div>
+    </div>
 
+    <!-- Ajouter une réponse -->
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-sm mt-2"
+      (click)="addResponse()"
+      [disabled]="responses.length >= maxResponses"
+    >
+      <i class="bi bi-plus-circle"></i> Ajouter une réponse
+    </button>
+
+    <div class="mt-4 text-center">
       <button
         type="button"
-        class="btn btn-outline-primary btn-sm"
-        (click)="addResponse()"
-        [disabled]="responses.length >= maxResponses"
+        class="btn btn-secondary me-2"
+        (click)="resetForm()"
       >
-        ➕ Ajouter une réponse
+        <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
       </button>
-
-      <br />
-      <div class="mt-4 text-center">
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-      </div>
+      <button type="submit" class="btn btn-success">
+        <i class="bi bi-save"></i> Enregistrer
+      </button>
     </div>
   </form>
+</div>
+<div
+  class="modal fade"
+  id="successModal"
+  tabindex="-1"
+  aria-labelledby="successModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem">✔️</span>
+        </div>
+        <h5 class="modal-title mb-3" id="successModalLabel">
+          Modification réalisée avec succès !
+        </h5>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="failedModal"
+  tabindex="-1"
+  aria-labelledby="failedModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem">❌</span>
+        </div>
+        <h5 class="modal-title mb-3" id="failedModalLabel">
+          Modification réalisée avec succès !
+        </h5>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -17,6 +17,15 @@ export interface Question {
   responses?: ResponseOption[];
 }
 
+export interface QuestionResponse {
+  id_response: number;
+  id_question: number;
+  response: string;
+  is_correct: boolean;
+  position: number;
+  question: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -32,6 +41,13 @@ export class QuestionService {
   // 🔎 Récupérer une question par son ID
   getQuestionById(id_question: number): Observable<Question> {
     return this.http.get<Question>(`${this.apiUrl}/${id_question}`);
+  }
+
+  // 🔎 Récupérer une question et ses réponses par son ID
+  getQuestionReponseById(id_question: number): Observable<QuestionResponse[]> {
+    return this.http.get<QuestionResponse[]>(
+      `${this.apiUrl}/response/${id_question}`
+    );
   }
 
   // ➕ Créer une question

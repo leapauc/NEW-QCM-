@@ -110,6 +110,28 @@ exports.getQuestionById = async (req, res) => {
   }
 };
 
+// Accéder à une question
+exports.getQuestionResponseById = async (req, res) => {
+  const id = parseInt(req.params.id_question, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
+  try {
+    const result = await pool.query(
+      `SELECT rq.*,qq.question FROM response_question rq
+      JOIN question_qcm qq ON rq.id_question=qq.id_question
+      WHERE rq.id_question = $1`,
+      [id]
+    );
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: "Question non trouvé" });
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
 // Modifier une question
 exports.updateQuestionForAQCM = async (req, res) => {
   const client = await pool.connect();
