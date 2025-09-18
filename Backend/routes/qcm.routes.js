@@ -8,6 +8,7 @@ const {
   getQuestionResponseOfQCMById,
   getQuestionOfQCMById,
   getAllQuestion,
+  getQuestionById,
   createQuestionForAQCM,
   updateQuestionForAQCM,
   deleteQuestionForAQCM,
@@ -23,8 +24,9 @@ router.delete("/:id", deleteQCM);
 router.get("/QcmQuestionsResponses/:id_qcm", getQuestionResponseOfQCMById);
 router.get("/QcmQuestions/:id_qcm", getQuestionOfQCMById);
 router.get("/questions", getAllQuestion);
-router.post("/questions/:id_qcm", createQuestionForAQCM);
-router.put("/questions/:id_qcm/:id_question", updateQuestionForAQCM);
-router.delete("/questions/:id_question", deleteQuestionForAQCM);
+router.get("/question/:id_question", getQuestionById);
+router.post("/question", createQuestionForAQCM);
+router.put("/question/:id_question", updateQuestionForAQCM);
+router.delete("/question/:id_question", deleteQuestionForAQCM);
 
 module.exports = router;

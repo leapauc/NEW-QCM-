@@ -11,3 +11,33 @@ html {
   height: 100%;
   width: 100%;
 }
+.center {
+  text-align: center;
+  color: #4e4fa8;
+}
+.form {
+  max-width: 800px;
+  margin: auto;
+  background: #dafafe;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px gray;
+}
+.logout-btn img {
+  position: fixed; /* Fixe par rapport à l'écran */
+  top: 10px; /* Distance du haut */
+  right: 10px; /* Distance de la droite */
+  z-index: 1000; /* Au-dessus de tout */
+  height: 60px;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-btn:hover img {
+  transform: scale(1.2);
+}

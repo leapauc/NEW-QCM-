@@ -68,9 +68,4 @@ export class QcmService {
   getQcmQuestions(qcmId: number): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}/QcmQuestions/${qcmId}`);
   }
-
-  /** 🔹 Récupérer toutes les questions (tous les QCM confondus) */
-  getAllQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.apiUrl}/questions`);
-  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QcmService } from '../../../services/qcm.service';
 import { CommonModule } from '@angular/common';
+import { QuestionService } from '../../../services/question.service';
 
 @Component({
   selector: 'app-suppression-question',
@@ -13,14 +14,17 @@ export class SuppressionQuestionComponent implements OnInit {
   currentPage = 1;
   pageSize = 5;
 
-  constructor(private qcmService: QcmService) {}
+  constructor(
+    private qcmService: QcmService,
+    private questionService: QuestionService
+  ) {}
 
   ngOnInit() {
     this.loadQuestions();
   }
 
   loadQuestions() {
-    this.qcmService.getAllQuestions().subscribe({
+    this.questionService.getAllQuestions().subscribe({
       next: (data) => (this.questions = data),
       error: (err) => console.error('Erreur chargement questions', err),
     });
