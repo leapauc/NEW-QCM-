@@ -2,24 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { QCM, QcmService } from '../../../services/qcm.service';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-suppression-qcm',
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './suppression-qcm.component.html',
   styleUrls: ['./suppression-qcm.component.css'],
 })
 export class SuppressionQcmComponent implements OnInit {
   qcms: QCM[] = [];
   selectedQcm: QCM | null = null;
+  form: FormGroup;
   currentPage = 1;
   pageSize = 5;
 
   message: string | null = null;
   messageClass: string = '';
 
-  constructor(private qcmService: QcmService) {}
-
+  constructor(private qcmService: QcmService, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      title: ['', Validators.required],
+      description: [''],
+      user: ['', [Validators.required]],
+      created_at: [''],
+      updated_at: [''],
+    });
+  }
   ngOnInit() {
     this.loadQcms();
   }

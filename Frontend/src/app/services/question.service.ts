@@ -21,31 +21,31 @@ export interface Question {
   providedIn: 'root',
 })
 export class QuestionService {
-  private apiUrl = 'http://localhost:3000/qcm';
+  private apiUrl = 'http://localhost:3000/questions';
 
   constructor(private http: HttpClient) {}
   /** 🔹 Récupérer toutes les questions (tous les QCM confondus) */
   getAllQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.apiUrl}/questions`);
+    return this.http.get<Question[]>(`${this.apiUrl}/`);
   }
 
   // 🔎 Récupérer une question par son ID
   getQuestionById(id_question: number): Observable<Question> {
-    return this.http.get<Question>(`${this.apiUrl}/question/${id_question}`);
+    return this.http.get<Question>(`${this.apiUrl}/${id_question}`);
   }
 
   // ➕ Créer une question
   createQuestion(question: Question): Observable<any> {
-    return this.http.post(`${this.apiUrl}/question`, question);
+    return this.http.post(`${this.apiUrl}/`, question);
   }
 
   // ✏️ Mettre à jour une question
   updateQuestion(id_question: number, question: Question): Observable<any> {
-    return this.http.put(`${this.apiUrl}/question/${id_question}`, question);
+    return this.http.put(`${this.apiUrl}/${id_question}`, question);
   }
 
   // 🗑️ Supprimer une question
   deleteQuestion(id_question: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/question/${id_question}`);
+    return this.http.delete(`${this.apiUrl}/${id_question}`);
   }
 }

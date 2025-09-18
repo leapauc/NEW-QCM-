@@ -1,1 +1,74 @@
-<h2>DASHBOARD - Stagiaire $name</h2>
+<br />
+<br />
+<div class="center">
+  <h1>DASHBOARD - Stagiaire $name</h1>
+
+  <br /><br />
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />
+        <h2 class="fw-bold">nb</h2>
+        <h4>
+          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}
+        </h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/happy_emoji.png" /><br /><br />
+        <h2 class="fw-bold">nb</h2>
+        <h4>score max</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/sad_emoji.png" /><br /><br />
+        <h2 class="fw-bold">nb</h2>
+        <h4>score min</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/average_icon.png" /><br /><br />
+        <h2 class="fw-bold">nb</h2>
+        <h4>de moyenne</h4>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row text-center">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/ranking_icon.png" /><br /><br />
+        <h2 class="fw-bold">nb {{ 1 > 2 ? "ème" : "ère }}</h2>
+        <h4>place</h4>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="card_3">
+        <img src="img/time_last.png" /><br /><br />
+        <h2 class="fw-bold">nb min</h2>
+        <h4>durée moyenne QCM</h4>
+      </div>
+    </div>
+
+    <div class="col-6 d-flex justify-content-center">
+      <div
+        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"
+      >
+        <div class="row w-100">
+          <div class="col-5 d-flex justify-content-center align-items-center">
+            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />
+          </div>
+          <div
+            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"
+          >
+            <h4>Questionnaire le plus populaire :</h4>
+            <h2 class="fw-bold"></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

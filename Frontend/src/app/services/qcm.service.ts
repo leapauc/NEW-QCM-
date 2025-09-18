@@ -6,7 +6,7 @@ export interface QCM {
   id_qcm?: number;
   title: string;
   description?: string;
-  created_by?: number;
+  user?: string;
   created_at?: string;
   updated_at?: string;
   questions?: Question[];

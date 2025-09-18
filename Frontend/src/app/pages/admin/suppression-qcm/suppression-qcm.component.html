@@ -24,12 +24,12 @@
             <i
               class="bi bi-trash text-danger fs-5"
               style="cursor: pointer"
-              (click)="deleteQcm()"
+              (click)="selectQcm(qcm)"
             ></i>
           </td>
           <td>{{ qcm.title }}</td>
           <td>{{ qcm.description }}</td>
-          <td>{{ qcm.created_by }}</td>
+          <td>{{ qcm.user }}</td>
           <td>{{ qcm.created_at | date : "short" }}</td>
         </tr>
       </tbody>
@@ -53,8 +53,8 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content p-3">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">
-          Confirmer la suppression
+        <h5 class="modal-title text-danger fw-bold" id="confirmModalLabel">
+          Confirmer la suppression du QCM
         </h5>
         <button
           type="button"
@@ -67,7 +67,7 @@
         <pre>
           Title: {{ selectedQcm?.title }}
           Description: {{ selectedQcm?.description }}
-          Créé par: {{ selectedQcm?.created_by }}
+          Créé par: {{ selectedQcm?.user }}
         </pre>
       </div>
       <div class="modal-footer">

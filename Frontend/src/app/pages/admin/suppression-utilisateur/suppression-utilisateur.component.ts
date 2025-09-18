@@ -35,7 +35,8 @@ export class SuppressionUtilisateurComponent implements OnInit {
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (data) => (this.users = data),
-      error: (err) => console.error(err),
+      error: (err) =>
+        console.error("Erreur chargement de l'utilisateurs :", err),
     });
   }
 

@@ -1,60 +1,109 @@
-<br />
-<br />
 <div class="center">
+  <br /><br />
   <h1>Modification question</h1>
-
   <br /><br />
   <p>Ce formulaire permet de modifier une question d'un questionnaire.</p>
   <br />
 
-  <form class="form">
-    <!-- QCM -->
-    <div class="mb-3">
-      <div class="row">
-        <!-- Sélection QCM -->
-        <div class="col-5 offset-1">
-          <label for="id_qcm" class="form-label">QCM</label>
-          <br />
-          <select
-            class="form-select"
-            id="id_qcm"
-            (change)="onQcmChange($event)"
-          >
-            <option value="" disabled selected>
-              -- Sélectionner un QCM --
-            </option>
-            <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
-              {{ qcm.title }}
-            </option>
-          </select>
-        </div>
+  <!-- Formulaire -->
+  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="mt-4 form">
+    <!-- Sélection QCM et Question -->
+    <div class="mb-3 row">
+      <div class="col-5 offset-1">
+        <label for="id_qcm">QCM</label>
+        <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">
+          <option value="" disabled selected>-- Sélectionner un QCM --</option>
+          <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
+            {{ qcm.title }}
+          </option>
+        </select>
+      </div>
 
-        <!-- Sélection Question -->
-        <div class="col-5">
-          <label for="id_question" class="form-label">Question</label>
-          <br />
-          <select
-            class="form-select"
-            id="id_question"
-            (change)="onQuestionChange($event)"
+      <div class="col-5">
+        <label for="id_question">Question</label>
+        <select
+          class="form-select"
+          id="id_question"
+          (change)="onQuestionChange($event)"
+        >
+          <option value="" disabled selected>
+            -- Sélectionner une question --
+          </option>
+          <option
+            *ngFor="let question of questions"
+            [value]="question.id_question"
           >
-            <option value="" disabled selected>
-              -- Sélectionner une question --
-            </option>
-            <option
-              *ngFor="let question of questions"
-              [value]="question.id_question"
-            >
-              {{ question.question }}
-            </option>
-          </select>
-        </div>
+            {{ question.question }}
+          </option>
+        </select>
       </div>
     </div>
 
-    <!-- Formulaire de modification -->
-    <app-form-question [questionId]="selectedQuestionId"></app-form-question>
+    <div *ngIf="selectedQuestionId" formArrayName="responses">
+      <div class="mb-3">
+        <label for="question">Question</label>
+        <textarea
+          id="question"
+          class="form-control"
+          formControlName="question"
+        ></textarea>
+        <div
+          *ngIf="
+            questionForm.get('question')?.touched &&
+            questionForm.get('question')?.invalid
+          "
+          class="text-danger"
+        >
+          Le titre est requis.
+        </div>
+      </div>
+      <h5>Réponses :</h5>
+      <div
+        *ngFor="let response of responses.controls; let i = index"
+        [formGroupName]="i"
+        class="row g-2 align-items-center mb-2"
+      >
+        <div class="col-8">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Réponse {{ i + 1 }}"
+            formControlName="text"
+          />
+        </div>
+        <div class="col-2 text-center">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="isCorrect"
+          />
+          <label class="form-check-label">Correct</label>
+        </div>
+        <div class="col-2 text-end">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            (click)="removeResponse(i)"
+            [disabled]="responses.length <= minResponses"
+          >
+            ❌
+          </button>
+        </div>
+      </div>
 
-    <!-- <app-form-question></app-form-question> -->
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        (click)="addResponse()"
+        [disabled]="responses.length >= maxResponses"
+      >
+        ➕ Ajouter une réponse
+      </button>
+
+      <br />
+      <div class="mt-4 text-center">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </div>
+    </div>
   </form>
 </div>

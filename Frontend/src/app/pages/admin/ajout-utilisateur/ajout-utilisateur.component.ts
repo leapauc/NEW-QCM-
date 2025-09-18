@@ -14,7 +14,6 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
   selector: 'app-ajout-utilisateur',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './ajout-utilisateur.component.html',
-  styleUrl: './ajout-utilisateur.component.css',
 })
 export class AjoutUtilisateurComponent {
   form: FormGroup;

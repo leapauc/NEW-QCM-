@@ -1,35 +1,111 @@
-<br />
-<br />
 <div class="center">
+  <br /><br />
   <h1>Ajout question</h1>
-
   <br /><br />
   <p>Ce formulaire permet d'ajouter une/des question/s à un questionnaire.</p>
   <br />
-
-  <form class="form">
-    <!-- QCM -->
+  <!-- Formulaire question -->
+  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="form">
+    <!-- Sélection QCM -->
     <div class="mb-3">
-      <div class="row">
-        <div class="col-10 offset-1">
-          <label for="id_qcm" class="form-label">QCM</label>
-          <br />
-          <select
-            class="form-select"
-            id="id_qcm"
-            (change)="onQcmChange($event)"
-          >
-            <option value="" disabled selected>
-              -- Sélectionner un QCM --
-            </option>
-            <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
-              {{ qcm.title }}
-            </option>
-          </select>
-        </div>
+      <label for="id_qcm" class="form-label">QCM</label>
+      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">
+        <option value="" disabled selected>-- Sélectionner un QCM --</option>
+        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">
+          {{ qcm.title }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="question" class="form-label">Question</label>
+      <textarea
+        id="question"
+        class="form-control"
+        formControlName="question"
+      ></textarea>
+      <div
+        *ngIf="
+          questionForm.get('question')?.touched &&
+          questionForm.get('question')?.invalid
+        "
+        class="text-danger"
+      >
+        Le titre est requis.
       </div>
     </div>
 
-    <app-form-question></app-form-question>
+    <!-- Réponses -->
+    <div formArrayName="responses">
+      <h5>Réponses :</h5>
+      <div
+        *ngFor="let response of responses.controls; let i = index"
+        [formGroupName]="i"
+        class="row g-2 align-items-center mb-2"
+      >
+        <div class="col-8">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Réponse {{ i + 1 }}"
+            formControlName="text"
+          />
+        </div>
+        <div class="col-2 text-center">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="isCorrect"
+          />
+          <label class="form-check-label">Correct</label>
+        </div>
+        <div class="col-2 text-end">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            (click)="removeResponse(i)"
+            [disabled]="responses.length <= minResponses"
+          >
+            ❌
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        (click)="addResponse()"
+        [disabled]="responses.length >= maxResponses"
+      >
+        ➕ Ajouter une réponse
+      </button>
+    </div>
+
+    <!-- Submit -->
+    <div class="mt-4 text-center">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
   </form>
+</div>
+<div
+  class="modal fade"
+  id="successModal"
+  tabindex="-1"
+  aria-labelledby="successModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem">✔️</span>
+        </div>
+        <h5 class="modal-title mb-3" id="successModalLabel">
+          Question ajouté avec succès !
+        </h5>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
