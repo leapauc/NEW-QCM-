@@ -12,20 +12,20 @@ exports.getAllQCM = async (req, res) => {
   }
 };
 
-// exports.getQCMById = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const result = await pool.query("SELECT * FROM qcm WHERE id_qcm = $1", [
-//       id,
-//     ]);
-//     if (result.rows.length === 0)
-//       return res.status(404).json({ error: "Utilisateur non trouvé" });
-//     res.json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Erreur serveur" });
-//   }
-// };
+exports.getQCMById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query("SELECT * FROM qcm WHERE id_qcm = $1", [
+      id,
+    ]);
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
 
 exports.createQCM = async (req, res) => {
   const client = await pool.connect();

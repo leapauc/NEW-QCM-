@@ -110,7 +110,7 @@ exports.getQuestionById = async (req, res) => {
   }
 };
 
-// Accéder à une question
+// Accéder à une question et ses réponses
 exports.getQuestionResponseById = async (req, res) => {
   const id = parseInt(req.params.id_question, 10);
   if (isNaN(id)) {

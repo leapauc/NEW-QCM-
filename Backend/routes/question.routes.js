@@ -242,7 +242,81 @@ router.post("/", createQuestionForAQCM);
  *                   example: "Erreur serveur"
  */
 router.get("/:id_question", getQuestionById);
-
+/**
+ * @swagger
+ * /response/{id_question}:
+ *   get:
+ *     summary: Récupérer une question et ses réponses
+ *     description: Retourne toutes les réponses associées à une question spécifique d'un QCM.
+ *     tags:
+ *       - Questions
+ *     parameters:
+ *       - in: path
+ *         name: id_question
+ *         required: true
+ *         description: ID de la question à récupérer
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Question et ses réponses récupérées avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_response:
+ *                     type: integer
+ *                     example: 1
+ *                   id_question:
+ *                     type: integer
+ *                     example: 1
+ *                   response:
+ *                     type: string
+ *                     example: "Java est interprété"
+ *                   is_correct:
+ *                     type: boolean
+ *                     example: false
+ *                   position:
+ *                     type: integer
+ *                     example: 1
+ *                   question:
+ *                     type: string
+ *                     example: "Java est un langage ..."
+ *       400:
+ *         description: ID invalide
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "ID invalide"
+ *       404:
+ *         description: Question non trouvée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Question non trouvé"
+ *       500:
+ *         description: Erreur serveur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/response/:id_question", getQuestionResponseById);
 /**
  * @swagger
