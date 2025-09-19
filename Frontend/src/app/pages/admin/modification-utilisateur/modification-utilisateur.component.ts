@@ -21,6 +21,10 @@ export class ModificationUtilisateurComponent implements OnInit {
   form: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  selectedUserBefore!: User;
+  selectedUserAfter!: User;
+  message: string | null = null;
+  messageClass: string = '';
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -30,6 +34,13 @@ export class ModificationUtilisateurComponent implements OnInit {
       society: ['', Validators.required],
       password: [''],
       admin: [false],
+    });
+
+    // 👇 Ajout : écoute les changements sur admin
+    this.form.get('admin')?.valueChanges.subscribe((isAdmin: boolean) => {
+      if (isAdmin) {
+        this.form.patchValue({ society: 'LECLIENT' });
+      }
     });
   }
 
@@ -64,11 +75,9 @@ export class ModificationUtilisateurComponent implements OnInit {
       const updatedData = { ...this.form.value };
       updatedData.admin = updatedData.admin || false;
 
-      // Affichage modal avant confirmation
       const modalEl = document.getElementById('confirmModal');
       const modal = new bootstrap.Modal(modalEl!);
 
-      // On injecte les infos dans le modal
       this.selectedUserBefore = { ...this.selectedUser };
       this.selectedUserAfter = { ...this.selectedUser, ...updatedData };
 
@@ -76,8 +85,6 @@ export class ModificationUtilisateurComponent implements OnInit {
     }
   }
 
-  message: string | null = null;
-  messageClass: string = '';
   confirmUpdate() {
     if (!this.selectedUser) {
       this.message = 'Impossible de modifier cet utilisateur.';
@@ -104,14 +111,10 @@ export class ModificationUtilisateurComponent implements OnInit {
         error: (err) => console.error(err),
       });
     this.message = `Utilisateur "${this.selectedUser?.name}" modifié avec succès !`;
-    this.messageClass = 'alert alert-success'; // vert
+    this.messageClass = 'alert alert-success';
     setTimeout(() => (this.message = null), 2000);
   }
 
-  selectedUserBefore!: User;
-  selectedUserAfter!: User;
-
-  // Pagination simple
   get paginatedUsers() {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.users.slice(start, start + this.pageSize);
@@ -121,6 +124,7 @@ export class ModificationUtilisateurComponent implements OnInit {
     if (this.currentPage * this.pageSize < this.users.length)
       this.currentPage++;
   }
+
   prevPage() {
     if (this.currentPage > 1) this.currentPage--;
   }

@@ -109,7 +109,10 @@
 <!-- Modal de confirmation -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content p-3">
+    <div
+      class="modal-content p-3"
+      *ngIf="selectedUserBefore && selectedUserAfter"
+    >
       <div class="modal-header">
         <h5 class="modal-title">Confirmer la mise à jour</h5>
       </div>
@@ -117,11 +120,25 @@
         <div class="row mb-3">
           <div class="col-6">
             <h6>Avant :</h6>
-            <pre>{{ selectedUserBefore | json }}</pre>
+            <pre>
+    Nom : {{ selectedUserBefore.name }}
+    Prénom : {{ selectedUserBefore.firstname }}
+    Société : {{ selectedUserBefore.society }}
+    Password : ***************
+    Email : {{ selectedUserBefore.email }}
+    Admin : {{ selectedUserBefore.admin }}
+            </pre>
           </div>
           <div class="col-6">
             <h6>Après :</h6>
-            <pre>{{ selectedUserAfter | json }}</pre>
+            <pre>
+    Nom : {{ selectedUserAfter.name }}
+    Prénom : {{ selectedUserAfter.firstname }}
+    Société : {{ selectedUserAfter.society }}
+    Password : ***************
+    Email : {{ selectedUserAfter.email }}
+    Admin : {{ selectedUserAfter.admin }}
+            </pre>
           </div>
         </div>
       </div>

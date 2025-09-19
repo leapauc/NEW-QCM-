@@ -24,7 +24,7 @@ export class AjoutUtilisateurComponent {
         name: ['', Validators.required],
         firstname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        society: ['', Validators.required],
+        society: [''],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
         admin: [false],
@@ -42,6 +42,7 @@ export class AjoutUtilisateurComponent {
   onSubmit() {
     if (this.form.valid) {
       const { confirmPassword, ...userData } = this.form.value;
+      // Forcer admin à false si vide
       if (!userData.admin) {
         userData.admin = false;
       }

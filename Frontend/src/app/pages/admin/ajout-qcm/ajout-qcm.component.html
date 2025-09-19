@@ -1,1 +1,70 @@
-<p>ajout-qcm works!</p>
+<br />
+<br />
+<div class="center">
+  <h1>Modifier d'un questionnaire</h1>
+
+  <br /><br />
+  <p>
+    Ce formulaire permet de modifier un questionnaire.Aucun ajout ou suppression
+    possible via cette page.
+  </p>
+  <p>
+    Elle est dédiée uniquement à la modification du contenu d'un questionnaire
+    existant.
+  </p>
+  <br />
+  <form class="form-l">
+    <h4 class="fw-bold"></h4>
+    <br />
+    <label for="title">Titre</label>
+    <input
+      formControlName="title"
+      placeholder="Titre QCM"
+      class="form-control mb-2"
+    /><br />
+    <label for="title">Description</label>
+    <textarea
+      formControlName="description"
+      placeholder="Description"
+      class="form-control mb-4"
+    ></textarea>
+    <br /><br />
+    <label for="title">Questions</label>
+    <div formArrayName="questions">
+      <div class="mb-4">
+        <input
+          formControlName="question"
+          placeholder="Intitulé de la question"
+          class="form-control mb-2"
+        />
+
+        <h5>Réponses :</h5>
+        <div formArrayName="responses">
+          <div class="row g-2 align-items-center mb-2">
+            <div class="col-8">
+              <input formControlName="response" class="form-control" />
+            </div>
+            <div class="col-2 text-center">
+              <input
+                type="checkbox"
+                formControlName="is_correct"
+                class="form-check-input"
+              />
+            </div>
+            <div class="col-2 text-end">
+              <button type="button" class="btn btn-outline-danger btn-sm">
+                ❌
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-sm mt-2">
+          ➕ Ajouter une réponse
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Enregistrer</button>
+  </form>
+</div>

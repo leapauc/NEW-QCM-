@@ -28,11 +28,14 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
   const { name, firstname, society, password, email, admin } = req.body;
   try {
+    const finalSociety = admin === true ? "LECLIENT" : society;
+
     const result = await pool.query(
       `INSERT INTO users (name, firstname, society, password, email, admin) 
        VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5, $6) RETURNING *`,
-      [name, firstname, society, password, email, admin]
+      [name, firstname, finalSociety, password, email, admin]
     );
+
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
