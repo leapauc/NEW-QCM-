@@ -15,6 +15,8 @@ import { AjoutQuestionComponent } from './pages/admin/ajout-question/ajout-quest
 import { ModificationQuestionComponent } from './pages/admin/modification-question/modification-question.component';
 import { SuppressionQuestionComponent } from './pages/admin/suppression-question/suppression-question.component';
 import { StagiaireComponent } from './pages/stagiaire/stagiaire.component';
+import { AjoutQcmQuestionComponent } from './pages/admin/ajout-qcm-question/ajout-qcm-question.component';
+import { ModificationQcmQuestionComponent } from './pages/admin/modification-qcm-question/modification-qcm-question.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,6 +29,14 @@ export const routes: Routes = [
       { path: 'admin/ajout_qcm', component: AjoutQcmComponent },
       { path: 'admin/modification_qcm', component: ModificationQcmComponent },
       { path: 'admin/suppression_qcm', component: SuppressionQcmComponent },
+      {
+        path: 'admin/ajout_qcm&question',
+        component: AjoutQcmQuestionComponent,
+      },
+      {
+        path: 'admin/modification_qcm&question',
+        component: ModificationQcmQuestionComponent,
+      },
       { path: 'admin/ajout_question', component: AjoutQuestionComponent },
       {
         path: 'admin/modification_question',

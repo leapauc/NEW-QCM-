@@ -30,6 +30,37 @@ exports.getQCMById = async (req, res) => {
 exports.createQCM = async (req, res) => {
   const client = await pool.connect();
   try {
+    const { title, description, created_by } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ error: "Titre est obligatoire" });
+    }
+
+    await client.query("BEGIN");
+
+    // Insérer le QCM
+    const qcmResult = await client.query(
+      `INSERT INTO qcm (title, description, created_by)
+       VALUES ($1, $2, $3)
+       RETURNING id_qcm`,
+      [title, description, created_by]
+    );
+    const qcmId = qcmResult.rows[0].id_qcm;
+
+    await client.query("COMMIT");
+    res.status(201).json({ message: "QCM créé avec succès", qcmId });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur", details: err.message });
+  } finally {
+    client.release();
+  }
+};
+
+exports.createQCMWithQuestion = async (req, res) => {
+  const client = await pool.connect();
+  try {
     const { title, description, created_by, questions } = req.body;
 
     if (!title || !Array.isArray(questions) || questions.length === 0) {
@@ -90,15 +121,62 @@ exports.updateQCM = async (req, res) => {
 
     await client.query("BEGIN");
 
-    // 1️⃣ Update du QCM
+    // Update du QCM
     await client.query(
       `UPDATE qcm 
-       SET title=$1, description=$2, updated_at=NOW() 
+       SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP 
        WHERE id_qcm=$3`,
       [title, description, qcmId]
     );
 
-    // 2️⃣ Update des questions existantes
+    // // Update des questions existantes
+    // for (const q of questions) {
+    //   await client.query(
+    //     `UPDATE question_qcm
+    //      SET question=$1, type=$2
+    //      WHERE id_question=$3 AND id_qcm=$4`,
+    //     [q.question, q.type, q.id_question, qcmId]
+    //   );
+
+    //   // Update des réponses existantes
+    //   for (const r of q.responses) {
+    //     await client.query(
+    //       `UPDATE response_question
+    //        SET response=$1, is_correct=$2, position=$3
+    //        WHERE id_response=$4 AND id_question=$5`,
+    //       [r.response, r.is_correct, r.position, r.id_response, q.id_question]
+    //     );
+    //   }
+    // }
+
+    await client.query("COMMIT");
+    res.json({ message: "QCM et questions/réponses mis à jour avec succès" });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur", details: err.message });
+  } finally {
+    client.release();
+  }
+};
+
+exports.updateQCMWithQuestion = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const qcmId = req.params.id;
+    const { title, description, questions } = req.body;
+
+    await client.query("BEGIN");
+
+    // Update du QCM
+    await client.query(
+      `UPDATE qcm 
+       SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP 
+       WHERE id_qcm=$3`,
+      [title, description, qcmId]
+    );
+
+    // Update des questions existantes
     for (const q of questions) {
       await client.query(
         `UPDATE question_qcm
@@ -107,7 +185,7 @@ exports.updateQCM = async (req, res) => {
         [q.question, q.type, q.id_question, qcmId]
       );
 
-      // 3️⃣ Update des réponses existantes
+      // Update des réponses existantes
       for (const r of q.responses) {
         await client.query(
           `UPDATE response_question

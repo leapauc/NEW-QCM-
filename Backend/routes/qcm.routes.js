@@ -3,7 +3,9 @@ const {
   getAllQCM,
   getQCMById,
   createQCM,
+  createQCMWithQuestion,
   updateQCM,
+  updateQCMWithQuestion,
   deleteQCM,
   getQuestionResponseOfQCMById,
   getQuestionResponseByQuestionId,
@@ -130,6 +132,76 @@ router.get("/:id", getQCMById);
  * /qcm:
  *   post:
  *     summary: Créer un nouveau QCM
+ *     description: Permet de créer un QCM avec un titre, une description et l'identifiant de l'utilisateur créateur.
+ *     tags:
+ *       - QCM
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - created_by
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Introduction à Java"
+ *                 description: Titre du QCM (obligatoire)
+ *               description:
+ *                 type: string
+ *                 example: "QCM sur les bases de Java"
+ *                 description: Description du QCM
+ *               created_by:
+ *                 type: integer
+ *                 example: 1
+ *                 description: ID de l'utilisateur créateur (obligatoire)
+ *     responses:
+ *       201:
+ *         description: QCM créé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "QCM créé avec succès"
+ *                 qcmId:
+ *                   type: integer
+ *                   example: 10
+ *                   description: ID du QCM créé
+ *       400:
+ *         description: "Requête invalide (ex: titre manquant)"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Titre est obligatoire"
+ *       500:
+ *         description: Erreur serveur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ *                 details:
+ *                   type: string
+ *                   example: "Message d'erreur détaillé"
+ */
+router.post("/", createQCM);
+/**
+ * @swagger
+ * /qcm/plusQuestion:
+ *   post:
+ *     summary: Créer un nouveau QCM
  *     description: Permet de créer un QCM avec ses questions et réponses.
  *     tags:
  *       - QCM
@@ -210,13 +282,13 @@ router.get("/:id", getQCMById);
  *                   type: string
  *                   example: "Détails de l'erreur côté serveur"
  */
-router.post("/", createQCM);
+router.post("/plusQuestion", createQCMWithQuestion);
 /**
  * @swagger
  * /qcm/{id}:
  *   put:
- *     summary: Mettre à jour un QCM
- *     description: Met à jour un QCM existant avec ses questions et réponses.
+ *     summary: Met à jour un QCM existant
+ *     description: Met à jour le titre et la description d'un QCM spécifique. Les questions et réponses ne sont pas modifiées pour le moment.
  *     tags:
  *       - QCM
  *     parameters:
@@ -225,7 +297,7 @@ router.post("/", createQCM);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du QCM à modifier
+ *         description: ID du QCM à mettre à jour
  *     requestBody:
  *       required: true
  *       content:
@@ -235,24 +307,24 @@ router.post("/", createQCM);
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Introduction à JavaScript"
+ *                 example: "Titre mis à jour"
+ *                 description: Nouveau titre du QCM
  *               description:
  *                 type: string
- *                 example: "QCM pour débutants sur JavaScript"
+ *                 example: "Description mise à jour"
+ *                 description: Nouvelle description du QCM
  *               questions:
  *                 type: array
+ *                 description: Liste des questions avec leurs réponses (non utilisée actuellement)
  *                 items:
  *                   type: object
  *                   properties:
  *                     id_question:
  *                       type: integer
- *                       example: 12
  *                     question:
  *                       type: string
- *                       example: "JavaScript est un langage ..."
  *                     type:
  *                       type: string
- *                       enum: [single, multiple]
  *                       example: "single"
  *                     responses:
  *                       type: array
@@ -261,19 +333,15 @@ router.post("/", createQCM);
  *                         properties:
  *                           id_response:
  *                             type: integer
- *                             example: 34
  *                           response:
  *                             type: string
- *                             example: "interprété"
  *                           is_correct:
  *                             type: boolean
- *                             example: true
  *                           position:
  *                             type: integer
- *                             example: 1
  *     responses:
  *       200:
- *         description: QCM et questions/réponses mis à jour avec succès
+ *         description: QCM mis à jour avec succès
  *         content:
  *           application/json:
  *             schema:
@@ -282,6 +350,26 @@ router.post("/", createQCM);
  *                 message:
  *                   type: string
  *                   example: "QCM et questions/réponses mis à jour avec succès"
+ *       400:
+ *         description: Requête invalide
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Requête invalide"
+ *       404:
+ *         description: QCM non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "QCM non trouvé"
  *       500:
  *         description: Erreur serveur
  *         content:
@@ -294,9 +382,11 @@ router.post("/", createQCM);
  *                   example: "Erreur serveur"
  *                 details:
  *                   type: string
- *                   example: "Détails de l'erreur côté serveur"
+ *                   example: "Message d'erreur détaillé"
  */
 router.put("/:id", updateQCM);
+
+router.put("/plusQuestion/:id", updateQCMWithQuestion);
 /**
  * @swagger
  * /qcm/{id}:

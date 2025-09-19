@@ -6,6 +6,14 @@ const {
   getNbQuestionRealise,
   getQuestionnairePopulaire,
   getFirstStagiaireActif,
+  getNbQuestionnaireList,
+  getNbQuestionnaireByUser,
+  getMaxMinAvgScoreList,
+  getMaxMinAvgScoreByUser,
+  getRangeList,
+  getRangeByUser,
+  getMoyenneTimeList,
+  getMoyenneTimeByUser,
 } = require("../controllers/stats.controller");
 
 const router = express.Router();
@@ -211,5 +219,14 @@ router.get("/questionnairePopulaire", getQuestionnairePopulaire);
  *                   example: "Erreur serveur"
  */
 router.get("/firstActivStagiaire", getFirstStagiaireActif);
+
+router.get("/nbQuestionnaireList", getNbQuestionnaireList);
+router.get("/nbQuestionnaireByUser/:id_user", getNbQuestionnaireByUser);
+router.get("/maxMinAvgScoreList", getMaxMinAvgScoreList);
+router.get("/maxMinAvgScoreByUser/:id_user", getMaxMinAvgScoreByUser);
+router.get("/rangeList", getRangeList);
+router.get("/rangeByUser/:id_user", getRangeByUser);
+router.get("/avgTimeList", getMoyenneTimeList);
+router.get("/avgTimeByUser/:id_user", getMoyenneTimeByUser);
 
 module.exports = router;

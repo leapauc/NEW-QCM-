@@ -38,12 +38,13 @@ export class ModificationQcmComponent implements OnInit {
   }
 
   editQCM(qcm: QCM) {
-    this.qcmService.getQcmQuestionsWithResponses(qcm.id_qcm!).subscribe({
-      next: (questions) => {
-        this.selectedQcm = { ...qcm, questions };
+    // On récupère le QCM complet (title + description)
+    this.qcmService.getQCMById(qcm.id_qcm!).subscribe({
+      next: (data) => {
+        this.selectedQcm = data; // titre et description récupérés
         this.initForm();
       },
-      error: (err) => console.error('Erreur chargement questions', err),
+      error: (err) => console.error('Erreur chargement QCM', err),
     });
   }
 
@@ -52,61 +53,20 @@ export class ModificationQcmComponent implements OnInit {
     this.qcmForm = this.fb.group({
       title: [this.selectedQcm?.title, Validators.required],
       description: [this.selectedQcm?.description],
-      questions: this.fb.array([]),
     });
+  }
+  resetForm() {
+    if (!this.selectedQcm) return;
 
-    this.selectedQcm?.questions?.forEach((q: any) => {
-      const questionGroup = this.fb.group({
-        id_question: [q.id_question],
-        question: [q.question, Validators.required],
-        type: [q.type || 'single'],
-        responses: this.fb.array([]),
-      });
-
-      // 🔹 Parser les réponses et is_correct séparées par "|"
-      const responsesArray = (q.response || '').split('|');
-      const isCorrectArray = (q.is_correct || '').split('|');
-
-      responsesArray.forEach((resp: string, idx: number) => {
-        (questionGroup.get('responses') as FormArray).push(
-          this.fb.group({
-            response: [resp, Validators.required],
-            is_correct: [isCorrectArray[idx] === 'true'],
-            position: [idx + 1],
-          })
-        );
-      });
-
-      (this.qcmForm.get('questions') as FormArray).push(questionGroup);
+    // Remet le formulaire à ses valeurs originales récupérées depuis le QCM
+    this.qcmForm.patchValue({
+      title: this.selectedQcm.title,
+      description: this.selectedQcm.description,
     });
   }
 
   get questions(): FormArray {
     return this.qcmForm.get('questions') as FormArray;
-  }
-
-  getResponses(questionIndex: number): FormArray {
-    return this.questions.at(questionIndex).get('responses') as FormArray;
-  }
-
-  addResponse(questionIndex: number) {
-    const responses = this.getResponses(questionIndex);
-    if (responses.length < this.maxResponses) {
-      responses.push(
-        this.fb.group({
-          response: ['', Validators.required],
-          is_correct: [false],
-          position: [responses.length + 1],
-        })
-      );
-    }
-  }
-
-  removeResponse(questionIndex: number, responseIndex: number) {
-    const responses = this.getResponses(questionIndex);
-    if (responses.length > this.minResponses) {
-      responses.removeAt(responseIndex);
-    }
   }
 
   // ---------- Sauvegarde ----------
@@ -115,9 +75,17 @@ export class ModificationQcmComponent implements OnInit {
       this.qcmForm.markAllAsTouched();
       return;
     }
+
     const formValue = this.qcmForm.value;
-    console.log('Données à envoyer:', formValue);
-    // Ici tu appellerais ton service updateQCM pour envoyer formValue
+
+    // Appel de la mise à jour côté backend
+    this.qcmService.updateQCM(this.selectedQcm!.id_qcm!, formValue).subscribe({
+      next: (res) => {
+        console.log(res.message);
+        this.onQcmUpdated();
+      },
+      error: (err) => console.error(err),
+    });
   }
 
   onQcmUpdated() {

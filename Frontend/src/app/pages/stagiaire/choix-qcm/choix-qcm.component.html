@@ -1,1 +1,107 @@
-<p>choix-qcm works!</p>
+<br />
+<br />
+<div class="center">
+  <h1>Répondre à un questionnaire</h1>
+
+  <br /><br />
+  <p>
+    Vous êtes libre de choisir le QCM qui vous convient le nombre de fois que
+    vous désirez.
+  </p>
+  <p><i>Il n'y a pas de limite pour améliorer ces connaissances !</i></p>
+  <br />
+  <!-- Tableau des qcm -->
+  <div class="table-responsive-custom">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Créé par</th>
+          <th>Créé le</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let qcm of paginatedQCM">
+          <td class="text-center">
+            <i
+              class="bi bi-pencil-square text-primary fs-5"
+              style="cursor: pointer"
+              (click)="editQCM(qcm)"
+            ></i>
+          </td>
+          <td>{{ qcm.title }}</td>
+          <td>{{ qcm.description }}</td>
+          <td>{{ qcm.user }}</td>
+          <td>{{ qcm.created_at | date : "short" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+  </div>
+  <br /><br />
+
+  <!-- Modal qcm page -->
+  <div
+    class="modal fade"
+    id="qcmModal"
+    tabindex="-1"
+    aria-labelledby="qcmModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content p-3">
+        <div class="modal-body" *ngIf="selectedQcm">
+          <h4 class="fw-bold center">{{ selectedQcm.title }}</h4>
+          <br />
+          <p>{{ selectedQcm.description }}</p>
+          <hr />
+          <br />
+          <div
+            *ngFor="let question of selectedQcm.questions; let qIndex = index"
+          >
+            <p class="fw-bold center">
+              Q{{ qIndex + 1 }}: {{ question.question }}
+            </p>
+
+            <ul class="list-group mb-3">
+              <li
+                class="list-group-item d-flex align-items-center"
+                *ngFor="
+                  let resp of getResponses(qIndex).controls;
+                  let rIndex = index
+                "
+              >
+                <input
+                  type="{{ question.type === 'single' ? 'radio' : 'checkbox' }}"
+                  [name]="'question' + qIndex"
+                  class="me-2"
+                />
+                {{ resp.value.response }}
+              </li>
+            </ul>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-danger mt-3 me-2"
+            data-bs-dismiss="modal"
+          >
+            Fermer
+          </button>
+          <button type="button" class="btn btn-secondary mt-3 me-2">
+            <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+          </button>
+          <button type="submit" class="btn btn-success mt-3">
+            <i class="bi bi-save"></i> Valider
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

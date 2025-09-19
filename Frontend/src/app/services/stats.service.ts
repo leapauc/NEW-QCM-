@@ -43,4 +43,36 @@ export class StatsService {
   getFirstStagiaireActif(): Observable<any> {
     return this.http.get(`${this.apiUrl}/firstActivStagiaire`);
   }
+
+  getNbQuestionnaireList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/nbQuestionnaireList`);
+  }
+
+  getNbQuestionnaireByUser(id_user: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/nbQuestionnaireByUser/${id_user}`);
+  }
+
+  getMaxMinAvgScoreList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/maxMinAvgScoreList`);
+  }
+
+  getMaxMinAvgScoreByUser(id_user: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/maxMinAvgScoreByUser/${id_user}`);
+  }
+
+  getRangeList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/rangeList`);
+  }
+
+  getRangeByUser(id_user: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/rangeByUser/${id_user}`);
+  }
+
+  getAvgTimeList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/avgTimeList`);
+  }
+
+  getAvgTimeByUser(id_user: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/avgTimeByUser/${id_user}`);
+  }
 }

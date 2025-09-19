@@ -1,14 +1,14 @@
 <br />
 <br />
 <div class="center">
-  <h1>DASHBOARD - Stagiaire $name</h1>
+  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>
 
   <br /><br />
   <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />
-        <h2 class="fw-bold">nb</h2>
+        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>
         <h4>
           {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}
         </h4>
@@ -17,21 +17,21 @@
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/happy_emoji.png" /><br /><br />
-        <h2 class="fw-bold">nb</h2>
+        <h2 class="fw-bold">{{ scoreMax }}</h2>
         <h4>score max</h4>
       </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/sad_emoji.png" /><br /><br />
-        <h2 class="fw-bold">nb</h2>
+        <h2 class="fw-bold">{{ scoreMin }}</h2>
         <h4>score min</h4>
       </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/average_icon.png" /><br /><br />
-        <h2 class="fw-bold">nb</h2>
+        <h2 class="fw-bold">{{ scoreAvg }}</h2>
         <h4>de moyenne</h4>
       </div>
     </div>
@@ -41,14 +41,15 @@
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/ranking_icon.png" /><br /><br />
-        <h2 class="fw-bold">nb {{ 1 > 2 ? "ème" : "ère }}</h2>
+        <h2 class="fw-bold">{{ range }}</h2>
+        <!-- 1 ? "ème" : "ère"-->
         <h4>place</h4>
       </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/time_last.png" /><br /><br />
-        <h2 class="fw-bold">nb min</h2>
+        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>
         <h4>durée moyenne QCM</h4>
       </div>
     </div>
@@ -65,7 +66,7 @@
             class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"
           >
             <h4>Questionnaire le plus populaire :</h4>
-            <h2 class="fw-bold"></h2>
+            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>
           </div>
         </div>
       </div>

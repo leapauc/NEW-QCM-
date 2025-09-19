@@ -10,6 +10,7 @@ const userRoutes = require("./routes/users.routes");
 const userStats = require("./routes/stats.routes");
 const userQCM = require("./routes/qcm.routes");
 const questionQCM = require("./routes/question.routes");
+const quizAttempts = require("./routes/quiz_attempts.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use("/users", userRoutes);
 app.use("/stats", userStats);
 app.use("/qcm", userQCM);
 app.use("/questions", questionQCM);
+app.use("/quizAttempts", quizAttempts);
 
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);

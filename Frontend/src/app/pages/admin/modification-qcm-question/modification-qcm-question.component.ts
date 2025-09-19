@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { QCM, QcmService } from '../../../services/qcm.service';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -7,21 +6,29 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  FormsModule,
 } from '@angular/forms';
-import * as bootstrap from 'bootstrap';
+import { QCM, QcmService } from '../../../services/qcm.service';
+import {
+  QuestionResponse,
+  QuestionService,
+} from '../../../services/question.service';
+import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 
 @Component({
-  selector: 'app-choix-qcm',
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './choix-qcm.component.html',
-  styleUrl: './choix-qcm.component.css',
+  selector: 'app-modification-qcm-question',
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  templateUrl: './modification-qcm-question.component.html',
+  styleUrl: './modification-qcm-question.component.css',
 })
-export class ChoixQcmComponent implements OnInit {
+export class ModificationQcmQuestionComponent implements OnInit {
   qcms: QCM[] = [];
   selectedQcm: QCM | null = null;
   qcmForm!: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  maxResponses = 5;
+  minResponses = 2;
 
   constructor(private qcmService: QcmService, private fb: FormBuilder) {}
 
@@ -41,13 +48,6 @@ export class ChoixQcmComponent implements OnInit {
       next: (questions) => {
         this.selectedQcm = { ...qcm, questions };
         this.initForm();
-
-        // ✅ Afficher le modal après avoir initialisé le formulaire
-        const modalEl = document.getElementById('qcmModal');
-        if (modalEl) {
-          const modal = new bootstrap.Modal(modalEl);
-          modal.show();
-        }
       },
       error: (err) => console.error('Erreur chargement questions', err),
     });
@@ -95,6 +95,26 @@ export class ChoixQcmComponent implements OnInit {
     return this.questions.at(questionIndex).get('responses') as FormArray;
   }
 
+  addResponse(questionIndex: number) {
+    const responses = this.getResponses(questionIndex);
+    if (responses.length < this.maxResponses) {
+      responses.push(
+        this.fb.group({
+          response: ['', Validators.required],
+          is_correct: [false],
+          position: [responses.length + 1],
+        })
+      );
+    }
+  }
+
+  removeResponse(questionIndex: number, responseIndex: number) {
+    const responses = this.getResponses(questionIndex);
+    if (responses.length > this.minResponses) {
+      responses.removeAt(responseIndex);
+    }
+  }
+
   // ---------- Sauvegarde ----------
   submitForm() {
     if (this.qcmForm.invalid) {
@@ -104,6 +124,11 @@ export class ChoixQcmComponent implements OnInit {
     const formValue = this.qcmForm.value;
     console.log('Données à envoyer:', formValue);
     // Ici tu appellerais ton service updateQCM pour envoyer formValue
+  }
+
+  onQcmUpdated() {
+    this.selectedQcm = null;
+    this.loadQCMs();
   }
 
   // ---------- Pagination ----------

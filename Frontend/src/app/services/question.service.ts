@@ -52,7 +52,7 @@ export class QuestionService {
 
   // ➕ Créer une question
   createQuestion(question: Question): Observable<any> {
-    return this.http.post(`${this.apiUrl}/`, question);
+    return this.http.post(`${this.apiUrl}`, question);
   }
 
   // ✏️ Mettre à jour une question

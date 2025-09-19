@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-admin',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard-admin.component.html',
-  styleUrl: './dashboard-admin.component.css',
+  styleUrls: ['./dashboard-admin.component.css'],
 })
 export class DashboardAdminComponent {
   nbStagiaires = 0;
@@ -15,10 +16,19 @@ export class DashboardAdminComponent {
   questionnairePopulaire = '';
   stagiaireActif = { name: '', firstname: '' };
 
+  // Nouvelles variables pour les tableaux
+  userStats: any[] = [];
+  userAvgTime: any[] = [];
+  userRank: any[] = [];
+  userNbQuestionnaire: any[] = [];
+
+  combinedUserStats: any[] = [];
+
   constructor(private statsService: StatsService) {}
 
   ngOnInit(): void {
     this.loadStats();
+    this.loadUserTables();
   }
 
   loadStats() {
@@ -44,6 +54,41 @@ export class DashboardAdminComponent {
 
     this.statsService.getFirstStagiaireActif().subscribe((res: any) => {
       if (res.length > 0) this.stagiaireActif = res[0];
+    });
+
+    this.statsService.getNbQuestionnaireList().subscribe((nbRes: any[]) => {
+      this.statsService.getMaxMinAvgScoreList().subscribe((statsRes: any[]) => {
+        // Fusionner les tableaux
+        this.combinedUserStats = statsRes.map((user) => {
+          const nb =
+            nbRes.find((u) => u.id_user === user.id_user)?.nb_questionnaires ??
+            0;
+          return {
+            ...user,
+            nb_questionnaires: nb,
+          };
+        });
+      });
+    });
+  }
+
+  loadUserTables() {
+    // Tableau questionnaires par utilisateur (min/max/avg)
+    this.statsService.getNbQuestionnaireList().subscribe((res: any) => {
+      this.userNbQuestionnaire = res;
+    });
+    this.statsService.getMaxMinAvgScoreList().subscribe((res: any) => {
+      this.userStats = res;
+    });
+
+    // Tableau temps moyen
+    this.statsService.getAvgTimeList().subscribe((res: any) => {
+      this.userAvgTime = res;
+    });
+
+    // Tableau rang
+    this.statsService.getRangeList().subscribe((res: any) => {
+      this.userRank = res;
     });
   }
 }

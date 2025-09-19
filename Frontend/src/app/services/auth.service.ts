@@ -2,22 +2,38 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+// Interface pour l'utilisateur authentifié
+export interface AuthUser {
+  id_user: number;
+  name: string;
+  admin: boolean;
+  // Ajouter d'autres champs si nécessaire
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000'; // ton backend Node.js
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  login(name: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { name, password }).pipe(
-      tap((res: any) => {
-        if (res.user) {
-          localStorage.setItem('user', JSON.stringify(res.user));
-        }
+  login(
+    name: string,
+    password: string
+  ): Observable<{ message: string; user: AuthUser }> {
+    return this.http
+      .post<{ message: string; user: AuthUser }>(`${this.apiUrl}/login`, {
+        name,
+        password,
       })
-    );
+      .pipe(
+        tap((res) => {
+          if (res.user) {
+            localStorage.setItem('user', JSON.stringify(res.user));
+          }
+        })
+      );
   }
 
   logout() {
@@ -25,9 +41,9 @@ export class AuthService {
     localStorage.removeItem('user');
   }
 
-  getUser() {
+  getUser(): AuthUser | null {
     const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    return user ? (JSON.parse(user) as AuthUser) : null;
   }
 
   isAdmin(): boolean {

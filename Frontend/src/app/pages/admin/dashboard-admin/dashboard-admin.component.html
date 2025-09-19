@@ -75,3 +75,68 @@
     </div>
   </div>
 </div>
+<hr />
+
+<!-- Tableau questionnaires par utilisateur -->
+<h3>Statistiques par utilisateur</h3>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Utilisateur</th>
+      <th>Nb questionnaires</th>
+      <th>Score min</th>
+      <th>Score max</th>
+      <th>Score moyen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of combinedUserStats">
+      <td>{{ user.name }} {{ user.firstname }}</td>
+      <td>{{ user.nb_questionnaires }}</td>
+      <td>{{ user.min_score }}</td>
+      <td>{{ user.max_score }}</td>
+      <td>{{ user.avg_score }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<!-- Tableaux côte à côte : temps moyen et rang -->
+<div class="row">
+  <div class="col-md-6">
+    <h3>Temps moyen par utilisateur</h3>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Utilisateur</th>
+          <th>Temps moyen (min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userAvgTime">
+          <td>{{ user.name }} {{ user.firstname }}</td>
+          <td>{{ user.avg_time_minutes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <h3>Rang des utilisateurs</h3>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Utilisateur</th>
+          <th>Rang</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userRank">
+          <td>{{ user.name }} {{ user.firstname }}</td>
+          <td>{{ user.rank }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

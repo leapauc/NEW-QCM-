@@ -30,29 +30,35 @@
             <li routerLink="admin/suppression_qcm" routerLinkActive="active">
               <i class="bi bi-trash"></i> Suppression QCM
             </li>
-
-            <!-- Gestion des questions -->
-            <li>
-              <div class="menu-item" (click)="toggleQuestions()">
-                <i class="bi bi-question-circle"></i> Gestion des questions
-              </div>
-              <ul *ngIf="showQuestions">
-                <li routerLink="admin/ajout_question" routerLinkActive="active">
-                  <i class="bi bi-plus-circle"></i> Ajout question
-                </li>
-                <li
-                  routerLink="admin/modification_question"
-                  routerLinkActive="active"
-                >
-                  <i class="bi bi-pencil-square"></i> Modification question
-                </li>
-                <li
-                  routerLink="admin/suppression_question"
-                  routerLinkActive="active"
-                >
-                  <i class="bi bi-trash"></i> Suppression question
-                </li>
-              </ul>
+            <li routerLink="admin/ajout_qcm&question" routerLinkActive="active">
+              <i class="bi bi-plus-circle"></i> Ajout QCM + Questions
+            </li>
+            <li
+              routerLink="admin/modification_qcm&question"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-pencil-square"></i> Modification QCM + Questions
+            </li>
+          </ul>
+          <!-- Gestion des Questions -->
+          <div class="menu-item" (click)="toggleQuestions()">
+            <i class="bi bi-question-circle"></i> Gestion des Questions
+          </div>
+          <ul *ngIf="showQuestions">
+            <li routerLink="admin/ajout_question" routerLinkActive="active">
+              <i class="bi bi-plus-circle"></i> Ajout question
+            </li>
+            <li
+              routerLink="admin/modification_question"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-pencil-square"></i> Modification question
+            </li>
+            <li
+              routerLink="admin/suppression_question"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-trash"></i> Suppression question
             </li>
           </ul>
         </li>

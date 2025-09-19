@@ -46,7 +46,9 @@ export class QcmService {
   createQCM(qcm: QCM): Observable<any> {
     return this.http.post(`${this.apiUrl}`, qcm);
   }
-
+  getQCMById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
   /** 🔹 Mettre à jour un QCM existant */
   updateQCM(id: number, qcm: QCM): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, qcm);
