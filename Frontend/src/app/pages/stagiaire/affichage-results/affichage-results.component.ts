@@ -13,7 +13,6 @@ import * as bootstrap from 'bootstrap';
   selector: 'app-affichage-results',
   imports: [CommonModule, TimeFormatPipe, ReactiveFormsModule],
   templateUrl: './affichage-results.component.html',
-  styleUrl: './affichage-results.component.css',
 })
 export class AffichageResultsComponent {
   attempts: any[] = [];
@@ -25,6 +24,22 @@ export class AffichageResultsComponent {
     private quizAttemptsService: QuizAttemptsService,
     private authService: AuthService
   ) {}
+
+  ngOnInit(): void {
+    this.currentUser = this.authService.getUser();
+    if (this.currentUser) {
+      this.quizAttemptsService
+        .getAttemptsByUser(this.currentUser.id_user)
+        .subscribe(
+          (res) => {
+            this.attempts = res;
+          },
+          (err) => {
+            console.error('Erreur récupération tentatives', err);
+          }
+        );
+    }
+  }
 
   getDurationMinutes(start: string | Date, end: string | Date): string {
     if (!start || !end) return '-';
@@ -47,19 +62,20 @@ export class AffichageResultsComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.currentUser = this.authService.getUser();
-    if (this.currentUser) {
-      this.quizAttemptsService
-        .getAttemptsByUser(this.currentUser.id_user)
-        .subscribe(
-          (res) => {
-            this.attempts = res;
-          },
-          (err) => {
-            console.error('Erreur récupération tentatives', err);
-          }
-        );
+  closeModal() {
+    const modalEl = document.getElementById('attemptModal');
+    if (modalEl) {
+      const modalInstance =
+        bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      modalInstance.hide();
     }
+  }
+
+  getCompletionColor(percent: number): string {
+    if (percent < 25) return 'red';
+    if (percent < 50) return 'lightred';
+    if (percent < 75) return 'orange';
+    if (percent < 100) return 'yellow';
+    return 'lightgreen';
   }
 }

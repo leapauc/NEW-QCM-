@@ -17,7 +17,7 @@
           <th></th>
           <th>ID Tentative</th>
           <th>Score</th>
-          <th>Début</th>
+          <th>Progression</th>
           <th>Fin</th>
           <th>Durée (minutes)</th>
         </tr>
@@ -31,9 +31,40 @@
             ></i>
           </td>
           <td>{{ attempt.id_attempt }}</td>
-          <td>{{ attempt.score }}</td>
+          <td>
+            {{ attempt.score }}
+            <span *ngIf="attempt.score === 100" class="text-warning ms-1"
+              >⭐</span
+            >
+          </td>
+          <td>
+            <!-- Conteneur de la jauge -->
+            <div class="position-relative" style="height: 20px">
+              <!-- Barre de progression -->
+              <div class="progress h-100">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [ngStyle]="{
+                    width: attempt.completed + '%',
+                    backgroundColor: getCompletionColor(attempt.completed)
+                  }"
+                  [attr.aria-valuenow]="attempt.completed"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+
+              <!-- Texte centré -->
+              <span
+                class="position-absolute top-50 start-50 translate-middle fw-bold"
+                style="color: black"
+              >
+                {{ attempt.completed }}%
+              </span>
+            </div>
+          </td>
           <td>{{ attempt.started_at | date : "short" }}</td>
-          <td>{{ attempt.ended_at | date : "short" }}</td>
           <td>
             {{
               getDurationMinutes(attempt.started_at, attempt.ended_at)
@@ -62,22 +93,20 @@
           <p>
             <b>{{ q.question }}</b>
           </p>
-          <div *ngFor="let r of q.responses; let i = index">
+          <li
+            class="list-group-item d-flex align-items-center"
+            *ngFor="let resp of getResponses(qIndex).controls"
+          >
             <input
-              [type]="q.type === 'single' ? 'radio' : 'checkbox'"
-              [name]="'question-' + q.id_question"
-              [attr.checked]="r.selected ? true : null"
-              disabled
+              type="{{ question.type === 'single' ? 'radio' : 'checkbox' }}"
+              [name]="'question' + qIndex"
+              class="me-2"
             />
-            {{ r.response }}
-          </div>
+            {{ resp.value.position }}. {{ resp.value.response }}
+          </li>
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary"
-          (click)="showAttemptModal = false"
-        >
+        <button type="button" class="btn btn-primary" (click)="closeModal()">
           Fermer
         </button>
       </div>

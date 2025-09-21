@@ -18,6 +18,7 @@ export class AdminComponent {
   showQcm = false;
   showQuestions = false;
   showUtilisateur = false;
+  showOption = false;
 
   constructor(private authService: AuthService, private router: Router) {}
   toggleQcm() {
@@ -30,6 +31,10 @@ export class AdminComponent {
 
   toggleUtilisateur() {
     this.showUtilisateur = !this.showUtilisateur;
+  }
+
+  toggleOption() {
+    this.showOption = !this.showOption;
   }
 
   logout() {

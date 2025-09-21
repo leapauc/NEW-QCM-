@@ -70,4 +70,8 @@ export class QcmService {
   getQcmQuestions(qcmId: number): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}/QcmQuestions/${qcmId}`);
   }
+
+  updateQCM_Question(id: number, qcm: QCM): Observable<any> {
+    return this.http.put(`${this.apiUrl}/plusQuestion/${id}`, qcm);
+  }
 }

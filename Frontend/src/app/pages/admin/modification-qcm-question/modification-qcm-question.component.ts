@@ -9,17 +9,12 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { QCM, QcmService } from '../../../services/qcm.service';
-import {
-  QuestionResponse,
-  QuestionService,
-} from '../../../services/question.service';
-import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 
 @Component({
   selector: 'app-modification-qcm-question',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modification-qcm-question.component.html',
-  styleUrl: './modification-qcm-question.component.css',
+  styleUrls: ['./modification-qcm-question.component.css'],
 })
 export class ModificationQcmQuestionComponent implements OnInit {
   qcms: QCM[] = [];
@@ -36,6 +31,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
     this.loadQCMs();
   }
 
+  // 🔹 Charger tous les QCM
   loadQCMs() {
     this.qcmService.getAllQCM().subscribe({
       next: (data) => (this.qcms = data),
@@ -43,6 +39,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
     });
   }
 
+  // 🔹 Editer un QCM : récupérer les questions + réponses
   editQCM(qcm: QCM) {
     this.qcmService.getQcmQuestionsWithResponses(qcm.id_qcm!).subscribe({
       next: (questions) => {
@@ -69,16 +66,14 @@ export class ModificationQcmQuestionComponent implements OnInit {
         responses: this.fb.array([]),
       });
 
-      // 🔹 Parser les réponses et is_correct séparées par "|"
-      const responsesArray = (q.response || '').split('|');
-      const isCorrectArray = (q.is_correct || '').split('|');
-
-      responsesArray.forEach((resp: string, idx: number) => {
+      // Parcourir le tableau responses (tableau d'objets)
+      q.responses.forEach((r: any) => {
         (questionGroup.get('responses') as FormArray).push(
           this.fb.group({
-            response: [resp, Validators.required],
-            is_correct: [isCorrectArray[idx] === 'true'],
-            position: [idx + 1],
+            id_response: [r.id_response],
+            response: [r.response, Validators.required],
+            is_correct: [r.is_correct],
+            position: [r.position],
           })
         );
       });
@@ -95,6 +90,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
     return this.questions.at(questionIndex).get('responses') as FormArray;
   }
 
+  // Ajouter une réponse
   addResponse(questionIndex: number) {
     const responses = this.getResponses(questionIndex);
     if (responses.length < this.maxResponses) {
@@ -108,6 +104,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
     }
   }
 
+  // Supprimer une réponse
   removeResponse(questionIndex: number, responseIndex: number) {
     const responses = this.getResponses(questionIndex);
     if (responses.length > this.minResponses) {
@@ -117,18 +114,31 @@ export class ModificationQcmQuestionComponent implements OnInit {
 
   // ---------- Sauvegarde ----------
   submitForm() {
-    if (this.qcmForm.invalid) {
+    if (this.qcmForm.invalid || !this.selectedQcm) {
       this.qcmForm.markAllAsTouched();
       return;
     }
-    const formValue = this.qcmForm.value;
-    console.log('Données à envoyer:', formValue);
-    // Ici tu appellerais ton service updateQCM pour envoyer formValue
-  }
 
-  onQcmUpdated() {
-    this.selectedQcm = null;
-    this.loadQCMs();
+    const formValue = this.qcmForm.value;
+    console.log('Données à envoyer au backend:', formValue);
+
+    this.qcmService
+      .updateQCM_Question(this.selectedQcm.id_qcm!, formValue)
+      .subscribe({
+        next: (res) => {
+          console.log('QCM mis à jour avec succès', res);
+          alert('Le questionnaire a été mis à jour !');
+
+          // Réinitialiser le formulaire et la sélection
+          this.selectedQcm = null;
+          this.qcmForm.reset();
+          this.loadQCMs();
+        },
+        error: (err) => {
+          console.error('Erreur lors de la mise à jour du QCM', err);
+          alert('Une erreur est survenue lors de la mise à jour.');
+        },
+      });
   }
 
   // ---------- Pagination ----------
@@ -140,6 +150,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
   nextPage() {
     if (this.currentPage * this.pageSize < this.qcms.length) this.currentPage++;
   }
+
   prevPage() {
     if (this.currentPage > 1) this.currentPage--;
   }

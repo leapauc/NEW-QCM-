@@ -72,4 +72,70 @@
       </div>
     </div>
   </div>
+  <br />
+  <hr />
+  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->
+  <div class="center">
+    <h3>Statistiques par tentatives de réponses au QCM</h3>
+    <table class="table table-bordered table-striped align-middle text-center">
+      <thead>
+        <tr>
+          <th>ID Attempt</th>
+          <th>Nom QCM</th>
+          <th>Stagiaire</th>
+          <th>Début</th>
+          <th>Fin</th>
+          <th>Score</th>
+          <th>Progression</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attempt of allAttemptsOfMyUser">
+          <td>{{ attempt.id_attempt }}</td>
+          <td>{{ attempt.title }}</td>
+          <td>{{ attempt.name }}</td>
+          <td>{{ attempt.started_at | date : "short" }}</td>
+          <td>{{ attempt.ended_at | date : "short" }}</td>
+          <td>
+            {{ attempt.score }}
+            <span *ngIf="attempt.score === 100" class="text-warning ms-1"
+              >⭐</span
+            >
+          </td>
+          <td>
+            <!-- Conteneur de la jauge -->
+            <div class="position-relative" style="height: 20px">
+              <!-- Barre de progression -->
+              <div class="progress h-100">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [ngStyle]="{
+                    width: attempt.completed + '%',
+                    backgroundColor: getCompletionColor(attempt.completed)
+                  }"
+                  [attr.aria-valuenow]="attempt.completed"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+
+              <!-- Texte centré -->
+              <span
+                class="position-absolute top-50 start-50 translate-middle fw-bold"
+                style="color: black"
+              >
+                {{ attempt.completed }}%
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+      <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
+    </div>
+  </div>
 </div>

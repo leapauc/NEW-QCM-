@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
 import { AuthService, AuthUser } from '../../../services/auth.service';
 import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
+import { CommonModule } from '@angular/common';
+import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
 
 @Component({
   selector: 'app-dashboard-stagiaire',
-  imports: [TimeFormatPipe],
+  imports: [TimeFormatPipe, CommonModule],
   templateUrl: './dashboard-stagiaire.component.html',
-  styleUrl: './dashboard-stagiaire.component.css',
 })
 export class DashboardStagiaireComponent {
   nbQuestionnairesRealises = 0;
@@ -19,10 +20,14 @@ export class DashboardStagiaireComponent {
   questionnairePopulaire = '';
   authNameUser = '';
   stagiaireActif = { name: '', firstname: '' };
+  currentPage = 1;
+  pageSize = 5;
+  allAttemptsOfMyUser: any[] = [];
 
   constructor(
     private statsService: StatsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private quizAttempts: QuizAttemptsService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +40,7 @@ export class DashboardStagiaireComponent {
 
     this.authNameUser = currentUser.name;
     console.log(currentUser.name + ', ' + currentUser.id_user);
+
     // Nombre de questionnaires réalisés
     this.statsService
       .getNbQuestionnaireByUser(currentUser.id_user)
@@ -68,9 +74,38 @@ export class DashboardStagiaireComponent {
         this.avgTime = res?.avg_time_minutes ?? '-';
       });
 
-    // Questionnaire le plus populaire (pas besoin d'user)
+    // Questionnaire le plus populaire
     this.statsService.getQuestionnairePopulaire().subscribe((res: any) => {
       this.questionnairePopulaire = res?.[0]?.title ?? '';
     });
+
+    // 🔥 Récupérer les tentatives de l'utilisateur
+    this.quizAttempts
+      .getAttemptsByUser(currentUser.id_user)
+      .subscribe((res: any[]) => {
+        this.allAttemptsOfMyUser = res;
+      });
+  }
+
+  get paginated() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.allAttemptsOfMyUser.slice(start, start + this.pageSize);
+  }
+
+  nextPage() {
+    if (this.currentPage * this.pageSize < this.allAttemptsOfMyUser.length)
+      this.currentPage++;
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) this.currentPage--;
+  }
+
+  getCompletionColor(percent: number): string {
+    if (percent < 25) return 'red';
+    if (percent < 50) return 'lightred';
+    if (percent < 75) return 'orange';
+    if (percent < 100) return 'yellow';
+    return 'lightgreen';
   }
 }

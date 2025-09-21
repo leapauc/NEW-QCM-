@@ -55,51 +55,70 @@
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content p-3">
-        <div class="modal-body" *ngIf="selectedQcm">
+      <div class="modal-content p-3" *ngIf="selectedQcm">
+        <div class="modal-body" [formGroup]="attemptForm">
           <h4 class="fw-bold center">{{ selectedQcm.title }}</h4>
           <br />
           <p>{{ selectedQcm.description }}</p>
           <hr />
           <br />
+
           <div
-            *ngFor="let question of selectedQcm.questions; let qIndex = index"
+            formArrayName="questions"
+            *ngFor="let question of questions.controls; let qIndex = index"
+            [formGroupName]="qIndex"
           >
             <p class="fw-bold center">
-              Q{{ qIndex + 1 }}: {{ question.question }}
+              Q{{ qIndex + 1 }}: {{ question.get("question")?.value }}
             </p>
 
-            <ul class="list-group mb-3">
+            <ul class="list-group mb-3" formArrayName="responses">
               <li
                 class="list-group-item d-flex align-items-center"
                 *ngFor="
                   let resp of getResponses(qIndex).controls;
                   let rIndex = index
                 "
+                [formGroupName]="rIndex"
               >
                 <input
-                  type="{{ question.type === 'single' ? 'radio' : 'checkbox' }}"
+                  type="{{
+                    question.get('type')?.value === 'single'
+                      ? 'radio'
+                      : 'checkbox'
+                  }}"
                   [name]="'question' + qIndex"
+                  formControlName="selected"
                   class="me-2"
                 />
-                {{ resp.value.response }}
+                {{ resp.get("response")?.value }}
               </li>
             </ul>
           </div>
 
-          <button
-            type="button"
-            class="btn btn-danger mt-3 me-2"
-            data-bs-dismiss="modal"
-          >
-            Fermer
-          </button>
-          <button type="button" class="btn btn-secondary mt-3 me-2">
-            <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
-          </button>
-          <button type="submit" class="btn btn-success mt-3">
-            <i class="bi bi-save"></i> Valider
-          </button>
+          <div class="d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-danger mt-3 me-2"
+              data-bs-dismiss="modal"
+            >
+              Fermer
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary mt-3 me-2"
+              (click)="resetForm()"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+            </button>
+            <button
+              type="button"
+              class="btn btn-success mt-3"
+              (click)="submitForm()"
+            >
+              <i class="bi bi-save"></i> Valider
+            </button>
+          </div>
         </div>
       </div>
     </div>

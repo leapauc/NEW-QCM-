@@ -41,4 +41,12 @@ export class QuizAttemptsService {
       `${this.apiUrl}/attempt_details/${id_attempt}`
     );
   }
+
+  submitAttempt(
+    id_user: number,
+    id_qcm: number,
+    answers: { id_question: number; id_response: number }[]
+  ) {
+    return this.http.post<any>(`${this.apiUrl}`, { id_user, id_qcm, answers });
+  }
 }

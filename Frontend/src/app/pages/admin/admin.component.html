@@ -30,16 +30,9 @@
             <li routerLink="admin/suppression_qcm" routerLinkActive="active">
               <i class="bi bi-trash"></i> Suppression QCM
             </li>
-            <li routerLink="admin/ajout_qcm&question" routerLinkActive="active">
-              <i class="bi bi-plus-circle"></i> Ajout QCM + Questions
-            </li>
-            <li
-              routerLink="admin/modification_qcm&question"
-              routerLinkActive="active"
-            >
-              <i class="bi bi-pencil-square"></i> Modification QCM + Questions
-            </li>
           </ul>
+        </li>
+        <li>
           <!-- Gestion des Questions -->
           <div class="menu-item" (click)="toggleQuestions()">
             <i class="bi bi-question-circle"></i> Gestion des Questions
@@ -62,7 +55,6 @@
             </li>
           </ul>
         </li>
-
         <!-- Gestion des stagiaires -->
         <li>
           <div class="menu-item" (click)="toggleUtilisateur()">
@@ -83,6 +75,25 @@
               routerLinkActive="active"
             >
               <i class="bi bi-trash"></i> Suppression utilisateur
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <div class="menu-item" (click)="toggleOption()">
+            <i class="bi bi-option"></i>
+            Options
+          </div>
+          <ul *ngIf="showOption">
+            <li routerLink="admin/ajout_qcm&question" routerLinkActive="active">
+              <i class="bi bi-plus-circle"></i> Ajout QCM + Questions
+            </li>
+            <li
+              routerLink="admin/modification_qcm&question"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-pencil-square"></i> Modification QCM + Questions
             </li>
           </ul>
         </li>

@@ -75,68 +75,137 @@
     </div>
   </div>
 </div>
+<br />
 <hr />
 
-<!-- Tableau questionnaires par utilisateur -->
-<h3>Statistiques par utilisateur</h3>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Utilisateur</th>
-      <th>Nb questionnaires</th>
-      <th>Score min</th>
-      <th>Score max</th>
-      <th>Score moyen</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of combinedUserStats">
-      <td>{{ user.name }} {{ user.firstname }}</td>
-      <td>{{ user.nb_questionnaires }}</td>
-      <td>{{ user.min_score }}</td>
-      <td>{{ user.max_score }}</td>
-      <td>{{ user.avg_score }}</td>
-    </tr>
-  </tbody>
-</table>
+<!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->
+<div class="center">
+  <h3>Statistiques par tentatives de réponses au QCM</h3>
+  <table class="table table-bordered table-striped align-middle text-center">
+    <thead>
+      <tr>
+        <th>ID Attempt</th>
+        <th>Nom QCM</th>
+        <th>Stagiaire</th>
+        <th>Début</th>
+        <th>Fin</th>
+        <th>Score</th>
+        <th>Progression</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let attempt of allAttempts">
+        <td>{{ attempt.id_attempt }}</td>
+        <td>{{ attempt.title }}</td>
+        <td>{{ attempt.name }}</td>
+        <td>{{ attempt.started_at | date : "short" }}</td>
+        <td>{{ attempt.ended_at | date : "short" }}</td>
+        <td>
+          {{ attempt.score }}
+          <span *ngIf="attempt.score === 100" class="text-warning ms-1"
+            >⭐</span
+          >
+        </td>
+        <td>
+          <!-- Conteneur de la jauge -->
+          <div class="position-relative" style="height: 20px">
+            <!-- Barre de progression -->
+            <div class="progress h-100">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [ngStyle]="{
+                  width: attempt.completed + '%',
+                  backgroundColor: getCompletionColor(attempt.completed)
+                }"
+                [attr.aria-valuenow]="attempt.completed"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
 
-<hr />
-
-<!-- Tableaux côte à côte : temps moyen et rang -->
-<div class="row">
-  <div class="col-md-6">
-    <h3>Temps moyen par utilisateur</h3>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Utilisateur</th>
-          <th>Temps moyen (min)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of userAvgTime">
-          <td>{{ user.name }} {{ user.firstname }}</td>
-          <td>{{ user.avg_time_minutes }}</td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Texte centré -->
+            <span
+              class="position-absolute top-50 start-50 translate-middle fw-bold"
+              style="color: black"
+            >
+              {{ attempt.completed }}%
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
   </div>
+</div>
 
-  <div class="col-md-6">
-    <h3>Rang des utilisateurs</h3>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Utilisateur</th>
-          <th>Rang</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of userRank">
-          <td>{{ user.name }} {{ user.firstname }}</td>
-          <td>{{ user.rank }}</td>
-        </tr>
-      </tbody>
-    </table>
+<hr />
+<div class="center">
+  <!-- Tableau questionnaires par utilisateur -->
+  <h3>Statistiques par utilisateur</h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Nb questionnaires</th>
+        <th>Score min</th>
+        <th>Score max</th>
+        <th>Score moyen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of combinedUserStats">
+        <td>{{ user.name }} {{ user.firstname }}</td>
+        <td>{{ user.nb_questionnaires }}</td>
+        <td>{{ user.min_score }}</td>
+        <td>{{ user.max_score }}</td>
+        <td>{{ user.avg_score }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br />
+<!-- Tableaux côte à côte : temps moyen et rang -->
+<div class="center">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Temps moyen par utilisateur</h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Temps moyen (min)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userAvgTime">
+            <td>{{ user.name }} {{ user.firstname }}</td>
+            <td>{{ user.avg_time_minutes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Rang des utilisateurs</h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Rang</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userRank">
+            <td>{{ user.name }} {{ user.firstname }}</td>
+            <td>{{ user.rank }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
