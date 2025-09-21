@@ -2,13 +2,12 @@
 <br />
 <div class="center">
   <h1>Affichage des résultats par tentative</h1>
-
   <br /><br />
   <p>
     Permet de consulter la liste des tentatives et visualiser les réponses
     données.
   </p>
-  <p><i>Continu à pratiquer pour améliorer tes statistiques !</i></p>
+  <p><i>Continue à pratiquer pour améliorer tes statistiques !</i></p>
   <br />
   <div class="table-responsive-custom">
     <table class="table table-striped">
@@ -38,9 +37,7 @@
             >
           </td>
           <td>
-            <!-- Conteneur de la jauge -->
             <div class="position-relative" style="height: 20px">
-              <!-- Barre de progression -->
               <div class="progress h-100">
                 <div
                   class="progress-bar"
@@ -54,8 +51,6 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-
-              <!-- Texte centré -->
               <span
                 class="position-absolute top-50 start-50 translate-middle fw-bold"
                 style="color: black"
@@ -87,22 +82,28 @@
 >
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content p-3">
-      <div class="modal-body" *ngIf="selectedAttemptQuestions">
+      <div class="modal-body" *ngIf="selectedAttemptQuestions.length">
         <h3>Questionnaire</h3>
-        <div *ngFor="let q of selectedAttemptQuestions" class="mb-3">
+
+        <div
+          *ngFor="let q of selectedAttemptQuestions; let qIndex = index"
+          class="mb-3"
+        >
           <p>
             <b>{{ q.question }}</b>
           </p>
           <li
             class="list-group-item d-flex align-items-center"
-            *ngFor="let resp of getResponses(qIndex).controls"
+            *ngFor="let resp of q.responses"
           >
             <input
-              type="{{ question.type === 'single' ? 'radio' : 'checkbox' }}"
+              type="{{ q.type === 'single' ? 'radio' : 'checkbox' }}"
               [name]="'question' + qIndex"
+              [checked]="resp.selected"
+              disabled
               class="me-2"
             />
-            {{ resp.value.position }}. {{ resp.value.response }}
+            {{ resp.response }}
           </li>
         </div>
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QCM, QcmService } from '../../../services/qcm.service';
 import { CommonModule } from '@angular/common';
 import {
-  FormsModule,
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
@@ -10,57 +9,25 @@ import {
   Validators,
 } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
-import { AuthService } from '../../../services/auth.service';
-import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
 
 @Component({
   selector: 'app-choix-qcm',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './choix-qcm.component.html',
 })
 export class ChoixQcmComponent implements OnInit {
   qcms: QCM[] = [];
   selectedQcm: QCM | null = null;
-  attemptForm!: FormGroup;
+  qcmForm!: FormGroup;
   currentPage = 1;
   pageSize = 5;
 
-  constructor(
-    private qcmService: QcmService,
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private quizAttemptsService: QuizAttemptsService
-  ) {}
+  constructor(private qcmService: QcmService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.loadQCMs();
   }
 
-  // Pagination
-  get paginatedQCM() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.qcms.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.qcms.length) this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
-  }
-
-  // Accès au FormArray questions
-  get questions(): FormArray {
-    return this.attemptForm.get('questions') as FormArray;
-  }
-  // Méthode pour accéder au FormArray responses d’une question
-  getResponses(qIndex: number): FormArray {
-    return this.questions.at(qIndex).get('responses') as FormArray;
-  }
-
-  // Charger tous les QCM
   loadQCMs() {
     this.qcmService.getAllQCM().subscribe({
       next: (data) => (this.qcms = data),
@@ -68,14 +35,13 @@ export class ChoixQcmComponent implements OnInit {
     });
   }
 
-  // Charger questions + réponses d’un QCM et ouvrir modal
   editQCM(qcm: QCM) {
     this.qcmService.getQcmQuestionsWithResponses(qcm.id_qcm!).subscribe({
       next: (questions) => {
-        // Le backend renvoie un tableau de questions avec leurs réponses dans "responses"
         this.selectedQcm = { ...qcm, questions };
         this.initForm();
 
+        // ✅ Afficher le modal après avoir initialisé le formulaire
         const modalEl = document.getElementById('qcmModal');
         if (modalEl) {
           const modal = new bootstrap.Modal(modalEl);
@@ -86,77 +52,69 @@ export class ChoixQcmComponent implements OnInit {
     });
   }
 
-  // Initialiser le formulaire réactif avec questions et réponses
+  // ---------- Formulaire réactif ----------
   initForm() {
-    this.attemptForm = this.fb.group({
+    this.qcmForm = this.fb.group({
       title: [this.selectedQcm?.title, Validators.required],
       description: [this.selectedQcm?.description],
       questions: this.fb.array([]),
     });
 
-    this.selectedQcm?.questions?.forEach((q) => {
+    this.selectedQcm?.questions?.forEach((q: any) => {
       const questionGroup = this.fb.group({
         id_question: [q.id_question],
         question: [q.question, Validators.required],
-        type: [q.type || 'single'], // Par défaut 'single' si non défini
+        type: [q.type || 'single'],
         responses: this.fb.array([]),
       });
 
-      // Le backend renvoie les réponses dans q.responses
-      q.responses.forEach((resp: any) => {
+      // 🔹 Parser les réponses et is_correct séparées par "|"
+      const responsesArray = (q.response || '').split('|');
+      const isCorrectArray = (q.is_correct || '').split('|');
+
+      responsesArray.forEach((resp: string, idx: number) => {
         (questionGroup.get('responses') as FormArray).push(
           this.fb.group({
-            id_response: [resp.id_response],
-            response: [resp.response],
-            selected: [false], // initialement non sélectionné
-            is_correct: [resp.is_correct],
+            response: [resp, Validators.required],
+            is_correct: [isCorrectArray[idx] === 'true'],
+            position: [idx + 1],
           })
         );
       });
 
-      (this.attemptForm.get('questions') as FormArray).push(questionGroup);
+      (this.qcmForm.get('questions') as FormArray).push(questionGroup);
     });
   }
 
-  // Réinitialiser le formulaire (désélectionner toutes les réponses)
-  resetForm() {
-    if (this.selectedQcm) this.initForm();
+  get questions(): FormArray {
+    return this.qcmForm.get('questions') as FormArray;
   }
 
-  // Soumettre les réponses sélectionnées
+  getResponses(questionIndex: number): FormArray {
+    return this.questions.at(questionIndex).get('responses') as FormArray;
+  }
+
+  // ---------- Sauvegarde ----------
   submitForm() {
-    if (!this.selectedQcm) return;
-    const user = this.authService.getUser();
-    if (!user) return;
-
-    const answers: { id_question: number; id_response: number }[] = [];
-
-    this.questions.controls.forEach((qCtrl) => {
-      const responses = qCtrl.get('responses') as FormArray;
-      responses.controls.forEach((rCtrl) => {
-        if (rCtrl.value.selected) {
-          answers.push({
-            id_question: qCtrl.value.id_question,
-            id_response: rCtrl.value.id_response,
-          });
-        }
-      });
-    });
-
-    if (answers.length === 0) {
-      alert('Veuillez sélectionner au moins une réponse.');
+    if (this.qcmForm.invalid) {
+      this.qcmForm.markAllAsTouched();
       return;
     }
+    const formValue = this.qcmForm.value;
+    console.log('Données à envoyer:', formValue);
+    // Ici tu appellerais ton service updateQCM pour envoyer formValue
+  }
 
-    this.quizAttemptsService
-      .submitAttempt(user.id_user, this.selectedQcm.id_qcm!, answers)
-      .subscribe({
-        next: (res) => {
-          alert(`Score: ${res.score}, Progression: ${res.completed}%`);
-          const modalEl = document.getElementById('qcmModal');
-          bootstrap.Modal.getInstance(modalEl!)?.hide();
-        },
-        error: (err) => console.error('Erreur submission tentative', err),
-      });
+  // ---------- Pagination ----------
+  get paginatedQCM() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.qcms.slice(start, start + this.pageSize);
+  }
+
+  nextPage() {
+    if (this.currentPage * this.pageSize < this.qcms.length) this.currentPage++;
+  }
+  prevPage() {
+    if (this.currentPage > 1) this.currentPage--;
   }
 }
