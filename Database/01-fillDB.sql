@@ -29,7 +29,7 @@ CREATE TABLE qcm (
     updated_at TIMESTAMPTZ DEFAULT NULL
 );
 INSERT INTO qcm (title,description,created_by)
-VALUES ('Java','Test de connaissance sur le language Java',2),
+VALUES ('Java','Test de connaissance sur le langage Java',2),
        ('Python débutant','Test de connaissance sur le language python pour les débutants',1),
        ('Angular','Test de connaissance sur le framework Angular',2),
        ('PHP','Test de connaissance sur le language PHP',2),

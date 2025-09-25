@@ -220,13 +220,345 @@ router.get("/questionnairePopulaire", getQuestionnairePopulaire);
  */
 router.get("/firstActivStagiaire", getFirstStagiaireActif);
 
+/**
+ * @swagger
+ * /stats/nbQuestionnaireList:
+ *   get:
+ *     summary: Récupérer le nombre de questionnaires par utilisateur
+ *     description: Retourne la liste des utilisateurs (hors administrateurs) avec le nombre de questionnaires qu'ils ont réalisés.
+ *     tags:
+ *       - Stats
+ *     responses:
+ *       200:
+ *         description: Liste des utilisateurs avec leur nombre de questionnaires complétés
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_user:
+ *                     type: integer
+ *                     example: 42
+ *                   name:
+ *                     type: string
+ *                     example: "Jean Dupont"
+ *                   nb_questionnaires:
+ *                     type: integer
+ *                     example: 5
+ *       500:
+ *         description: Erreur serveur lors de la récupération des statistiques
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/nbQuestionnaireList", getNbQuestionnaireList);
+/**
+ * @swagger
+ * /stats/nbQuestionnaireByUser/{id_user}:
+ *   get:
+ *     summary: Récupérer le nombre de questionnaires d'un utilisateur
+ *     description: Retourne le nombre de questionnaires réalisés par un utilisateur spécifique (hors administrateurs).
+ *     tags:
+ *       - Stats
+ *     parameters:
+ *       - in: path
+ *         name: id_user
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 42
+ *         description: ID de l'utilisateur dont on veut connaître le nombre de questionnaires
+ *     responses:
+ *       200:
+ *         description: Nombre de questionnaires réalisés par l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nb_questionnaires:
+ *                   type: integer
+ *                   example: 3
+ *       500:
+ *         description: Erreur serveur lors de la récupération du nombre de questionnaires
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/nbQuestionnaireByUser/:id_user", getNbQuestionnaireByUser);
+/**
+ * @swagger
+ * /stats/maxMinAvgScoreList:
+ *   get:
+ *     summary: Récupérer les scores max, min et moyen pour chaque utilisateur
+ *     description: Retourne la liste des utilisateurs (hors administrateurs) avec leur score maximum, minimum et moyen sur l'ensemble de leurs tentatives.
+ *     tags:
+ *       - Stats
+ *     responses:
+ *       200:
+ *         description: Liste des utilisateurs avec leurs statistiques de scores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_user:
+ *                     type: integer
+ *                     example: 42
+ *                   name:
+ *                     type: string
+ *                     example: "Jean Dupont"
+ *                   max_score:
+ *                     type: number
+ *                     format: float
+ *                     example: 9.5
+ *                   min_score:
+ *                     type: number
+ *                     format: float
+ *                     example: 5.0
+ *                   avg_score:
+ *                     type: number
+ *                     format: float
+ *                     example: 7.2
+ *       500:
+ *         description: Erreur serveur lors de la récupération des statistiques de scores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/maxMinAvgScoreList", getMaxMinAvgScoreList);
+/**
+ * @swagger
+ * /stats/maxMinAvgScoreByUser/{id_user}:
+ *   get:
+ *     summary: Récupérer les scores max, min et moyen d'un utilisateur
+ *     description: Retourne les statistiques (score maximum, minimum et moyen) pour un utilisateur spécifique (hors administrateurs).
+ *     tags:
+ *       - Stats
+ *     parameters:
+ *       - in: path
+ *         name: id_user
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 42
+ *         description: ID de l'utilisateur dont on veut connaître les statistiques de scores
+ *     responses:
+ *       200:
+ *         description: Statistiques de scores pour l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 max_score:
+ *                   type: string
+ *                   example: "9.5"
+ *                 min_score:
+ *                   type: string
+ *                   example: "5.0"
+ *                 avg_score:
+ *                   type: string
+ *                   example: "7.2"
+ *       500:
+ *         description: Erreur serveur lors de la récupération des statistiques de scores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/maxMinAvgScoreByUser/:id_user", getMaxMinAvgScoreByUser);
+/**
+ * @swagger
+ * /stats/rangeList:
+ *   get:
+ *     summary: Récupérer le classement des utilisateurs par score moyen
+ *     description: Retourne la liste des utilisateurs (hors administrateurs) avec leur score moyen et leur rang dans le classement.
+ *     tags:
+ *       - Stats
+ *     responses:
+ *       200:
+ *         description: Liste classée des utilisateurs par score moyen
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_user:
+ *                     type: integer
+ *                     example: 42
+ *                   name:
+ *                     type: string
+ *                     example: "Jean Dupont"
+ *                   avg_score:
+ *                     type: number
+ *                     format: float
+ *                     example: 7.8
+ *                   rank:
+ *                     type: integer
+ *                     example: 1
+ *       500:
+ *         description: Erreur serveur lors de la récupération du classement
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/rangeList", getRangeList);
+/**
+ * @swagger
+ * /stats/rangeByUser/{id_user}:
+ *   get:
+ *     summary: Récupérer le rang et le score moyen d'un utilisateur
+ *     description: Retourne le score moyen et le rang dans le classement pour un utilisateur spécifique (hors administrateurs).
+ *     tags:
+ *       - Stats
+ *     parameters:
+ *       - in: path
+ *         name: id_user
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 42
+ *         description: ID de l'utilisateur dont on veut connaître le rang et le score moyen
+ *     responses:
+ *       200:
+ *         description: Rang et score moyen de l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 avg_score:
+ *                   type: number
+ *                   format: float
+ *                   example: 7.8
+ *                 rank:
+ *                   oneOf:
+ *                     - type: integer
+ *                       example: 5
+ *                     - type: string
+ *                       example: "dernier"
+ *       500:
+ *         description: Erreur serveur lors de la récupération du rang de l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/rangeByUser/:id_user", getRangeByUser);
+/**
+ * @swagger
+ * /stats/avgTimeList:
+ *   get:
+ *     summary: Récupérer le temps moyen par utilisateur
+ *     description: Retourne la liste des utilisateurs (hors administrateurs) avec le temps moyen (en minutes) qu'ils mettent pour compléter un quiz.
+ *                  Si un utilisateur n'a pas de tentatives, la valeur renvoyée est "-".
+ *     tags:
+ *       - Stats
+ *     responses:
+ *       200:
+ *         description: Liste des utilisateurs avec leur temps moyen par quiz
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_user:
+ *                     type: integer
+ *                     example: 42
+ *                   name:
+ *                     type: string
+ *                     example: "Jean Dupont"
+ *                   avg_time_minutes:
+ *                     type: string
+ *                     example: "12.50"
+ *       500:
+ *         description: Erreur serveur lors de la récupération des temps moyens
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/avgTimeList", getMoyenneTimeList);
+/**
+ * @swagger
+ * /stats/avgTimeByUser/{id_user}:
+ *   get:
+ *     summary: Récupérer le temps moyen d'un utilisateur
+ *     description: Retourne le temps moyen (en minutes) qu'un utilisateur spécifique met pour compléter un quiz (hors administrateurs).
+ *                  Si l'utilisateur n'a pas de tentatives, la valeur renvoyée est "-".
+ *     tags:
+ *       - Stats
+ *     parameters:
+ *       - in: path
+ *         name: id_user
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 42
+ *         description: ID de l'utilisateur dont on veut connaître le temps moyen
+ *     responses:
+ *       200:
+ *         description: Temps moyen de l'utilisateur pour compléter un quiz
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 avg_time_minutes:
+ *                   type: string
+ *                   example: "12.50"
+ *       500:
+ *         description: Erreur serveur lors de la récupération du temps moyen
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ */
 router.get("/avgTimeByUser/:id_user", getMoyenneTimeByUser);
 
 module.exports = router;

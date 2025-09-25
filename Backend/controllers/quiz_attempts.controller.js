@@ -1,8 +1,12 @@
 const pool = require("../db");
 
+// Récupérer toutes les tentatives
 exports.getAllAttempts = async (req, res) => {
   try {
-    const result = await pool.query(`SELECT * FROM quiz_attempts`);
+    const result =
+      await pool.query(`SELECT *,users.name,qcm.title FROM quiz_attempts qa
+      JOIN users ON users.id_user = qa.id_user
+      JOIN qcm ON qcm.id_qcm = qa.id_qcm`);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -10,6 +14,7 @@ exports.getAllAttempts = async (req, res) => {
   }
 };
 
+// Récupérer les tentatives d'un l'utilisateur
 exports.getAttemptsByUser = async (req, res) => {
   const { id_user } = req.params;
   try {
@@ -72,6 +77,82 @@ exports.getAttemptDetailsById = async (req, res) => {
     );
 
     res.json({ questions });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+// Ajouter une tentative d'un utilisateur en base de données
+exports.submitAttempt = async (req, res) => {
+  const { id_user, id_qcm, answers } = req.body;
+  // answers = [{ id_question, id_response }]
+
+  if (!id_user || !id_qcm || !answers || !answers.length) {
+    return res.status(400).json({ error: "Données manquantes" });
+  }
+
+  try {
+    // Créer la tentative
+    const attemptResult = await pool.query(
+      `INSERT INTO quiz_attempts (id_user, id_qcm, score, completed, started_at)
+       VALUES ($1, $2, 0, 0, CURRENT_TIMESTAMP)
+       RETURNING *`,
+      [id_user, id_qcm]
+    );
+
+    const attempt = attemptResult.rows[0];
+
+    // Récupérer les réponses correctes depuis la base
+    const correctResps = await pool.query(
+      `SELECT id_question, id_response
+       FROM response_question
+       WHERE is_correct = true AND id_question IN (${answers
+         .map((a, i) => `$${i + 1}`)
+         .join(",")})`,
+      answers.map((a) => a.id_question)
+    );
+
+    // Calculer score
+    let score = 0;
+    answers.forEach((a) => {
+      const correct = correctResps.rows.find(
+        (r) =>
+          r.id_question === a.id_question && r.id_response === a.id_response
+      );
+      if (correct) score++;
+    });
+
+    const completed = Math.round((score / answers.length) * 100);
+
+    // Enregistrer les réponses utilisateur
+    const insertPromises = answers.map((a) =>
+      pool.query(
+        `INSERT INTO user_answers (id_attempt, id_question, id_response, is_correct)
+         VALUES ($1, $2, $3, $4)`,
+        [
+          attempt.id_attempt,
+          a.id_question,
+          a.id_response,
+          correctResps.rows.some(
+            (r) =>
+              r.id_question === a.id_question && r.id_response === a.id_response
+          ),
+        ]
+      )
+    );
+
+    await Promise.all(insertPromises);
+
+    // Mettre à jour le score et le taux de remplissage dans quiz_attempts
+    await pool.query(
+      `UPDATE quiz_attempts
+       SET score = $1, completed = $2, ended_at = CURRENT_TIMESTAMP
+       WHERE id_attempt = $3`,
+      [score, completed, attempt.id_attempt]
+    );
+
+    res.status(201).json({ attemptId: attempt.id_attempt, score, completed });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });

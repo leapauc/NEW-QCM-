@@ -160,44 +160,53 @@ exports.updateQCM = async (req, res) => {
   }
 };
 
-exports.updateQCMWithQuestion = async (req, res) => {
+exports.updateQCMWithQuestions = async (req, res) => {
   const client = await pool.connect();
   try {
-    const qcmId = req.params.id;
+    const qcmId = parseInt(req.params.id, 10);
     const { title, description, questions } = req.body;
+
+    if (isNaN(qcmId)) {
+      return res.status(400).json({ error: "ID QCM invalide" });
+    }
 
     await client.query("BEGIN");
 
-    // Update du QCM
+    // 🔹 Mettre à jour le QCM
     await client.query(
       `UPDATE qcm 
-       SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP 
+       SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP
        WHERE id_qcm=$3`,
       [title, description, qcmId]
     );
 
-    // Update des questions existantes
+    // 🔹 Parcourir les questions
     for (const q of questions) {
+      // Mettre à jour la question
       await client.query(
         `UPDATE question_qcm
-         SET question=$1, type=$2
+         SET question=$1, type=$2, updated_at=CURRENT_TIMESTAMP
          WHERE id_question=$3 AND id_qcm=$4`,
-        [q.question, q.type, q.id_question, qcmId]
+        [q.question, q.type || "single", q.id_question, qcmId]
       );
 
-      // Update des réponses existantes
+      // Supprimer toutes les réponses existantes pour cette question
+      await client.query(`DELETE FROM response_question WHERE id_question=$1`, [
+        q.id_question,
+      ]);
+
+      // Réinsérer toutes les réponses envoyées
       for (const r of q.responses) {
         await client.query(
-          `UPDATE response_question
-           SET response=$1, is_correct=$2, position=$3
-           WHERE id_response=$4 AND id_question=$5`,
-          [r.response, r.is_correct, r.position, r.id_response, q.id_question]
+          `INSERT INTO response_question (id_question, response, is_correct, position)
+           VALUES ($1, $2, $3, $4)`,
+          [q.id_question, r.response, r.is_correct, r.position]
         );
       }
     }
 
     await client.query("COMMIT");
-    res.json({ message: "QCM et questions/réponses mis à jour avec succès" });
+    res.json({ message: "QCM, questions et réponses mis à jour avec succès" });
   } catch (err) {
     await client.query("ROLLBACK");
     console.error(err);
@@ -250,25 +259,38 @@ exports.getQuestionResponseOfQCMById = async (req, res) => {
     return res.status(400).json({ error: "ID invalide" });
   }
   try {
-    const result = await pool.query(
-      `SELECT qq.*,STRING_AGG(rq.response::text,'|') as response,
-       STRING_AGG(rq.is_correct::text,'|') as is_correct,
-       STRING_AGG(rq.position::text,'|') as position FROM question_qcm qq 
-       JOIN response_question rq ON rq.id_question=qq.id_question
-       WHERE qq.id_qcm = $1 
-       GROUP BY qq.id_question`,
+    const resultQuestions = await pool.query(
+      `SELECT * FROM question_qcm WHERE id_qcm=$1 ORDER BY position`,
       [id]
     );
-    if (result.rows.length === 0)
+
+    const questions = [];
+    for (const q of resultQuestions.rows) {
+      const resps = await pool.query(
+        `SELECT id_response, response, is_correct, position
+         FROM response_question
+         WHERE id_question=$1 ORDER BY position`,
+        [q.id_question]
+      );
+
+      questions.push({
+        ...q,
+        responses: resps.rows, // Tableau d'objets complet
+      });
+    }
+
+    if (questions.length === 0)
       return res
         .status(404)
         .json({ error: "Le QCM comporte aucune question." });
-    res.json(result.rows);
+
+    res.json(questions);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+
 exports.getQuestionResponseByQuestionId = async (req, res) => {
   const id = parseInt(req.params.id_question, 10);
   if (isNaN(id)) {

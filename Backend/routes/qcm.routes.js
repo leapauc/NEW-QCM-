@@ -5,7 +5,7 @@ const {
   createQCM,
   createQCMWithQuestion,
   updateQCM,
-  updateQCMWithQuestion,
+  updateQCMWithQuestions,
   deleteQCM,
   getQuestionResponseOfQCMById,
   getQuestionResponseByQuestionId,
@@ -385,8 +385,116 @@ router.post("/plusQuestion", createQCMWithQuestion);
  *                   example: "Message d'erreur détaillé"
  */
 router.put("/:id", updateQCM);
-
-router.put("/plusQuestion/:id", updateQCMWithQuestion);
+/**
+ * @swagger
+ * /qcm/plusQuestion/{id}:
+ *   put:
+ *     summary: Mettre à jour un QCM avec ses questions et réponses
+ *     description: >
+ *       Met à jour un QCM existant (titre et description),
+ *       puis parcourt les questions et leurs réponses pour les mettre à jour.
+ *       Les réponses existantes sont supprimées avant de réinsérer celles envoyées dans la requête.
+ *     tags:
+ *       - QCM
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID du QCM à mettre à jour
+ *         schema:
+ *           type: integer
+ *           example: 3
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - questions
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Nouveau titre QCM"
+ *               description:
+ *                 type: string
+ *                 example: "Description mise à jour du QCM"
+ *               questions:
+ *                 type: array
+ *                 description: Liste des questions à mettre à jour
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - id_question
+ *                     - question
+ *                     - responses
+ *                   properties:
+ *                     id_question:
+ *                       type: integer
+ *                       example: 10
+ *                     question:
+ *                       type: string
+ *                       example: "Quelle est la capitale de la France ?"
+ *                     type:
+ *                       type: string
+ *                       enum: [single, multiple]
+ *                       example: "single"
+ *                     responses:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         required:
+ *                           - response
+ *                           - is_correct
+ *                           - position
+ *                         properties:
+ *                           response:
+ *                             type: string
+ *                             example: "Paris"
+ *                           is_correct:
+ *                             type: boolean
+ *                             example: true
+ *                           position:
+ *                             type: integer
+ *                             example: 1
+ *     responses:
+ *       200:
+ *         description: QCM mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "QCM, questions et réponses mis à jour avec succès"
+ *       400:
+ *         description: Mauvaise requête (ID ou données invalides)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "ID QCM invalide"
+ *       500:
+ *         description: Erreur interne du serveur lors de la mise à jour du QCM ou des questions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur serveur"
+ *                 details:
+ *                   type: string
+ *                   example: "duplicate key value violates unique constraint « response_question_pkey »"
+ */
+router.put("/plusQuestion/:id", updateQCMWithQuestions);
 /**
  * @swagger
  * /qcm/{id}:
@@ -462,20 +570,23 @@ router.delete("/:id", deleteQCM);
  * @swagger
  * /qcm/QcmQuestionsResponses/{id_qcm}:
  *   get:
- *     summary: Récupérer les questions et réponses d'un QCM
- *     description: Retourne toutes les questions et leurs réponses associées pour un QCM donné. Les réponses, leur validité et leur position sont renvoyées sous forme de chaînes séparées par "|".
+ *     summary: Récupérer toutes les questions et réponses d'un QCM
+ *     description: >
+ *       Retourne la liste complète des questions d'un QCM ainsi que leurs réponses associées.
+ *       Chaque question contient un tableau `responses` avec les réponses possibles.
  *     tags:
  *       - QCM
  *     parameters:
- *       - in: path
- *         name: id_qcm
+ *       - name: id_qcm
+ *         in: path
  *         required: true
+ *         description: ID du QCM dont on veut récupérer les questions et réponses
  *         schema:
  *           type: integer
- *         description: ID du QCM
+ *           example: 5
  *     responses:
  *       200:
- *         description: Questions et réponses récupérées avec succès
+ *         description: Liste des questions et réponses récupérée avec succès
  *         content:
  *           application/json:
  *             schema:
@@ -485,27 +596,38 @@ router.delete("/:id", deleteQCM);
  *                 properties:
  *                   id_question:
  *                     type: integer
- *                     example: 1
+ *                     example: 12
  *                   id_qcm:
  *                     type: integer
- *                     example: 1
+ *                     example: 5
  *                   question:
  *                     type: string
- *                     example: "Java est un langage ..."
+ *                     example: "Quelle est la capitale de l'Espagne ?"
  *                   type:
  *                     type: string
  *                     example: "single"
- *                   response:
- *                     type: string
- *                     example: "interprété|compilé|les deux"
- *                   is_correct:
- *                     type: string
- *                     example: "f|f|t"
  *                   position:
- *                     type: string
- *                     example: "1|2|3"
+ *                     type: integer
+ *                     example: 1
+ *                   responses:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id_response:
+ *                           type: integer
+ *                           example: 45
+ *                         response:
+ *                           type: string
+ *                           example: "Madrid"
+ *                         is_correct:
+ *                           type: boolean
+ *                           example: true
+ *                         position:
+ *                           type: integer
+ *                           example: 1
  *       400:
- *         description: ID invalide
+ *         description: Mauvaise requête (ID invalide)
  *         content:
  *           application/json:
  *             schema:
@@ -515,7 +637,7 @@ router.delete("/:id", deleteQCM);
  *                   type: string
  *                   example: "ID invalide"
  *       404:
- *         description: Le QCM ne comporte aucune question
+ *         description: Aucun résultat trouvé (pas de question pour ce QCM)
  *         content:
  *           application/json:
  *             schema:
@@ -525,7 +647,7 @@ router.delete("/:id", deleteQCM);
  *                   type: string
  *                   example: "Le QCM comporte aucune question."
  *       500:
- *         description: Erreur serveur
+ *         description: Erreur interne du serveur lors de la récupération des données
  *         content:
  *           application/json:
  *             schema:
