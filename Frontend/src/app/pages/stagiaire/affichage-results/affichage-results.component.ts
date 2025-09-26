@@ -5,18 +5,19 @@ import {
 } from '../../../services/quiz_attempts.service';
 import { AuthService, AuthUser } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
 import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-affichage-results',
-  imports: [CommonModule, TimeFormatPipe],
+  imports: [CommonModule],
   templateUrl: './affichage-results.component.html',
 })
 export class AffichageResultsComponent {
   attempts: any[] = [];
   currentUser: AuthUser | null = null;
   selectedAttemptQuestions: AttemptQuestion[] = [];
+  currentPage = 1;
+  pageSize = 10;
 
   constructor(
     private quizAttemptsService: QuizAttemptsService,
@@ -38,13 +39,8 @@ export class AffichageResultsComponent {
         );
     }
   }
-
-  getDurationMinutes(start: string | Date, end: string | Date): string {
-    if (!start || !end) return '-';
-    const startTime = new Date(start).getTime();
-    const endTime = new Date(end).getTime();
-    const minutes = (endTime - startTime) / 60000;
-    return minutes.toFixed(0); // arrondi à l'entier
+  getCompletedRounded(attempt: any): number {
+    return Math.round(attempt.completed);
   }
 
   viewAttempt(id_attempt: number) {
@@ -73,5 +69,19 @@ export class AffichageResultsComponent {
     if (percent < 75) return 'orange';
     if (percent < 100) return 'yellow';
     return 'lightgreen';
+  }
+
+  get paginated() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.attempts.slice(start, start + this.pageSize);
+  }
+
+  nextPage() {
+    if (this.currentPage * this.pageSize < this.attempts.length)
+      this.currentPage++;
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) this.currentPage--;
   }
 }

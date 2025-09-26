@@ -16,11 +16,24 @@ export interface AttemptQuestion {
   responses: AttemptResponse[];
 }
 
+export interface UserAnswer {
+  id_question: number;
+  id_response: number;
+}
+
+export interface AttemptPayload {
+  id_user: number;
+  id_qcm: number;
+  started_at: string;
+  ended_at: string;
+  answers: UserAnswer[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class QuizAttemptsService {
-  private apiUrl = 'http://localhost:3000/quizAttempts'; // adapter si nécessaire
+  private apiUrl = 'http://localhost:3000/quizAttempts'; // Adapter selon ton API
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +47,7 @@ export class QuizAttemptsService {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
+  // Détails d'une tentative précise
   getAttemptDetails(
     id_attempt: number
   ): Observable<{ questions: AttemptQuestion[] }> {
@@ -42,11 +56,8 @@ export class QuizAttemptsService {
     );
   }
 
-  submitAttempt(
-    id_user: number,
-    id_qcm: number,
-    answers: { id_question: number; id_response: number }[]
-  ) {
-    return this.http.post<any>(`${this.apiUrl}`, { id_user, id_qcm, answers });
+  // ✅ Nouvelle méthode saveAttempt (plus propre)
+  saveAttempt(payload: AttemptPayload): Observable<any> {
+    return this.http.post<any>(this.apiUrl, payload);
   }
 }

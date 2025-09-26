@@ -31,7 +31,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <div class="card_3">
         <img src="img/average_icon.png" /><br /><br />
-        <h2 class="fw-bold">{{ scoreAvg }}</h2>
+        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>
         <h4>de moyenne</h4>
       </div>
     </div>
@@ -80,9 +80,7 @@
     <table class="table table-bordered table-striped align-middle text-center">
       <thead>
         <tr>
-          <th>ID Attempt</th>
           <th>Nom QCM</th>
-          <th>Stagiaire</th>
           <th>Début</th>
           <th>Fin</th>
           <th>Score</th>
@@ -90,10 +88,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let attempt of allAttemptsOfMyUser">
-          <td>{{ attempt.id_attempt }}</td>
+        <tr *ngFor="let attempt of paginated">
           <td>{{ attempt.title }}</td>
-          <td>{{ attempt.name }}</td>
           <td>{{ attempt.started_at | date : "short" }}</td>
           <td>{{ attempt.ended_at | date : "short" }}</td>
           <td>

@@ -227,12 +227,12 @@ VALUES (1,'interprété',FALSE,1),
     (36,'let x = 5;',TRUE,3),
     (36,'int x = 5;',FALSE,4),
     (37,'fs',FALSE,1),
-    (37,'http',TRUE,2),
+    (37,'http',FALSE,2),
     (37,'url',FALSE,3),
-    (37,'express',FALSE,4),
-    (38,'node install <package>;',FALSE,1),
+    (37,'express',TRUE,4),
+    (38,'node install <package>;',TRUE,1),
     (38,'npm add <package>',FALSE,2),
-    (38,'npm add <package>',TRUE,3),
+    (38,'npm add <package>',FALSE,3),
     (38,'node get <package>',FALSE,4);
 
 CREATE TABLE quiz_attempts (

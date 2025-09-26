@@ -14,22 +14,22 @@
       <thead>
         <tr>
           <th></th>
-          <th>ID Tentative</th>
+          <th>Nom du QCM</th>
           <th>Score</th>
           <th>Progression</th>
           <th>Fin</th>
-          <th>Durée (minutes)</th>
+          <th>Durée</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let attempt of attempts">
+        <tr *ngFor="let attempt of paginated">
           <td>
             <i
               class="bi bi-eye text-success fs-5"
               (click)="viewAttempt(attempt.id_attempt)"
             ></i>
           </td>
-          <td>{{ attempt.id_attempt }}</td>
+          <td>{{ attempt.title }}</td>
           <td>
             {{ attempt.score }}
             <span *ngIf="attempt.score === 100" class="text-warning ms-1"
@@ -43,14 +43,15 @@
                   class="progress-bar"
                   role="progressbar"
                   [ngStyle]="{
-                    width: attempt.completed + '%',
+                    width: getCompletedRounded(attempt) + '%',
                     backgroundColor: getCompletionColor(attempt.completed)
                   }"
-                  [attr.aria-valuenow]="attempt.completed"
+                  [attr.aria-valuenow]="getCompletedRounded(attempt)"
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
               </div>
+
               <span
                 class="position-absolute top-50 start-50 translate-middle fw-bold"
                 style="color: black"
@@ -60,15 +61,19 @@
             </div>
           </td>
           <td>{{ attempt.started_at | date : "short" }}</td>
-          <td>
-            {{
-              getDurationMinutes(attempt.started_at, attempt.ended_at)
-                | timeFormat
-            }}
+          <td *ngIf="attempt.duration.minutes">
+            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s
+          </td>
+          <td *ngIf="!attempt.duration.minutes">
+            {{ attempt.duration.seconds }} s
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
+    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
   </div>
 </div>
 

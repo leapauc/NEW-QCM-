@@ -9,6 +9,11 @@ import {
   Validators,
 } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
+import {
+  AttemptPayload,
+  QuizAttemptsService,
+} from '../../../services/quiz_attempts.service';
+import { AuthService, AuthUser } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-choix-qcm',
@@ -21,14 +26,26 @@ export class ChoixQcmComponent implements OnInit {
   qcmForm!: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  authIdUser = 0;
+  startTime = '';
+  endTime = '';
 
-  constructor(private qcmService: QcmService, private fb: FormBuilder) {}
+  constructor(
+    private qcmService: QcmService,
+    private fb: FormBuilder,
+    private quizAttemptsService: QuizAttemptsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadQCMs();
   }
 
   loadQCMs() {
+    const currentUser: AuthUser | null = this.authService.getUser();
+    if (!currentUser) return;
+
+    this.authIdUser = currentUser.id_user;
     this.qcmService.getAllQCM().subscribe({
       next: (data) => (this.qcms = data),
       error: (err) => console.error('Erreur chargement QCM', err),
@@ -41,7 +58,9 @@ export class ChoixQcmComponent implements OnInit {
         this.selectedQcm = { ...qcm, questions };
         this.initForm();
 
-        // ✅ Afficher le modal après avoir initialisé le formulaire
+        // ✅ Stocker la date de début ici
+        this.startTime = new Date().toISOString(); // <-- ajout
+        console.log(this.startTime);
         const modalEl = document.getElementById('qcmModal');
         if (modalEl) {
           const modal = new bootstrap.Modal(modalEl);
@@ -50,6 +69,38 @@ export class ChoixQcmComponent implements OnInit {
       },
       error: (err) => console.error('Erreur chargement questions', err),
     });
+  }
+
+  selectedAnswers: { id_question: number; id_response: number }[] = [];
+
+  onAnswerSelect(
+    qIndex: number,
+    id_response: number,
+    event: Event,
+    type: string
+  ) {
+    const id_question = this.questions.at(qIndex).get('id_question')?.value;
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (type === 'single') {
+      // ❌ Supprime toute réponse existante pour cette question
+      this.selectedAnswers = this.selectedAnswers.filter(
+        (a) => a.id_question !== id_question
+      );
+      if (checked) {
+        this.selectedAnswers.push({ id_question, id_response });
+      }
+    } else {
+      // ✅ pour les checkbox, on ajoute ou retire
+      if (checked) {
+        this.selectedAnswers.push({ id_question, id_response });
+      } else {
+        this.selectedAnswers = this.selectedAnswers.filter(
+          (a) =>
+            !(a.id_question === id_question && a.id_response === id_response)
+        );
+      }
+    }
   }
 
   // ---------- Formulaire réactif ----------
@@ -68,16 +119,14 @@ export class ChoixQcmComponent implements OnInit {
         responses: this.fb.array([]),
       });
 
-      // 🔹 Parser les réponses et is_correct séparées par "|"
-      const responsesArray = (q.response || '').split('|');
-      const isCorrectArray = (q.is_correct || '').split('|');
-
-      responsesArray.forEach((resp: string, idx: number) => {
+      // ✅ Ajout des réponses depuis le back
+      q.responses.forEach((resp: any) => {
         (questionGroup.get('responses') as FormArray).push(
           this.fb.group({
-            response: [resp, Validators.required],
-            is_correct: [isCorrectArray[idx] === 'true'],
-            position: [idx + 1],
+            id_response: [resp.id_response],
+            response: [resp.response, Validators.required],
+            is_correct: [resp.is_correct],
+            position: [resp.position],
           })
         );
       });
@@ -96,13 +145,33 @@ export class ChoixQcmComponent implements OnInit {
 
   // ---------- Sauvegarde ----------
   submitForm() {
-    if (this.qcmForm.invalid) {
-      this.qcmForm.markAllAsTouched();
+    if (this.selectedAnswers.length === 0) {
+      alert('Veuillez répondre à au moins une question !');
       return;
     }
-    const formValue = this.qcmForm.value;
-    console.log('Données à envoyer:', formValue);
-    // Ici tu appellerais ton service updateQCM pour envoyer formValue
+    if (!this.selectedQcm || this.selectedQcm.id_qcm === undefined) {
+      console.error('Aucun QCM sélectionné');
+      return;
+    }
+    this.endTime = new Date().toISOString();
+
+    const payload: AttemptPayload = {
+      id_qcm: this.selectedQcm.id_qcm, // ✅ ici c'est garanti non-undefined
+      id_user: this.authIdUser,
+      started_at: this.startTime,
+      ended_at: this.endTime,
+      answers: this.selectedAnswers,
+    };
+
+    console.log('Payload à envoyer:', payload);
+
+    this.quizAttemptsService.saveAttempt(payload).subscribe({
+      next: (res) => {
+        console.log('Réponse backend:', res);
+        alert(`Votre score : ${res.score.toFixed(2)}%`);
+      },
+      error: (err) => console.error('Erreur saveAttempt', err),
+    });
   }
 
   // ---------- Pagination ----------

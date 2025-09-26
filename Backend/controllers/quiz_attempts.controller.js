@@ -4,7 +4,7 @@ const pool = require("../db");
 exports.getAllAttempts = async (req, res) => {
   try {
     const result =
-      await pool.query(`SELECT *,users.name,qcm.title FROM quiz_attempts qa
+      await pool.query(`SELECT *,users.name,qcm.title,ended_at - started_at as duration FROM quiz_attempts qa
       JOIN users ON users.id_user = qa.id_user
       JOIN qcm ON qcm.id_qcm = qa.id_qcm`);
     res.json(result.rows);
@@ -19,7 +19,10 @@ exports.getAttemptsByUser = async (req, res) => {
   const { id_user } = req.params;
   try {
     const result = await pool.query(
-      `SELECT * FROM quiz_attempts where id_user=$1`,
+      `SELECT *,qcm.title,ended_at - started_at as duration 
+      FROM quiz_attempts qa
+      JOIN qcm ON qcm.id_qcm = qa.id_qcm 
+      where id_user=$1`,
       [id_user]
     );
     res.json(result.rows);
@@ -156,5 +159,78 @@ exports.submitAttempt = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+// Ajouter une tentative d'un utilisateur en base de données
+exports.saveAttempt = async (req, res) => {
+  const { id_qcm, id_user, answers, started_at, ended_at } = req.body;
+
+  try {
+    const attemptRes = await pool.query(
+      `INSERT INTO quiz_attempts (id_qcm, id_user, started_at,ended_at)
+       VALUES ($1, $2, $3::timestamptz, $4::timestamptz)
+       RETURNING id_attempt`,
+      [id_qcm, id_user, started_at, ended_at]
+    );
+    const id_attempt = attemptRes.rows[0].id_attempt;
+
+    for (const a of answers) {
+      await pool.query(
+        `INSERT INTO user_answers (id_attempt, id_question, id_response)
+         VALUES ($1, $2, $3)`,
+        [id_attempt, a.id_question, a.id_response]
+      );
+    }
+
+    // 3. Calcul des stats
+    const totalQ = await pool.query(
+      `SELECT COUNT(*) FROM question_qcm WHERE id_qcm=$1`,
+      [id_qcm]
+    );
+    const totalQuestions = parseInt(totalQ.rows[0].count, 10);
+
+    const answeredQ = await pool.query(
+      `SELECT COUNT(DISTINCT id_question) FROM user_answers WHERE id_attempt=$1`,
+      [id_attempt]
+    );
+    const answeredCount = parseInt(answeredQ.rows[0].count, 10);
+
+    const correctQ = await pool.query(
+      `SELECT COUNT(*) AS correct_questions
+       FROM question_qcm q
+       WHERE q.id_qcm = $1
+       AND NOT EXISTS (
+         SELECT 1 FROM response_question r
+         LEFT JOIN user_answers ua 
+           ON ua.id_question = q.id_question 
+          AND ua.id_response = r.id_response
+         WHERE r.id_question = q.id_question
+         AND (
+           (r.is_correct = TRUE AND ua.id_response IS NULL)
+           OR (r.is_correct = FALSE AND ua.id_response IS NOT NULL)
+         )
+       )`,
+      [id_qcm]
+    );
+    const correctCount = parseInt(correctQ.rows[0].correct_questions, 10);
+
+    const completed = (answeredCount / totalQuestions) * 100;
+    const score = (correctCount / totalQuestions) * 100;
+
+    // 4. Mettre à jour la tentative
+    await pool.query(
+      `UPDATE quiz_attempts
+       SET completed=$1, score=$2
+       WHERE id_attempt=$3`,
+      [completed, score, id_attempt]
+    );
+
+    res.json({ id_attempt, completed, score });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Erreur lors de l'enregistrement de la tentative" });
   }
 };
