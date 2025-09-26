@@ -27,3 +27,8 @@ npm install swagger-jsdoc swagger-ui-express
 npm install bootstrap
 npm i --save-dev @types/bootstrap
 npm install bootstrap-icons
+npm install --save-dev @compodoc/compodoc
+
+#### Génère la compodoc:
+
+npm run npm run compodoc:serve

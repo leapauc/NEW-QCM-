@@ -148,6 +148,7 @@
     </div>
   </form>
 </div>
+<!-- MODALS -->
 <div
   class="modal fade"
   id="successModal"
@@ -164,6 +165,30 @@
         <h5 class="modal-title mb-3" id="successModalLabel">
           Utilisateur ajouté avec succès !
         </h5>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="failedModal"
+  tabindex="-1"
+  aria-labelledby="failedModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem; color: red">❌</span>
+        </div>
+        <h5 class="modal-title mb-3" id="failedModalLabel">
+          Echec lors de l'ajout de l'utilisateur !
+        </h5>
+        <p>Veuillez tenter ultérieurement.</p>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Fermer
         </button>

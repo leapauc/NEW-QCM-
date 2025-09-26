@@ -9,6 +9,17 @@
   </p>
   <p><i>Continue à pratiquer pour améliorer tes statistiques !</i></p>
   <br />
+  <!-- Search bar -->
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
+  <!-- TABLE -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
       <thead>
@@ -30,11 +41,28 @@
             ></i>
           </td>
           <td>{{ attempt.title }}</td>
-          <td>
-            {{ attempt.score }}
-            <span *ngIf="attempt.score === 100" class="text-warning ms-1"
-              >⭐</span
-            >
+          <td style="width: 200px">
+            <div class="position-relative" style="height: 20px">
+              <div class="progress h-100">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [ngStyle]="{
+                    width: attempt.score + '%',
+                    backgroundColor: getCompletionColor(attempt.score)
+                  }"
+                  [attr.aria-valuenow]="attempt.score"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <span
+                class="position-absolute top-50 start-50 translate-middle fw-bold"
+                style="color: black"
+              >
+                {{ attempt.score | number : "1.0-0" }}%
+              </span>
+            </div>
           </td>
           <td>
             <div class="position-relative" style="height: 20px">
@@ -56,7 +84,7 @@
                 class="position-absolute top-50 start-50 translate-middle fw-bold"
                 style="color: black"
               >
-                {{ attempt.completed }}%
+                {{ attempt.completed | number : "1.0-0" }}%
               </span>
             </div>
           </td>

@@ -3,7 +3,6 @@ const {
   getAllAttempts,
   getAttemptsByUser,
   getAttemptDetailsById,
-  submitAttempt,
   saveAttempt,
 } = require("../controllers/quiz_attempts.controller");
 
@@ -194,7 +193,88 @@ router.get("/:id_user", getAttemptsByUser);
  */
 router.get("/attempt_details/:id_attempt", getAttemptDetailsById);
 
-router.post("/submit", submitAttempt);
+/**
+ * @swagger
+ * /quizAttempts:
+ *   post:
+ *     summary: Enregistrer une nouvelle tentative de quiz
+ *     description: Crée une nouvelle tentative pour un QCM, enregistre les réponses de l'utilisateur et calcule le score et le pourcentage de progression.
+ *     tags:
+ *       - QuizAttempts
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id_qcm
+ *               - id_user
+ *               - answers
+ *               - started_at
+ *               - ended_at
+ *             properties:
+ *               id_qcm:
+ *                 type: integer
+ *                 example: 42
+ *                 description: ID du QCM sur lequel la tentative est effectuée
+ *               id_user:
+ *                 type: integer
+ *                 example: 7
+ *                 description: ID de l'utilisateur qui passe le quiz
+ *               answers:
+ *                 type: array
+ *                 description: Liste des réponses sélectionnées par l'utilisateur
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id_question:
+ *                       type: integer
+ *                       example: 12
+ *                     id_response:
+ *                       type: integer
+ *                       example: 55
+ *               started_at:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-09-26T14:00:00.000Z"
+ *                 description: Date/heure de début de la tentative (format ISO 8601)
+ *               ended_at:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-09-26T14:10:00.000Z"
+ *                 description: Date/heure de fin de la tentative (format ISO 8601)
+ *     responses:
+ *       200:
+ *         description: Tentative enregistrée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id_attempt:
+ *                   type: integer
+ *                   example: 101
+ *                 completed:
+ *                   type: number
+ *                   format: float
+ *                   example: 100
+ *                   description: Pourcentage de questions répondues
+ *                 score:
+ *                   type: integer
+ *                   example: 80
+ *                   description: Score final de l'utilisateur en pourcentage
+ *       500:
+ *         description: Erreur serveur lors de l'enregistrement de la tentative
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur lors de l'enregistrement de la tentative"
+ */
 router.post("", saveAttempt);
 
 module.exports = router;

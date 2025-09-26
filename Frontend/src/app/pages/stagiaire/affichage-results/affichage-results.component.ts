@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import {
-  AttemptQuestion,
-  QuizAttemptsService,
-} from '../../../services/quiz_attempts.service';
-import { AuthService, AuthUser } from '../../../services/auth.service';
+import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
+import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
+import { FormsModule } from '@angular/forms';
+import { AuthUser } from '../../../models/authUser';
+import { AttemptQuestion } from '../../../models/attemptQuestion';
 
 @Component({
   selector: 'app-affichage-results',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './affichage-results.component.html',
 })
 export class AffichageResultsComponent {
@@ -18,6 +18,8 @@ export class AffichageResultsComponent {
   selectedAttemptQuestions: AttemptQuestion[] = [];
   currentPage = 1;
   pageSize = 10;
+  filteredAttempts: any[] = [];
+  searchTerm = '';
 
   constructor(
     private quizAttemptsService: QuizAttemptsService,
@@ -32,6 +34,7 @@ export class AffichageResultsComponent {
         .subscribe(
           (res) => {
             this.attempts = res;
+            this.filteredAttempts = [...this.attempts];
           },
           (err) => {
             console.error('Erreur récupération tentatives', err);
@@ -71,9 +74,23 @@ export class AffichageResultsComponent {
     return 'lightgreen';
   }
 
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredAttempts = [...this.attempts];
+    } else {
+      this.filteredAttempts = this.attempts.filter((a) =>
+        (a.title + a.score + a.progression).toLowerCase().includes(term)
+      );
+    }
+
+    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+  }
+
   get paginated() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.attempts.slice(start, start + this.pageSize);
+    return this.filteredAttempts.slice(start, start + this.pageSize);
   }
 
   nextPage() {

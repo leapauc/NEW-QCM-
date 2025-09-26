@@ -7,7 +7,17 @@
   <p>Cette page permet de supprimer une/des question/s.</p>
   <br />
   <br />
-
+  <!-- Search bar -->
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
+  <!-- TABLE -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
       <thead>

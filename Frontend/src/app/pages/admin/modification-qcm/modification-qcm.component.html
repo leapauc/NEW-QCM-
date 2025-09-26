@@ -13,6 +13,16 @@
     existant.
   </p>
   <br />
+  <!-- Search bar -->
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
   <!-- Tableau des qcm -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
@@ -79,7 +89,7 @@
     <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
   </form>
 </div>
-
+<!-- MODALS -->
 <div
   class="modal fade"
   id="successModal"
@@ -117,7 +127,7 @@
           <span style="font-size: 3rem">❌</span>
         </div>
         <h5 class="modal-title mb-3" id="failedModalLabel">
-          Modification réalisée avec succès !
+          La modification a échoué !
         </h5>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Fermer

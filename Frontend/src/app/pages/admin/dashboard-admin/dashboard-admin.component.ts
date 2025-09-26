@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
 import { CommonModule } from '@angular/common';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
+import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
 
 @Component({
   selector: 'app-dashboard-admin',
-  imports: [CommonModule],
+  imports: [CommonModule, TimeFormatPipe],
   templateUrl: './dashboard-admin.component.html',
-  styleUrls: ['./dashboard-admin.component.css'],
 })
 export class DashboardAdminComponent {
   nbStagiaires = 0;
@@ -124,7 +124,7 @@ export class DashboardAdminComponent {
 
   getCompletionColor(percent: number): string {
     if (percent < 25) return 'red';
-    if (percent < 50) return 'lightred';
+    if (percent < 50) return 'lightcoral';
     if (percent < 75) return 'orange';
     if (percent < 100) return 'yellow';
     return 'lightgreen';

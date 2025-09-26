@@ -111,6 +111,9 @@
     </button>
 
     <div class="mt-4 text-center">
+      <button type="button" class="btn btn-danger me-2" (click)="cancelForm()">
+        Annuler
+      </button>
       <button
         type="button"
         class="btn btn-secondary me-2"
@@ -124,7 +127,7 @@
     </div>
   </form>
 </div>
-
+<!-- MODALS -->
 <div
   class="modal fade"
   id="successModal"
@@ -162,7 +165,7 @@
           <span style="font-size: 3rem">❌</span>
         </div>
         <h5 class="modal-title mb-3" id="failedModalLabel">
-          Modification réalisée avec succès !
+          La modification a échoué !
         </h5>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Fermer

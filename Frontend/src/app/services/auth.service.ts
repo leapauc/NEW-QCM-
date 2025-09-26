@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-
-// Interface pour l'utilisateur authentifié
-export interface AuthUser {
-  id_user: number;
-  name: string;
-  admin: boolean;
-  // Ajouter d'autres champs si nécessaire
-}
+import { AuthUser } from '../models/authUser';
 
 @Injectable({
   providedIn: 'root',

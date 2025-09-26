@@ -57,7 +57,11 @@ export class AjoutUtilisateurComponent {
           const modal = new bootstrap.Modal(modalEl!);
           modal.show();
         },
-        error: (err) => console.error('Erreur création utilisateur', err),
+        error: (err) => {
+          const modalEl = document.getElementById('failedModal');
+          const modal = new bootstrap.Modal(modalEl!);
+          modal.show();
+        },
       });
     } else {
       console.log('Form invalid');

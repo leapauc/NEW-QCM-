@@ -1,5 +1,6 @@
 const pool = require("../db");
 
+// appel pour connection d'un utilisateur
 exports.login = async (req, res) => {
   const { name, password } = req.body;
 

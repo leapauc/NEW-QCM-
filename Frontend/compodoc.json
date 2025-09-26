@@ -1,0 +1,17 @@
+{
+  "output": "./documentation",
+  "name": "Mon Projet Angular",
+  "tsconfig": "tsconfig.json",
+  "includes": ["src/app"],
+  "exclude": ["**/*.spec.ts"],
+  "readme": "README.md",
+  "coverage": {
+    "mode": "detailed"
+  },
+  "openGraph": {
+    "title": "Doc Angular",
+    "type": "website",
+    "image": "logo.png",
+    "site_name": "Mon Projet"
+  }
+}

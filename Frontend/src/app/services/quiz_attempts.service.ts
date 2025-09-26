@@ -2,32 +2,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface AttemptResponse {
-  id_response: number;
-  response: string;
-  selected: boolean;
-}
-
-export interface AttemptQuestion {
-  id_question: number;
-  question: string;
-  type: 'single' | 'multiple';
-  responses: AttemptResponse[];
-}
-
-export interface UserAnswer {
-  id_question: number;
-  id_response: number;
-}
-
-export interface AttemptPayload {
-  id_user: number;
-  id_qcm: number;
-  started_at: string;
-  ended_at: string;
-  answers: UserAnswer[];
-}
+import { AttemptQuestion } from '../models/attemptQuestion';
+import { AttemptPayload } from '../models/attemptPayload';
 
 @Injectable({
   providedIn: 'root',

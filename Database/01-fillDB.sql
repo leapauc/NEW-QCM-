@@ -30,10 +30,10 @@ CREATE TABLE qcm (
 );
 INSERT INTO qcm (title,description,created_by)
 VALUES ('Java','Test de connaissance sur le langage Java',2),
-       ('Python débutant','Test de connaissance sur le language python pour les débutants',1),
+       ('Python débutant','Test de connaissance sur le langage python pour les débutants',1),
        ('Angular','Test de connaissance sur le framework Angular',2),
-       ('PHP','Test de connaissance sur le language PHP',2),
-       ('JavaScript','Test de connaissance sur le language JavaScript',1),
+       ('PHP','Test de connaissance sur le langage PHP',2),
+       ('JavaScript','Test de connaissance sur le langage JavaScript',1),
        ('NodeJS','Test de connaissance sur la plateforme de développement JavaScript NodeJS',2);
 
 CREATE TABLE question_qcm (
@@ -64,8 +64,7 @@ VALUES (1,'Java est un langage ...','single',1,2),
        (2,'Quel type de boucle est utilisé pour répéter un bloc un nombre fixe de fois ?','single',4,1),
        (2,'Que fait l’instruction len("Python") ?','single',5,1),
        (2,'Quel symbole est utilisé pour l’exponentiation (puissance) en Python ?','single',6,1),
-       (2,'Quelle est la sortie de ce code ? <pre>x,y = 5,3 
-       print(x % y)</pre>','single',7,1),
+       (2,'Quelle est la sortie de ce code ? x,y = 5,3  print(x % y)','single',7,1),
        (2,'Quelle est la différence entre une liste et un tuple en Python ?','single',8,1),
        (2,'Comment définir une fonction en Python ?','single',9,1),
        (2,'Quelle méthode permet d’ajouter un élément à la fin d’une liste ?','single',10,1),

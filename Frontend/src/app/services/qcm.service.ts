@@ -1,33 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface QCM {
-  id_qcm?: number;
-  title: string;
-  description?: string;
-  user?: string;
-  created_at?: string;
-  updated_at?: string;
-  questions?: Question[];
-}
-
-export interface Question {
-  id_question?: number;
-  id_qcm?: number;
-  question: string;
-  type: 'single' | 'multiple';
-  position?: number;
-  responses: ResponseOption[];
-}
-
-export interface ResponseOption {
-  id_response?: number;
-  id_question?: number;
-  response: string;
-  is_correct: boolean;
-  position?: number;
-}
+import { Question } from '../models/question';
+import { QCM } from '../models/qcm';
 
 @Injectable({
   providedIn: 'root',

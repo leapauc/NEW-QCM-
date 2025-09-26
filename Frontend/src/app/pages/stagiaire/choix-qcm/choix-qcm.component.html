@@ -10,6 +10,16 @@
   </p>
   <p><i>Il n'y a pas de limite pour améliorer ces connaissances !</i></p>
   <br />
+  <!-- Search bar -->
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
   <!-- Tableau des qcm -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
@@ -103,8 +113,13 @@
           >
             Fermer
           </button>
-          <button type="button" class="btn btn-secondary mt-3 me-2">
-            <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+          <button
+            type="button"
+            class="btn btn-secondary mt-3 me-2"
+            (click)="resetAnswers()"
+          >
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Réinitialiser
           </button>
           <button
             type="submit"
@@ -114,6 +129,55 @@
             <i class="bi bi-save"></i> Valider
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="successModal"
+  tabindex="-1"
+  aria-labelledby="successModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem; color: green">✔️</span>
+        </div>
+        <h5 class="modal-title mb-3" id="successModalLabel">
+          QCM ajouté avec succès !
+        </h5>
+        <p>{{ successMessage }}</p>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="failedModal"
+  tabindex="-1"
+  aria-labelledby="failedModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span style="font-size: 3rem; color: red">❌</span>
+        </div>
+        <h5 class="modal-title mb-3" id="failedModalLabel">
+          Echec lors de l'ajout du qcm !
+        </h5>
+        <p>{{ failedMessage }}</p>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Fermer
+        </button>
       </div>
     </div>
   </div>

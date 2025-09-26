@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
-import { User, UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-utilisateur-stagiaire',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modification-utilisateur.component.html',
-  styleUrl: './modification-utilisateur.component.css',
 })
 export class ModificationUtilisateurComponent implements OnInit {
   users: User[] = [];
@@ -25,6 +26,8 @@ export class ModificationUtilisateurComponent implements OnInit {
   selectedUserAfter!: User;
   message: string | null = null;
   messageClass: string = '';
+  filteredUsers: User[] = [];
+  searchTerm = '';
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -50,7 +53,10 @@ export class ModificationUtilisateurComponent implements OnInit {
 
   loadUsers() {
     this.userService.getAllUsers().subscribe({
-      next: (data) => (this.users = data),
+      next: (data) => {
+        this.users = data;
+        this.filteredUsers = [...this.users]; // initialise tableau filtré
+      },
       error: (err) => console.error(err),
     });
   }
@@ -85,6 +91,26 @@ export class ModificationUtilisateurComponent implements OnInit {
     }
   }
 
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter((u) =>
+        (u.name + u.firstname + u.email + u.society)
+          .toLowerCase()
+          .includes(term)
+      );
+    }
+
+    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+  }
+  cancelEdit() {
+    this.selectedUser = null;
+    this.form.reset(); // (optionnel) pour vider les champs du formulaire
+  }
+
   confirmUpdate() {
     if (!this.selectedUser) {
       this.message = 'Impossible de modifier cet utilisateur.';
@@ -114,10 +140,33 @@ export class ModificationUtilisateurComponent implements OnInit {
     this.messageClass = 'alert alert-success';
     setTimeout(() => (this.message = null), 2000);
   }
+  resetForm() {
+    if (this.selectedUser) {
+      // Remet les valeurs du formulaire à celles de l'utilisateur sélectionné
+      this.form.patchValue({
+        name: this.selectedUser.name,
+        firstname: this.selectedUser.firstname,
+        email: this.selectedUser.email,
+        society: this.selectedUser.society,
+        password: '', // on ne pré-remplit jamais le mot de passe
+        admin: this.selectedUser.admin || false,
+      });
+    } else {
+      // Si aucun utilisateur sélectionné, vide tous les champs
+      this.form.reset({
+        name: '',
+        firstname: '',
+        email: '',
+        society: '',
+        password: '',
+        admin: false,
+      });
+    }
+  }
 
   get paginatedUsers() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.users.slice(start, start + this.pageSize);
+    return this.filteredUsers.slice(start, start + this.pageSize);
   }
 
   nextPage() {

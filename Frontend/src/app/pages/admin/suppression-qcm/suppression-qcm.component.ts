@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { QCM, QcmService } from '../../../services/qcm.service';
+import { QcmService } from '../../../services/qcm.service';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { QCM } from '../../../models/qcm';
 
 @Component({
   selector: 'app-suppression-qcm',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './suppression-qcm.component.html',
-  styleUrls: ['./suppression-qcm.component.css'],
 })
 export class SuppressionQcmComponent implements OnInit {
   qcms: QCM[] = [];
@@ -21,6 +22,8 @@ export class SuppressionQcmComponent implements OnInit {
   form: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  filteredQcms: QCM[] = [];
+  searchTerm = '';
 
   message: string | null = null;
   messageClass: string = '';
@@ -34,13 +37,17 @@ export class SuppressionQcmComponent implements OnInit {
       updated_at: [''],
     });
   }
+
   ngOnInit() {
     this.loadQcms();
   }
 
   loadQcms() {
     this.qcmService.getAllQCM().subscribe({
-      next: (data) => (this.qcms = data),
+      next: (data) => {
+        this.qcms = data;
+        this.filteredQcms = [...this.qcms];
+      },
       error: (err) => console.error('Erreur chargement QCMs', err),
     });
   }
@@ -58,11 +65,24 @@ export class SuppressionQcmComponent implements OnInit {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     this.openConfirmModal();
   }
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQcms = [...this.qcms];
+    } else {
+      this.filteredQcms = this.qcms.filter((qcm) =>
+        (qcm.title + qcm.description + qcm.user).toLowerCase().includes(term)
+      );
+    }
+
+    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+  }
 
   // Pagination simple
   get paginatedQcm() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.qcms.slice(start, start + this.pageSize);
+    return this.filteredQcms.slice(start, start + this.pageSize);
   }
 
   nextPage() {

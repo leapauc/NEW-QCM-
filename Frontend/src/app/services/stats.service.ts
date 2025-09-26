@@ -3,15 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface DashboardStats {
-  nbStagiaires: number;
-  nbQuestionnaires: number;
-  nbQuestionnairesComplets: number;
-  nbQuestionnairesRealises: number;
-  questionnairePopulaire: string;
-  stagiaireActif: { name: string; firstname: string };
-}
-
 @Injectable({
   providedIn: 'root',
 })

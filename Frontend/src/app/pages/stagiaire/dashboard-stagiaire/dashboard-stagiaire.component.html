@@ -81,8 +81,8 @@
       <thead>
         <tr>
           <th>Nom QCM</th>
-          <th>Début</th>
-          <th>Fin</th>
+          <th>Finie à</th>
+          <th>Durée</th>
           <th>Score</th>
           <th>Progression</th>
         </tr>
@@ -90,13 +90,35 @@
       <tbody>
         <tr *ngFor="let attempt of paginated">
           <td>{{ attempt.title }}</td>
-          <td>{{ attempt.started_at | date : "short" }}</td>
           <td>{{ attempt.ended_at | date : "short" }}</td>
-          <td>
-            {{ attempt.score }}
-            <span *ngIf="attempt.score === 100" class="text-warning ms-1"
-              >⭐</span
-            >
+          <td *ngIf="attempt.duration.minutes">
+            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s
+          </td>
+          <td *ngIf="!attempt.duration.minutes">
+            {{ attempt.duration.seconds }} s
+          </td>
+          <td style="width: 200px">
+            <div class="position-relative" style="height: 20px">
+              <div class="progress h-100">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [ngStyle]="{
+                    width: attempt.score + '%',
+                    backgroundColor: getCompletionColor(attempt.score)
+                  }"
+                  [attr.aria-valuenow]="attempt.score"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <span
+                class="position-absolute top-50 start-50 translate-middle fw-bold"
+                style="color: black"
+              >
+                {{ attempt.score | number : "1.0-0" }}%
+              </span>
+            </div>
           </td>
           <td>
             <!-- Conteneur de la jauge -->
@@ -121,7 +143,7 @@
                 class="position-absolute top-50 start-50 translate-middle fw-bold"
                 style="color: black"
               >
-                {{ attempt.completed }}%
+                {{ attempt.completed | number : "1.0-0" }}%
               </span>
             </div>
           </td>

@@ -1,5 +1,6 @@
 const pool = require("../db");
 
+// Récupérer les informations de tous les utilisateurs
 exports.getAllUsers = async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM users ORDER BY id_user");
@@ -10,6 +11,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// Récupérer les informations d'un utilisateur
 exports.getUserById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -25,6 +27,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+// Créer un utilisateur
 exports.createUser = async (req, res) => {
   const { name, firstname, society, password, email, admin } = req.body;
   try {
@@ -43,6 +46,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
+// Mettre à jour un utilisateur
 exports.updateUser = async (req, res) => {
   const { id } = req.params;
   const { name, firstname, society, password, email, admin } = req.body;
@@ -62,6 +66,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+// Supprimer un utilisateur
 exports.deleteUser = async (req, res) => {
   const { id } = req.params;
   try {

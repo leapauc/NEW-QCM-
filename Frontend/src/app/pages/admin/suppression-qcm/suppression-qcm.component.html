@@ -7,6 +7,15 @@
   <p>Ce formulaire permet de supprimer d'un questionnaire.</p>
   <br />
   <br />
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
   <div class="table-responsive-custom">
     <table class="table table-striped">
       <thead>

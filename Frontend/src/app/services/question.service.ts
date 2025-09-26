@@ -1,30 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface ResponseOption {
-  response: string;
-  is_correct: boolean;
-  position?: number;
-}
-
-export interface Question {
-  id_question?: number;
-  id_qcm?: number;
-  question: string;
-  type: 'single' | 'multiple';
-  position?: number;
-  responses?: ResponseOption[];
-}
-
-export interface QuestionResponse {
-  id_response: number;
-  id_question: number;
-  response: string;
-  is_correct: boolean;
-  position: number;
-  question: string;
-}
+import { QuestionResponse } from '../models/questionResponse';
+import { Question } from '../models/question';
 
 @Injectable({
   providedIn: 'root',

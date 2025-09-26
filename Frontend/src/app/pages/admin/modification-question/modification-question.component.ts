@@ -9,11 +9,9 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { QcmService } from '../../../services/qcm.service';
-import {
-  QuestionResponse,
-  QuestionService,
-} from '../../../services/question.service';
+import { QuestionService } from '../../../services/question.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
+import { QuestionResponse } from '../../../models/questionResponse';
 
 @Component({
   selector: 'app-modification-question',
@@ -141,6 +139,13 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  cancelForm() {
+    this.selectedQuestionId = null;
+    this.questionForm.reset();
+    while (this.responses.length) {
+      this.responses.removeAt(0);
+    }
+  }
   resetForm() {
     if (!this.selectedQuestionId) return;
 
@@ -226,5 +231,6 @@ export class ModificationQuestionComponent implements OnInit {
           modal.show();
         },
       });
+    this.cancelForm();
   }
 }

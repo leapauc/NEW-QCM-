@@ -1,5 +1,6 @@
 const pool = require("../db");
 
+// Récupérer tous les QCM
 exports.getAllQCM = async (req, res) => {
   try {
     const result = await pool.query(
@@ -12,6 +13,7 @@ exports.getAllQCM = async (req, res) => {
   }
 };
 
+// Récupérer un QCM par son id
 exports.getQCMById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -27,6 +29,7 @@ exports.getQCMById = async (req, res) => {
   }
 };
 
+// Créer un QCM - titre et description
 exports.createQCM = async (req, res) => {
   const client = await pool.connect();
   try {
@@ -58,6 +61,7 @@ exports.createQCM = async (req, res) => {
   }
 };
 
+// Créer un QCM et ces questions/réponses
 exports.createQCMWithQuestion = async (req, res) => {
   const client = await pool.connect();
   try {
@@ -113,6 +117,7 @@ exports.createQCMWithQuestion = async (req, res) => {
   }
 };
 
+// Mettre à jour un QCM - titre et description
 exports.updateQCM = async (req, res) => {
   const client = await pool.connect();
   try {
@@ -160,6 +165,7 @@ exports.updateQCM = async (req, res) => {
   }
 };
 
+// Mettre à jour un QCM et ces questions/réponses
 exports.updateQCMWithQuestions = async (req, res) => {
   const client = await pool.connect();
   try {
@@ -216,6 +222,7 @@ exports.updateQCMWithQuestions = async (req, res) => {
   }
 };
 
+// Supprimer un QCM par son id
 exports.deleteQCM = async (req, res) => {
   const id = req.params.id;
 
@@ -253,6 +260,7 @@ exports.deleteQCM = async (req, res) => {
   }
 };
 
+// Récupérer un QCM avec ces questions/réponses
 exports.getQuestionResponseOfQCMById = async (req, res) => {
   const id = parseInt(req.params.id_qcm, 10);
   if (isNaN(id)) {
@@ -291,6 +299,7 @@ exports.getQuestionResponseOfQCMById = async (req, res) => {
   }
 };
 
+// Récupérer une question avec ces réponses
 exports.getQuestionResponseByQuestionId = async (req, res) => {
   const id = parseInt(req.params.id_question, 10);
   if (isNaN(id)) {
@@ -316,6 +325,7 @@ exports.getQuestionResponseByQuestionId = async (req, res) => {
   }
 };
 
+// Récupérer la liste des questions d'un QCM
 exports.getQuestionOfQCMById = async (req, res) => {
   const id = parseInt(req.params.id_qcm, 10);
   if (isNaN(id)) {

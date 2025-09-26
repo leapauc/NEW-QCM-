@@ -10,6 +10,16 @@
   </p>
   <br />
   <br />
+  <!-- Search bar -->
+  <div class="mb-3 d-flex justify-content-end">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Rechercher un QCM..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
   <!-- Tableau des utilisateurs -->
   <div>
     <table class="table table-striped">
@@ -99,6 +109,17 @@
           </div>
         </div>
       </div>
+      <button class="btn btn-danger me-2" type="button" (click)="cancelEdit()">
+        Cancel
+      </button>
+      <button
+        class="btn btn-secondary me-2"
+        type="button"
+        (click)="resetForm()"
+      >
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Réinitialiser
+      </button>
       <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
         Valider
       </button>

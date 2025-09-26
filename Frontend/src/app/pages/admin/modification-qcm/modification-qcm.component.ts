@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QCM, QcmService } from '../../../services/qcm.service';
+import { QcmService } from '../../../services/qcm.service';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -7,13 +7,15 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  FormsModule,
 } from '@angular/forms';
+import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
+import { QCM } from '../../../models/qcm';
 
 @Component({
   selector: 'app-modification-qcm',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modification-qcm.component.html',
-  styleUrls: ['./modification-qcm.component.css'],
 })
 export class ModificationQcmComponent implements OnInit {
   qcms: QCM[] = [];
@@ -23,6 +25,8 @@ export class ModificationQcmComponent implements OnInit {
   pageSize = 5;
   maxResponses = 5;
   minResponses = 2;
+  filteredQcms: QCM[] = [];
+  searchTerm = '';
 
   constructor(private qcmService: QcmService, private fb: FormBuilder) {}
 
@@ -32,7 +36,10 @@ export class ModificationQcmComponent implements OnInit {
 
   loadQCMs() {
     this.qcmService.getAllQCM().subscribe({
-      next: (data) => (this.qcms = data),
+      next: (data) => {
+        this.qcms = data;
+        this.filteredQcms = [...this.qcms];
+      },
       error: (err) => console.error('Erreur chargement QCM', err),
     });
   }
@@ -81,10 +88,16 @@ export class ModificationQcmComponent implements OnInit {
     // Appel de la mise à jour côté backend
     this.qcmService.updateQCM(this.selectedQcm!.id_qcm!, formValue).subscribe({
       next: (res) => {
-        console.log(res.message);
+        const modalEl = document.getElementById('successModal');
+        const modal = new bootstrap.Modal(modalEl!);
+        modal.show();
         this.onQcmUpdated();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        const modalEl = document.getElementById('failedModal');
+        const modal = new bootstrap.Modal(modalEl!);
+        modal.show();
+      },
     });
   }
 
@@ -93,10 +106,24 @@ export class ModificationQcmComponent implements OnInit {
     this.loadQCMs();
   }
 
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQcms = [...this.qcms];
+    } else {
+      this.filteredQcms = this.qcms.filter((qcm) =>
+        (qcm.title + qcm.description + qcm.user).toLowerCase().includes(term)
+      );
+    }
+
+    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+  }
+
   // ---------- Pagination ----------
   get paginatedQCM() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.qcms.slice(start, start + this.pageSize);
+    return this.filteredQcms.slice(start, start + this.pageSize); // ✅ Utiliser filteredQcms
   }
 
   nextPage() {

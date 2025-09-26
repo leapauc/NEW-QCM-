@@ -4,6 +4,7 @@ import { QuestionService } from '../../../services/question.service';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -12,9 +13,8 @@ import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-suppression-question',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './suppression-question.component.html',
-  styleUrl: './suppression-question.component.css',
 })
 export class SuppressionQuestionComponent implements OnInit {
   questions: any[] = [];
@@ -22,6 +22,8 @@ export class SuppressionQuestionComponent implements OnInit {
   form: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  filteredQuestions: any[] = [];
+  searchTerm = '';
 
   message: string | null = null;
   messageClass: string = '';
@@ -43,7 +45,10 @@ export class SuppressionQuestionComponent implements OnInit {
 
   loadQuestions() {
     this.questionService.getAllQuestions().subscribe({
-      next: (data) => (this.questions = data),
+      next: (data) => {
+        this.questions = data;
+        this.filteredQuestions = [...this.questions];
+      },
       error: (err) => console.error('Erreur chargement questions : ', err),
     });
   }
@@ -98,9 +103,23 @@ export class SuppressionQuestionComponent implements OnInit {
       });
   }
 
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQuestions = [...this.questions];
+    } else {
+      this.filteredQuestions = this.questions.filter((question) =>
+        (question.question + question.title).toLowerCase().includes(term)
+      );
+    }
+
+    this.currentPage = 1;
+  }
+
   get paginatedQuestions() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.questions.slice(start, start + this.pageSize);
+    return this.filteredQuestions.slice(start, start + this.pageSize); // ❌ Mauvais tableau
   }
 
   nextPage() {

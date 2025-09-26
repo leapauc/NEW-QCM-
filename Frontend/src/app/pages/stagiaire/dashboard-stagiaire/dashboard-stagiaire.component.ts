@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
-import { AuthService, AuthUser } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
 import { CommonModule } from '@angular/common';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
+import { AuthUser } from '../../../models/authUser';
 
 @Component({
   selector: 'app-dashboard-stagiaire',
@@ -103,7 +104,7 @@ export class DashboardStagiaireComponent {
 
   getCompletionColor(percent: number): string {
     if (percent < 25) return 'red';
-    if (percent < 50) return 'lightred';
+    if (percent < 50) return 'lightcoral';
     if (percent < 75) return 'orange';
     if (percent < 100) return 'yellow';
     return 'lightgreen';

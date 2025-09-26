@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UserService } from '../../../services/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-suppression-utilisateur',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './suppression-utilisateur.component.html',
-  styleUrl: './suppression-utilisateur.component.css',
 })
 export class SuppressionUtilisateurComponent implements OnInit {
   users: User[] = [];
@@ -16,6 +21,8 @@ export class SuppressionUtilisateurComponent implements OnInit {
   form: FormGroup;
   currentPage = 1;
   pageSize = 5;
+  filteredUsers: User[] = [];
+  searchTerm = '';
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -34,7 +41,10 @@ export class SuppressionUtilisateurComponent implements OnInit {
 
   loadUsers() {
     this.userService.getAllUsers().subscribe({
-      next: (data) => (this.users = data),
+      next: (data) => {
+        this.users = data;
+        this.filteredUsers = [...this.users];
+      },
       error: (err) =>
         console.error("Erreur chargement de l'utilisateurs :", err),
     });
@@ -62,11 +72,26 @@ export class SuppressionUtilisateurComponent implements OnInit {
     this.openConfirmModal();
   }
 
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter((u) =>
+        (u.name + u.firstname + u.email + u.society)
+          .toLowerCase()
+          .includes(term)
+      );
+    }
+
+    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+  }
   // Mettre à jour les utilisateurs affichés en fonction de la page
   // Pagination simple
   get paginatedUsers() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.users.slice(start, start + this.pageSize);
+    return this.filteredUsers.slice(start, start + this.pageSize);
   }
 
   nextPage() {

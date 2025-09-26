@@ -10,7 +10,30 @@ services:
       - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./Database:/docker-entrypoint-initdb.d:ro # monte tout le dossier Database
+      - ./Database:/docker-entrypoint-initdb.d:ro
+    healthcheck: # Ajout : Vérifie si la DB est prête
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web-dev:
+    image: node:18
+    container_name: my-web-dev
+    working_dir: /app
+    ports:
+      - "3000:3000" # Changez en "3001:3000" si port occupé
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:0zaIySyzZro1qeSbe8aQ@postgres:5432/webdev
+      - PORT=3000 # Ajout : Pour que votre app utilise ce port
+    depends_on:
+      postgres:
+        condition: service_healthy # Attends que Postgres soit prêt (Docker Compose v3+)
+    command: sh -c "sleep 10 && npm install && npm start" # Ajout : Délai de 10s pour laisser la DB s'initialiser
 
 volumes:
   pgdata:

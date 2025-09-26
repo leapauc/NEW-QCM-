@@ -8,13 +8,14 @@ import {
   Validators,
   FormsModule,
 } from '@angular/forms';
-import { QCM, QcmService } from '../../../services/qcm.service';
+import { QcmService } from '../../../services/qcm.service';
+import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
+import { QCM } from '../../../models/qcm';
 
 @Component({
   selector: 'app-modification-qcm-question',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modification-qcm-question.component.html',
-  styleUrls: ['./modification-qcm-question.component.css'],
 })
 export class ModificationQcmQuestionComponent implements OnInit {
   qcms: QCM[] = [];
@@ -120,14 +121,14 @@ export class ModificationQcmQuestionComponent implements OnInit {
     }
 
     const formValue = this.qcmForm.value;
-    console.log('Données à envoyer au backend:', formValue);
 
     this.qcmService
       .updateQCM_Question(this.selectedQcm.id_qcm!, formValue)
       .subscribe({
         next: (res) => {
-          console.log('QCM mis à jour avec succès', res);
-          alert('Le questionnaire a été mis à jour !');
+          const modalEl = document.getElementById('successModal');
+          const modal = new bootstrap.Modal(modalEl!);
+          modal.show();
 
           // Réinitialiser le formulaire et la sélection
           this.selectedQcm = null;
@@ -135,8 +136,9 @@ export class ModificationQcmQuestionComponent implements OnInit {
           this.loadQCMs();
         },
         error: (err) => {
-          console.error('Erreur lors de la mise à jour du QCM', err);
-          alert('Une erreur est survenue lors de la mise à jour.');
+          const modalEl = document.getElementById('failedModal');
+          const modal = new bootstrap.Modal(modalEl!);
+          modal.show();
         },
       });
   }
