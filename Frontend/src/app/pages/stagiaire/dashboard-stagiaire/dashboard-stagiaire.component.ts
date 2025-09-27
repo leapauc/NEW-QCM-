@@ -1,46 +1,91 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
 import { AuthService } from '../../../services/auth.service';
 import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
 import { CommonModule } from '@angular/common';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
 import { AuthUser } from '../../../models/authUser';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
 
+/**
+ * Composant du tableau de bord pour un stagiaire connecté.
+ *
+ * Affiche des statistiques personnelles, comme :
+ * - Nombre de questionnaires réalisés
+ * - Scores maximum, minimum et moyen
+ * - Rang et temps moyen
+ * - Questionnaire le plus populaire
+ * - Liste paginée des tentatives de l'utilisateur
+ *
+ * Utilise `StatsService` et `QuizAttemptsService` pour récupérer les données
+ * et `AuthService` pour obtenir l'utilisateur courant.
+ *
+ * @example
+ * ```html
+ * <app-dashboard-stagiaire></app-dashboard-stagiaire>
+ * ```
+ */
 @Component({
   selector: 'app-dashboard-stagiaire',
-  imports: [TimeFormatPipe, CommonModule],
+  imports: [TimeFormatPipe, CommonModule, PaginationComponent],
   templateUrl: './dashboard-stagiaire.component.html',
 })
 export class DashboardStagiaireComponent {
+  /** Nombre de questionnaires réalisés par l'utilisateur */
   nbQuestionnairesRealises = 0;
+  /** Score maximum de l'utilisateur */
   scoreMax = '-';
+  /** Score minimum de l'utilisateur */
   scoreMin = '-';
+  /** Score moyen de l'utilisateur */
   scoreAvg = '-';
+  /** Rang de l'utilisateur */
   range = 'dernier';
+  /** Temps moyen passé sur les questionnaires */
   avgTime = '-';
+  /** Questionnaire le plus populaire */
   questionnairePopulaire = '';
+  /** Nom de l'utilisateur authentifié */
   authNameUser = '';
+  /** Stagiaire actif (nom et prénom) */
   stagiaireActif = { name: '', firstname: '' };
-  currentPage = 1;
-  pageSize = 5;
+  /** Pagination */
+  paginatedAttempts: any[] = [];
+  /** Liste complète des tentatives de l'utilisateur */
   allAttemptsOfMyUser: any[] = [];
+  pageSize = 5;
 
+  /**
+   * Constructeur du composant.
+   *
+   * @param statsService Service pour récupérer les statistiques
+   * @param authService Service d'authentification
+   * @param quizAttempts Service pour récupérer les tentatives de quiz
+   * @param cdr ChangeDetectorRef pour déclencher manuellement la détection des changements
+   */
   constructor(
     private statsService: StatsService,
     private authService: AuthService,
-    private quizAttempts: QuizAttemptsService
+    private quizAttempts: QuizAttemptsService,
+    private cdr: ChangeDetectorRef
   ) {}
 
+  /** Lifecycle hook : appelé après l'initialisation du composant */
   ngOnInit(): void {
     this.loadStats();
   }
 
+  /**
+   * Charge les statistiques de l'utilisateur courant.
+   *
+   * Récupère les scores, le rang, le temps moyen, le questionnaire populaire
+   * et la liste des tentatives via les services.
+   */
   loadStats() {
     const currentUser: AuthUser | null = this.authService.getUser();
     if (!currentUser) return;
 
     this.authNameUser = currentUser.name;
-    console.log(currentUser.name + ', ' + currentUser.id_user);
 
     // Nombre de questionnaires réalisés
     this.statsService
@@ -80,28 +125,19 @@ export class DashboardStagiaireComponent {
       this.questionnairePopulaire = res?.[0]?.title ?? '';
     });
 
-    // 🔥 Récupérer les tentatives de l'utilisateur
+    // Récupérer les tentatives de l'utilisateur
     this.quizAttempts
       .getAttemptsByUser(currentUser.id_user)
       .subscribe((res: any[]) => {
         this.allAttemptsOfMyUser = res;
+        this.paginatedAttempts = res.slice(0, this.pageSize);
       });
   }
 
-  get paginated() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.allAttemptsOfMyUser.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.allAttemptsOfMyUser.length)
-      this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
-  }
-
+  /**
+   * Retourne une couleur en fonction du pourcentage de complétion
+   * @param percent Pourcentage de complétion
+   */
   getCompletionColor(percent: number): string {
     if (percent < 25) return 'red';
     if (percent < 50) return 'lightcoral';

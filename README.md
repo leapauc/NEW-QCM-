@@ -31,4 +31,4 @@ npm install --save-dev @compodoc/compodoc
 
 #### Génère la compodoc:
 
-npm run npm run compodoc:serve
+npm run compodoc:serve

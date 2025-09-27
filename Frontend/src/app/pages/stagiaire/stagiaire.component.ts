@@ -7,6 +7,17 @@ import {
 } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
+/**
+ * Composant représentant le template principale d'un stagiaire connecté.
+ *
+ * Ce composant fournit un espace réservé pour le contenu des stagiaires
+ * et inclut la possibilité de se déconnecter via la méthode `logout`.
+ *
+ * @example
+ * ```html
+ * <app-stagiaire></app-stagiaire>
+ * ```
+ */
 @Component({
   selector: 'app-stagiaire',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -14,7 +25,20 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './stagiaire.component.css',
 })
 export class StagiaireComponent {
+  /**
+   * Constructeur du composant.
+   *
+   * @param authService Service d'authentification pour gérer l'état de connexion
+   * @param router Router pour naviguer après déconnexion
+   */
   constructor(private authService: AuthService, private router: Router) {}
+
+  /**
+   * Déconnecte l'utilisateur actuel et redirige vers la page de login.
+   *
+   * Supprime le token ou l'état de connexion via `AuthService` puis
+   * utilise le `Router` pour naviguer vers `/login`.
+   */
   logout() {
     this.authService.logout(); // supprime le token ou l'état de connexion
     this.router.navigate(['/login']); // redirige vers la page de login

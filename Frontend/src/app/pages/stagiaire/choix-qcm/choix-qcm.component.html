@@ -50,10 +50,12 @@
     </table>
   </div>
   <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="filteredQcms"
+    [pageSize]="5"
+    (pageChange)="paginatedQCM = $event"
+  >
+  </app-pagination>
   <br /><br />
 
   <!-- Modal qcm page -->

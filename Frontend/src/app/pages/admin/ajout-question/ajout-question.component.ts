@@ -11,6 +11,30 @@ import { QcmService } from '../../../services/qcm.service';
 import { QuestionService } from '../../../services/question.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 
+/**
+ * @component
+ * @name AjoutQuestionComponent
+ * @description
+ * Composant permettant à un utilisateur de créer une question pour un QCM existant.
+ *
+ * Fonctionnalités principales :
+ * - Chargement de tous les QCMs disponibles via `QcmService`.
+ * - Sélection d’un QCM pour lequel ajouter la question.
+ * - Formulaire réactif avec validation :
+ *    - Texte de la question obligatoire.
+ *    - Liste de réponses dynamiques (minimum 2, maximum 5).
+ *    - Chaque réponse a un texte et un booléen `isCorrect`.
+ * - Ajout et suppression dynamique de réponses.
+ * - Validation que chaque réponse contient du texte.
+ * - Soumission des données au backend via `QuestionService`.
+ * - Affichage d’un modal Bootstrap en cas de succès.
+ * - Réinitialisation du formulaire et des réponses après soumission.
+ *
+ * @example
+ * ```html
+ * <app-ajout-question></app-ajout-question>
+ * ```
+ */
 @Component({
   selector: 'app-ajout-question',
   standalone: true,
@@ -18,24 +42,52 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
   templateUrl: './ajout-question.component.html',
 })
 export class AjoutQuestionComponent implements OnInit {
+  /**
+   * Liste de tous les QCMs disponibles pour l’utilisateur.
+   */
   qcms: any[] = [];
+  /**
+   * ID du QCM sélectionné dans la liste déroulante.
+   */
   selectedQcmId: number | null = null;
+  /**
+   * Formulaire réactif pour la question et ses réponses.
+   */
   questionForm!: FormGroup;
 
+  /**
+   * Nombre maximal de réponses autorisées pour une question.
+   */
   maxResponses = 5;
+  /**
+   * Nombre minimal de réponses obligatoires pour une question.
+   */
   minResponses = 2;
 
+  /**
+   * Constructeur du composant.
+   * @param fb FormBuilder pour créer les formulaires réactifs.
+   * @param qcmService Service pour récupérer les QCMs.
+   * @param questionService Service pour créer une question via l’API.
+   */
   constructor(
     private fb: FormBuilder,
     private qcmService: QcmService,
     private questionService: QuestionService
   ) {}
 
+  /**
+   * Lifecycle hook ngOnInit.
+   * Initialise le formulaire et charge les QCMs.
+   */
   ngOnInit() {
     this.loadQcms();
     this.initForm();
   }
 
+  /**
+   * Charge tous les QCMs disponibles via le service QcmService.
+   */
   loadQcms() {
     this.qcmService.getAllQCM().subscribe({
       next: (data) => (this.qcms = data),
@@ -43,6 +95,11 @@ export class AjoutQuestionComponent implements OnInit {
     });
   }
 
+  /**
+   * Initialise le formulaire réactif avec :
+   * - question : champ obligatoire
+   * - responses : FormArray contenant 2 réponses par défaut
+   */
   initForm() {
     this.questionForm = this.fb.group({
       question: ['', Validators.required],
@@ -54,10 +111,16 @@ export class AjoutQuestionComponent implements OnInit {
     this.addResponse();
   }
 
+  /**
+   * Getter pour accéder au FormArray des réponses.
+   */
   get responses(): FormArray {
     return this.questionForm.get('responses') as FormArray;
   }
 
+  /**
+   * Crée un FormGroup représentant une réponse.
+   */
   createResponse(): FormGroup {
     return this.fb.group({
       text: ['', Validators.required],
@@ -65,22 +128,42 @@ export class AjoutQuestionComponent implements OnInit {
     });
   }
 
+  /**
+   * Ajoute une nouvelle réponse au formulaire si le maximum n'est pas atteint.
+   */
   addResponse(): void {
     if (this.responses.length < this.maxResponses) {
       this.responses.push(this.createResponse());
     }
   }
 
+  /**
+   * Supprime une réponse du formulaire si le minimum n'est pas dépassé.
+   * @param index Index de la réponse à supprimer.
+   */
   removeResponse(index: number): void {
     if (this.responses.length > this.minResponses) {
       this.responses.removeAt(index);
     }
   }
 
+  /**
+   * Met à jour l'ID du QCM sélectionné lorsque l'utilisateur change la sélection.
+   * @param event Événement de changement du select.
+   */
   onQcmChange(event: any) {
     this.selectedQcmId = +event.target.value;
   }
 
+  /**
+   * Soumet le formulaire après validation.
+   * - Vérifie que le QCM est sélectionné.
+   * - Vérifie que le formulaire est valide.
+   * - Filtre les réponses non vides.
+   * - Prépare les données et appelle QuestionService pour créer la question.
+   * - Affiche un modal Bootstrap en cas de succès.
+   * - Réinitialise le formulaire et les réponses après création.
+   */
   submitForm() {
     if (!this.selectedQcmId) {
       alert('Veuillez sélectionner un QCM');

@@ -21,7 +21,9 @@ permettant :
 
 Le projet Angular nécessite l'installation de quelques librairies indispensables à son bon fonctionnement :
 
--
+- bootstrap
+- bootstrap-icons
+- @compodoc/compodoc
 
 L'installation peut se faire avec les commandes suivantes :
 

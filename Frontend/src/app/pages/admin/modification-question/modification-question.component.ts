@@ -13,6 +13,33 @@ import { QuestionService } from '../../../services/question.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QuestionResponse } from '../../../models/questionResponse';
 
+/**
+ * @component
+ * @name ModificationQuestionComponent
+ * @description
+ * Composant pour la modification des questions d'un QCM.
+ *
+ * Ce composant permet à un utilisateur de :
+ * - Sélectionner un QCM parmi ceux disponibles
+ * - Visualiser la liste des questions du QCM
+ * - Sélectionner une question et charger ses réponses existantes
+ * - Modifier la question et ses réponses
+ * - Ajouter ou supprimer des réponses (avec un minimum et maximum défini)
+ * - Déterminer automatiquement le type de question (single/multiple) selon le nombre de réponses correctes
+ * - Sauvegarder les modifications via le service `QuestionService`
+ * - Afficher un modal de succès ou d'échec avec Bootstrap
+ *
+ * Il utilise les services suivants :
+ * - `QcmService` : pour récupérer les QCM et leurs questions
+ * - `QuestionService` : pour récupérer et mettre à jour les questions et leurs réponses
+ *
+ * Le formulaire est un formulaire réactif (`ReactiveFormsModule`) avec un `FormArray` pour les réponses.
+ *
+ * @example
+ * ```html
+ * <app-modification-question></app-modification-question>
+ * ```
+ */
 @Component({
   selector: 'app-modification-question',
   standalone: true,
@@ -20,21 +47,36 @@ import { QuestionResponse } from '../../../models/questionResponse';
   templateUrl: './modification-question.component.html',
 })
 export class ModificationQuestionComponent implements OnInit {
+  /** Liste des QCM disponibles */
   qcms: any[] = [];
+  /** Liste des questions du QCM sélectionné */
   questions: any[] = [];
+  /** ID du QCM actuellement sélectionné */
   selectedQcmId: number | null = null;
+  /** ID de la question actuellement sélectionnée */
   selectedQuestionId: number | null = null;
-
+  /** Formulaire réactif pour la question et ses réponses */
   questionForm!: FormGroup;
+
+  /** Nombre maximum de réponses autorisées par question */
   maxResponses = 5;
+  /** Nombre minimum de réponses obligatoires par question */
   minResponses = 2;
 
+  /**
+   * Constructeur
+   *
+   * @param fb FormBuilder pour créer et gérer le formulaire réactif
+   * @param qcmService Service pour récupérer les QCM et leurs questions
+   * @param questionService Service pour récupérer et mettre à jour les questions
+   */
   constructor(
     private fb: FormBuilder,
     private qcmService: QcmService,
     private questionService: QuestionService
   ) {}
 
+  /** Lifecycle hook : initialisation du composant */
   ngOnInit() {
     this.loadQcms();
     this.initForm();
@@ -43,6 +85,7 @@ export class ModificationQuestionComponent implements OnInit {
   }
 
   // -------- Form Initialization --------
+  /** Initialise le formulaire réactif pour la question et ses réponses */
   initForm() {
     this.questionForm = this.fb.group({
       question: ['', Validators.required],
@@ -50,10 +93,17 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  /** Retourne le FormArray des réponses du formulaire */
   get responses(): FormArray {
     return this.questionForm.get('responses') as FormArray;
   }
 
+  /**
+   * Crée un FormGroup pour une réponse
+   * @param text Texte de la réponse
+   * @param isCorrect Indique si la réponse est correcte
+   * @returns FormGroup représentant la réponse
+   */
   createResponse(text = '', isCorrect = false): FormGroup {
     return this.fb.group({
       text: [text, Validators.required],
@@ -61,12 +111,21 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  /**
+   * Ajoute une réponse au formulaire si le maximum n’est pas atteint
+   * @param text Texte de la réponse
+   * @param isCorrect Indique si la réponse est correcte
+   */
   addResponse(text = '', isCorrect = false) {
     if (this.responses.length < this.maxResponses) {
       this.responses.push(this.createResponse(text, isCorrect));
     }
   }
 
+  /**
+   * Supprime une réponse du formulaire si le minimum n’est pas atteint
+   * @param index Index de la réponse à supprimer
+   */
   removeResponse(index: number) {
     if (this.responses.length > this.minResponses) {
       this.responses.removeAt(index);
@@ -74,6 +133,7 @@ export class ModificationQuestionComponent implements OnInit {
   }
 
   // -------- Load QCMs and Questions --------
+  /** Charge tous les QCM depuis le service */
   loadQcms() {
     this.qcmService.getAllQCM().subscribe({
       next: (data) => (this.qcms = data),
@@ -81,6 +141,10 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  /**
+   * Sélection d’un QCM
+   * @param event Event provenant du select
+   */
   onQcmChange(event: any) {
     this.selectedQcmId = +event.target.value;
 
@@ -99,6 +163,7 @@ export class ModificationQuestionComponent implements OnInit {
     }
   }
 
+  /** Charge les questions d’un QCM spécifique */
   loadQuestionsByQcm(qcmId: number) {
     this.qcmService.getQcmQuestions(qcmId).subscribe({
       next: (data) => (this.questions = data),
@@ -109,12 +174,17 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  /**
+   * Sélection d’une question
+   * @param event Event provenant du select
+   */
   onQuestionChange(event: any) {
     this.selectedQuestionId = +event.target.value;
     if (this.selectedQuestionId)
       this.loadQuestionDetails(this.selectedQuestionId);
   }
 
+  /** Charge les détails d’une question et ses réponses */
   loadQuestionDetails(questionId: number) {
     this.questionService.getQuestionReponseById(questionId).subscribe({
       next: (data: QuestionResponse[]) => {
@@ -139,6 +209,7 @@ export class ModificationQuestionComponent implements OnInit {
     });
   }
 
+  /** Réinitialise le formulaire et le FormArray des réponses */
   cancelForm() {
     this.selectedQuestionId = null;
     this.questionForm.reset();
@@ -146,6 +217,10 @@ export class ModificationQuestionComponent implements OnInit {
       this.responses.removeAt(0);
     }
   }
+  /**
+   * Recharge la question et ses réponses depuis le backend
+   * (utile pour annuler les modifications)
+   */
   resetForm() {
     if (!this.selectedQuestionId) return;
 
@@ -172,6 +247,7 @@ export class ModificationQuestionComponent implements OnInit {
   }
 
   // -------- Submit Form --------
+  /** Soumet le formulaire et met à jour la question via le service */
   submitForm() {
     if (!this.selectedQcmId || !this.selectedQuestionId) {
       alert('Veuillez sélectionner un QCM et une question');

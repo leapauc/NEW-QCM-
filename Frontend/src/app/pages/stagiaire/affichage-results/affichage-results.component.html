@@ -33,7 +33,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let attempt of paginated">
+        <tr *ngFor="let attempt of paginatedAttempts">
           <td>
             <i
               class="bi bi-eye text-success fs-5"
@@ -71,10 +71,10 @@
                   class="progress-bar"
                   role="progressbar"
                   [ngStyle]="{
-                    width: getCompletedRounded(attempt) + '%',
+                    width: attempt.completed + '%',
                     backgroundColor: getCompletionColor(attempt.completed)
                   }"
-                  [attr.aria-valuenow]="getCompletedRounded(attempt)"
+                  [attr.aria-valuenow]="attempt.completed"
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
@@ -99,10 +99,13 @@
       </tbody>
     </table>
   </div>
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    *ngIf="filteredAttempts.length"
+    [items]="filteredAttempts"
+    [pageSize]="10"
+    (pageChange)="paginatedAttempts = $event"
+  >
+  </app-pagination>
 </div>
 
 <!-- Modal -->

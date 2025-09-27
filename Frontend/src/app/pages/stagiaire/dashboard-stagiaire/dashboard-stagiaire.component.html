@@ -88,7 +88,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let attempt of paginated">
+        <tr *ngFor="let attempt of paginatedAttempts">
           <td>{{ attempt.title }}</td>
           <td>{{ attempt.ended_at | date : "short" }}</td>
           <td *ngIf="attempt.duration.minutes">
@@ -151,9 +151,11 @@
       </tbody>
     </table>
     <!-- Pagination -->
-    <div class="d-flex justify-content-between">
-      <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-      <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-    </div>
+    <app-pagination
+      [items]="allAttemptsOfMyUser"
+      [pageSize]="pageSize"
+      (pageChange)="paginatedAttempts = $event"
+    >
+    </app-pagination>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -6,46 +6,74 @@ import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 import { AuthUser } from '../../../models/authUser';
 import { AttemptQuestion } from '../../../models/attemptQuestion';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
 
+/**
+ * Composant d'affichage des résultats d'un utilisateur.
+ *
+ * Permet à un stagiaire de :
+ * - Visualiser la liste de ses tentatives de QCM
+ * - Filtrer et rechercher une tentative
+ * - Paginer les tentatives
+ * - Afficher le détail d'une tentative dans un modal
+ *
+ * Utilise `QuizAttemptsService` pour récupérer les tentatives et leurs détails,
+ * et `AuthService` pour obtenir l'utilisateur courant.
+ *
+ * @example
+ * ```html
+ * <app-affichage-results></app-affichage-results>
+ * ```
+ */
 @Component({
   selector: 'app-affichage-results',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PaginationComponent],
   templateUrl: './affichage-results.component.html',
 })
 export class AffichageResultsComponent {
+  /** Liste de toutes les tentatives de l'utilisateur */
   attempts: any[] = [];
+  /** Utilisateur courant authentifié */
   currentUser: AuthUser | null = null;
+  /** Détail des questions d'une tentative sélectionnée */
   selectedAttemptQuestions: AttemptQuestion[] = [];
-  currentPage = 1;
-  pageSize = 10;
+  /** Pagination */
+  paginatedAttempts: any[] = [];
+  /** Liste filtrée des tentatives après recherche */
   filteredAttempts: any[] = [];
+  /** Terme de recherche pour filtrer les tentatives */
   searchTerm = '';
 
+  /**
+   * Constructeur du composant
+   * @param quizAttemptsService Service pour récupérer les tentatives
+   * @param authService Service pour obtenir l'utilisateur courant
+   * @param cdr ChangeDetectorRef pour déclencher manuellement la détection des changements
+   */
   constructor(
     private quizAttemptsService: QuizAttemptsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
+  /** Lifecycle hook : appelé après l'initialisation du composant */
   ngOnInit(): void {
     this.currentUser = this.authService.getUser();
     if (this.currentUser) {
       this.quizAttemptsService
         .getAttemptsByUser(this.currentUser.id_user)
-        .subscribe(
-          (res) => {
-            this.attempts = res;
-            this.filteredAttempts = [...this.attempts];
-          },
-          (err) => {
-            console.error('Erreur récupération tentatives', err);
-          }
-        );
+        .subscribe((res) => {
+          this.attempts = res;
+          this.filteredAttempts = [...this.attempts];
+          this.cdr.detectChanges(); // <-- force la détection après update
+        });
     }
   }
-  getCompletedRounded(attempt: any): number {
-    return Math.round(attempt.completed);
-  }
 
+  /**
+   * Affiche le détail d'une tentative dans un modal
+   * @param id_attempt ID de la tentative
+   */
   viewAttempt(id_attempt: number) {
     this.quizAttemptsService.getAttemptDetails(id_attempt).subscribe((res) => {
       this.selectedAttemptQuestions = res.questions;
@@ -57,6 +85,7 @@ export class AffichageResultsComponent {
     });
   }
 
+  /** Ferme le modal de détail de tentative */
   closeModal() {
     const modalEl = document.getElementById('attemptModal');
     if (modalEl) {
@@ -66,6 +95,10 @@ export class AffichageResultsComponent {
     }
   }
 
+  /**
+   * Retourne une couleur en fonction du pourcentage de complétion
+   * @param percent Pourcentage de complétion
+   */
   getCompletionColor(percent: number): string {
     if (percent < 25) return 'red';
     if (percent < 50) return 'lightcoral';
@@ -74,6 +107,7 @@ export class AffichageResultsComponent {
     return 'lightgreen';
   }
 
+  /** Applique le filtre de recherche sur la liste des tentatives */
   applyFilter() {
     const term = this.searchTerm.trim().toLowerCase();
 
@@ -85,20 +119,6 @@ export class AffichageResultsComponent {
       );
     }
 
-    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
-  }
-
-  get paginated() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredAttempts.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.attempts.length)
-      this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
+    this.cdr.detectChanges(); // force Angular à recalculer
   }
 }
