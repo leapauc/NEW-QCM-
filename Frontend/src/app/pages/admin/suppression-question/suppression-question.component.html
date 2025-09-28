@@ -8,16 +8,12 @@
   <br />
   <br />
   <!-- Search bar -->
-  <div class="mb-3 d-flex justify-content-end">
-    <input
-      type="text"
-      class="form-control w-25"
-      placeholder="Rechercher une question..."
-      [(ngModel)]="searchTerm"
-      (input)="applyFilter()"
-    />
-  </div>
-  <!-- TABLE -->
+  <app-search-bar
+    placeholder="Rechercher une question..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
+  <!-- Tableau des Questions -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
       <thead>
@@ -49,10 +45,12 @@
   </div>
 
   <!-- Pagination -->
-  <div class="d-flex justify-content-between mt-2">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="filteredQuestions"
+    [pageSize]="5"
+    (pageChange)="paginatedQuestions = $event"
+  >
+  </app-pagination>
 </div>
 
 <!-- Modal de confirmation -->
@@ -88,6 +86,19 @@
     </div>
   </div>
 </div>
+<app-confirmation-modal
+  [title]="'Confirmer la suppression d\'une Question'"
+  [actionType]="'delete'"
+  [message]="'Êtes-vous sûr de vouloir supprimer cette Question ?'"
+  (confirm)="deleteQuestion()"
+>
+  <!-- Contenu personnalisé pour le corps du modal -->
+  <h6>Question sélectionnée :</h6>
+  <pre>
+  Question: {{ selectedQuestion?.question }}
+  Type: {{ selectedQuestion?.type }}
+  </pre>
+</app-confirmation-modal>
 <div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
   {{ message }}
 </div>

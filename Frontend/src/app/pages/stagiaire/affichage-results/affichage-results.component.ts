@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthUser } from '../../../models/authUser';
 import { AttemptQuestion } from '../../../models/attemptQuestion';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 
 /**
  * Composant d'affichage des résultats d'un utilisateur.
@@ -27,7 +28,7 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
  */
 @Component({
   selector: 'app-affichage-results',
-  imports: [CommonModule, FormsModule, PaginationComponent],
+  imports: [CommonModule, FormsModule, PaginationComponent, SearchBarComponent],
   templateUrl: './affichage-results.component.html',
 })
 export class AffichageResultsComponent {

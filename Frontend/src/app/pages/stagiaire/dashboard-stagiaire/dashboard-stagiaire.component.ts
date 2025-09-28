@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
 import { AuthUser } from '../../../models/authUser';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 
 /**
  * Composant du tableau de bord pour un stagiaire connecté.

@@ -9,6 +9,7 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QcmService } from '../../../services/qcm.service';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 /**
  * @component
@@ -31,7 +32,7 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-ajout-qcm',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './ajout-qcm.component.html',
 })
 export class AjoutQcmComponent {
@@ -94,8 +95,7 @@ export class AjoutQcmComponent {
           // Afficher le modal Bootstrap uniquement si insertion réussie
           if (res && res.qcmId) {
             const modalEl = document.getElementById('successModal');
-            const modal = new bootstrap.Modal(modalEl!);
-            modal.show();
+            if (modalEl) new bootstrap.Modal(modalEl).show();
 
             // Réinitialiser le formulaire
             this.form.reset();
@@ -103,7 +103,10 @@ export class AjoutQcmComponent {
             console.error('Erreur : QCM non créé correctement');
           }
         },
-        error: (err) => console.error('Erreur création QCM', err),
+        error: (err) => {
+          const modalEl = document.getElementById('failedModal');
+          if (modalEl) new bootstrap.Modal(modalEl).show();
+        },
       });
     } else {
       console.log('Formulaire invalide');

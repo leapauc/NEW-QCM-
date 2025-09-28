@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { QcmService } from '../../../services/qcm.service';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
@@ -10,25 +10,100 @@ import {
   Validators,
 } from '@angular/forms';
 import { QCM } from '../../../models/qcm';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
 
+/**
+ * Composant responsable de la suppression des QCM.
+ *
+ * @description
+ * Ce composant permet :
+ * - de charger et afficher la liste des QCM existants
+ * - d'effectuer une recherche et une pagination sur les QCM
+ * - de sélectionner un QCM et afficher une modale de confirmation
+ * - de supprimer le QCM sélectionné après confirmation
+ *
+ * @usageNotes
+ * ### Importation
+ * Ce composant utilise :
+ * - `CommonModule`, `FormsModule`, `ReactiveFormsModule`
+ * - `SearchBarComponent` pour la recherche
+ * - `PaginationComponent` pour la pagination
+ * - `ConfirmationModalComponent` pour afficher un dialogue de confirmation avant suppression
+ *
+ * @example
+ * ```html
+ * <app-suppression-qcm></app-suppression-qcm>
+ * ```
+ *
+ * @selector app-suppression-qcm
+ * @component
+ */
 @Component({
   selector: 'app-suppression-qcm',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SearchBarComponent,
+    PaginationComponent,
+    ConfirmationModalComponent,
+  ],
   templateUrl: './suppression-qcm.component.html',
 })
 export class SuppressionQcmComponent implements OnInit {
+  /**
+   * Liste complète des QCM récupérés depuis le backend.
+   */
   qcms: QCM[] = [];
+
+  /**
+   * QCM actuellement sélectionné pour suppression.
+   */
   selectedQcm: QCM | null = null;
+
+  /**
+   * Formulaire réactif utilisé pour afficher les détails du QCM sélectionné.
+   */
   form: FormGroup;
-  currentPage = 1;
-  pageSize = 5;
+
+  /**
+   * Liste des QCM filtrés selon le terme de recherche.
+   */
   filteredQcms: QCM[] = [];
+
+  /**
+   * Terme de recherche saisi par l'utilisateur.
+   */
   searchTerm = '';
 
+  /**
+   * Liste des QCM à afficher pour la page courante (pagination).
+   */
+  paginatedQcms: QCM[] = [];
+
+  /**
+   * Message de confirmation ou d'erreur affiché après suppression.
+   */
   message: string | null = null;
+
+  /**
+   * Classe CSS pour styliser le message (success/danger).
+   */
   messageClass: string = '';
 
-  constructor(private qcmService: QcmService, private fb: FormBuilder) {
+  /**
+   * Constructeur du composant.
+   * @param qcmService Service de gestion des QCM
+   * @param fb FormBuilder pour initialiser le formulaire
+   * @param cdr ChangeDetectorRef pour rafraîchir la vue après modifications asynchrones
+   */
+  constructor(
+    private qcmService: QcmService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -38,33 +113,56 @@ export class SuppressionQcmComponent implements OnInit {
     });
   }
 
+  /**
+   * Cycle de vie Angular : Initialisation du composant.
+   * Charge les QCM existants dès l'affichage.
+   */
   ngOnInit() {
     this.loadQcms();
   }
 
+  /**
+   * Charge tous les QCM via le service et initialise la pagination.
+   */
   loadQcms() {
     this.qcmService.getAllQCM().subscribe({
       next: (data) => {
         this.qcms = data;
         this.filteredQcms = [...this.qcms];
+
+        Promise.resolve().then(() => {
+          this.paginatedQcms = this.filteredQcms.slice(0, 5);
+          this.cdr.detectChanges();
+        });
       },
       error: (err) => console.error('Erreur chargement QCMs', err),
     });
   }
 
+  /**
+   * Ouvre la modale de confirmation avant suppression.
+   */
   openConfirmModal() {
-    const modalEl = document.getElementById('confirmModal');
+    const modalEl = document.getElementById('confirmationModal');
     if (modalEl) {
       const modal = new bootstrap.Modal(modalEl);
       modal.show();
     }
   }
 
+  /**
+   * Sélectionne un QCM pour suppression et déclenche l'ouverture de la modale.
+   * @param qcm QCM à supprimer
+   */
   selectQcm(qcm: QCM) {
     this.selectedQcm = qcm;
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     this.openConfirmModal();
   }
+
+  /**
+   * Filtre les QCM selon le terme saisi dans la barre de recherche.
+   */
   applyFilter() {
     const term = this.searchTerm.trim().toLowerCase();
 
@@ -76,26 +174,18 @@ export class SuppressionQcmComponent implements OnInit {
       );
     }
 
-    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
-  }
-
-  // Pagination simple
-  get paginatedQcm() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredQcms.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.qcms.length) this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
+    Promise.resolve().then(() => {
+      this.paginatedQcms = this.filteredQcms.slice(0, 5);
+      this.cdr.detectChanges();
+    });
   }
 
   // Supprimer le QCM sélectionné
+  /**
+   * Supprime le QCM sélectionné via le service.
+   * Affiche un message de succès ou d'erreur en fonction du résultat.
+   */
   deleteQcm(): void {
-    console.log('test');
     if (!this.selectedQcm || this.selectedQcm.id_qcm == null) return;
 
     this.qcmService.deleteQCM(this.selectedQcm.id_qcm).subscribe({
@@ -104,6 +194,9 @@ export class SuppressionQcmComponent implements OnInit {
         this.messageClass = 'alert alert-success';
         this.loadQcms();
         this.selectedQcm = null;
+
+        const modalEl = document.getElementById('confirmationModal');
+        if (modalEl) bootstrap.Modal.getInstance(modalEl)?.hide();
 
         setTimeout(() => (this.message = null), 2000);
       },

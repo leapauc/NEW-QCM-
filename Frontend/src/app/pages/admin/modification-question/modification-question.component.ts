@@ -12,6 +12,7 @@ import { QcmService } from '../../../services/qcm.service';
 import { QuestionService } from '../../../services/question.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QuestionResponse } from '../../../models/questionResponse';
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 /**
  * @component
@@ -43,7 +44,7 @@ import { QuestionResponse } from '../../../models/questionResponse';
 @Component({
   selector: 'app-modification-question',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ModalComponent],
   templateUrl: './modification-question.component.html',
 })
 export class ModificationQuestionComponent implements OnInit {
@@ -294,17 +295,12 @@ export class ModificationQuestionComponent implements OnInit {
       .updateQuestion(this.selectedQuestionId, dataToUpdate)
       .subscribe({
         next: (res) => {
-          // Afficher le modal Bootstrap
           const modalEl = document.getElementById('successModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
         error: (err) => {
-          console.error(err);
-          // Afficher le modal Bootstrap
           const modalEl = document.getElementById('failedModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
       });
     this.cancelForm();

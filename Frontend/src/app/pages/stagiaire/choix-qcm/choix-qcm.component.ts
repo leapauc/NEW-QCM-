@@ -16,6 +16,8 @@ import { AuthUser } from '../../../models/authUser';
 import { AttemptPayload } from '../../../models/attemptPayload';
 import { QCM } from '../../../models/qcm';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { Serializer } from '@angular/compiler';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 
 /**
  * Composant de sélection et d'exécution d'un QCM.
@@ -42,6 +44,7 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
     ReactiveFormsModule,
     FormsModule,
     PaginationComponent,
+    SearchBarComponent,
   ],
   templateUrl: './choix-qcm.component.html',
 })
@@ -53,7 +56,7 @@ export class ChoixQcmComponent implements OnInit {
   /** Formulaire réactif pour le QCM */
   qcmForm!: FormGroup;
   /** Pagination */
-  paginatedQCM: QCM[] = [];
+  paginatedQcms: QCM[] = [];
   /** ID de l'utilisateur authentifié */
   authIdUser = 0;
   /** Date/heure de début du QCM */
@@ -110,7 +113,7 @@ export class ChoixQcmComponent implements OnInit {
 
         // 🔹 éviter ExpressionChangedAfterItHasBeenCheckedError
         Promise.resolve().then(() => {
-          this.paginatedQCM = this.filteredQcms.slice(0, 5);
+          this.paginatedQcms = this.filteredQcms.slice(0, 5);
           this.cdr.detectChanges();
         });
       },
@@ -312,7 +315,7 @@ export class ChoixQcmComponent implements OnInit {
     }
 
     Promise.resolve().then(() => {
-      this.paginatedQCM = this.filteredQcms.slice(0, 5);
+      this.paginatedQcms = this.filteredQcms.slice(0, 5);
       this.cdr.detectChanges();
     });
   }

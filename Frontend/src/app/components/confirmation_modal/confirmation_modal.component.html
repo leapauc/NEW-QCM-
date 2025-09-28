@@ -1,0 +1,43 @@
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5
+          class="modal-title"
+          [ngClass]="{
+            'text-danger': actionType === 'delete',
+            'text-primary': actionType === 'update'
+          }"
+        >
+          {{ title }}
+        </h5>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+        <ng-content></ng-content>
+        <!-- Permet d'injecter du contenu personnalisé -->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="onCancel()"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn"
+          [ngClass]="{
+            'btn-success': actionType === 'update',
+            'btn-danger': actionType === 'delete'
+          }"
+          (click)="onConfirm()"
+        >
+          Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

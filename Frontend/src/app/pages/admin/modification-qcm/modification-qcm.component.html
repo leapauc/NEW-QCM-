@@ -14,15 +14,11 @@
   </p>
   <br />
   <!-- Search bar -->
-  <div class="mb-3 d-flex justify-content-end">
-    <input
-      type="text"
-      class="form-control w-25"
-      placeholder="Rechercher un QCM..."
-      [(ngModel)]="searchTerm"
-      (input)="applyFilter()"
-    />
-  </div>
+  <app-search-bar
+    placeholder="Rechercher un QCM..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
   <!-- Tableau des qcm -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
@@ -36,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let qcm of paginatedQCM">
+        <tr *ngFor="let qcm of paginatedQcms">
           <td class="text-center">
             <i
               class="bi bi-pencil-square text-primary fs-5"
@@ -53,10 +49,12 @@
     </table>
   </div>
   <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="filteredQcms"
+    [pageSize]="5"
+    (pageChange)="paginatedQcms = $event"
+  >
+  </app-pagination>
   <br /><br />
   <form
     [formGroup]="qcmForm"
@@ -90,49 +88,14 @@
   </form>
 </div>
 <!-- MODALS -->
-<div
-  class="modal fade"
-  id="successModal"
-  tabindex="-1"
-  aria-labelledby="successModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <div class="modal-body">
-        <div class="mb-3">
-          <span style="font-size: 3rem">✔️</span>
-        </div>
-        <h5 class="modal-title mb-3" id="successModalLabel">
-          Modification QCM réalisée avec succès !
-        </h5>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          Fermer
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="failedModal"
-  tabindex="-1"
-  aria-labelledby="failedModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <div class="modal-body">
-        <div class="mb-3">
-          <span style="font-size: 3rem">❌</span>
-        </div>
-        <h5 class="modal-title mb-3" id="failedModalLabel">
-          La modification a échoué !
-        </h5>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          Fermer
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-modal
+  modalId="successModal"
+  icon="✔️"
+  message="Modification QCM réalisée avec succès !"
+  (onClose)="onQcmUpdated()"
+></app-modal>
+<app-modal
+  modalId="failedModal"
+  icon="❌"
+  message="La modification du QCM a échoué !"
+></app-modal>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import {
   FormBuilder,
@@ -9,22 +9,92 @@ import {
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
 
+/**
+ * Composant responsable de la suppression des utilisateurs.
+ *
+ * @description
+ * Ce composant permet :
+ * - de charger et afficher la liste des utilisateurs disponibles
+ * - de filtrer les utilisateurs via une barre de recherche
+ * - de sélectionner un utilisateur et afficher une modale de confirmation
+ * - de supprimer l'utilisateur sélectionné via le service UserService
+ *
+ * @usageNotes
+ * ### Importation
+ * Ce composant importe et utilise :
+ * - `CommonModule`, `FormsModule`
+ * - `SearchBarComponent` pour la recherche
+ * - `PaginationComponent` pour la pagination
+ * - `ConfirmationModalComponent` pour afficher le dialogue de confirmation avant suppression
+ *
+ * @example
+ * ```html
+ * <app-suppression-utilisateur></app-suppression-utilisateur>
+ * ```
+ *
+ * @selector app-suppression-utilisateur
+ * @component
+ */
 @Component({
   selector: 'app-suppression-utilisateur',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SearchBarComponent,
+    PaginationComponent,
+    ConfirmationModalComponent,
+  ],
   templateUrl: './suppression-utilisateur.component.html',
 })
 export class SuppressionUtilisateurComponent implements OnInit {
+  /**
+   * Liste complète des utilisateurs récupérés depuis l'API.
+   */
   users: User[] = [];
+  /**
+   * Utilisateur actuellement sélectionné pour suppression.
+   */
   selectedUser: User | null = null;
+  /**
+   * Formulaire réactif affichant les informations de l'utilisateur sélectionné.
+   */
   form: FormGroup;
-  currentPage = 1;
-  pageSize = 5;
+  /**
+   * Liste filtrée des utilisateurs selon le terme de recherche.
+   */
   filteredUsers: User[] = [];
+  /**
+   * Terme de recherche saisi par l'utilisateur.
+   */
   searchTerm = '';
+  /**
+   * Liste paginée des utilisateurs affichés dans le tableau.
+   */
+  paginatedUsers: User[] = [];
+  /**
+   * Message de retour affiché après suppression (succès ou erreur).
+   */
+  message: string | null = null;
+  /**
+   * Classe CSS appliquée au message (ex. "alert-success", "alert-danger").
+   */
+  messageClass: string = '';
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  /**
+   * Constructeur du composant.
+   * @param userService Service pour récupérer et supprimer les utilisateurs.
+   * @param fb FormBuilder pour créer et gérer le formulaire.
+   * @param cdr ChangeDetectorRef pour forcer la détection des changements après mises à jour asynchrones.
+   */
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       firstname: ['', Validators.required],
@@ -35,29 +105,48 @@ export class SuppressionUtilisateurComponent implements OnInit {
     });
   }
 
+  /**
+   * Cycle de vie Angular : Initialisation du composant.
+   * Charge les utilisateurs dès l'affichage.
+   */
   ngOnInit() {
     this.loadUsers();
   }
 
+  /**
+   * Charge tous les utilisateurs depuis le service et initialise la pagination.
+   */
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
         this.filteredUsers = [...this.users];
+
+        Promise.resolve().then(() => {
+          this.paginatedUsers = this.filteredUsers.slice(0, 5);
+          this.cdr.detectChanges();
+        });
       },
       error: (err) =>
         console.error("Erreur chargement de l'utilisateurs :", err),
     });
   }
 
+  /**
+   * Ouvre la modale de confirmation avant suppression.
+   */
   openConfirmModal() {
-    const modalEl = document.getElementById('confirmModal');
+    const modalEl = document.getElementById('confirmationModal');
     if (modalEl) {
       const modal = new bootstrap.Modal(modalEl);
       modal.show();
     }
   }
 
+  /**
+   * Sélectionne un utilisateur et préremplit le formulaire, puis ouvre la modale de confirmation.
+   * @param user Utilisateur à supprimer.
+   */
   selectUser(user: User) {
     this.selectedUser = user;
     this.form.patchValue({
@@ -72,6 +161,10 @@ export class SuppressionUtilisateurComponent implements OnInit {
     this.openConfirmModal();
   }
 
+  /**
+   * Sélectionne un utilisateur et préremplit le formulaire, puis ouvre la modale de confirmation.
+   * @param user Utilisateur à supprimer.
+   */
   applyFilter() {
     const term = this.searchTerm.trim().toLowerCase();
 
@@ -85,27 +178,17 @@ export class SuppressionUtilisateurComponent implements OnInit {
       );
     }
 
-    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
-  }
-  // Mettre à jour les utilisateurs affichés en fonction de la page
-  // Pagination simple
-  get paginatedUsers() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredUsers.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.users.length)
-      this.currentPage++;
-  }
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
+    Promise.resolve().then(() => {
+      this.paginatedUsers = this.filteredUsers.slice(0, 5);
+      this.cdr.detectChanges();
+    });
   }
 
   // Supprimer l'utilisateur sélectionné
-  message: string | null = null;
-  messageClass: string = '';
-
+  /**
+   * Supprime l'utilisateur sélectionné via le service.
+   * Affiche un message de succès ou d'erreur et recharge la liste des utilisateurs.
+   */
   deleteUser(): void {
     if (!this.selectedUser || this.selectedUser.id_user == null) return;
 
@@ -115,6 +198,9 @@ export class SuppressionUtilisateurComponent implements OnInit {
         this.messageClass = 'alert alert-success'; // vert
         this.loadUsers();
         this.selectedUser = null;
+
+        const modalEl = document.getElementById('confirmationModal');
+        if (modalEl) bootstrap.Modal.getInstance(modalEl)?.hide();
 
         // faire disparaître le message après 2 secondes
         setTimeout(() => (this.message = null), 2000);

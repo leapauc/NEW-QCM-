@@ -11,15 +11,11 @@
   <br />
   <br />
   <!-- Search bar -->
-  <div class="mb-3 d-flex justify-content-end">
-    <input
-      type="text"
-      class="form-control w-25"
-      placeholder="Rechercher un utilisateur..."
-      [(ngModel)]="searchTerm"
-      (input)="applyFilter()"
-    />
-  </div>
+  <app-search-bar
+    placeholder="Rechercher un utilisateur..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
   <!-- Tableau des utilisateurs -->
   <div>
     <table class="table table-striped">
@@ -53,10 +49,12 @@
   </div>
 
   <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="filteredUsers"
+    [pageSize]="5"
+    (pageChange)="paginatedUsers = $event"
+  >
+  </app-pagination>
 
   <!-- Formulaire d'édition -->
   <div *ngIf="selectedUser" class="mt-4 form">
@@ -128,52 +126,38 @@
 </div>
 
 <!-- Modal de confirmation -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div
-      class="modal-content p-3"
-      *ngIf="selectedUserBefore && selectedUserAfter"
-    >
-      <div class="modal-header">
-        <h5 class="modal-title">Confirmer la mise à jour</h5>
+<app-confirmation-modal
+  [title]="'Confirmer la mise à jour'"
+  [actionType]="'update'"
+  [message]="'Confirmez-vous la modification de cet utilisateur ?'"
+  (confirm)="confirmUpdate()"
+>
+  <!-- Contenu personnalisé si besoin -->
+  <div *ngIf="selectedUserBefore && selectedUserAfter">
+    <div class="row mb-3">
+      <div class="col-6">
+        <h6>Avant :</h6>
+        <pre>
+  Nom : {{ selectedUserBefore.name }}
+  Prénom : {{ selectedUserBefore.firstname }}
+  Société : {{ selectedUserBefore.society }}
+  Email : {{ selectedUserBefore.email }}
+  Admin : {{ selectedUserBefore.admin }}
+        </pre>
       </div>
-      <div class="modal-body">
-        <div class="row mb-3">
-          <div class="col-6">
-            <h6>Avant :</h6>
-            <pre>
-    Nom : {{ selectedUserBefore.name }}
-    Prénom : {{ selectedUserBefore.firstname }}
-    Société : {{ selectedUserBefore.society }}
-    Password : ***************
-    Email : {{ selectedUserBefore.email }}
-    Admin : {{ selectedUserBefore.admin }}
-            </pre>
-          </div>
-          <div class="col-6">
-            <h6>Après :</h6>
-            <pre>
-    Nom : {{ selectedUserAfter.name }}
-    Prénom : {{ selectedUserAfter.firstname }}
-    Société : {{ selectedUserAfter.society }}
-    Password : ***************
-    Email : {{ selectedUserAfter.email }}
-    Admin : {{ selectedUserAfter.admin }}
-            </pre>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Annuler
-        </button>
-        <button type="button" class="btn btn-success" (click)="confirmUpdate()">
-          Valider
-        </button>
+      <div class="col-6">
+        <h6>Après :</h6>
+        <pre>
+Nom : {{ selectedUserAfter.name }}
+Prénom : {{ selectedUserAfter.firstname }}
+Société : {{ selectedUserAfter.society }}
+Email : {{ selectedUserAfter.email }}
+Admin : {{ selectedUserAfter.admin }}
+        </pre>
       </div>
     </div>
   </div>
-</div>
+</app-confirmation-modal>
 <div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
   {{ message }}
 </div>

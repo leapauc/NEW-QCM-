@@ -1,0 +1,1500 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>New QCM + documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">New QCM + documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  SuppressionQuestionComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/admin/suppression-question/suppression-question.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant responsable de la suppression des questions.</p>
+<p>Ce composant permet :</p>
+<ul>
+<li>de charger et afficher la liste des questions disponibles</li>
+<li>de filtrer les questions grâce à une barre de recherche</li>
+<li>de sélectionner une question et afficher une modale de confirmation</li>
+<li>de supprimer la question sélectionnée via le service QuestionService</li>
+</ul>
+<h3>Importation</h3>
+<p>Ce composant importe et utilise :</p>
+<ul>
+<li><code>CommonModule</code>, <code>FormsModule</code>, <code>ReactiveFormsModule</code></li>
+<li><code>SearchBarComponent</code> pour la recherche</li>
+<li><code>PaginationComponent</code> pour la pagination</li>
+<li><code>ConfirmationModalComponent</code> pour afficher le dialogue de confirmation avant suppression</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-suppression-question&gt;&lt;/app-suppression-question&gt;</code></pre></div>
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-suppression-question</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>FormsModule</code>
+                                <code><a href="../components/SearchBarComponent.html" target="_self" >SearchBarComponent</a></code>
+                                <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
+                                <code><a href="../components/ConfirmationModalComponent.html" target="_self" >ConfirmationModalComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./suppression-question.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filteredQuestions" >filteredQuestions</a>
+                            </li>
+                            <li>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <a href="#message" >message</a>
+                            </li>
+                            <li>
+                                <a href="#messageClass" >messageClass</a>
+                            </li>
+                            <li>
+                                <a href="#paginatedQuestions" >paginatedQuestions</a>
+                            </li>
+                            <li>
+                                <a href="#questions" >questions</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                            <li>
+                                <a href="#selectedQuestion" >selectedQuestion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#deleteQuestion" >deleteQuestion</a>
+                            </li>
+                            <li>
+                                <a href="#loadQuestions" >loadQuestions</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openConfirmModal" >openConfirmModal</a>
+                            </li>
+                            <li>
+                                <a href="#parseResponses" >parseResponses</a>
+                            </li>
+                            <li>
+                                <a href="#selectQuestion" >selectQuestion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(questionService: <a href="../injectables/QuestionService.html" target="_self">QuestionService</a>, fb: FormBuilder, cdr: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:87</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du composant.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>questionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QuestionService.html" target="_self" >QuestionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service pour récupérer et supprimer les questions.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>FormBuilder pour créer et gérer le formulaire réactif.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ChangeDetectorRef pour forcer la détection des changements après mises à jour asynchrones.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filtre les questions en fonction du terme saisi.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteQuestion"></a>
+                    <span class="name">
+                        <span ><b>deleteQuestion</b></span>
+                        <a href="#deleteQuestion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteQuestion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="171"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:171</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Supprime la question sélectionnée via le service.
+Affiche un message de succès ou d&#39;erreur et recharge la liste des questions.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadQuestions"></a>
+                    <span class="name">
+                        <span ><b>loadQuestions</b></span>
+                        <a href="#loadQuestions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadQuestions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge toutes les questions depuis le service et initialise la pagination.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:111</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cycle de vie Angular : Initialisation du composant.
+Charge les questions dès l&#39;affichage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openConfirmModal"></a>
+                    <span class="name">
+                        <span ><b>openConfirmModal</b></span>
+                        <a href="#openConfirmModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openConfirmModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ouvre la modale de confirmation avant suppression.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseResponses"></a>
+                    <span class="name">
+                        <span ><b>parseResponses</b></span>
+                        <a href="#parseResponses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>parseResponses(question: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Parse les réponses d&#39;une question (si elles sont sous forme de chaîne séparée par <code>|</code>).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>question</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Objet question à analyser.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Liste des réponses individuelles.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectQuestion"></a>
+                    <span class="name">
+                        <span ><b>selectQuestion</b></span>
+                        <a href="#selectQuestion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectQuestion(question: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="157"
+                                    class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:157</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sélectionne une question et préremplit le formulaire, puis affiche la modale.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>question</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Question à supprimer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredQuestions"></a>
+                    <span class="name">
+                        <span ><b>filteredQuestions</b></span>
+                        <a href="#filteredQuestions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste des questions filtrées selon la recherche.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulaire réactif permettant d&#39;afficher les informations de la question sélectionnée.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="message"></a>
+                    <span class="name">
+                        <span ><b>message</b></span>
+                        <a href="#message"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Message de retour affiché après suppression (succès ou erreur).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="messageClass"></a>
+                    <span class="name">
+                        <span ><b>messageClass</b></span>
+                        <a href="#messageClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Classe CSS appliquée au message (ex. &quot;alert-success&quot;, &quot;alert-danger&quot;).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginatedQuestions"></a>
+                    <span class="name">
+                        <span ><b>paginatedQuestions</b></span>
+                        <a href="#paginatedQuestions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:87</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste paginée des questions affichées dans le tableau.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="questions"></a>
+                    <span class="name">
+                        <span ><b>questions</b></span>
+                        <a href="#questions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste complète des questions récupérées depuis l&#39;API.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Terme de recherche saisi par l&#39;utilisateur.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedQuestion"></a>
+                    <span class="name">
+                        <span ><b>selectedQuestion</b></span>
+                        <a href="#selectedQuestion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/pages/admin/suppression-question/suppression-question.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Question actuellement sélectionnée pour suppression.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { QuestionService } from &#x27;../../../services/question.service&#x27;;
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import { typeValidator } from &#x27;../../../validators/type.validator&#x27;;
+import * as bootstrap from &#x27;bootstrap&#x27;;
+import { SearchBarComponent } from &#x27;../../../components/search_bar/search_bar.component&#x27;;
+import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
+import { ConfirmationModalComponent } from &#x27;../../../components/confirmation_modal/confirmation_modal.component&#x27;;
+
+/**
+ * Composant responsable de la suppression des questions.
+ *
+ * @description
+ * Ce composant permet :
+ * - de charger et afficher la liste des questions disponibles
+ * - de filtrer les questions grâce à une barre de recherche
+ * - de sélectionner une question et afficher une modale de confirmation
+ * - de supprimer la question sélectionnée via le service QuestionService
+ *
+ * @usageNotes
+ * ### Importation
+ * Ce composant importe et utilise :
+ * - &#x60;CommonModule&#x60;, &#x60;FormsModule&#x60;, &#x60;ReactiveFormsModule&#x60;
+ * - &#x60;SearchBarComponent&#x60; pour la recherche
+ * - &#x60;PaginationComponent&#x60; pour la pagination
+ * - &#x60;ConfirmationModalComponent&#x60; pour afficher le dialogue de confirmation avant suppression
+ *
+ * @example
+ * &#x60;&#x60;&#x60;html
+ * &lt;app-suppression-question&gt;&lt;/app-suppression-question&gt;
+ * &#x60;&#x60;&#x60;
+ *
+ * @selector app-suppression-question
+ * @component
+ */
+@Component({
+  selector: &#x27;app-suppression-question&#x27;,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SearchBarComponent,
+    PaginationComponent,
+    ConfirmationModalComponent,
+  ],
+  templateUrl: &#x27;./suppression-question.component.html&#x27;,
+})
+export class SuppressionQuestionComponent implements OnInit {
+  /**
+   * Liste complète des questions récupérées depuis l&#x27;API.
+   */
+  questions: any[] &#x3D; [];
+  /**
+   * Question actuellement sélectionnée pour suppression.
+   */
+  selectedQuestion: any | null &#x3D; null;
+  /**
+   * Formulaire réactif permettant d&#x27;afficher les informations de la question sélectionnée.
+   */
+  form: FormGroup;
+  /**
+   * Liste des questions filtrées selon la recherche.
+   */
+  filteredQuestions: any[] &#x3D; [];
+  /**
+   * Terme de recherche saisi par l&#x27;utilisateur.
+   */
+  searchTerm &#x3D; &#x27;&#x27;;
+  /**
+   * Message de retour affiché après suppression (succès ou erreur).
+   */
+  message: string | null &#x3D; null;
+  /**
+   * Classe CSS appliquée au message (ex. &quot;alert-success&quot;, &quot;alert-danger&quot;).
+   */
+  messageClass: string &#x3D; &#x27;&#x27;;
+  /**
+   * Liste paginée des questions affichées dans le tableau.
+   */
+  paginatedQuestions: any[] &#x3D; [];
+
+  /**
+   * Constructeur du composant.
+   * @param questionService Service pour récupérer et supprimer les questions.
+   * @param fb FormBuilder pour créer et gérer le formulaire réactif.
+   * @param cdr ChangeDetectorRef pour forcer la détection des changements après mises à jour asynchrones.
+   */
+  constructor(
+    private questionService: QuestionService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.form &#x3D; this.fb.group({
+      question: [&#x27;&#x27;, Validators.required],
+      type: [&#x27;&#x27;, [Validators.required, typeValidator()]],
+      position: [&#x27;&#x27;, Validators.required],
+    });
+  }
+
+  /**
+   * Cycle de vie Angular : Initialisation du composant.
+   * Charge les questions dès l&#x27;affichage.
+   */
+  ngOnInit() {
+    this.loadQuestions();
+  }
+
+  /**
+   * Charge toutes les questions depuis le service et initialise la pagination.
+   */
+  loadQuestions() {
+    this.questionService.getAllQuestions().subscribe({
+      next: (data) &#x3D;&gt; {
+        this.questions &#x3D; data;
+        this.filteredQuestions &#x3D; [...this.questions];
+
+        Promise.resolve().then(() &#x3D;&gt; {
+          this.paginatedQuestions &#x3D; this.filteredQuestions.slice(0, 5);
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement questions : &#x27;, err),
+    });
+  }
+
+  /**
+   * Parse les réponses d&#x27;une question (si elles sont sous forme de chaîne séparée par &#x60;|&#x60;).
+   * @param question Objet question à analyser.
+   * @returns Liste des réponses individuelles.
+   */
+  parseResponses(question: any): string[] {
+    return question.response ? question.response.split(&#x27;|&#x27;) : [];
+  }
+
+  /**
+   * Ouvre la modale de confirmation avant suppression.
+   */
+  openConfirmModal() {
+    const modalEl &#x3D; document.getElementById(&#x27;confirmationModal&#x27;);
+    if (modalEl) {
+      const modal &#x3D; new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  }
+
+  /**
+   * Sélectionne une question et préremplit le formulaire, puis affiche la modale.
+   * @param question Question à supprimer.
+   */
+  selectQuestion(question: any) {
+    this.selectedQuestion &#x3D; question;
+    this.form.patchValue({
+      question: question.question,
+      type: question.type,
+      position: question.position,
+    });
+    this.openConfirmModal();
+  }
+
+  /**
+   * Supprime la question sélectionnée via le service.
+   * Affiche un message de succès ou d&#x27;erreur et recharge la liste des questions.
+   */
+  deleteQuestion(): void {
+    if (!this.selectedQuestion?.id_question) return;
+
+    this.questionService
+      .deleteQuestion(this.selectedQuestion.id_question)
+      .subscribe({
+        next: () &#x3D;&gt; {
+          this.message &#x3D; &#x60;Question &quot;${this.selectedQuestion?.question}&quot; supprimée avec succès !&#x60;;
+          this.messageClass &#x3D; &#x27;alert alert-success&#x27;;
+          this.loadQuestions();
+          this.selectedQuestion &#x3D; null;
+
+          // Fermer le modal après suppression
+          const modalEl &#x3D; document.getElementById(&#x27;confirmationModal&#x27;);
+          if (modalEl) bootstrap.Modal.getInstance(modalEl)?.hide();
+
+          setTimeout(() &#x3D;&gt; (this.message &#x3D; null), 2000);
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Erreur lors de la suppression&#x27;, err);
+          this.message &#x3D; &#x27;Impossible de supprimer cette question.&#x27;;
+          this.messageClass &#x3D; &#x27;alert alert-danger&#x27;;
+          setTimeout(() &#x3D;&gt; (this.message &#x3D; null), 2000);
+        },
+      });
+  }
+
+  /**
+   * Filtre les questions en fonction du terme saisi.
+   */
+  applyFilter() {
+    const term &#x3D; this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQuestions &#x3D; [...this.questions];
+    } else {
+      this.filteredQuestions &#x3D; this.questions.filter((question) &#x3D;&gt;
+        (question.question + question.title).toLowerCase().includes(term)
+      );
+    }
+
+    Promise.resolve().then(() &#x3D;&gt; {
+      this.paginatedQuestions &#x3D; this.filteredQuestions.slice(0, 5);
+      this.cdr.detectChanges();
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;br /&gt;
+&lt;br /&gt;
+&lt;div class&#x3D;&quot;center&quot;&gt;
+  &lt;h1&gt;Suppression de question&lt;/h1&gt;
+
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;p&gt;Cette page permet de supprimer une/des question/s.&lt;/p&gt;
+  &lt;br /&gt;
+  &lt;br /&gt;
+  &lt;!-- Search bar --&gt;
+  &lt;app-search-bar
+    placeholder&#x3D;&quot;Rechercher une question...&quot;
+    [(value)]&#x3D;&quot;searchTerm&quot;
+    (valueChange)&#x3D;&quot;applyFilter()&quot;
+  &gt;&lt;/app-search-bar&gt;
+  &lt;!-- Tableau des Questions --&gt;
+  &lt;div class&#x3D;&quot;table-responsive-custom&quot;&gt;
+    &lt;table class&#x3D;&quot;table table-striped&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;&lt;/th&gt;
+          &lt;th&gt;Nom QCM&lt;/th&gt;
+          &lt;th&gt;Question&lt;/th&gt;
+          &lt;th&gt;Type&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr *ngFor&#x3D;&quot;let question of paginatedQuestions&quot;&gt;
+          &lt;td class&#x3D;&quot;text-center&quot;&gt;
+            &lt;i
+              class&#x3D;&quot;bi bi-trash text-danger fs-5&quot;
+              style&#x3D;&quot;cursor: pointer&quot;
+              (click)&#x3D;&quot;selectQuestion(question)&quot;
+            &gt;&lt;/i&gt;
+          &lt;/td&gt;
+          &lt;td&gt;{{ question.title }}&lt;/td&gt;
+          &lt;td&gt;{{ question.question }}&lt;/td&gt;
+          &lt;td&gt;{{ question.type }}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;div *ngIf&#x3D;&quot;questions.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;text-center text-muted mt-3&quot;&gt;
+      Aucune question disponible.
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Pagination --&gt;
+  &lt;app-pagination
+    [items]&#x3D;&quot;filteredQuestions&quot;
+    [pageSize]&#x3D;&quot;5&quot;
+    (pageChange)&#x3D;&quot;paginatedQuestions &#x3D; $event&quot;
+  &gt;
+  &lt;/app-pagination&gt;
+&lt;/div&gt;
+
+&lt;!-- Modal de confirmation --&gt;
+&lt;div class&#x3D;&quot;modal fade&quot; id&#x3D;&quot;confirmModal&quot; tabindex&#x3D;&quot;-1&quot;&gt;
+  &lt;div class&#x3D;&quot;modal-dialog&quot;&gt;
+    &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+      &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+        &lt;h5 class&#x3D;&quot;modal-title text-danger fw-bold&quot;&gt;
+          Confirmation de suppresion !
+        &lt;/h5&gt;
+        &lt;button
+          type&#x3D;&quot;button&quot;
+          class&#x3D;&quot;btn-close&quot;
+          data-bs-dismiss&#x3D;&quot;modal&quot;
+        &gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+        &lt;h6&gt;Question sélectionnée :&lt;/h6&gt;
+        &lt;pre&gt;
+          Question: {{ selectedQuestion?.question }}
+          Type: {{ selectedQuestion?.type }}
+          Position: {{ selectedQuestion?.position }}
+        &lt;/pre&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; data-bs-dismiss&#x3D;&quot;modal&quot;&gt;
+          Annuler
+        &lt;/button&gt;
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-danger&quot; (click)&#x3D;&quot;deleteQuestion()&quot;&gt;
+          Supprimer
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;app-confirmation-modal
+  [title]&#x3D;&quot;&#x27;Confirmer la suppression d\&#x27;une Question&#x27;&quot;
+  [actionType]&#x3D;&quot;&#x27;delete&#x27;&quot;
+  [message]&#x3D;&quot;&#x27;Êtes-vous sûr de vouloir supprimer cette Question ?&#x27;&quot;
+  (confirm)&#x3D;&quot;deleteQuestion()&quot;
+&gt;
+  &lt;!-- Contenu personnalisé pour le corps du modal --&gt;
+  &lt;h6&gt;Question sélectionnée :&lt;/h6&gt;
+  &lt;pre&gt;
+  Question: {{ selectedQuestion?.question }}
+  Type: {{ selectedQuestion?.type }}
+  &lt;/pre&gt;
+&lt;/app-confirmation-modal&gt;
+&lt;div *ngIf&#x3D;&quot;message&quot; class&#x3D;&quot;alert&quot; [ngClass]&#x3D;&quot;messageClass&quot; role&#x3D;&quot;alert&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Suppression de question</h1>  <br /><br />  <p>Cette page permet de supprimer une/des question/s.</p>  <br />  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher une question..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Tableau des Questions -->  <div class="table-responsive-custom">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Nom QCM</th>          <th>Question</th>          <th>Type</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let question of paginatedQuestions">          <td class="text-center">            <i              class="bi bi-trash text-danger fs-5"              style="cursor: pointer"              (click)="selectQuestion(question)"            ></i>          </td>          <td>{{ question.title }}</td>          <td>{{ question.question }}</td>          <td>{{ question.type }}</td>        </tr>      </tbody>    </table>    <div *ngIf="questions.length === 0" class="text-center text-muted mt-3">      Aucune question disponible.    </div>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredQuestions"    [pageSize]="5"    (pageChange)="paginatedQuestions = $event"  >  </app-pagination></div><!-- Modal de confirmation --><div class="modal fade" id="confirmModal" tabindex="-1">  <div class="modal-dialog">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title text-danger fw-bold">          Confirmation de suppresion !        </h5>        <button          type="button"          class="btn-close"          data-bs-dismiss="modal"        ></button>      </div>      <div class="modal-body">        <h6>Question sélectionnée :</h6>        <pre>          Question: {{ selectedQuestion?.question }}          Type: {{ selectedQuestion?.type }}          Position: {{ selectedQuestion?.position }}        </pre>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">          Annuler        </button>        <button type="button" class="btn btn-danger" (click)="deleteQuestion()">          Supprimer        </button>      </div>    </div>  </div></div><app-confirmation-modal  [title]="\'Confirmer la suppression d\\'une Question\'"  [actionType]="\'delete\'"  [message]="\'Êtes-vous sûr de vouloir supprimer cette Question ?\'"  (confirm)="deleteQuestion()">  <!-- Contenu personnalisé pour le corps du modal -->  <h6>Question sélectionnée :</h6>  <pre>  Question: {{ selectedQuestion?.question }}  Type: {{ selectedQuestion?.type }}  </pre></app-confirmation-modal><div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">  {{ message }}</div></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'SuppressionQuestionComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'SuppressionQuestionComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

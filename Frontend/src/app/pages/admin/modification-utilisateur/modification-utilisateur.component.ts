@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,26 +10,110 @@ import * as bootstrap from 'bootstrap';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
 
+/**
+ * Composant responsable de la modification des utilisateurs (stagiaires ou admins).
+ *
+ * @description
+ * Ce composant permet :
+ * - de charger la liste des utilisateurs depuis le service `UserService`
+ * - d'afficher les utilisateurs avec pagination et recherche
+ * - de sélectionner un utilisateur et modifier ses informations (nom, email, société, etc.)
+ * - de confirmer la mise à jour via un modal avant de l'envoyer au serveur
+ * - de réinitialiser ou annuler la modification
+ *
+ * @usageNotes
+ * ### Importation
+ * Ce composant utilise :
+ * - `CommonModule`, `FormsModule`, `ReactiveFormsModule`
+ * - `SearchBarComponent` pour la recherche
+ * - `PaginationComponent` pour la pagination
+ * - `ConfirmationModalComponent` pour afficher une confirmation avant mise à jour
+ *
+ * @example
+ * ```html
+ * <app-utilisateur-stagiaire></app-utilisateur-stagiaire>
+ * ```
+ *
+ * @selector app-utilisateur-stagiaire
+ * @component
+ */
 @Component({
   selector: 'app-utilisateur-stagiaire',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SearchBarComponent,
+    PaginationComponent,
+    ConfirmationModalComponent,
+  ],
   templateUrl: './modification-utilisateur.component.html',
 })
 export class ModificationUtilisateurComponent implements OnInit {
+  /**
+   * Liste complète des utilisateurs récupérés depuis l'API.
+   */
   users: User[] = [];
+  /**
+   * Utilisateur actuellement sélectionné pour modification.
+   */
   selectedUser: User | null = null;
+  /**
+   * Formulaire réactif pour la modification des informations de l'utilisateur.
+   */
   form: FormGroup;
+  /**
+   * Numéro de la page courante pour la pagination.
+   */
   currentPage = 1;
+  /**
+   * Nombre d'utilisateurs affichés par page.
+   */
   pageSize = 5;
+  /**
+   * Sauvegarde de l'état de l'utilisateur avant modification.
+   */
   selectedUserBefore!: User;
+  /**
+   * État de l'utilisateur après modification (pour confirmation).
+   */
   selectedUserAfter!: User;
+  /**
+   * Message d'alerte affiché après action.
+   */
   message: string | null = null;
+  /**
+   * Classe CSS de l'alerte (success/danger).
+   */
   messageClass: string = '';
+  /**
+   * Liste des utilisateurs filtrés selon le terme de recherche.
+   */
   filteredUsers: User[] = [];
+  /**
+   * Terme de recherche saisi dans la barre de recherche.
+   */
   searchTerm = '';
+  /**
+   * Utilisateurs affichés sur la page courante (pagination).
+   */
+  paginatedUsers: User[] = [];
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  /**
+   * Constructeur du composant.
+   * @param userService Service de gestion des utilisateurs
+   * @param fb FormBuilder pour créer les formulaires réactifs
+   * @param cdr ChangeDetectorRef pour forcer la détection des changements après chargement asynchrone
+   */
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       firstname: ['', Validators.required],
@@ -39,7 +123,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       admin: [false],
     });
 
-    // 👇 Ajout : écoute les changements sur admin
+    // Ajout : écoute les changements sur admin
     this.form.get('admin')?.valueChanges.subscribe((isAdmin: boolean) => {
       if (isAdmin) {
         this.form.patchValue({ society: 'LECLIENT' });
@@ -47,20 +131,36 @@ export class ModificationUtilisateurComponent implements OnInit {
     });
   }
 
+  /**
+   * Cycle de vie Angular : Initialisation du composant.
+   * Charge les utilisateurs depuis le backend.
+   */
   ngOnInit() {
     this.loadUsers();
   }
 
+  /**
+   * Charge tous les utilisateurs via le service et initialise la pagination.
+   */
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
-        this.filteredUsers = [...this.users]; // initialise tableau filtré
+        this.filteredUsers = [...this.users];
+
+        Promise.resolve().then(() => {
+          this.paginatedUsers = this.filteredUsers.slice(0, 5);
+          this.cdr.detectChanges();
+        });
       },
       error: (err) => console.error(err),
     });
   }
 
+  /**
+   * Sélectionne un utilisateur pour modification et pré-remplit le formulaire.
+   * @param user Utilisateur à modifier
+   */
   selectUser(user: User) {
     this.selectedUser = user;
     this.form.patchValue({
@@ -74,6 +174,9 @@ export class ModificationUtilisateurComponent implements OnInit {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 
+  /**
+   * Affiche le modal de confirmation avant validation des changements.
+   */
   onSubmit() {
     if (!this.selectedUser) return;
 
@@ -81,7 +184,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       const updatedData = { ...this.form.value };
       updatedData.admin = updatedData.admin || false;
 
-      const modalEl = document.getElementById('confirmModal');
+      const modalEl = document.getElementById('confirmationModal');
       const modal = new bootstrap.Modal(modalEl!);
 
       this.selectedUserBefore = { ...this.selectedUser };
@@ -91,6 +194,9 @@ export class ModificationUtilisateurComponent implements OnInit {
     }
   }
 
+  /**
+   * Filtre la liste des utilisateurs selon le terme saisi.
+   */
   applyFilter() {
     const term = this.searchTerm.trim().toLowerCase();
 
@@ -104,13 +210,24 @@ export class ModificationUtilisateurComponent implements OnInit {
       );
     }
 
-    this.currentPage = 1; // ✅ Réinitialise pagination après recherche
+    Promise.resolve().then(() => {
+      this.paginatedUsers = this.filteredUsers.slice(0, 5);
+      this.cdr.detectChanges();
+    });
   }
+
+  /**
+   * Annule la modification en cours et vide le formulaire.
+   */
   cancelEdit() {
     this.selectedUser = null;
     this.form.reset(); // (optionnel) pour vider les champs du formulaire
   }
 
+  /**
+   * Confirme la modification après validation dans le modal.
+   * Met à jour l'utilisateur via le service puis recharge la liste.
+   */
   confirmUpdate() {
     if (!this.selectedUser) {
       this.message = 'Impossible de modifier cet utilisateur.';
@@ -130,7 +247,7 @@ export class ModificationUtilisateurComponent implements OnInit {
           this.loadUsers();
           this.selectedUser = null;
           this.form.reset();
-          const modalEl = document.getElementById('confirmModal');
+          const modalEl = document.getElementById('confirmationModal');
           const modal = bootstrap.Modal.getInstance(modalEl!);
           modal?.hide();
         },
@@ -140,6 +257,11 @@ export class ModificationUtilisateurComponent implements OnInit {
     this.messageClass = 'alert alert-success';
     setTimeout(() => (this.message = null), 2000);
   }
+
+  /**
+   * Réinitialise le formulaire avec les valeurs initiales de l'utilisateur sélectionné
+   * ou vide complètement les champs si aucun utilisateur n'est sélectionné.
+   */
   resetForm() {
     if (this.selectedUser) {
       // Remet les valeurs du formulaire à celles de l'utilisateur sélectionné
@@ -162,19 +284,5 @@ export class ModificationUtilisateurComponent implements OnInit {
         admin: false,
       });
     }
-  }
-
-  get paginatedUsers() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredUsers.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.users.length)
-      this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
   }
 }

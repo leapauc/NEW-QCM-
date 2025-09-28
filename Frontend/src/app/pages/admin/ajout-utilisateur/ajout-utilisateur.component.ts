@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 /**
  * @component
@@ -37,7 +38,7 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
  */
 @Component({
   selector: 'app-ajout-utilisateur',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ModalComponent],
   templateUrl: './ajout-utilisateur.component.html',
 })
 export class AjoutUtilisateurComponent {
@@ -101,13 +102,11 @@ export class AjoutUtilisateurComponent {
 
           // Afficher le modal Bootstrap
           const modalEl = document.getElementById('successModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
         error: (err) => {
           const modalEl = document.getElementById('failedModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
       });
     } else {

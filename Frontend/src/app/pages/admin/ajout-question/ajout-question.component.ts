@@ -10,6 +10,7 @@ import {
 import { QcmService } from '../../../services/qcm.service';
 import { QuestionService } from '../../../services/question.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 /**
  * @component
@@ -38,7 +39,7 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 @Component({
   selector: 'app-ajout-question',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './ajout-question.component.html',
 })
 export class AjoutQuestionComponent implements OnInit {
@@ -205,16 +206,15 @@ export class AjoutQuestionComponent implements OnInit {
       next: (res) => {
         // Afficher le modal Bootstrap
         const modalEl = document.getElementById('successModal');
-        const modal = new bootstrap.Modal(modalEl!);
-        modal.show();
+        if (modalEl) new bootstrap.Modal(modalEl).show();
         this.questionForm.reset();
         while (this.responses.length) this.responses.removeAt(0);
         this.addResponse();
         this.addResponse();
       },
       error: (err) => {
-        console.error(err);
-        alert("❌ Erreur lors de l'ajout de la question");
+        const modalEl = document.getElementById('failedModal');
+        if (modalEl) new bootstrap.Modal(modalEl).show();
       },
     });
   }

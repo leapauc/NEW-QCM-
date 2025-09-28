@@ -1,0 +1,2103 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>New QCM + documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">New QCM + documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ModificationQuestionComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/admin/modification-question/modification-question.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant pour la modification des questions d&#39;un QCM.</p>
+<p>Ce composant permet à un utilisateur de :</p>
+<ul>
+<li>Sélectionner un QCM parmi ceux disponibles</li>
+<li>Visualiser la liste des questions du QCM</li>
+<li>Sélectionner une question et charger ses réponses existantes</li>
+<li>Modifier la question et ses réponses</li>
+<li>Ajouter ou supprimer des réponses (avec un minimum et maximum défini)</li>
+<li>Déterminer automatiquement le type de question (single/multiple) selon le nombre de réponses correctes</li>
+<li>Sauvegarder les modifications via le service <code>QuestionService</code></li>
+<li>Afficher un modal de succès ou d&#39;échec avec Bootstrap</li>
+</ul>
+<p>Il utilise les services suivants :</p>
+<ul>
+<li><code>QcmService</code> : pour récupérer les QCM et leurs questions</li>
+<li><code>QuestionService</code> : pour récupérer et mettre à jour les questions et leurs réponses</li>
+</ul>
+<p>Le formulaire est un formulaire réactif (<code>ReactiveFormsModule</code>) avec un <code>FormArray</code> pour les réponses.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-modification-question&gt;&lt;/app-modification-question&gt;</code></pre></div>
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-modification-question</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>FormsModule</code>
+                                <code><a href="../components/ModalComponent.html" target="_self" >ModalComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./modification-question.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#maxResponses" >maxResponses</a>
+                            </li>
+                            <li>
+                                <a href="#minResponses" >minResponses</a>
+                            </li>
+                            <li>
+                                <a href="#qcms" >qcms</a>
+                            </li>
+                            <li>
+                                <a href="#questionForm" >questionForm</a>
+                            </li>
+                            <li>
+                                <a href="#questions" >questions</a>
+                            </li>
+                            <li>
+                                <a href="#selectedQcmId" >selectedQcmId</a>
+                            </li>
+                            <li>
+                                <a href="#selectedQuestionId" >selectedQuestionId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addResponse" >addResponse</a>
+                            </li>
+                            <li>
+                                <a href="#cancelForm" >cancelForm</a>
+                            </li>
+                            <li>
+                                <a href="#createResponse" >createResponse</a>
+                            </li>
+                            <li>
+                                <a href="#initForm" >initForm</a>
+                            </li>
+                            <li>
+                                <a href="#loadQcms" >loadQcms</a>
+                            </li>
+                            <li>
+                                <a href="#loadQuestionDetails" >loadQuestionDetails</a>
+                            </li>
+                            <li>
+                                <a href="#loadQuestionsByQcm" >loadQuestionsByQcm</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onQcmChange" >onQcmChange</a>
+                            </li>
+                            <li>
+                                <a href="#onQuestionChange" >onQuestionChange</a>
+                            </li>
+                            <li>
+                                <a href="#removeResponse" >removeResponse</a>
+                            </li>
+                            <li>
+                                <a href="#resetForm" >resetForm</a>
+                            </li>
+                            <li>
+                                <a href="#submitForm" >submitForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#responses" >responses</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: FormBuilder, qcmService: <a href="../injectables/QcmService.html" target="_self">QcmService</a>, questionService: <a href="../injectables/QuestionService.html" target="_self">QuestionService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:65</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>FormBuilder pour créer et gérer le formulaire réactif</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>qcmService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QcmService.html" target="_self" >QcmService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service pour récupérer les QCM et leurs questions</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>questionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QuestionService.html" target="_self" >QuestionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service pour récupérer et mettre à jour les questions</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addResponse"></a>
+                    <span class="name">
+                        <span ><b>addResponse</b></span>
+                        <a href="#addResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addResponse(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, isCorrect)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une réponse au formulaire si le maximum n’est pas atteint</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Texte de la réponse</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>isCorrect</td>
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Indique si la réponse est correcte</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelForm"></a>
+                    <span class="name">
+                        <span ><b>cancelForm</b></span>
+                        <a href="#cancelForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Réinitialise le formulaire et le FormArray des réponses</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createResponse"></a>
+                    <span class="name">
+                        <span ><b>createResponse</b></span>
+                        <a href="#createResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createResponse(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, isCorrect)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée un FormGroup pour une réponse</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Texte de la réponse</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>isCorrect</td>
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Indique si la réponse est correcte</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>FormGroup</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>FormGroup représentant la réponse</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initForm"></a>
+                    <span class="name">
+                        <span ><b>initForm</b></span>
+                        <a href="#initForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initialise le formulaire réactif pour la question et ses réponses</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadQcms"></a>
+                    <span class="name">
+                        <span ><b>loadQcms</b></span>
+                        <a href="#loadQcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadQcms()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge tous les QCM depuis le service</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadQuestionDetails"></a>
+                    <span class="name">
+                        <span ><b>loadQuestionDetails</b></span>
+                        <a href="#loadQuestionDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadQuestionDetails(questionId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge les détails d’une question et ses réponses</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>questionId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadQuestionsByQcm"></a>
+                    <span class="name">
+                        <span ><b>loadQuestionsByQcm</b></span>
+                        <a href="#loadQuestionsByQcm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadQuestionsByQcm(qcmId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge les questions d’un QCM spécifique</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>qcmId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook : initialisation du composant</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onQcmChange"></a>
+                    <span class="name">
+                        <span ><b>onQcmChange</b></span>
+                        <a href="#onQcmChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onQcmChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="149"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sélection d’un QCM</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Event provenant du select</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onQuestionChange"></a>
+                    <span class="name">
+                        <span ><b>onQuestionChange</b></span>
+                        <a href="#onQuestionChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onQuestionChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:182</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sélection d’une question</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Event provenant du select</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeResponse"></a>
+                    <span class="name">
+                        <span ><b>removeResponse</b></span>
+                        <a href="#removeResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeResponse(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Supprime une réponse du formulaire si le minimum n’est pas atteint</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Index de la réponse à supprimer</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetForm"></a>
+                    <span class="name">
+                        <span ><b>resetForm</b></span>
+                        <a href="#resetForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="225"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:225</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recharge la question et ses réponses depuis le backend
+(utile pour annuler les modifications)</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitForm"></a>
+                    <span class="name">
+                        <span ><b>submitForm</b></span>
+                        <a href="#submitForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="252"
+                                    class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Soumet le formulaire et met à jour la question via le service</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxResponses"></a>
+                    <span class="name">
+                        <span ><b>maxResponses</b></span>
+                        <a href="#maxResponses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre maximum de réponses autorisées par question</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minResponses"></a>
+                    <span class="name">
+                        <span ><b>minResponses</b></span>
+                        <a href="#minResponses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre minimum de réponses obligatoires par question</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="qcms"></a>
+                    <span class="name">
+                        <span ><b>qcms</b></span>
+                        <a href="#qcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste des QCM disponibles</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="questionForm"></a>
+                    <span class="name">
+                        <span ><b>questionForm</b></span>
+                        <a href="#questionForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulaire réactif pour la question et ses réponses</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="questions"></a>
+                    <span class="name">
+                        <span ><b>questions</b></span>
+                        <a href="#questions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste des questions du QCM sélectionné</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedQcmId"></a>
+                    <span class="name">
+                        <span ><b>selectedQcmId</b></span>
+                        <a href="#selectedQcmId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>ID du QCM actuellement sélectionné</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedQuestionId"></a>
+                    <span class="name">
+                        <span ><b>selectedQuestionId</b></span>
+                        <a href="#selectedQuestionId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>ID de la question actuellement sélectionnée</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="responses"></a>
+                        <span class="name"><b>responses</b><a href="#responses"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>responses()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/pages/admin/modification-question/modification-question.component.ts:98</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Retourne le FormArray des réponses du formulaire</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>FormArray</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  FormsModule,
+} from &#x27;@angular/forms&#x27;;
+import { QcmService } from &#x27;../../../services/qcm.service&#x27;;
+import { QuestionService } from &#x27;../../../services/question.service&#x27;;
+import * as bootstrap from &#x27;bootstrap&#x27;; // importer Bootstrap JS
+import { QuestionResponse } from &#x27;../../../models/questionResponse&#x27;;
+import { ModalComponent } from &#x27;../../../components/modal_success_failure/modal.component&#x27;;
+
+/**
+ * @component
+ * @name ModificationQuestionComponent
+ * @description
+ * Composant pour la modification des questions d&#x27;un QCM.
+ *
+ * Ce composant permet à un utilisateur de :
+ * - Sélectionner un QCM parmi ceux disponibles
+ * - Visualiser la liste des questions du QCM
+ * - Sélectionner une question et charger ses réponses existantes
+ * - Modifier la question et ses réponses
+ * - Ajouter ou supprimer des réponses (avec un minimum et maximum défini)
+ * - Déterminer automatiquement le type de question (single/multiple) selon le nombre de réponses correctes
+ * - Sauvegarder les modifications via le service &#x60;QuestionService&#x60;
+ * - Afficher un modal de succès ou d&#x27;échec avec Bootstrap
+ *
+ * Il utilise les services suivants :
+ * - &#x60;QcmService&#x60; : pour récupérer les QCM et leurs questions
+ * - &#x60;QuestionService&#x60; : pour récupérer et mettre à jour les questions et leurs réponses
+ *
+ * Le formulaire est un formulaire réactif (&#x60;ReactiveFormsModule&#x60;) avec un &#x60;FormArray&#x60; pour les réponses.
+ *
+ * @example
+ * &#x60;&#x60;&#x60;html
+ * &lt;app-modification-question&gt;&lt;/app-modification-question&gt;
+ * &#x60;&#x60;&#x60;
+ */
+@Component({
+  selector: &#x27;app-modification-question&#x27;,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ModalComponent],
+  templateUrl: &#x27;./modification-question.component.html&#x27;,
+})
+export class ModificationQuestionComponent implements OnInit {
+  /** Liste des QCM disponibles */
+  qcms: any[] &#x3D; [];
+  /** Liste des questions du QCM sélectionné */
+  questions: any[] &#x3D; [];
+  /** ID du QCM actuellement sélectionné */
+  selectedQcmId: number | null &#x3D; null;
+  /** ID de la question actuellement sélectionnée */
+  selectedQuestionId: number | null &#x3D; null;
+  /** Formulaire réactif pour la question et ses réponses */
+  questionForm!: FormGroup;
+
+  /** Nombre maximum de réponses autorisées par question */
+  maxResponses &#x3D; 5;
+  /** Nombre minimum de réponses obligatoires par question */
+  minResponses &#x3D; 2;
+
+  /**
+   * Constructeur
+   *
+   * @param fb FormBuilder pour créer et gérer le formulaire réactif
+   * @param qcmService Service pour récupérer les QCM et leurs questions
+   * @param questionService Service pour récupérer et mettre à jour les questions
+   */
+  constructor(
+    private fb: FormBuilder,
+    private qcmService: QcmService,
+    private questionService: QuestionService
+  ) {}
+
+  /** Lifecycle hook : initialisation du composant */
+  ngOnInit() {
+    this.loadQcms();
+    this.initForm();
+    this.addResponse();
+    this.addResponse();
+  }
+
+  // -------- Form Initialization --------
+  /** Initialise le formulaire réactif pour la question et ses réponses */
+  initForm() {
+    this.questionForm &#x3D; this.fb.group({
+      question: [&#x27;&#x27;, Validators.required],
+      responses: this.fb.array([]),
+    });
+  }
+
+  /** Retourne le FormArray des réponses du formulaire */
+  get responses(): FormArray {
+    return this.questionForm.get(&#x27;responses&#x27;) as FormArray;
+  }
+
+  /**
+   * Crée un FormGroup pour une réponse
+   * @param text Texte de la réponse
+   * @param isCorrect Indique si la réponse est correcte
+   * @returns FormGroup représentant la réponse
+   */
+  createResponse(text &#x3D; &#x27;&#x27;, isCorrect &#x3D; false): FormGroup {
+    return this.fb.group({
+      text: [text, Validators.required],
+      isCorrect: [isCorrect],
+    });
+  }
+
+  /**
+   * Ajoute une réponse au formulaire si le maximum n’est pas atteint
+   * @param text Texte de la réponse
+   * @param isCorrect Indique si la réponse est correcte
+   */
+  addResponse(text &#x3D; &#x27;&#x27;, isCorrect &#x3D; false) {
+    if (this.responses.length &lt; this.maxResponses) {
+      this.responses.push(this.createResponse(text, isCorrect));
+    }
+  }
+
+  /**
+   * Supprime une réponse du formulaire si le minimum n’est pas atteint
+   * @param index Index de la réponse à supprimer
+   */
+  removeResponse(index: number) {
+    if (this.responses.length &gt; this.minResponses) {
+      this.responses.removeAt(index);
+    }
+  }
+
+  // -------- Load QCMs and Questions --------
+  /** Charge tous les QCM depuis le service */
+  loadQcms() {
+    this.qcmService.getAllQCM().subscribe({
+      next: (data) &#x3D;&gt; (this.qcms &#x3D; data),
+      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement QCMs&#x27;, err),
+    });
+  }
+
+  /**
+   * Sélection d’un QCM
+   * @param event Event provenant du select
+   */
+  onQcmChange(event: any) {
+    this.selectedQcmId &#x3D; +event.target.value;
+
+    // Réinitialiser la sélection de la question
+    this.selectedQuestionId &#x3D; null;
+
+    // Vider le formulaire
+    this.questionForm.reset();
+    while (this.responses.length) {
+      this.responses.removeAt(0);
+    }
+
+    // Charger les questions du nouveau QCM
+    if (this.selectedQcmId) {
+      this.loadQuestionsByQcm(this.selectedQcmId);
+    }
+  }
+
+  /** Charge les questions d’un QCM spécifique */
+  loadQuestionsByQcm(qcmId: number) {
+    this.qcmService.getQcmQuestions(qcmId).subscribe({
+      next: (data) &#x3D;&gt; (this.questions &#x3D; data),
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Erreur chargement questions&#x27;, err);
+        this.questions &#x3D; [];
+      },
+    });
+  }
+
+  /**
+   * Sélection d’une question
+   * @param event Event provenant du select
+   */
+  onQuestionChange(event: any) {
+    this.selectedQuestionId &#x3D; +event.target.value;
+    if (this.selectedQuestionId)
+      this.loadQuestionDetails(this.selectedQuestionId);
+  }
+
+  /** Charge les détails d’une question et ses réponses */
+  loadQuestionDetails(questionId: number) {
+    this.questionService.getQuestionReponseById(questionId).subscribe({
+      next: (data: QuestionResponse[]) &#x3D;&gt; {
+        // ✅ correspond maintenant au type Observable&lt;&gt;
+        if (!data || data.length &#x3D;&#x3D;&#x3D; 0) return;
+
+        const first &#x3D; data[0];
+
+        this.questionForm.patchValue({
+          question: first.question,
+        });
+
+        // Clear old responses
+        while (this.responses.length) this.responses.removeAt(0);
+
+        // Add responses from backend
+        data.forEach((r: QuestionResponse) &#x3D;&gt; {
+          this.addResponse(r.response, r.is_correct);
+        });
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement détails question&#x27;, err),
+    });
+  }
+
+  /** Réinitialise le formulaire et le FormArray des réponses */
+  cancelForm() {
+    this.selectedQuestionId &#x3D; null;
+    this.questionForm.reset();
+    while (this.responses.length) {
+      this.responses.removeAt(0);
+    }
+  }
+  /**
+   * Recharge la question et ses réponses depuis le backend
+   * (utile pour annuler les modifications)
+   */
+  resetForm() {
+    if (!this.selectedQuestionId) return;
+
+    // Recharger les valeurs originales depuis le service
+    this.questionService
+      .getQuestionReponseById(this.selectedQuestionId)
+      .subscribe({
+        next: (data: QuestionResponse[]) &#x3D;&gt; {
+          if (!data || data.length &#x3D;&#x3D;&#x3D; 0) return;
+
+          const first &#x3D; data[0];
+
+          // Remettre le titre
+          this.questionForm.patchValue({ question: first.question });
+
+          // Vider les réponses existantes
+          while (this.responses.length) this.responses.removeAt(0);
+
+          // Remettre les réponses originales
+          data.forEach((r) &#x3D;&gt; this.addResponse(r.response, r.is_correct));
+        },
+        error: (err) &#x3D;&gt; console.error(&#x27;Erreur réinitialisation question&#x27;, err),
+      });
+  }
+
+  // -------- Submit Form --------
+  /** Soumet le formulaire et met à jour la question via le service */
+  submitForm() {
+    if (!this.selectedQcmId || !this.selectedQuestionId) {
+      alert(&#x27;Veuillez sélectionner un QCM et une question&#x27;);
+      return;
+    }
+
+    if (this.questionForm.invalid) {
+      this.questionForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue &#x3D; this.questionForm.value;
+    const validResponses &#x3D; formValue.responses
+      .filter((r: any) &#x3D;&gt; r.text.trim() !&#x3D;&#x3D; &#x27;&#x27;)
+      .map((r: any, index: number) &#x3D;&gt; ({
+        response: r.text,
+        is_correct: r.isCorrect,
+        position: index + 1,
+      }));
+
+    if (validResponses.length &lt; this.minResponses) {
+      alert(&#x60;Il faut au moins ${this.minResponses} réponses non vides.&#x60;);
+      return;
+    }
+
+    type QuestionType &#x3D; &#x27;single&#x27; | &#x27;multiple&#x27;;
+
+    const correctCount &#x3D; validResponses.filter(
+      (r: { is_correct: boolean }) &#x3D;&gt; r.is_correct
+    ).length;
+    const questionType: QuestionType &#x3D; correctCount &gt; 1 ? &#x27;multiple&#x27; : &#x27;single&#x27;;
+
+    const dataToUpdate: {
+      question: string;
+      type: QuestionType;
+      responses: any[];
+    } &#x3D; {
+      question: formValue.question,
+      type: questionType,
+      responses: validResponses,
+    };
+
+    this.questionService
+      .updateQuestion(this.selectedQuestionId, dataToUpdate)
+      .subscribe({
+        next: (res) &#x3D;&gt; {
+          const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
+          if (modalEl) new bootstrap.Modal(modalEl).show();
+        },
+        error: (err) &#x3D;&gt; {
+          const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
+          if (modalEl) new bootstrap.Modal(modalEl).show();
+        },
+      });
+    this.cancelForm();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;center&quot;&gt;
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;h1 class&#x3D;&quot;text-center my-4&quot;&gt;Modification question&lt;/h1&gt;
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;p&gt;Ce formulaire permet de modifier une question d&#x27;un questionnaire.&lt;/p&gt;
+  &lt;br /&gt;
+  &lt;!-- Sélection QCM et Question --&gt;
+  &lt;div class&#x3D;&quot;row mb-4 form&quot;&gt;
+    &lt;div class&#x3D;&quot;col-5 offset-1&quot;&gt;
+      &lt;label for&#x3D;&quot;id_qcm&quot; class&#x3D;&quot;form-label&quot;&gt;QCM&lt;/label&gt;
+      &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;id_qcm&quot; (change)&#x3D;&quot;onQcmChange($event)&quot;&gt;
+        &lt;option value&#x3D;&quot;&quot; disabled selected&gt;-- Sélectionner un QCM --&lt;/option&gt;
+        &lt;option *ngFor&#x3D;&quot;let qcm of qcms&quot; [value]&#x3D;&quot;qcm.id_qcm&quot;&gt;
+          {{ qcm.title }}
+        &lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;col-5&quot;&gt;
+      &lt;label for&#x3D;&quot;id_question&quot; class&#x3D;&quot;form-label&quot;&gt;Question&lt;/label&gt;
+      &lt;select
+        class&#x3D;&quot;form-select&quot;
+        id&#x3D;&quot;id_question&quot;
+        [(ngModel)]&#x3D;&quot;selectedQuestionId&quot;
+        (change)&#x3D;&quot;onQuestionChange($event)&quot;
+      &gt;
+        &lt;option
+          *ngFor&#x3D;&quot;let question of questions&quot;
+          [value]&#x3D;&quot;question.id_question&quot;
+        &gt;
+          {{ question.question }}
+        &lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Formulaire affiché seulement si une question est sélectionnée --&gt;
+  &lt;form
+    *ngIf&#x3D;&quot;selectedQuestionId&quot;
+    [formGroup]&#x3D;&quot;questionForm&quot;
+    (ngSubmit)&#x3D;&quot;submitForm()&quot;
+    class&#x3D;&quot;form&quot;
+  &gt;
+    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+      &lt;h4 class&#x3D;&quot;fw-bold&quot;&gt;MODIFICATION&lt;/h4&gt;
+      &lt;br /&gt;
+      &lt;label for&#x3D;&quot;question&quot; class&#x3D;&quot;form-label fw-bold&quot;
+        &gt;Intitulé de la question&lt;/label
+      &gt;
+      &lt;textarea
+        id&#x3D;&quot;question&quot;
+        class&#x3D;&quot;form-control&quot;
+        formControlName&#x3D;&quot;question&quot;
+      &gt;&lt;/textarea&gt;
+      &lt;div
+        *ngIf&#x3D;&quot;
+          questionForm.get(&#x27;question&#x27;)?.touched &amp;&amp;
+          questionForm.get(&#x27;question&#x27;)?.invalid
+        &quot;
+        class&#x3D;&quot;text-danger&quot;
+      &gt;
+        Le titre est requis.
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Réponses --&gt;
+    &lt;h5 class&#x3D;&quot;mt-4&quot;&gt;Réponses :&lt;/h5&gt;
+    &lt;div formArrayName&#x3D;&quot;responses&quot;&gt;
+      &lt;div
+        *ngFor&#x3D;&quot;let response of responses.controls; let i &#x3D; index&quot;
+        [formGroupName]&#x3D;&quot;i&quot;
+        class&#x3D;&quot;row g-2 align-items-center mb-2&quot;
+      &gt;
+        &lt;div class&#x3D;&quot;col-8&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;text&quot;
+            class&#x3D;&quot;form-control&quot;
+            placeholder&#x3D;&quot;Réponse {{ i + 1 }}&quot;
+            formControlName&#x3D;&quot;text&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-2 text-center&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;checkbox&quot;
+            class&#x3D;&quot;form-check-input&quot;
+            formControlName&#x3D;&quot;isCorrect&quot;
+          /&gt;
+          &lt;label class&#x3D;&quot;form-check-label&quot;&gt;Correct&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-2 text-end&quot;&gt;
+          &lt;button
+            type&#x3D;&quot;button&quot;
+            class&#x3D;&quot;btn btn-outline-danger btn-sm&quot;
+            (click)&#x3D;&quot;removeResponse(i)&quot;
+            [disabled]&#x3D;&quot;responses.length &lt;&#x3D; minResponses&quot;
+          &gt;
+            ❌
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Ajouter une réponse --&gt;
+    &lt;button
+      type&#x3D;&quot;button&quot;
+      class&#x3D;&quot;btn btn-outline-primary btn-sm mt-2&quot;
+      (click)&#x3D;&quot;addResponse()&quot;
+      [disabled]&#x3D;&quot;responses.length &gt;&#x3D; maxResponses&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;bi bi-plus-circle&quot;&gt;&lt;/i&gt; Ajouter une réponse
+    &lt;/button&gt;
+
+    &lt;div class&#x3D;&quot;mt-4 text-center&quot;&gt;
+      &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-danger me-2&quot; (click)&#x3D;&quot;cancelForm()&quot;&gt;
+        Annuler
+      &lt;/button&gt;
+      &lt;button
+        type&#x3D;&quot;button&quot;
+        class&#x3D;&quot;btn btn-secondary me-2&quot;
+        (click)&#x3D;&quot;resetForm()&quot;
+      &gt;
+        &lt;i class&#x3D;&quot;bi bi-arrow-counterclockwise&quot;&gt;&lt;/i&gt; Réinitialiser
+      &lt;/button&gt;
+      &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-success&quot;&gt;
+        &lt;i class&#x3D;&quot;bi bi-save&quot;&gt;&lt;/i&gt; Enregistrer
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+&lt;!-- MODALS --&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;successModal&quot;
+  icon&#x3D;&quot;✔️&quot;
+  message&#x3D;&quot;Modification de la Question réalisée avec succès !&quot;
+&gt;&lt;/app-modal&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;failedModal&quot;
+  icon&#x3D;&quot;❌&quot;
+  message&#x3D;&quot;La modification de la Question a échoué !&quot;
+&gt;&lt;/app-modal&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="center">  <br /><br />  <h1 class="text-center my-4">Modification question</h1>  <br /><br />  <p>Ce formulaire permet de modifier une question d\'un questionnaire.</p>  <br />  <!-- Sélection QCM et Question -->  <div class="row mb-4 form">    <div class="col-5 offset-1">      <label for="id_qcm" class="form-label">QCM</label>      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">        <option value="" disabled selected>-- Sélectionner un QCM --</option>        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">          {{ qcm.title }}        </option>      </select>    </div>    <div class="col-5">      <label for="id_question" class="form-label">Question</label>      <select        class="form-select"        id="id_question"        [(ngModel)]="selectedQuestionId"        (change)="onQuestionChange($event)"      >        <option          *ngFor="let question of questions"          [value]="question.id_question"        >          {{ question.question }}        </option>      </select>    </div>  </div>  <!-- Formulaire affiché seulement si une question est sélectionnée -->  <form    *ngIf="selectedQuestionId"    [formGroup]="questionForm"    (ngSubmit)="submitForm()"    class="form"  >    <div class="mb-3">      <h4 class="fw-bold">MODIFICATION</h4>      <br />      <label for="question" class="form-label fw-bold"        >Intitulé de la question</label      >      <textarea        id="question"        class="form-control"        formControlName="question"      ></textarea>      <div        *ngIf="          questionForm.get(\'question\')?.touched &&          questionForm.get(\'question\')?.invalid        "        class="text-danger"      >        Le titre est requis.      </div>    </div>    <!-- Réponses -->    <h5 class="mt-4">Réponses :</h5>    <div formArrayName="responses">      <div        *ngFor="let response of responses.controls; let i = index"        [formGroupName]="i"        class="row g-2 align-items-center mb-2"      >        <div class="col-8">          <input            type="text"            class="form-control"            placeholder="Réponse {{ i + 1 }}"            formControlName="text"          />        </div>        <div class="col-2 text-center">          <input            type="checkbox"            class="form-check-input"            formControlName="isCorrect"          />          <label class="form-check-label">Correct</label>        </div>        <div class="col-2 text-end">          <button            type="button"            class="btn btn-outline-danger btn-sm"            (click)="removeResponse(i)"            [disabled]="responses.length <= minResponses"          >            ❌          </button>        </div>      </div>    </div>    <!-- Ajouter une réponse -->    <button      type="button"      class="btn btn-outline-primary btn-sm mt-2"      (click)="addResponse()"      [disabled]="responses.length >= maxResponses"    >      <i class="bi bi-plus-circle"></i> Ajouter une réponse    </button>    <div class="mt-4 text-center">      <button type="button" class="btn btn-danger me-2" (click)="cancelForm()">        Annuler      </button>      <button        type="button"        class="btn btn-secondary me-2"        (click)="resetForm()"      >        <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser      </button>      <button type="submit" class="btn btn-success">        <i class="bi bi-save"></i> Enregistrer      </button>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Modification de la Question réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="La modification de la Question a échoué !"></app-modal></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ModificationQuestionComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ModificationQuestionComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

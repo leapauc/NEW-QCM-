@@ -11,15 +11,11 @@
   <br />
   <br />
   <!-- Search bar -->
-  <div class="mb-3 d-flex justify-content-end">
-    <input
-      type="text"
-      class="form-control w-25"
-      placeholder="Rechercher un utilisateur..."
-      [(ngModel)]="searchTerm"
-      (input)="applyFilter()"
-    />
-  </div>
+  <app-search-bar
+    placeholder="Rechercher une question..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
   <!-- Tableau des utilisateurs -->
   <div class="table-responsive-custom">
     <table class="table table-striped">
@@ -52,10 +48,12 @@
     </table>
   </div>
   <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="filteredUsers"
+    [pageSize]="5"
+    (pageChange)="paginatedUsers = $event"
+  >
+  </app-pagination>
 </div>
 
 <!-- Modal de confirmation -->
@@ -104,6 +102,23 @@
     </div>
   </div>
 </div>
+
+<app-confirmation-modal
+  [title]="'Confirmer la suppression d\'un Utilisateur'"
+  [actionType]="'delete'"
+  [message]="'Êtes-vous sûr de vouloir supprimer cet Utilisateur ?'"
+  (confirm)="deleteUser()"
+>
+  <!-- Contenu personnalisé pour le corps du modal -->
+  <h6>Question sélectionnée :</h6>
+  <pre>
+  Nom: {{ selectedUser?.name }}
+  Prénom: {{ selectedUser?.firstname }}
+  Email: {{ selectedUser?.email }}
+  Société: {{ selectedUser?.society }}
+  Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}
+  </pre>
+</app-confirmation-modal>
 <div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
   {{ message }}
 </div>

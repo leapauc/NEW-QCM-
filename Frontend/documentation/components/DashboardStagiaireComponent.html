@@ -1,0 +1,1446 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>New QCM + documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">New QCM + documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DashboardStagiaireComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant du tableau de bord pour un stagiaire connecté.</p>
+<p>Affiche des statistiques personnelles, comme :</p>
+<ul>
+<li>Nombre de questionnaires réalisés</li>
+<li>Scores maximum, minimum et moyen</li>
+<li>Rang et temps moyen</li>
+<li>Questionnaire le plus populaire</li>
+<li>Liste paginée des tentatives de l&#39;utilisateur</li>
+</ul>
+<p>Utilise <code>StatsService</code> et <code>QuizAttemptsService</code> pour récupérer les données
+et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-dashboard-stagiaire&gt;&lt;/app-dashboard-stagiaire&gt;</code></pre></div>
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-dashboard-stagiaire</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>TimeFormatPipe</code>
+                            <code>CommonModule</code>
+                                <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./dashboard-stagiaire.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allAttemptsOfMyUser" >allAttemptsOfMyUser</a>
+                            </li>
+                            <li>
+                                <a href="#authNameUser" >authNameUser</a>
+                            </li>
+                            <li>
+                                <a href="#avgTime" >avgTime</a>
+                            </li>
+                            <li>
+                                <a href="#nbQuestionnairesRealises" >nbQuestionnairesRealises</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#paginatedAttempts" >paginatedAttempts</a>
+                            </li>
+                            <li>
+                                <a href="#questionnairePopulaire" >questionnairePopulaire</a>
+                            </li>
+                            <li>
+                                <a href="#range" >range</a>
+                            </li>
+                            <li>
+                                <a href="#scoreAvg" >scoreAvg</a>
+                            </li>
+                            <li>
+                                <a href="#scoreMax" >scoreMax</a>
+                            </li>
+                            <li>
+                                <a href="#scoreMin" >scoreMin</a>
+                            </li>
+                            <li>
+                                <a href="#stagiaireActif" >stagiaireActif</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getCompletionColor" >getCompletionColor</a>
+                            </li>
+                            <li>
+                                <a href="#loadStats" >loadStats</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(statsService: <a href="../injectables/StatsService.html" target="_self">StatsService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, quizAttempts: <a href="../injectables/QuizAttemptsService.html" target="_self">QuizAttemptsService</a>, cdr: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du composant.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>statsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StatsService.html" target="_self" >StatsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service pour récupérer les statistiques</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service d&#39;authentification</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>quizAttempts</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QuizAttemptsService.html" target="_self" >QuizAttemptsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service pour récupérer les tentatives de quiz</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ChangeDetectorRef pour déclencher manuellement la détection des changements</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCompletionColor"></a>
+                    <span class="name">
+                        <span ><b>getCompletionColor</b></span>
+                        <a href="#getCompletionColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCompletionColor(percent: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne une couleur en fonction du pourcentage de complétion</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>percent</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pourcentage de complétion</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadStats"></a>
+                    <span class="name">
+                        <span ><b>loadStats</b></span>
+                        <a href="#loadStats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadStats()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Charge les statistiques de l&#39;utilisateur courant.</p>
+<p>Récupère les scores, le rang, le temps moyen, le questionnaire populaire
+et la liste des tentatives via les services.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="75"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook : appelé après l&#39;initialisation du composant</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allAttemptsOfMyUser"></a>
+                    <span class="name">
+                        <span ><b>allAttemptsOfMyUser</b></span>
+                        <a href="#allAttemptsOfMyUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste complète des tentatives de l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authNameUser"></a>
+                    <span class="name">
+                        <span ><b>authNameUser</b></span>
+                        <a href="#authNameUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nom de l&#39;utilisateur authentifié</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="avgTime"></a>
+                    <span class="name">
+                        <span ><b>avgTime</b></span>
+                        <a href="#avgTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;-&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Temps moyen passé sur les questionnaires</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nbQuestionnairesRealises"></a>
+                    <span class="name">
+                        <span ><b>nbQuestionnairesRealises</b></span>
+                        <a href="#nbQuestionnairesRealises"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre de questionnaires réalisés par l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginatedAttempts"></a>
+                    <span class="name">
+                        <span ><b>paginatedAttempts</b></span>
+                        <a href="#paginatedAttempts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Pagination</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="questionnairePopulaire"></a>
+                    <span class="name">
+                        <span ><b>questionnairePopulaire</b></span>
+                        <a href="#questionnairePopulaire"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Questionnaire le plus populaire</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="range"></a>
+                    <span class="name">
+                        <span ><b>range</b></span>
+                        <a href="#range"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dernier&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Rang de l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreAvg"></a>
+                    <span class="name">
+                        <span ><b>scoreAvg</b></span>
+                        <a href="#scoreAvg"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;-&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Score moyen de l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreMax"></a>
+                    <span class="name">
+                        <span ><b>scoreMax</b></span>
+                        <a href="#scoreMax"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;-&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Score maximum de l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreMin"></a>
+                    <span class="name">
+                        <span ><b>scoreMin</b></span>
+                        <a href="#scoreMin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;-&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Score minimum de l&#39;utilisateur</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stagiaireActif"></a>
+                    <span class="name">
+                        <span ><b>stagiaireActif</b></span>
+                        <a href="#stagiaireActif"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ name: &#x27;&#x27;, firstname: &#x27;&#x27; }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stagiaire actif (nom et prénom)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component } from &#x27;@angular/core&#x27;;
+import { StatsService } from &#x27;../../../services/stats.service&#x27;;
+import { AuthService } from &#x27;../../../services/auth.service&#x27;;
+import { TimeFormatPipe } from &#x27;../../../pipes/format-Time.pipe&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { QuizAttemptsService } from &#x27;../../../services/quiz_attempts.service&#x27;;
+import { AuthUser } from &#x27;../../../models/authUser&#x27;;
+import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
+import { SearchBarComponent } from &#x27;../../../components/search_bar/search_bar.component&#x27;;
+
+/**
+ * Composant du tableau de bord pour un stagiaire connecté.
+ *
+ * Affiche des statistiques personnelles, comme :
+ * - Nombre de questionnaires réalisés
+ * - Scores maximum, minimum et moyen
+ * - Rang et temps moyen
+ * - Questionnaire le plus populaire
+ * - Liste paginée des tentatives de l&#x27;utilisateur
+ *
+ * Utilise &#x60;StatsService&#x60; et &#x60;QuizAttemptsService&#x60; pour récupérer les données
+ * et &#x60;AuthService&#x60; pour obtenir l&#x27;utilisateur courant.
+ *
+ * @example
+ * &#x60;&#x60;&#x60;html
+ * &lt;app-dashboard-stagiaire&gt;&lt;/app-dashboard-stagiaire&gt;
+ * &#x60;&#x60;&#x60;
+ */
+@Component({
+  selector: &#x27;app-dashboard-stagiaire&#x27;,
+  imports: [TimeFormatPipe, CommonModule, PaginationComponent],
+  templateUrl: &#x27;./dashboard-stagiaire.component.html&#x27;,
+})
+export class DashboardStagiaireComponent {
+  /** Nombre de questionnaires réalisés par l&#x27;utilisateur */
+  nbQuestionnairesRealises &#x3D; 0;
+  /** Score maximum de l&#x27;utilisateur */
+  scoreMax &#x3D; &#x27;-&#x27;;
+  /** Score minimum de l&#x27;utilisateur */
+  scoreMin &#x3D; &#x27;-&#x27;;
+  /** Score moyen de l&#x27;utilisateur */
+  scoreAvg &#x3D; &#x27;-&#x27;;
+  /** Rang de l&#x27;utilisateur */
+  range &#x3D; &#x27;dernier&#x27;;
+  /** Temps moyen passé sur les questionnaires */
+  avgTime &#x3D; &#x27;-&#x27;;
+  /** Questionnaire le plus populaire */
+  questionnairePopulaire &#x3D; &#x27;&#x27;;
+  /** Nom de l&#x27;utilisateur authentifié */
+  authNameUser &#x3D; &#x27;&#x27;;
+  /** Stagiaire actif (nom et prénom) */
+  stagiaireActif &#x3D; { name: &#x27;&#x27;, firstname: &#x27;&#x27; };
+  /** Pagination */
+  paginatedAttempts: any[] &#x3D; [];
+  /** Liste complète des tentatives de l&#x27;utilisateur */
+  allAttemptsOfMyUser: any[] &#x3D; [];
+  pageSize &#x3D; 5;
+
+  /**
+   * Constructeur du composant.
+   *
+   * @param statsService Service pour récupérer les statistiques
+   * @param authService Service d&#x27;authentification
+   * @param quizAttempts Service pour récupérer les tentatives de quiz
+   * @param cdr ChangeDetectorRef pour déclencher manuellement la détection des changements
+   */
+  constructor(
+    private statsService: StatsService,
+    private authService: AuthService,
+    private quizAttempts: QuizAttemptsService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  /** Lifecycle hook : appelé après l&#x27;initialisation du composant */
+  ngOnInit(): void {
+    this.loadStats();
+  }
+
+  /**
+   * Charge les statistiques de l&#x27;utilisateur courant.
+   *
+   * Récupère les scores, le rang, le temps moyen, le questionnaire populaire
+   * et la liste des tentatives via les services.
+   */
+  loadStats() {
+    const currentUser: AuthUser | null &#x3D; this.authService.getUser();
+    if (!currentUser) return;
+
+    this.authNameUser &#x3D; currentUser.name;
+
+    // Nombre de questionnaires réalisés
+    this.statsService
+      .getNbQuestionnaireByUser(currentUser.id_user)
+      .subscribe((res: any) &#x3D;&gt; {
+        this.nbQuestionnairesRealises &#x3D; parseInt(
+          res?.nb_questionnaires ?? 0,
+          10
+        );
+      });
+
+    // Scores min / max / avg
+    this.statsService
+      .getMaxMinAvgScoreByUser(currentUser.id_user)
+      .subscribe((res: any) &#x3D;&gt; {
+        this.scoreMax &#x3D; res?.max_score ?? &#x27;-&#x27;;
+        this.scoreMin &#x3D; res?.min_score ?? &#x27;-&#x27;;
+        this.scoreAvg &#x3D; res?.avg_score ?? &#x27;-&#x27;;
+      });
+
+    // Rang
+    this.statsService
+      .getRangeByUser(currentUser.id_user)
+      .subscribe((res: any) &#x3D;&gt; {
+        this.range &#x3D; res?.rank ?? &#x27;dernier&#x27;;
+      });
+
+    // Temps moyen
+    this.statsService
+      .getAvgTimeByUser(currentUser.id_user)
+      .subscribe((res: any) &#x3D;&gt; {
+        this.avgTime &#x3D; res?.avg_time_minutes ?? &#x27;-&#x27;;
+      });
+
+    // Questionnaire le plus populaire
+    this.statsService.getQuestionnairePopulaire().subscribe((res: any) &#x3D;&gt; {
+      this.questionnairePopulaire &#x3D; res?.[0]?.title ?? &#x27;&#x27;;
+    });
+
+    // Récupérer les tentatives de l&#x27;utilisateur
+    this.quizAttempts
+      .getAttemptsByUser(currentUser.id_user)
+      .subscribe((res: any[]) &#x3D;&gt; {
+        this.allAttemptsOfMyUser &#x3D; res;
+        this.paginatedAttempts &#x3D; res.slice(0, this.pageSize);
+      });
+  }
+
+  /**
+   * Retourne une couleur en fonction du pourcentage de complétion
+   * @param percent Pourcentage de complétion
+   */
+  getCompletionColor(percent: number): string {
+    if (percent &lt; 25) return &#x27;red&#x27;;
+    if (percent &lt; 50) return &#x27;lightcoral&#x27;;
+    if (percent &lt; 75) return &#x27;orange&#x27;;
+    if (percent &lt; 100) return &#x27;yellow&#x27;;
+    return &#x27;lightgreen&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;br /&gt;
+&lt;br /&gt;
+&lt;div class&#x3D;&quot;center&quot;&gt;
+  &lt;h1&gt;DASHBOARD - Stagiaire {{ authNameUser }}&lt;/h1&gt;
+
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/icon_2_dashboard_admin.jpg&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ nbQuestionnairesRealises }}&lt;/h2&gt;
+        &lt;h4&gt;
+          {{ 1 &gt; 2 ? &quot;questionnaires réalisés&quot; : &quot;questionnaire réalisé&quot; }}
+        &lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/happy_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMax }}&lt;/h2&gt;
+        &lt;h4&gt;score max&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/sad_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMin }}&lt;/h2&gt;
+        &lt;h4&gt;score min&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/average_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreAvg | number : &quot;1.2-2&quot; }}&lt;/h2&gt;
+        &lt;h4&gt;de moyenne&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;hr /&gt;
+  &lt;div class&#x3D;&quot;row text-center&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/ranking_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ range }}&lt;/h2&gt;
+        &lt;!-- 1 ? &quot;ème&quot; : &quot;ère&quot;--&gt;
+        &lt;h4&gt;place&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+      &lt;div class&#x3D;&quot;card_3&quot;&gt;
+        &lt;img src&#x3D;&quot;img/time_last.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ avgTime | timeFormat }}&lt;/h2&gt;
+        &lt;h4&gt;durée moyenne QCM&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;col-6 d-flex justify-content-center&quot;&gt;
+      &lt;div
+        class&#x3D;&quot;card_6 p-3 w-100 d-flex align-items-center justify-content-center&quot;
+      &gt;
+        &lt;div class&#x3D;&quot;row w-100&quot;&gt;
+          &lt;div class&#x3D;&quot;col-5 d-flex justify-content-center align-items-center&quot;&gt;
+            &lt;img src&#x3D;&quot;img/icon_5_dashboard_admin.png&quot; class&#x3D;&quot;img-fluid&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div
+            class&#x3D;&quot;col-5 offset-1 d-flex flex-column justify-content-center align-items-center&quot;
+          &gt;
+            &lt;h4&gt;Questionnaire le plus populaire :&lt;/h4&gt;
+            &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ questionnairePopulaire }}&lt;/h2&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;br /&gt;
+  &lt;hr /&gt;
+  &lt;!-- Tableau statistique sur les tentatives de réponses des utilisateurs --&gt;
+  &lt;div class&#x3D;&quot;center&quot;&gt;
+    &lt;h3&gt;Statistiques par tentatives de réponses au QCM&lt;/h3&gt;
+    &lt;table class&#x3D;&quot;table table-bordered table-striped align-middle text-center&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Nom QCM&lt;/th&gt;
+          &lt;th&gt;Finie à&lt;/th&gt;
+          &lt;th&gt;Durée&lt;/th&gt;
+          &lt;th&gt;Score&lt;/th&gt;
+          &lt;th&gt;Progression&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr *ngFor&#x3D;&quot;let attempt of paginatedAttempts&quot;&gt;
+          &lt;td&gt;{{ attempt.title }}&lt;/td&gt;
+          &lt;td&gt;{{ attempt.ended_at | date : &quot;short&quot; }}&lt;/td&gt;
+          &lt;td *ngIf&#x3D;&quot;attempt.duration.minutes&quot;&gt;
+            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s
+          &lt;/td&gt;
+          &lt;td *ngIf&#x3D;&quot;!attempt.duration.minutes&quot;&gt;
+            {{ attempt.duration.seconds }} s
+          &lt;/td&gt;
+          &lt;td style&#x3D;&quot;width: 200px&quot;&gt;
+            &lt;div class&#x3D;&quot;position-relative&quot; style&#x3D;&quot;height: 20px&quot;&gt;
+              &lt;div class&#x3D;&quot;progress h-100&quot;&gt;
+                &lt;div
+                  class&#x3D;&quot;progress-bar&quot;
+                  role&#x3D;&quot;progressbar&quot;
+                  [ngStyle]&#x3D;&quot;{
+                    width: attempt.score + &#x27;%&#x27;,
+                    backgroundColor: getCompletionColor(attempt.score)
+                  }&quot;
+                  [attr.aria-valuenow]&#x3D;&quot;attempt.score&quot;
+                  aria-valuemin&#x3D;&quot;0&quot;
+                  aria-valuemax&#x3D;&quot;100&quot;
+                &gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;span
+                class&#x3D;&quot;position-absolute top-50 start-50 translate-middle fw-bold&quot;
+                style&#x3D;&quot;color: black&quot;
+              &gt;
+                {{ attempt.score | number : &quot;1.0-0&quot; }}%
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/td&gt;
+          &lt;td&gt;
+            &lt;!-- Conteneur de la jauge --&gt;
+            &lt;div class&#x3D;&quot;position-relative&quot; style&#x3D;&quot;height: 20px&quot;&gt;
+              &lt;!-- Barre de progression --&gt;
+              &lt;div class&#x3D;&quot;progress h-100&quot;&gt;
+                &lt;div
+                  class&#x3D;&quot;progress-bar&quot;
+                  role&#x3D;&quot;progressbar&quot;
+                  [ngStyle]&#x3D;&quot;{
+                    width: attempt.completed + &#x27;%&#x27;,
+                    backgroundColor: getCompletionColor(attempt.completed)
+                  }&quot;
+                  [attr.aria-valuenow]&#x3D;&quot;attempt.completed&quot;
+                  aria-valuemin&#x3D;&quot;0&quot;
+                  aria-valuemax&#x3D;&quot;100&quot;
+                &gt;&lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;!-- Texte centré --&gt;
+              &lt;span
+                class&#x3D;&quot;position-absolute top-50 start-50 translate-middle fw-bold&quot;
+                style&#x3D;&quot;color: black&quot;
+              &gt;
+                {{ attempt.completed | number : &quot;1.0-0&quot; }}%
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;!-- Pagination --&gt;
+    &lt;app-pagination
+      [items]&#x3D;&quot;allAttemptsOfMyUser&quot;
+      [pageSize]&#x3D;&quot;pageSize&quot;
+      (pageChange)&#x3D;&quot;paginatedAttempts &#x3D; $event&quot;
+    &gt;
+    &lt;/app-pagination&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>  <br /><br />  <div class="row">    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>        <h4>          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}        </h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/happy_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMax }}</h2>        <h4>score max</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/sad_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMin }}</h2>        <h4>score min</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/average_icon.png" /><br /><br />        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>        <h4>de moyenne</h4>      </div>    </div>  </div>  <hr />  <div class="row text-center">    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/ranking_icon.png" /><br /><br />        <h2 class="fw-bold">{{ range }}</h2>        <!-- 1 ? "ème" : "ère"-->        <h4>place</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/time_last.png" /><br /><br />        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>        <h4>durée moyenne QCM</h4>      </div>    </div>    <div class="col-6 d-flex justify-content-center">      <div        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"      >        <div class="row w-100">          <div class="col-5 d-flex justify-content-center align-items-center">            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />          </div>          <div            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"          >            <h4>Questionnaire le plus populaire :</h4>            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>          </div>        </div>      </div>    </div>  </div>  <br />  <hr />  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->  <div class="center">    <h3>Statistiques par tentatives de réponses au QCM</h3>    <table class="table table-bordered table-striped align-middle text-center">      <thead>        <tr>          <th>Nom QCM</th>          <th>Finie à</th>          <th>Durée</th>          <th>Score</th>          <th>Progression</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let attempt of paginatedAttempts">          <td>{{ attempt.title }}</td>          <td>{{ attempt.ended_at | date : "short" }}</td>          <td *ngIf="attempt.duration.minutes">            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s          </td>          <td *ngIf="!attempt.duration.minutes">            {{ attempt.duration.seconds }} s          </td>          <td style="width: 200px">            <div class="position-relative" style="height: 20px">              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.score + \'%\',                    backgroundColor: getCompletionColor(attempt.score)                  }"                  [attr.aria-valuenow]="attempt.score"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.score | number : "1.0-0" }}%              </span>            </div>          </td>          <td>            <!-- Conteneur de la jauge -->            <div class="position-relative" style="height: 20px">              <!-- Barre de progression -->              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.completed + \'%\',                    backgroundColor: getCompletionColor(attempt.completed)                  }"                  [attr.aria-valuenow]="attempt.completed"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <!-- Texte centré -->              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.completed | number : "1.0-0" }}%              </span>            </div>          </td>        </tr>      </tbody>    </table>    <!-- Pagination -->    <app-pagination      [items]="allAttemptsOfMyUser"      [pageSize]="pageSize"      (pageChange)="paginatedAttempts = $event"    >    </app-pagination>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DashboardStagiaireComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DashboardStagiaireComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

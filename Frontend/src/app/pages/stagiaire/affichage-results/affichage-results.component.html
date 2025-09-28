@@ -10,15 +10,11 @@
   <p><i>Continue à pratiquer pour améliorer tes statistiques !</i></p>
   <br />
   <!-- Search bar -->
-  <div class="mb-3 d-flex justify-content-end">
-    <input
-      type="text"
-      class="form-control w-25"
-      placeholder="Rechercher un QCM..."
-      [(ngModel)]="searchTerm"
-      (input)="applyFilter()"
-    />
-  </div>
+  <app-search-bar
+    placeholder="Rechercher une question..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
   <!-- TABLE -->
   <div class="table-responsive-custom">
     <table class="table table-striped">

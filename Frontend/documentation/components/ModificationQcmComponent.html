@@ -1,0 +1,1562 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>New QCM + documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">New QCM + documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ModificationQcmComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/admin/modification-qcm/modification-qcm.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant responsable de la modification d&#39;un QCM.</p>
+<p>Ce composant permet :</p>
+<ul>
+<li>de charger tous les QCM disponibles depuis le service <code>QcmService</code></li>
+<li>de rechercher et filtrer les QCM via une barre de recherche</li>
+<li>de sélectionner un QCM pour modification (titre, description)</li>
+<li>de soumettre les changements pour mise à jour côté serveur</li>
+<li>d&#39;afficher un modal de succès ou d&#39;échec selon le résultat de la mise à jour</li>
+</ul>
+<h3>Importation</h3>
+<p>Ce composant utilise :</p>
+<ul>
+<li><code>CommonModule</code>, <code>FormsModule</code>, <code>ReactiveFormsModule</code></li>
+<li><code>SearchBarComponent</code> pour la recherche</li>
+<li><code>PaginationComponent</code> pour la pagination</li>
+<li><code>ModalComponent</code> pour afficher le succès ou l&#39;échec</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-modification-qcm&gt;&lt;/app-modification-qcm&gt;</code></pre></div>
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-modification-qcm</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>FormsModule</code>
+                                <code><a href="../components/SearchBarComponent.html" target="_self" >SearchBarComponent</a></code>
+                                <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
+                                <code><a href="../components/ModalComponent.html" target="_self" >ModalComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./modification-qcm.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filteredQcms" >filteredQcms</a>
+                            </li>
+                            <li>
+                                <a href="#maxResponses" >maxResponses</a>
+                            </li>
+                            <li>
+                                <a href="#minResponses" >minResponses</a>
+                            </li>
+                            <li>
+                                <a href="#paginatedQcms" >paginatedQcms</a>
+                            </li>
+                            <li>
+                                <a href="#qcmForm" >qcmForm</a>
+                            </li>
+                            <li>
+                                <a href="#qcms" >qcms</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                            <li>
+                                <a href="#selectedQcm" >selectedQcm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#editQCM" >editQCM</a>
+                            </li>
+                            <li>
+                                <a href="#initForm" >initForm</a>
+                            </li>
+                            <li>
+                                <a href="#loadQCMs" >loadQCMs</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onQcmUpdated" >onQcmUpdated</a>
+                            </li>
+                            <li>
+                                <a href="#resetForm" >resetForm</a>
+                            </li>
+                            <li>
+                                <a href="#submitForm" >submitForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#questions" >questions</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(qcmService: <a href="../injectables/QcmService.html" target="_self">QcmService</a>, fb: FormBuilder, cdr: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:89</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du composant.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>qcmService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QcmService.html" target="_self" >QcmService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service de gestion des QCM</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>FormBuilder pour créer les formulaires réactifs</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ChangeDetectorRef pour forcer la détection des changements après chargement asynchrone</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Applique un filtre sur la liste des QCM en fonction du terme de recherche.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editQCM"></a>
+                    <span class="name">
+                        <span ><b>editQCM</b></span>
+                        <a href="#editQCM"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editQCM(qcm: <a href="../interfaces/QCM.html" target="_self">QCM</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sélectionne un QCM et initialise le formulaire avec ses données.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>qcm</td>
+                                            <td>
+                                                            <code><a href="../interfaces/QCM.html" target="_self" >QCM</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>QCM à modifier</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initForm"></a>
+                    <span class="name">
+                        <span ><b>initForm</b></span>
+                        <a href="#initForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="167"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:167</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initialise le formulaire avec les valeurs du QCM sélectionné.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadQCMs"></a>
+                    <span class="name">
+                        <span ><b>loadQCMs</b></span>
+                        <a href="#loadQCMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadQCMs()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="114"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:114</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Récupère tous les QCM via le service et initialise la pagination.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cycle de vie Angular : Initialisation du composant.
+Charge les QCM depuis le backend.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onQcmUpdated"></a>
+                    <span class="name">
+                        <span ><b>onQcmUpdated</b></span>
+                        <a href="#onQcmUpdated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onQcmUpdated()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="219"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Callback exécuté après la mise à jour d&#39;un QCM pour recharger la liste.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetForm"></a>
+                    <span class="name">
+                        <span ><b>resetForm</b></span>
+                        <a href="#resetForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Réinitialise le formulaire avec les valeurs originales du QCM.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitForm"></a>
+                    <span class="name">
+                        <span ><b>submitForm</b></span>
+                        <a href="#submitForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:197</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Soumet le formulaire pour mettre à jour le QCM.
+Affiche un modal de succès ou d&#39;échec en fonction du résultat.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredQcms"></a>
+                    <span class="name">
+                        <span ><b>filteredQcms</b></span>
+                        <a href="#filteredQcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/QCM.html" target="_self" >QCM[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste des QCM filtrés après recherche.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxResponses"></a>
+                    <span class="name">
+                        <span ><b>maxResponses</b></span>
+                        <a href="#maxResponses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre maximum de réponses autorisées pour un QCM.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minResponses"></a>
+                    <span class="name">
+                        <span ><b>minResponses</b></span>
+                        <a href="#minResponses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre minimum de réponses requises pour un QCM.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginatedQcms"></a>
+                    <span class="name">
+                        <span ><b>paginatedQcms</b></span>
+                        <a href="#paginatedQcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/QCM.html" target="_self" >QCM[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>QCM affichés sur la page courante (pagination).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="qcmForm"></a>
+                    <span class="name">
+                        <span ><b>qcmForm</b></span>
+                        <a href="#qcmForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulaire réactif pour modifier le titre et la description du QCM.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="qcms"></a>
+                    <span class="name">
+                        <span ><b>qcms</b></span>
+                        <a href="#qcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/QCM.html" target="_self" >QCM[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste complète des QCM récupérés depuis l&#39;API.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Terme de recherche saisi dans la barre de recherche.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedQcm"></a>
+                    <span class="name">
+                        <span ><b>selectedQcm</b></span>
+                        <a href="#selectedQcm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/QCM.html" target="_self" >QCM | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>QCM actuellement sélectionné pour modification.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="questions"></a>
+                        <span class="name"><b>questions</b><a href="#questions"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>questions()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/app/pages/admin/modification-qcm/modification-qcm.component.ts:188</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Getter pour accéder aux questions sous forme de <code>FormArray</code>.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>FormArray</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, OnInit } from &#x27;@angular/core&#x27;;
+import { QcmService } from &#x27;../../../services/qcm.service&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  FormsModule,
+} from &#x27;@angular/forms&#x27;;
+import * as bootstrap from &#x27;bootstrap&#x27;; // importer Bootstrap JS
+import { QCM } from &#x27;../../../models/qcm&#x27;;
+import { SearchBarComponent } from &#x27;../../../components/search_bar/search_bar.component&#x27;;
+import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
+import { ModalComponent } from &#x27;../../../components/modal_success_failure/modal.component&#x27;;
+
+/**
+ * Composant responsable de la modification d&#x27;un QCM.
+ *
+ * @description
+ * Ce composant permet :
+ * - de charger tous les QCM disponibles depuis le service &#x60;QcmService&#x60;
+ * - de rechercher et filtrer les QCM via une barre de recherche
+ * - de sélectionner un QCM pour modification (titre, description)
+ * - de soumettre les changements pour mise à jour côté serveur
+ * - d&#x27;afficher un modal de succès ou d&#x27;échec selon le résultat de la mise à jour
+ *
+ * @usageNotes
+ * ### Importation
+ * Ce composant utilise :
+ * - &#x60;CommonModule&#x60;, &#x60;FormsModule&#x60;, &#x60;ReactiveFormsModule&#x60;
+ * - &#x60;SearchBarComponent&#x60; pour la recherche
+ * - &#x60;PaginationComponent&#x60; pour la pagination
+ * - &#x60;ModalComponent&#x60; pour afficher le succès ou l&#x27;échec
+ *
+ * @example
+ * &#x60;&#x60;&#x60;html
+ * &lt;app-modification-qcm&gt;&lt;/app-modification-qcm&gt;
+ * &#x60;&#x60;&#x60;
+ *
+ * @selector app-modification-qcm
+ * @component
+ */
+@Component({
+  selector: &#x27;app-modification-qcm&#x27;,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SearchBarComponent,
+    PaginationComponent,
+    ModalComponent,
+  ],
+  templateUrl: &#x27;./modification-qcm.component.html&#x27;,
+})
+export class ModificationQcmComponent implements OnInit {
+  /**
+   * Liste complète des QCM récupérés depuis l&#x27;API.
+   */
+  qcms: QCM[] &#x3D; [];
+  /**
+   * QCM actuellement sélectionné pour modification.
+   */
+  selectedQcm: QCM | null &#x3D; null;
+  /**
+   * Formulaire réactif pour modifier le titre et la description du QCM.
+   */
+  qcmForm!: FormGroup;
+  /**
+   * Nombre maximum de réponses autorisées pour un QCM.
+   */
+  maxResponses &#x3D; 5;
+  /**
+   * Nombre minimum de réponses requises pour un QCM.
+   */
+  minResponses &#x3D; 2;
+  /**
+   * Liste des QCM filtrés après recherche.
+   */
+  filteredQcms: QCM[] &#x3D; [];
+  /**
+   * Terme de recherche saisi dans la barre de recherche.
+   */
+  searchTerm &#x3D; &#x27;&#x27;;
+  /**
+   * QCM affichés sur la page courante (pagination).
+   */
+  paginatedQcms: QCM[] &#x3D; [];
+
+  /**
+   * Constructeur du composant.
+   * @param qcmService Service de gestion des QCM
+   * @param fb FormBuilder pour créer les formulaires réactifs
+   * @param cdr ChangeDetectorRef pour forcer la détection des changements après chargement asynchrone
+   */
+  constructor(
+    private qcmService: QcmService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  /**
+   * Cycle de vie Angular : Initialisation du composant.
+   * Charge les QCM depuis le backend.
+   */
+  ngOnInit(): void {
+    this.loadQCMs();
+  }
+
+  /**
+   * Récupère tous les QCM via le service et initialise la pagination.
+   */
+  loadQCMs() {
+    this.qcmService.getAllQCM().subscribe({
+      next: (data) &#x3D;&gt; {
+        this.qcms &#x3D; data;
+        this.filteredQcms &#x3D; [...this.qcms];
+
+        Promise.resolve().then(() &#x3D;&gt; {
+          this.paginatedQcms &#x3D; this.filteredQcms.slice(0, 5);
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement QCM&#x27;, err),
+    });
+  }
+
+  /**
+   * Sélectionne un QCM et initialise le formulaire avec ses données.
+   * @param qcm QCM à modifier
+   */
+  editQCM(qcm: QCM) {
+    // On récupère le QCM complet (title + description)
+    this.qcmService.getQCMById(qcm.id_qcm!).subscribe({
+      next: (data) &#x3D;&gt; {
+        this.selectedQcm &#x3D; data; // titre et description récupérés
+        this.initForm();
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement QCM&#x27;, err),
+    });
+  }
+  /**
+   * Applique un filtre sur la liste des QCM en fonction du terme de recherche.
+   */
+  applyFilter() {
+    const term &#x3D; this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQcms &#x3D; [...this.qcms];
+    } else {
+      this.filteredQcms &#x3D; this.qcms.filter((qcm) &#x3D;&gt;
+        (qcm.title + qcm.description + qcm.user).toLowerCase().includes(term)
+      );
+    }
+
+    Promise.resolve().then(() &#x3D;&gt; {
+      this.paginatedQcms &#x3D; this.filteredQcms.slice(0, 5);
+      this.cdr.detectChanges();
+    });
+  }
+
+  // ---------- Formulaire réactif ----------
+  /**
+   * Initialise le formulaire avec les valeurs du QCM sélectionné.
+   */
+  initForm() {
+    this.qcmForm &#x3D; this.fb.group({
+      title: [this.selectedQcm?.title, Validators.required],
+      description: [this.selectedQcm?.description],
+    });
+  }
+  /**
+   * Réinitialise le formulaire avec les valeurs originales du QCM.
+   */
+  resetForm() {
+    if (!this.selectedQcm) return;
+
+    // Remet le formulaire à ses valeurs originales récupérées depuis le QCM
+    this.qcmForm.patchValue({
+      title: this.selectedQcm.title,
+      description: this.selectedQcm.description,
+    });
+  }
+  /**
+   * Getter pour accéder aux questions sous forme de &#x60;FormArray&#x60;.
+   */
+  get questions(): FormArray {
+    return this.qcmForm.get(&#x27;questions&#x27;) as FormArray;
+  }
+
+  // ---------- Sauvegarde ----------
+  /**
+   * Soumet le formulaire pour mettre à jour le QCM.
+   * Affiche un modal de succès ou d&#x27;échec en fonction du résultat.
+   */
+  submitForm() {
+    if (this.qcmForm.invalid) {
+      this.qcmForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue &#x3D; this.qcmForm.value;
+
+    this.qcmService.updateQCM(this.selectedQcm!.id_qcm!, formValue).subscribe({
+      next: () &#x3D;&gt; {
+        const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
+        if (modalEl) new bootstrap.Modal(modalEl).show();
+      },
+      error: () &#x3D;&gt; {
+        const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
+        if (modalEl) new bootstrap.Modal(modalEl).show();
+      },
+    });
+  }
+  /**
+   * Callback exécuté après la mise à jour d&#x27;un QCM pour recharger la liste.
+   */
+  onQcmUpdated() {
+    this.selectedQcm &#x3D; null;
+    this.loadQCMs();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;br /&gt;
+&lt;br /&gt;
+&lt;div class&#x3D;&quot;center&quot;&gt;
+  &lt;h1&gt;Modifier d&#x27;un questionnaire&lt;/h1&gt;
+
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;p&gt;
+    Ce formulaire permet de modifier un questionnaire.Aucun ajout ou suppression
+    possible via cette page.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Elle est dédiée uniquement à la modification du contenu d&#x27;un questionnaire
+    existant.
+  &lt;/p&gt;
+  &lt;br /&gt;
+  &lt;!-- Search bar --&gt;
+  &lt;app-search-bar
+    placeholder&#x3D;&quot;Rechercher un QCM...&quot;
+    [(value)]&#x3D;&quot;searchTerm&quot;
+    (valueChange)&#x3D;&quot;applyFilter()&quot;
+  &gt;&lt;/app-search-bar&gt;
+  &lt;!-- Tableau des qcm --&gt;
+  &lt;div class&#x3D;&quot;table-responsive-custom&quot;&gt;
+    &lt;table class&#x3D;&quot;table table-striped&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;&lt;/th&gt;
+          &lt;th&gt;Titre&lt;/th&gt;
+          &lt;th&gt;Description&lt;/th&gt;
+          &lt;th&gt;Créé par&lt;/th&gt;
+          &lt;th&gt;Créé le&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr *ngFor&#x3D;&quot;let qcm of paginatedQcms&quot;&gt;
+          &lt;td class&#x3D;&quot;text-center&quot;&gt;
+            &lt;i
+              class&#x3D;&quot;bi bi-pencil-square text-primary fs-5&quot;
+              style&#x3D;&quot;cursor: pointer&quot;
+              (click)&#x3D;&quot;editQCM(qcm)&quot;
+            &gt;&lt;/i&gt;
+          &lt;/td&gt;
+          &lt;td&gt;{{ qcm.title }}&lt;/td&gt;
+          &lt;td&gt;{{ qcm.description }}&lt;/td&gt;
+          &lt;td&gt;{{ qcm.user }}&lt;/td&gt;
+          &lt;td&gt;{{ qcm.created_at | date : &quot;short&quot; }}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;!-- Pagination --&gt;
+  &lt;app-pagination
+    [items]&#x3D;&quot;filteredQcms&quot;
+    [pageSize]&#x3D;&quot;5&quot;
+    (pageChange)&#x3D;&quot;paginatedQcms &#x3D; $event&quot;
+  &gt;
+  &lt;/app-pagination&gt;
+  &lt;br /&gt;&lt;br /&gt;
+  &lt;form
+    [formGroup]&#x3D;&quot;qcmForm&quot;
+    (ngSubmit)&#x3D;&quot;submitForm()&quot;
+    *ngIf&#x3D;&quot;selectedQcm&quot;
+    class&#x3D;&quot;form-l&quot;
+  &gt;
+    &lt;h4 class&#x3D;&quot;fw-bold&quot;&gt;MODIFICATION&lt;/h4&gt;
+    &lt;br /&gt;
+    &lt;label for&#x3D;&quot;title&quot;&gt;Titre&lt;/label&gt;
+    &lt;input
+      formControlName&#x3D;&quot;title&quot;
+      placeholder&#x3D;&quot;Titre QCM&quot;
+      class&#x3D;&quot;form-control mb-2&quot;
+    /&gt;&lt;br /&gt;
+    &lt;label for&#x3D;&quot;title&quot;&gt;Description&lt;/label&gt;
+    &lt;textarea
+      formControlName&#x3D;&quot;description&quot;
+      placeholder&#x3D;&quot;Description&quot;
+      class&#x3D;&quot;form-control mb-4&quot;
+    &gt;&lt;/textarea&gt;
+    &lt;br /&gt;
+    &lt;button
+      type&#x3D;&quot;button&quot;
+      class&#x3D;&quot;btn btn-secondary mt-3 me-2&quot;
+      (click)&#x3D;&quot;resetForm()&quot;
+    &gt;
+      Réinitialiser
+    &lt;/button&gt;
+    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary mt-3&quot;&gt;Enregistrer&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+&lt;!-- MODALS --&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;successModal&quot;
+  icon&#x3D;&quot;✔️&quot;
+  message&#x3D;&quot;Modification QCM réalisée avec succès !&quot;
+  (onClose)&#x3D;&quot;onQcmUpdated()&quot;
+&gt;&lt;/app-modal&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;failedModal&quot;
+  icon&#x3D;&quot;❌&quot;
+  message&#x3D;&quot;La modification du QCM a échoué !&quot;
+&gt;&lt;/app-modal&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Modifier d\'un questionnaire</h1>  <br /><br />  <p>    Ce formulaire permet de modifier un questionnaire.Aucun ajout ou suppression    possible via cette page.  </p>  <p>    Elle est dédiée uniquement à la modification du contenu d\'un questionnaire    existant.  </p>  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher un QCM..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Tableau des qcm -->  <div class="table-responsive-custom">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Titre</th>          <th>Description</th>          <th>Créé par</th>          <th>Créé le</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let qcm of paginatedQcms">          <td class="text-center">            <i              class="bi bi-pencil-square text-primary fs-5"              style="cursor: pointer"              (click)="editQCM(qcm)"            ></i>          </td>          <td>{{ qcm.title }}</td>          <td>{{ qcm.description }}</td>          <td>{{ qcm.user }}</td>          <td>{{ qcm.created_at | date : "short" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredQcms"    [pageSize]="5"    (pageChange)="paginatedQcms = $event"  >  </app-pagination>  <br /><br />  <form    [formGroup]="qcmForm"    (ngSubmit)="submitForm()"    *ngIf="selectedQcm"    class="form-l"  >    <h4 class="fw-bold">MODIFICATION</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    /><br />    <label for="title">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <br />    <button      type="button"      class="btn btn-secondary mt-3 me-2"      (click)="resetForm()"    >      Réinitialiser    </button>    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Modification QCM réalisée avec succès !"  (onClose)="onQcmUpdated()"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="La modification du QCM a échoué !"></app-modal></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ModificationQcmComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ModificationQcmComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

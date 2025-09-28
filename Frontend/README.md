@@ -38,12 +38,19 @@ npm install --save-dev @compodoc/compodoc
 
 Le frontend Angular communique avec un backend NodeJS qui répond sur :
 
-`````
+```
 http://localhost:3000
-````
+```
 
 Différentes urls sont disponibles et permettent de réaliser de nombreuses requêtes dans la base de données.
-`````
+
+## Documentation
+
+La documentation est disponible dans le dossier documentation, mais également à l'url suivante :
+
+```
+http://127.0.0.1:3001
+```
 
 ## Contenerisation
 
