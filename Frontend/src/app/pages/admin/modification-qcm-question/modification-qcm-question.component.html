@@ -96,8 +96,9 @@
       placeholder="Description"
       class="form-control mb-4"
     ></textarea>
-    <br /><br />
-    <label for="title">Questions</label>
+    <br />
+    <hr />
+    <h5 for="title">Questions</h5>
     <div formArrayName="questions">
       <div
         *ngFor="let question of questions.controls; let qIndex = index"
@@ -109,8 +110,6 @@
           placeholder="Intitulé de la question"
           class="form-control mb-2"
         />
-
-        <h5>Réponses :</h5>
         <div formArrayName="responses">
           <div
             *ngFor="

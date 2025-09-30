@@ -1,1 +1,117 @@
-<p>ajout-qcm-question works!</p>
+<br /><br />
+<div class="center">
+  <h1>Ajouter un questionnaire</h1>
+
+  <br /><br />
+  <p>Ce formulaire permet d'ajouter un questionnaire et ses question.</p>
+  <br />
+  <br />
+
+  <form [formGroup]="qcmForm" (ngSubmit)="submitForm()" class="form">
+    <!-- Titre et Description -->
+    <label>Titre du QCM</label>
+    <input
+      formControlName="title"
+      class="form-control mb-2"
+      placeholder="Titre"
+    />
+
+    <label>Description</label>
+    <textarea
+      formControlName="description"
+      class="form-control mb-4"
+      placeholder="Description"
+    ></textarea>
+
+    <!-- Bouton pour ajouter une question -->
+    <button type="button" class="btn btn-primary mb-3" (click)="addQuestion()">
+      ➕ Ajouter une question
+    </button>
+
+    <!-- Liste des questions dynamiques -->
+    <div formArrayName="questions">
+      <div
+        *ngFor="let question of questions.controls; let qIndex = index"
+        [formGroupName]="qIndex"
+        class="mb-4 p-3 border rounded"
+      >
+        <label>Question {{ qIndex + 1 }}</label>
+        <input
+          formControlName="question"
+          class="form-control mb-2"
+          placeholder="Intitulé de la question"
+        />
+
+        <h5>Réponses :</h5>
+        <div formArrayName="responses">
+          <div
+            *ngFor="
+              let response of getResponses(qIndex).controls;
+              let rIndex = index
+            "
+            [formGroupName]="rIndex"
+            class="row g-2 align-items-center mb-2"
+          >
+            <div class="col-8">
+              <input
+                formControlName="response"
+                class="form-control"
+                placeholder="Réponse"
+              />
+            </div>
+            <div class="col-2 text-center">
+              <input
+                type="checkbox"
+                formControlName="is_correct"
+                class="form-check-input"
+              />
+            </div>
+            <div class="col-2 text-end">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                (click)="removeResponse(qIndex, rIndex)"
+              >
+                ❌
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm mt-2"
+          (click)="addResponse(qIndex)"
+        >
+          ➕ Ajouter une réponse
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm mt-2 ms-2"
+          (click)="removeQuestion(qIndex)"
+        >
+          🗑 Supprimer la question
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Créer le QCM</button>
+  </form>
+</div>
+
+<!-- MODALS pour feedback -->
+<app-modal
+  modalId="unvalidModal"
+  icon="❌"
+  message="Au moins une réponse correcte par question est requise."
+></app-modal>
+<app-modal
+  modalId="successModal"
+  icon="✔️"
+  message="QCM créé avec succès !"
+></app-modal>
+<app-modal
+  modalId="failedModal"
+  icon="❌"
+  message="La création du QCM a échoué !"
+></app-modal>
