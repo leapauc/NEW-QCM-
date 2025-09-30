@@ -85,6 +85,8 @@ export class SuppressionQuestionComponent implements OnInit {
    * Liste paginée des questions affichées dans le tableau.
    */
   paginatedQuestions: any[] = [];
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
@@ -116,17 +118,21 @@ export class SuppressionQuestionComponent implements OnInit {
    * Charge toutes les questions depuis le service et initialise la pagination.
    */
   loadQuestions() {
+    this.isLoading = true;
+
     this.questionService.getAllQuestions().subscribe({
       next: (data) => {
         this.questions = data;
         this.filteredQuestions = [...this.questions];
+        this.paginatedQuestions = this.filteredQuestions.slice(0, 5);
 
-        Promise.resolve().then(() => {
-          this.paginatedQuestions = this.filteredQuestions.slice(0, 5);
-          this.cdr.detectChanges();
-        });
+        this.isLoading = false; // ✅ fin du chargement
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Erreur chargement questions : ', err),
+      error: (err) => {
+        console.error('Erreur chargement questions : ', err);
+        this.isLoading = false;
+      },
     });
   }
 

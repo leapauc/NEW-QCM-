@@ -16,8 +16,31 @@
     [(value)]="searchTerm"
     (valueChange)="applyFilter()"
   ></app-search-bar>
-  <!-- Tableau des utilisateurs -->
-  <div>
+  <!-- Spinner pendant le chargement -->
+  <div *ngIf="isLoading" class="text-center p-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  <!-- Message si aucun utilisateur après chargement -->
+  <div
+    *ngIf="!isLoading && users.length === 0"
+    class="alert alert-warning text-center"
+    role="alert"
+  >
+    Aucun utilisateur n'a encore été créé. Veuillez en ajouter pour pouvoir les
+    modifier !
+  </div>
+  <!-- Message si recherche mais aucun résultat -->
+  <div
+    *ngIf="!isLoading && users.length > 0 && filteredUsers.length === 0"
+    class="alert alert-info text-center"
+    role="alert"
+  >
+    Aucun utilisateur ne correspond à votre recherche.
+  </div>
+  <!-- Tableau affiché uniquement si filteredUsers contient des éléments -->
+  <div *ngIf="!isLoading && filteredUsers.length > 0">
     <table class="table table-striped">
       <thead>
         <tr>

@@ -15,8 +15,31 @@
     [(value)]="searchTerm"
     (valueChange)="applyFilter()"
   ></app-search-bar>
-  <!-- TABLE -->
-  <div class="table-responsive-custom">
+  <!-- Spinner pendant le chargement -->
+  <div *ngIf="isLoading" class="text-center p-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  <!-- Message si aucune tentative en BDD -->
+  <div
+    *ngIf="!isLoading && attempts.length === 0"
+    class="alert alert-warning text-center"
+  >
+    Vous n'avez aucune tentative enregistrée.
+  </div>
+  <!-- Message si aucun résultat après recherche -->
+  <div
+    *ngIf="!isLoading && attempts.length > 0 && filteredAttempts.length === 0"
+    class="alert alert-info text-center"
+  >
+    Aucun résultat ne correspond à votre recherche.
+  </div>
+  <!-- Tableau des tentatives : uniquement si chargé et tentatives présentes -->
+  <div
+    class="table-responsive-custom"
+    *ngIf="!isLoading && filteredAttempts.length > 0"
+  >
     <table class="table table-striped">
       <thead>
         <tr>

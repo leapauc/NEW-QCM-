@@ -102,6 +102,8 @@ export class ModificationUtilisateurComponent implements OnInit {
    * Utilisateurs affichés sur la page courante (pagination).
    */
   paginatedUsers: User[] = [];
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
@@ -143,17 +145,21 @@ export class ModificationUtilisateurComponent implements OnInit {
    * Charge tous les utilisateurs via le service et initialise la pagination.
    */
   loadUsers() {
+    this.isLoading = true;
+
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
         this.filteredUsers = [...this.users];
+        this.paginatedUsers = this.filteredUsers.slice(0, 5);
 
-        Promise.resolve().then(() => {
-          this.paginatedUsers = this.filteredUsers.slice(0, 5);
-          this.cdr.detectChanges();
-        });
+        this.isLoading = false; // ✅ fin du chargement
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+        this.isLoading = false;
+      },
     });
   }
 

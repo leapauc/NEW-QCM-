@@ -44,6 +44,8 @@ export class AffichageResultsComponent {
   filteredAttempts: any[] = [];
   /** Terme de recherche pour filtrer les tentatives */
   searchTerm = '';
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant
@@ -59,16 +61,28 @@ export class AffichageResultsComponent {
 
   /** Lifecycle hook : appelé après l'initialisation du composant */
   ngOnInit(): void {
+    this.loadAttempts();
+  }
+
+  loadAttempts() {
+    this.isLoading = true;
     this.currentUser = this.authService.getUser();
-    if (this.currentUser) {
-      this.quizAttemptsService
-        .getAttemptsByUser(this.currentUser.id_user)
-        .subscribe((res) => {
+    if (!this.currentUser) return;
+
+    this.quizAttemptsService
+      .getAttemptsByUser(this.currentUser.id_user)
+      .subscribe({
+        next: (res) => {
           this.attempts = res;
           this.filteredAttempts = [...this.attempts];
-          this.cdr.detectChanges(); // <-- force la détection après update
-        });
-    }
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Erreur chargement tentatives', err);
+          this.isLoading = false;
+        },
+      });
   }
 
   /**

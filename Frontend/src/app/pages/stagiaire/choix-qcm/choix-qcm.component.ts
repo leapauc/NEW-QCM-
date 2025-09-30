@@ -77,6 +77,8 @@ export class ChoixQcmComponent implements OnInit {
   searchTerm = '';
   /** Réponses sélectionnées par l'utilisateur */
   selectedAnswers: { id_question: number; id_response: number }[] = [];
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant `ChoixQcmComponent`.
@@ -102,6 +104,7 @@ export class ChoixQcmComponent implements OnInit {
 
   /** Charge tous les QCM depuis le backend et initialise la liste filtrée */
   loadQCMs() {
+    this.isLoading = true;
     const currentUser: AuthUser | null = this.authService.getUser();
     if (!currentUser) return;
 
@@ -111,13 +114,17 @@ export class ChoixQcmComponent implements OnInit {
         this.qcms = data;
         this.filteredQcms = [...this.qcms];
 
-        // 🔹 éviter ExpressionChangedAfterItHasBeenCheckedError
         Promise.resolve().then(() => {
           this.paginatedQcms = this.filteredQcms.slice(0, 5);
           this.cdr.detectChanges();
         });
+
+        this.isLoading = false;
       },
-      error: (err) => console.error('Erreur chargement QCM', err),
+      error: (err) => {
+        console.error('Erreur chargement QCM', err);
+        this.isLoading = false;
+      },
     });
   }
 

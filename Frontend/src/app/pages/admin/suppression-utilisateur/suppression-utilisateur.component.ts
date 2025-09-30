@@ -12,6 +12,7 @@ import { User } from '../../../models/user';
 import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
+import { AuthService } from '../../../services/auth.service';
 
 /**
  * Composant responsable de la suppression des utilisateurs.
@@ -83,17 +84,23 @@ export class SuppressionUtilisateurComponent implements OnInit {
    * Classe CSS appliquée au message (ex. "alert-success", "alert-danger").
    */
   messageClass: string = '';
+  /** Stocke l'id de l'utilisateur courant*/
+  private currentUserId: number | null = null;
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
    * @param userService Service pour récupérer et supprimer les utilisateurs.
    * @param fb FormBuilder pour créer et gérer le formulaire.
    * @param cdr ChangeDetectorRef pour forcer la détection des changements après mises à jour asynchrones.
+   * @param authService AuthService pour pouvoir récupérer les informations de d'administrateur connecté.
    */
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
@@ -110,25 +117,35 @@ export class SuppressionUtilisateurComponent implements OnInit {
    * Charge les utilisateurs dès l'affichage.
    */
   ngOnInit() {
+    const currentUser = this.authService.getUser();
+    this.currentUserId = currentUser ? currentUser.id_user : null;
+
     this.loadUsers();
   }
 
   /**
-   * Charge tous les utilisateurs depuis le service et initialise la pagination.
+   * Charge tous les utilisateurs depuis le service et initialise la pagination,
+   * en excluant l’administrateur connecté.
    */
   loadUsers() {
+    this.isLoading = true;
+
     this.userService.getAllUsers().subscribe({
       next: (data) => {
-        this.users = data;
-        this.filteredUsers = [...this.users];
+        this.users = this.currentUserId
+          ? data.filter((u) => u.id_user !== this.currentUserId)
+          : data;
 
-        Promise.resolve().then(() => {
-          this.paginatedUsers = this.filteredUsers.slice(0, 5);
-          this.cdr.detectChanges();
-        });
+        this.filteredUsers = [...this.users];
+        this.paginatedUsers = this.filteredUsers.slice(0, 5);
+
+        this.isLoading = false; // ✅ fin du chargement
+        this.cdr.detectChanges();
       },
-      error: (err) =>
-        console.error("Erreur chargement de l'utilisateurs :", err),
+      error: (err) => {
+        console.error('Erreur chargement des utilisateurs :', err);
+        this.isLoading = false;
+      },
     });
   }
 

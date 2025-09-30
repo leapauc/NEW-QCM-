@@ -77,7 +77,24 @@
   <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->
   <div class="center">
     <h3>Statistiques par tentatives de réponses au QCM</h3>
-    <table class="table table-bordered table-striped align-middle text-center">
+    <!-- Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+    <!-- Message si aucune tentative -->
+    <div
+      *ngIf="!isLoading && allAttemptsOfMyUser.length === 0"
+      class="alert alert-info text-center my-4"
+    >
+      Aucune tentative disponible.
+    </div>
+    <!-- Table uniquement si données présentes -->
+    <table
+      *ngIf="!isLoading && allAttemptsOfMyUser.length > 0"
+      class="table table-bordered table-striped align-middle text-center"
+    >
       <thead>
         <tr>
           <th>Nom QCM</th>

@@ -87,6 +87,8 @@ export class ModificationQcmComponent implements OnInit {
    * QCM affichés sur la page courante (pagination).
    */
   paginatedQcms: QCM[] = [];
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
@@ -112,17 +114,21 @@ export class ModificationQcmComponent implements OnInit {
    * Récupère tous les QCM via le service et initialise la pagination.
    */
   loadQCMs() {
+    this.isLoading = true;
     this.qcmService.getAllQCM().subscribe({
       next: (data) => {
         this.qcms = data;
         this.filteredQcms = [...this.qcms];
-
         Promise.resolve().then(() => {
           this.paginatedQcms = this.filteredQcms.slice(0, 5);
           this.cdr.detectChanges();
         });
+        this.isLoading = false; // ✅ fin du chargement
       },
-      error: (err) => console.error('Erreur chargement QCM', err),
+      error: (err) => {
+        console.error('Erreur chargement QCM', err);
+        this.isLoading = false;
+      },
     });
   }
 

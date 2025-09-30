@@ -25,6 +25,8 @@ export class ModificationQcmQuestionComponent implements OnInit {
   pageSize = 5;
   maxResponses = 5;
   minResponses = 2;
+  /** Etat chargement des données */
+  isLoading = true;
 
   constructor(private qcmService: QcmService, private fb: FormBuilder) {}
 
@@ -34,9 +36,16 @@ export class ModificationQcmQuestionComponent implements OnInit {
 
   // 🔹 Charger tous les QCM
   loadQCMs() {
+    this.isLoading = true;
     this.qcmService.getAllQCM().subscribe({
-      next: (data) => (this.qcms = data),
-      error: (err) => console.error('Erreur chargement QCM', err),
+      next: (data) => {
+        this.qcms = data;
+        this.isLoading = false; // ✅ fin du chargement
+      },
+      error: (err) => {
+        console.error('Erreur chargement QCM', err);
+        this.isLoading = false;
+      },
     });
   }
 

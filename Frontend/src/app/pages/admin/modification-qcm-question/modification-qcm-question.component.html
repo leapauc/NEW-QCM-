@@ -13,9 +13,35 @@
     existant.
   </p>
   <br />
-  <!-- Tableau des qcm -->
-  <div class="table-responsive-custom">
-    <table class="table table-striped">
+  <!-- Spinner pendant le chargement -->
+  <div *ngIf="isLoading" class="text-center p-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  <!-- Message si aucun QCM après chargement -->
+  <ng-template #noQcm>
+    <div
+      *ngIf="!isLoading"
+      class="alert alert-warning text-center"
+      role="alert"
+    >
+      Aucun QCM n'a encore été créé. Veuillez créer des QCM pour tester vos
+      stagiaires !
+    </div>
+  </ng-template>
+  <!-- Message si recherche/pagination sans résultat -->
+  <ng-template #noSearchResult>
+    <div *ngIf="!isLoading" class="alert alert-info text-center" role="alert">
+      Aucun QCM ne correspond à votre recherche.
+    </div>
+  </ng-template>
+  <!-- Tableau affiché uniquement si des QCM sont présents -->
+  <div class="table-responsive-custom" *ngIf="!isLoading && qcms.length > 0">
+    <table
+      class="table table-striped"
+      *ngIf="paginatedQCM.length > 0; else noSearchResult"
+    >
       <thead>
         <tr>
           <th></th>
@@ -42,12 +68,14 @@
       </tbody>
     </table>
   </div>
+
   <!-- Pagination -->
   <div class="d-flex justify-content-between">
     <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
     <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
   </div>
   <br /><br />
+  <!--Forms de modification-->
   <form
     [formGroup]="qcmForm"
     (ngSubmit)="submitForm()"

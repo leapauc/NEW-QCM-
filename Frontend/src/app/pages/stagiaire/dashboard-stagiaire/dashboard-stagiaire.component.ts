@@ -55,6 +55,8 @@ export class DashboardStagiaireComponent {
   /** Liste complète des tentatives de l'utilisateur */
   allAttemptsOfMyUser: any[] = [];
   pageSize = 5;
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
@@ -86,53 +88,47 @@ export class DashboardStagiaireComponent {
     const currentUser: AuthUser | null = this.authService.getUser();
     if (!currentUser) return;
 
+    this.isLoading = true;
     this.authNameUser = currentUser.name;
 
-    // Nombre de questionnaires réalisés
-    this.statsService
-      .getNbQuestionnaireByUser(currentUser.id_user)
-      .subscribe((res: any) => {
-        this.nbQuestionnairesRealises = parseInt(
+    // Récupérer toutes les données de manière combinée
+    this.statsService.getNbQuestionnaireByUser(currentUser.id_user).subscribe({
+      next: (res: any) =>
+        (this.nbQuestionnairesRealises = parseInt(
           res?.nb_questionnaires ?? 0,
           10
-        );
-      });
+        )),
+    });
 
-    // Scores min / max / avg
-    this.statsService
-      .getMaxMinAvgScoreByUser(currentUser.id_user)
-      .subscribe((res: any) => {
+    this.statsService.getMaxMinAvgScoreByUser(currentUser.id_user).subscribe({
+      next: (res: any) => {
         this.scoreMax = res?.max_score ?? '-';
         this.scoreMin = res?.min_score ?? '-';
         this.scoreAvg = res?.avg_score ?? '-';
-      });
-
-    // Rang
-    this.statsService
-      .getRangeByUser(currentUser.id_user)
-      .subscribe((res: any) => {
-        this.range = res?.rank ?? 'dernier';
-      });
-
-    // Temps moyen
-    this.statsService
-      .getAvgTimeByUser(currentUser.id_user)
-      .subscribe((res: any) => {
-        this.avgTime = res?.avg_time_minutes ?? '-';
-      });
-
-    // Questionnaire le plus populaire
-    this.statsService.getQuestionnairePopulaire().subscribe((res: any) => {
-      this.questionnairePopulaire = res?.[0]?.title ?? '';
+      },
     });
 
-    // Récupérer les tentatives de l'utilisateur
-    this.quizAttempts
-      .getAttemptsByUser(currentUser.id_user)
-      .subscribe((res: any[]) => {
+    this.statsService.getRangeByUser(currentUser.id_user).subscribe({
+      next: (res: any) => (this.range = res?.rank ?? 'dernier'),
+    });
+
+    this.statsService.getAvgTimeByUser(currentUser.id_user).subscribe({
+      next: (res: any) => (this.avgTime = res?.avg_time_minutes ?? '-'),
+    });
+
+    this.statsService.getQuestionnairePopulaire().subscribe({
+      next: (res: any) => (this.questionnairePopulaire = res?.[0]?.title ?? ''),
+    });
+
+    this.quizAttempts.getAttemptsByUser(currentUser.id_user).subscribe({
+      next: (res: any[]) => {
         this.allAttemptsOfMyUser = res;
         this.paginatedAttempts = res.slice(0, this.pageSize);
-      });
+        this.isLoading = false; // ✅ chargement terminé
+        this.cdr.detectChanges();
+      },
+      error: () => (this.isLoading = false),
+    });
   }
 
   /**

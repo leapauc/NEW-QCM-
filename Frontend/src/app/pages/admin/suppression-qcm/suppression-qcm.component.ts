@@ -57,41 +57,36 @@ export class SuppressionQcmComponent implements OnInit {
    * Liste complète des QCM récupérés depuis le backend.
    */
   qcms: QCM[] = [];
-
   /**
    * QCM actuellement sélectionné pour suppression.
    */
   selectedQcm: QCM | null = null;
-
   /**
    * Formulaire réactif utilisé pour afficher les détails du QCM sélectionné.
    */
   form: FormGroup;
-
   /**
    * Liste des QCM filtrés selon le terme de recherche.
    */
   filteredQcms: QCM[] = [];
-
   /**
    * Terme de recherche saisi par l'utilisateur.
    */
   searchTerm = '';
-
   /**
    * Liste des QCM à afficher pour la page courante (pagination).
    */
   paginatedQcms: QCM[] = [];
-
   /**
    * Message de confirmation ou d'erreur affiché après suppression.
    */
   message: string | null = null;
-
   /**
    * Classe CSS pour styliser le message (success/danger).
    */
   messageClass: string = '';
+  /** Etat chargement des données */
+  isLoading = true;
 
   /**
    * Constructeur du composant.
@@ -125,17 +120,21 @@ export class SuppressionQcmComponent implements OnInit {
    * Charge tous les QCM via le service et initialise la pagination.
    */
   loadQcms() {
+    this.isLoading = true;
+
     this.qcmService.getAllQCM().subscribe({
       next: (data) => {
         this.qcms = data;
         this.filteredQcms = [...this.qcms];
+        this.paginatedQcms = this.filteredQcms.slice(0, 5);
 
-        Promise.resolve().then(() => {
-          this.paginatedQcms = this.filteredQcms.slice(0, 5);
-          this.cdr.detectChanges();
-        });
+        this.isLoading = false;
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Erreur chargement QCMs', err),
+      error: (err) => {
+        console.error('Erreur chargement QCMs', err);
+        this.isLoading = false;
+      },
     });
   }
 
