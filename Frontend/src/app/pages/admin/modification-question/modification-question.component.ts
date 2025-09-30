@@ -261,6 +261,16 @@ export class ModificationQuestionComponent implements OnInit {
     }
 
     const formValue = this.questionForm.value;
+
+    // Vérifier qu'au moins une réponse est correcte
+    const hasCorrectAnswer = formValue.responses.some((r: any) => r.isCorrect);
+    if (!hasCorrectAnswer) {
+      const modalEl = document.getElementById('unvalidModal');
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    // Filtrer les réponses non vides
     const validResponses = formValue.responses
       .filter((r: any) => r.text.trim() !== '')
       .map((r: any, index: number) => ({
@@ -275,17 +285,10 @@ export class ModificationQuestionComponent implements OnInit {
     }
 
     type QuestionType = 'single' | 'multiple';
-
-    const correctCount = validResponses.filter(
-      (r: { is_correct: boolean }) => r.is_correct
-    ).length;
+    const correctCount = validResponses.filter((r: any) => r.is_correct).length;
     const questionType: QuestionType = correctCount > 1 ? 'multiple' : 'single';
 
-    const dataToUpdate: {
-      question: string;
-      type: QuestionType;
-      responses: any[];
-    } = {
+    const dataToUpdate = {
       question: formValue.question,
       type: questionType,
       responses: validResponses,
@@ -294,15 +297,16 @@ export class ModificationQuestionComponent implements OnInit {
     this.questionService
       .updateQuestion(this.selectedQuestionId, dataToUpdate)
       .subscribe({
-        next: (res) => {
+        next: () => {
           const modalEl = document.getElementById('successModal');
           if (modalEl) new bootstrap.Modal(modalEl).show();
         },
-        error: (err) => {
+        error: () => {
           const modalEl = document.getElementById('failedModal');
           if (modalEl) new bootstrap.Modal(modalEl).show();
         },
       });
+
     this.cancelForm();
   }
 }

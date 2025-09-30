@@ -177,6 +177,16 @@ export class AjoutQuestionComponent implements OnInit {
     }
 
     const formValue = this.questionForm.value;
+
+    // Vérifier qu'au moins une réponse est correcte
+    const hasCorrectAnswer = formValue.responses.some((r: any) => r.isCorrect);
+    if (!hasCorrectAnswer) {
+      const modalEl = document.getElementById('unvalidModal');
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    // Filtrer les réponses non vides
     const validResponses = formValue.responses
       .filter((r: any) => r.text.trim() !== '')
       .map((r: any, index: number) => ({
@@ -198,13 +208,12 @@ export class AjoutQuestionComponent implements OnInit {
     } = {
       id_qcm: this.selectedQcmId,
       question: formValue.question,
-      type: 'single', // littéral compatible
+      type: 'single',
       responses: validResponses,
     };
 
     this.questionService.createQuestion(dataToSave).subscribe({
-      next: (res) => {
-        // Afficher le modal Bootstrap
+      next: () => {
         const modalEl = document.getElementById('successModal');
         if (modalEl) new bootstrap.Modal(modalEl).show();
         this.questionForm.reset();
@@ -212,7 +221,7 @@ export class AjoutQuestionComponent implements OnInit {
         this.addResponse();
         this.addResponse();
       },
-      error: (err) => {
+      error: () => {
         const modalEl = document.getElementById('failedModal');
         if (modalEl) new bootstrap.Modal(modalEl).show();
       },
