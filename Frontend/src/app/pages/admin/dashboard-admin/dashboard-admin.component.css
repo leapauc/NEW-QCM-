@@ -1,0 +1,54 @@
+.podium-container {
+  height: 200px;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.podium-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 150px;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 3px 0px 6px gray;
+  padding: 0.5rem;
+  color: black;
+  position: relative;
+}
+
+.podium-block .podium-height {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 0.5rem 0;
+  font-weight: bold;
+}
+
+.podium-block.first {
+  background: linear-gradient(135deg, #ffd700, #ffec8b); /* doré incliné */
+  height: 150px;
+}
+
+.podium-block.second {
+  background: linear-gradient(135deg, #c0c0c0, #e0e0e0); /* argent incliné */
+  height: 120px;
+}
+
+.podium-block.third {
+  background: linear-gradient(135deg, #cd7f32, #d9a066); /* bronze incliné */
+  height: 100px;
+}
+
+.podium-block .podium-name {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.podium-block .podium-label {
+  position: absolute;
+  top: -2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+}

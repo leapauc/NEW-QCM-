@@ -8,6 +8,7 @@ import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
   selector: 'app-dashboard-admin',
   imports: [CommonModule, TimeFormatPipe],
   templateUrl: './dashboard-admin.component.html',
+  styleUrl: './dashboard-admin.component.css',
 })
 export class DashboardAdminComponent {
   nbStagiaires = 0;

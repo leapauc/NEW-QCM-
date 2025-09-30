@@ -11,10 +11,11 @@ import {
 import { QcmService } from '../../../services/qcm.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QCM } from '../../../models/qcm';
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 @Component({
   selector: 'app-modification-qcm-question',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ModalComponent],
   templateUrl: './modification-qcm-question.component.html',
 })
 export class ModificationQcmQuestionComponent implements OnInit {
@@ -131,23 +132,32 @@ export class ModificationQcmQuestionComponent implements OnInit {
 
     const formValue = this.qcmForm.value;
 
+    // ✅ Vérifier que chaque question a au moins une réponse correcte
+    for (const q of formValue.questions) {
+      const hasCorrect = q.responses.some((r: any) => r.is_correct);
+      if (!hasCorrect) {
+        const modalEl = document.getElementById('unvalidModal');
+        if (modalEl) new bootstrap.Modal(modalEl).show();
+        return; // arrêter la soumission
+      }
+    }
+
+    // ✅ Soumission au backend
     this.qcmService
       .updateQCM_Question(this.selectedQcm.id_qcm!, formValue)
       .subscribe({
         next: (res) => {
           const modalEl = document.getElementById('successModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
 
-          // Réinitialiser le formulaire et la sélection
+          // Réinitialiser formulaire et sélection
           this.selectedQcm = null;
           this.qcmForm.reset();
           this.loadQCMs();
         },
         error: (err) => {
           const modalEl = document.getElementById('failedModal');
-          const modal = new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
       });
   }
