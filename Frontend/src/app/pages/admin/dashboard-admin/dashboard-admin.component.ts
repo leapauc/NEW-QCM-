@@ -1,32 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatsService } from '../../../services/stats.service';
-import { CommonModule } from '@angular/common';
 import { QuizAttemptsService } from '../../../services/quiz_attempts.service';
+import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from '../../../pipes/format-Time.pipe';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-dashboard-admin',
-  imports: [CommonModule, TimeFormatPipe],
+  imports: [CommonModule, TimeFormatPipe, PaginationComponent],
   templateUrl: './dashboard-admin.component.html',
-  styleUrl: './dashboard-admin.component.css',
+  styleUrls: ['./dashboard-admin.component.css'],
 })
-export class DashboardAdminComponent {
+export class DashboardAdminComponent implements OnInit {
+  pageSize = 5;
+
   nbStagiaires = 0;
   nbQuestionnaires = 0;
   nbQuestionnairesComplets = 0;
   nbQuestionnairesRealises = 0;
   questionnairePopulaire = '';
   stagiaireActif = { name: '', firstname: '' };
-  currentPage = 1;
-  pageSize = 5;
 
-  // Nouvelles variables pour les tableaux
-  userStats: any[] = [];
-  userAvgTime: any[] = [];
-  userRank: any[] = [];
-  userNbQuestionnaire: any[] = [];
-  allAttempts: any[] = []; // <-- nouveau
+  // Tableaux
+  allAttempts: any[] = [];
+  paginatedAttempts: any[] = [];
+
   combinedUserStats: any[] = [];
+  paginatedUserStats: any[] = [];
+
+  userAvgTime: any[] = [];
+  paginatedAvgTime: any[] = [];
+
+  userRank: any[] = [];
 
   constructor(
     private statsService: StatsService,
@@ -37,15 +42,6 @@ export class DashboardAdminComponent {
     this.loadStats();
     this.loadUserTables();
     this.loadAllAttempts();
-  }
-
-  loadAllAttempts() {
-    this.quizAttemptsService.getAllAttempts().subscribe({
-      next: (res: any[]) => {
-        this.allAttempts = res;
-      },
-      error: (err) => console.error('Erreur récupération des tentatives', err),
-    });
   }
 
   loadStats() {
@@ -73,54 +69,43 @@ export class DashboardAdminComponent {
       if (res.length > 0) this.stagiaireActif = res[0];
     });
 
-    this.statsService.getNbQuestionnaireList().subscribe((nbRes: any[]) => {
-      this.statsService.getMaxMinAvgScoreList().subscribe((statsRes: any[]) => {
-        // Fusionner les tableaux
-        this.combinedUserStats = statsRes.map((user) => {
-          const nb =
-            nbRes.find((u) => u.id_user === user.id_user)?.nb_questionnaires ??
-            0;
-          return {
-            ...user,
-            nb_questionnaires: nb,
-          };
-        });
-      });
-    });
-  }
-
-  loadUserTables() {
-    // Tableau questionnaires par utilisateur (min/max/avg)
-    this.statsService.getNbQuestionnaireList().subscribe((res: any) => {
-      this.userNbQuestionnaire = res;
-    });
-    this.statsService.getMaxMinAvgScoreList().subscribe((res: any) => {
-      this.userStats = res;
-    });
-
-    // Tableau temps moyen
-    this.statsService.getAvgTimeList().subscribe((res: any) => {
-      this.userAvgTime = res;
-    });
-
-    // Tableau rang
     this.statsService.getRangeList().subscribe((res: any) => {
       this.userRank = res;
     });
   }
 
-  get paginated() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.allAttempts.slice(start, start + this.pageSize);
+  loadAllAttempts() {
+    this.quizAttemptsService.getAllAttempts().subscribe({
+      next: (res: any[]) => {
+        this.allAttempts = res;
+        this.paginatedAttempts = this.allAttempts.slice(0, this.pageSize);
+      },
+      error: (err) => console.error('Erreur récupération des tentatives', err),
+    });
   }
 
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.allAttempts.length)
-      this.currentPage++;
-  }
+  loadUserTables() {
+    // Tableau statistiques utilisateurs (min/max/avg)
+    this.statsService.getMaxMinAvgScoreList().subscribe((statsRes: any[]) => {
+      this.statsService.getNbQuestionnaireList().subscribe((nbRes: any[]) => {
+        this.combinedUserStats = statsRes.map((user) => {
+          const nb =
+            nbRes.find((u) => u.id_user === user.id_user)?.nb_questionnaires ??
+            0;
+          return { ...user, nb_questionnaires: nb };
+        });
+        this.paginatedUserStats = this.combinedUserStats.slice(
+          0,
+          this.pageSize
+        );
+      });
+    });
 
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
+    // Tableau temps moyen
+    this.statsService.getAvgTimeList().subscribe((res: any[]) => {
+      this.userAvgTime = res;
+      this.paginatedAvgTime = this.userAvgTime.slice(0, this.pageSize);
+    });
   }
 
   getCompletionColor(percent: number): string {

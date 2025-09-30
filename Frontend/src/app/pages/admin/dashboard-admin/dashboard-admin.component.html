@@ -1,40 +1,45 @@
-<br />
-<br />
+<br /><br />
 <div class="center">
   <h1>DASHBOARD - Administrateur</h1>
-
   <br /><br />
   <div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div
+      class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
+      *ngFor="
+        let stat of [
+          {
+            icon: 'img/icon_1_dashboard_admin.jpg',
+            value: nbStagiaires,
+            label: 'stagiaires'
+          },
+          {
+            icon: 'img/icon_2_dashboard_admin.jpg',
+            value: nbQuestionnaires,
+            label: 'questionnaires'
+          },
+          {
+            icon: 'img/icon_3_dashboard_admin.png',
+            value: nbQuestionnairesComplets,
+            label: 'questionnaires complets'
+          },
+          {
+            icon: 'img/icon_4_dashboard_admin.png',
+            value: nbQuestionnairesRealises,
+            label: 'questionnaires réalisés'
+          }
+        ]
+      "
+    >
       <div class="card_3">
-        <img src="img/icon_1_dashboard_admin.jpg" /><br /><br />
-        <h2 class="fw-bold">{{ nbStagiaires }}</h2>
-        <h4>stagiaires</h4>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-      <div class="card_3">
-        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />
-        <h2 class="fw-bold">{{ nbQuestionnaires }}</h2>
-        <h4>questionnaires</h4>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-      <div class="card_3">
-        <img src="img/icon_3_dashboard_admin.png" /><br /><br />
-        <h2 class="fw-bold">{{ nbQuestionnairesComplets }}</h2>
-        <h4>questionnaires complets</h4>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-      <div class="card_3">
-        <img src="img/icon_4_dashboard_admin.png" /><br /><br />
-        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>
-        <h4>questionnaires réalisés</h4>
+        <img [src]="stat.icon" /><br /><br />
+        <h2 class="fw-bold">{{ stat.value }}</h2>
+        <h4>{{ stat.label }}</h4>
       </div>
     </div>
   </div>
+
   <hr />
+
   <div class="row text-center">
     <div class="col-6 d-flex justify-content-center">
       <div
@@ -75,13 +80,12 @@
     </div>
   </div>
 </div>
-<br />
 
 <hr />
+
 <div class="center my-4">
   <h3>Podium des utilisateurs les plus performants</h3>
   <div class="podium-container d-flex justify-content-center align-items-end">
-    <!-- 2nd place -->
     <div
       class="podium-block second"
       *ngIf="userRank.length > 1"
@@ -92,8 +96,6 @@
       </div>
       <div class="podium-label">2ᵉ</div>
     </div>
-
-    <!-- 1st place -->
     <div
       class="podium-block first"
       *ngIf="userRank.length > 0"
@@ -104,8 +106,6 @@
       </div>
       <div class="podium-label">1ᵉʳ</div>
     </div>
-
-    <!-- 3rd place -->
     <div
       class="podium-block third"
       *ngIf="userRank.length > 2"
@@ -118,9 +118,9 @@
     </div>
   </div>
 </div>
+
 <hr />
 
-<!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->
 <div class="center">
   <h3>Statistiques par tentatives de réponses au QCM</h3>
   <table class="table table-bordered table-striped align-middle text-center">
@@ -136,16 +136,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let attempt of paginated">
+      <tr *ngFor="let attempt of paginatedAttempts">
         <td>{{ attempt.id_attempt }}</td>
         <td>{{ attempt.title }}</td>
         <td>{{ attempt.name }}</td>
         <td>{{ attempt.started_at | date : "short" }}</td>
         <td>{{ attempt.ended_at | date : "short" }}</td>
         <td style="width: 15%">
-          <!-- Conteneur de la jauge -->
           <div class="position-relative" style="height: 20px">
-            <!-- Barre de progression -->
             <div class="progress h-100">
               <div
                 class="progress-bar"
@@ -159,8 +157,6 @@
                 aria-valuemax="100"
               ></div>
             </div>
-
-            <!-- Texte centré -->
             <span
               class="position-absolute top-50 start-50 translate-middle fw-bold"
               style="color: black"
@@ -170,9 +166,7 @@
           </div>
         </td>
         <td style="width: 10%">
-          <!-- Conteneur de la jauge -->
           <div class="position-relative" style="height: 20px">
-            <!-- Barre de progression -->
             <div class="progress h-100">
               <div
                 class="progress-bar"
@@ -186,8 +180,6 @@
                 aria-valuemax="100"
               ></div>
             </div>
-
-            <!-- Texte centré -->
             <span
               class="position-absolute top-50 start-50 translate-middle fw-bold"
               style="color: black"
@@ -199,16 +191,17 @@
       </tr>
     </tbody>
   </table>
-  <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+
+  <app-pagination
+    [items]="allAttempts"
+    [pageSize]="pageSize"
+    (pageChange)="paginatedAttempts = $event"
+  ></app-pagination>
 </div>
 
 <hr />
+
 <div class="center">
-  <!-- Tableau questionnaires par utilisateur -->
   <h3>Statistiques par utilisateur</h3>
   <table class="table table-bordered table-striped">
     <thead>
@@ -221,7 +214,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of combinedUserStats">
+      <tr *ngFor="let user of paginatedUserStats">
         <td>{{ user.name }} {{ user.firstname }}</td>
         <td>{{ user.nb_questionnaires }}</td>
         <td>{{ user.min_score | number : "1.1-1" }}</td>
@@ -230,27 +223,36 @@
       </tr>
     </tbody>
   </table>
+
+  <app-pagination
+    [items]="combinedUserStats"
+    [pageSize]="pageSize"
+    (pageChange)="paginatedUserStats = $event"
+  ></app-pagination>
 </div>
-<br />
-<!-- Tableaux côte à côte : temps moyen et rang -->
+
+<hr />
+
 <div class="center">
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Temps moyen par utilisateur</h3>
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Utilisateur</th>
-            <th>Temps moyen (min)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of userAvgTime">
-            <td>{{ user.name }} {{ user.firstname }}</td>
-            <td>{{ user.avg_time_minutes | timeFormat }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <h3>Temps moyen par utilisateur</h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Temps moyen (min)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedAvgTime">
+        <td>{{ user.name }} {{ user.firstname }}</td>
+        <td>{{ user.avg_time_minutes | timeFormat }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pagination
+    [items]="userAvgTime"
+    [pageSize]="pageSize"
+    (pageChange)="paginatedAvgTime = $event"
+  ></app-pagination>
 </div>

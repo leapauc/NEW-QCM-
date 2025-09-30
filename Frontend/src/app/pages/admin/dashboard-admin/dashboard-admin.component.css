@@ -26,18 +26,18 @@
 }
 
 .podium-block.first {
-  background: linear-gradient(135deg, #ffd700, #ffec8b); /* doré incliné */
+  background: linear-gradient(135deg, #ffd700, #f3edcd); /* doré incliné */
   height: 150px;
 }
 
 .podium-block.second {
-  background: linear-gradient(135deg, #c0c0c0, #e0e0e0); /* argent incliné */
-  height: 120px;
+  background: linear-gradient(135deg, #c0c0c0, #f9f8f8); /* argent incliné */
+  height: 110px;
 }
 
 .podium-block.third {
-  background: linear-gradient(135deg, #cd7f32, #d9a066); /* bronze incliné */
-  height: 100px;
+  background: linear-gradient(135deg, #cd7f32, #d9c8b7); /* bronze incliné */
+  height: 70px;
 }
 
 .podium-block .podium-name {
