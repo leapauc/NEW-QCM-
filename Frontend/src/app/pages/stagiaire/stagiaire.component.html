@@ -1,9 +1,11 @@
 <div class="dashboard-container">
   <!-- Sidebar à droite -->
+  <button class="burger-btn" (click)="toggleSidebar()">☰</button>
+
   <button class="logout-btn" (click)="logout()">
     <img src="img/icon_deconnexion.png" alt="Déconnexion" />
   </button>
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="isSidebarOpen">
     <div class="menu">
       <div id="logo-div">
         <img class="logo" src="img/logo-blankBackground.png" alt="Logo" />
@@ -12,15 +14,27 @@
       <h2>Stagiaire</h2>
       <br />
       <ul>
-        <li routerLink="stagiaire/dashboard" routerLinkActive="active">
+        <li
+          routerLink="stagiaire/dashboard"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
           <i class="bi bi-house-door"></i> Dashboard
         </li>
         <br />
-        <li routerLink="stagiaire/choix_qcm" routerLinkActive="active">
+        <li
+          routerLink="stagiaire/choix_qcm"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
           <i class="bi bi-search"></i> Choix QCM
         </li>
         <br />
-        <li routerLink="stagiaire/affichage_results" routerLinkActive="active">
+        <li
+          routerLink="stagiaire/affichage_results"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
           <i class="bi bi-trophy"></i> Affichage résultats
         </li>
       </ul>

@@ -75,7 +75,7 @@ exports.createQCMWithQuestion = async (req, res) => {
 
     await client.query("BEGIN");
 
-    // 1️⃣ Insérer le QCM
+    // Insérer le QCM
     const qcmResult = await client.query(
       `INSERT INTO qcm (title, description, created_by)
        VALUES ($1, $2, $3)
@@ -84,7 +84,7 @@ exports.createQCMWithQuestion = async (req, res) => {
     );
     const qcmId = qcmResult.rows[0].id_qcm;
 
-    // 2️⃣ Insérer les questions + réponses
+    // Insérer les questions + réponses
     for (let i = 0; i < questions.length; i++) {
       const q = questions[i];
       const questionResult = await client.query(
@@ -95,7 +95,7 @@ exports.createQCMWithQuestion = async (req, res) => {
       );
       const questionId = questionResult.rows[0].id_question;
 
-      // 3️⃣ Insérer les réponses
+      // Insérer les réponses
       for (let j = 0; j < q.responses.length; j++) {
         const r = q.responses[j];
         await client.query(
@@ -287,12 +287,11 @@ exports.getQuestionResponseOfQCMById = async (req, res) => {
       });
     }
 
-    if (questions.length === 0)
-      return res
-        .status(404)
-        .json({ error: "Le QCM comporte aucune question." });
+    // ❌ Plus de 404, on renvoie juste un tableau vide
+    // if (questions.length === 0)
+    //   return res.status(404).json({ error: "Le QCM comporte aucune question." });
 
-    res.json(questions);
+    res.json(questions); // renvoie [] si pas de question
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur" });

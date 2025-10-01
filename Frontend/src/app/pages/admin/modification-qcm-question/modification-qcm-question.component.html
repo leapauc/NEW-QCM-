@@ -52,7 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let qcm of paginatedQCM">
+        <tr *ngFor="let qcm of paginatedQcms">
           <td class="text-center">
             <i
               class="bi bi-pencil-square text-primary fs-5"
@@ -70,10 +70,12 @@
   </div>
 
   <!-- Pagination -->
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>
-    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>
-  </div>
+  <app-pagination
+    [items]="qcms"
+    [pageSize]="5"
+    (pageChange)="paginatedQcms = $event"
+  >
+  </app-pagination>
   <br /><br />
   <!--Forms de modification-->
   <form
@@ -134,6 +136,7 @@
                 type="button"
                 class="btn btn-outline-danger btn-sm"
                 (click)="removeResponse(qIndex, rIndex)"
+                [disabled]="getResponses(qIndex).length <= minResponses"
               >
                 ❌
               </button>
@@ -145,12 +148,20 @@
           type="button"
           class="btn btn-outline-primary btn-sm mt-2"
           (click)="addResponse(qIndex)"
+          [disabled]="getResponses(qIndex).length >= maxResponses"
         >
-          ➕ Ajouter une réponse
+          <i class="bi bi-plus-circle"></i> Ajouter une réponse
         </button>
       </div>
     </div>
 
+    <button
+      type="button"
+      class="btn btn-danger mt-3 me-2"
+      (click)="cancelForm()"
+    >
+      Annuler
+    </button>
     <button
       type="button"
       class="btn btn-secondary mt-3 me-2"

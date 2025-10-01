@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -12,35 +12,106 @@ import { QcmService } from '../../../services/qcm.service';
 import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QCM } from '../../../models/qcm';
 import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
 
+/**
+ * @module ModificationQcmQuestionComponent
+ * @description
+ * Composant pour modifier les QCM et leurs questions/réponses.
+ *
+ * Fonctionnalités principales :
+ * - Liste les QCM existants avec pagination.
+ * - Permet de sélectionner un QCM pour éditer ses questions et réponses.
+ * - Gestion dynamique des réponses (ajout/suppression) avec contraintes min/max.
+ * - Validation avant soumission : chaque question doit avoir au moins une réponse correcte.
+ * - Soumission des modifications au backend via QcmService.
+ * - Affichage des modals Bootstrap pour succès/échec.
+ *
+ * @example
+ * ```html
+ * <app-modification-qcm-question></app-modification-qcm-question>
+ * ```
+ */
 @Component({
   selector: 'app-modification-qcm-question',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, ModalComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ModalComponent,
+    PaginationComponent,
+  ],
   templateUrl: './modification-qcm-question.component.html',
 })
 export class ModificationQcmQuestionComponent implements OnInit {
+  /**
+   * Liste complète des QCM récupérés depuis le backend
+   */
   qcms: QCM[] = [];
+  /**
+   * QCM actuellement sélectionné pour modification
+   */
   selectedQcm: QCM | null = null;
+  /**
+   * Formulaire réactif pour la modification des questions et réponses
+   */
   qcmForm!: FormGroup;
+  /** Pagination */
+  paginatedQcms: QCM[] = [];
+  /**
+   * Page actuelle pour la pagination
+   */
   currentPage = 1;
+  /**
+   * Nombre d’éléments par page pour la pagination
+   */
   pageSize = 5;
+  /**
+   * Nombre maximum de réponses par question
+   */
   maxResponses = 5;
+  /**
+   * Nombre minimum de réponses par question
+   */
   minResponses = 2;
-  /** Etat chargement des données */
+  /**
+   * Indique si les données sont en cours de chargement
+   */
   isLoading = true;
 
-  constructor(private qcmService: QcmService, private fb: FormBuilder) {}
+  /**
+   * Constructeur du composant
+   * @param qcmService Service pour récupérer et modifier les QCM
+   * @param fb FormBuilder pour créer les formulaires réactifs
+   * @param cdr ChangeDetectorRef pour déclencher manuellement la détection des changements
+   */
+  constructor(
+    private qcmService: QcmService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {}
 
+  /**
+   * Lifecycle hook : appelé après l'initialisation du composant
+   * Charge tous les QCM
+   */
   ngOnInit(): void {
     this.loadQCMs();
   }
 
-  // 🔹 Charger tous les QCM
+  /**
+   * Charge tous les QCM depuis le backend et met à jour l'état de chargement
+   */
   loadQCMs() {
     this.isLoading = true;
     this.qcmService.getAllQCM().subscribe({
       next: (data) => {
         this.qcms = data;
+
+        Promise.resolve().then(() => {
+          this.paginatedQcms = this.qcms.slice(0, 5);
+          this.cdr.detectChanges();
+        });
         this.isLoading = false; // ✅ fin du chargement
       },
       error: (err) => {
@@ -50,7 +121,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
     });
   }
 
-  // 🔹 Editer un QCM : récupérer les questions + réponses
+  /**
+   * Sélectionne un QCM pour modification
+   * Récupère les questions et réponses associées
+   * @param qcm QCM sélectionné
+   */
   editQCM(qcm: QCM) {
     this.qcmService.getQcmQuestionsWithResponses(qcm.id_qcm!).subscribe({
       next: (questions) => {
@@ -62,6 +137,10 @@ export class ModificationQcmQuestionComponent implements OnInit {
   }
 
   // ---------- Formulaire réactif ----------
+  /**
+   * Initialise le formulaire réactif pour le QCM sélectionné
+   * Crée les FormArray pour questions et réponses
+   */
   initForm() {
     this.qcmForm = this.fb.group({
       title: [this.selectedQcm?.title, Validators.required],
@@ -93,15 +172,20 @@ export class ModificationQcmQuestionComponent implements OnInit {
     });
   }
 
+  /** Retourne le FormArray des questions */
   get questions(): FormArray {
     return this.qcmForm.get('questions') as FormArray;
   }
 
+  /** Retourne le FormArray des réponses d’une question donnée */
   getResponses(questionIndex: number): FormArray {
     return this.questions.at(questionIndex).get('responses') as FormArray;
   }
 
-  // Ajouter une réponse
+  /**
+   * Ajoute une réponse à une question
+   * @param questionIndex Index de la question
+   */
   addResponse(questionIndex: number) {
     const responses = this.getResponses(questionIndex);
     if (responses.length < this.maxResponses) {
@@ -115,7 +199,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
     }
   }
 
-  // Supprimer une réponse
+  /**
+   * Supprime une réponse d’une question
+   * @param questionIndex Index de la question
+   * @param responseIndex Index de la réponse
+   */
   removeResponse(questionIndex: number, responseIndex: number) {
     const responses = this.getResponses(questionIndex);
     if (responses.length > this.minResponses) {
@@ -124,6 +212,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
   }
 
   // ---------- Sauvegarde ----------
+  /**
+   * Valide et soumet le formulaire au backend
+   * Vérifie que chaque question a au moins une réponse correcte
+   * Affiche les modals de succès/échec
+   */
   submitForm() {
     if (this.qcmForm.invalid || !this.selectedQcm) {
       this.qcmForm.markAllAsTouched();
@@ -162,10 +255,17 @@ export class ModificationQcmQuestionComponent implements OnInit {
       });
   }
 
+  /** Réinitialise le formulaire pour le QCM sélectionné */
   resetForm() {
     if (this.selectedQcm) {
       this.initForm();
     }
+  }
+
+  /** Annule la modification et réinitialise le formulaire */
+  cancelForm() {
+    this.selectedQcm = null;
+    this.qcmForm.reset();
   }
 
   // ---------- Pagination ----------

@@ -79,6 +79,7 @@ export class ChoixQcmComponent implements OnInit {
   selectedAnswers: { id_question: number; id_response: number }[] = [];
   /** Etat chargement des données */
   isLoading = true;
+  noQuestionsMessage = '';
 
   /**
    * Constructeur du composant `ChoixQcmComponent`.
@@ -139,13 +140,28 @@ export class ChoixQcmComponent implements OnInit {
         this.selectedQcm = { ...qcm, questions };
         this.initForm();
 
-        // ✅ Stocker la date de début ici
-        this.startTime = new Date().toISOString(); // <-- ajout
-        console.log(this.startTime);
-        const modalEl = document.getElementById('qcmModal');
-        if (modalEl) {
-          const modal = new bootstrap.Modal(modalEl);
-          modal.show();
+        // ✅ Vérifier si le QCM n’a pas de questions
+        if (!questions || questions.length === 0) {
+          this.noQuestionsMessage = '⚠️ Ce QCM ne contient aucune question !';
+
+          // Faire disparaître après 4s
+          setTimeout(() => {
+            this.noQuestionsMessage = '';
+            this.cdr.detectChanges();
+          }, 4000);
+        }
+
+        // ✅ Stocker la date de début
+        if (!questions || questions.length !== 0) {
+          // ✅ Stocker la date de début
+
+          this.startTime = new Date().toISOString();
+
+          const modalEl = document.getElementById('qcmModal');
+          if (modalEl) {
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+          }
         }
       },
       error: (err) => console.error('Erreur chargement questions', err),

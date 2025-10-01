@@ -61,7 +61,6 @@ export class AjoutQcmQuestionComponent implements OnInit {
         this.fb.group({
           response: ['', Validators.required],
           is_correct: [false],
-          position: [i + 1],
         })
       );
     }
@@ -77,7 +76,6 @@ export class AjoutQcmQuestionComponent implements OnInit {
         this.fb.group({
           response: ['', Validators.required],
           is_correct: [false],
-          position: [responses.length + 1],
         })
       );
     }
@@ -110,14 +108,25 @@ export class AjoutQcmQuestionComponent implements OnInit {
       }
     }
 
-    this.qcmService.createQCM(this.qcmForm.value).subscribe({
+    // ✅ Construire un payload JSON pur (clone pour éviter metadata Angular)
+    const payload = JSON.parse(
+      JSON.stringify({
+        ...this.qcmForm.value,
+        created_by: 1,
+      })
+    );
+
+    console.log('📤 Payload envoyé :', payload);
+
+    this.qcmService.createQCM(payload).subscribe({
       next: () => {
         const modalEl = document.getElementById('successModal');
         if (modalEl) new bootstrap.Modal(modalEl).show();
         this.qcmForm.reset();
         this.questions.clear();
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ Erreur API :', err);
         const modalEl = document.getElementById('failedModal');
         if (modalEl) new bootstrap.Modal(modalEl).show();
       },

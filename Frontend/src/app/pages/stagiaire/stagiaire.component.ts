@@ -25,6 +25,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './stagiaire.component.css',
 })
 export class StagiaireComponent {
+  /** état pour le menu responsive */
+  isSidebarOpen = false;
+
   /**
    * Constructeur du composant.
    *
@@ -42,5 +45,14 @@ export class StagiaireComponent {
   logout() {
     this.authService.logout(); // supprime le token ou l'état de connexion
     this.router.navigate(['/login']); // redirige vers la page de login
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+  closeSidebar() {
+    if (window.innerWidth <= 890) {
+      this.isSidebarOpen = false;
+    }
   }
 }

@@ -15,6 +15,12 @@
       class="form-control mb-2"
       placeholder="Titre"
     />
+    <div
+      *ngIf="qcmForm.get('title')?.touched && qcmForm.get('title')?.invalid"
+      class="text-danger mb-2"
+    >
+      Le titre est requis.
+    </div>
 
     <label>Description</label>
     <textarea
@@ -25,7 +31,7 @@
 
     <!-- Bouton pour ajouter une question -->
     <button type="button" class="btn btn-primary mb-3" (click)="addQuestion()">
-      ➕ Ajouter une question
+      <i class="bi bi-plus-circle"></i> Ajouter une question
     </button>
 
     <!-- Liste des questions dynamiques -->
@@ -71,6 +77,7 @@
                 type="button"
                 class="btn btn-outline-danger btn-sm"
                 (click)="removeResponse(qIndex, rIndex)"
+                [disabled]="getResponses(qIndex).length <= minResponses"
               >
                 ❌
               </button>
@@ -82,6 +89,7 @@
           type="button"
           class="btn btn-outline-primary btn-sm mt-2"
           (click)="addResponse(qIndex)"
+          [disabled]="getResponses(qIndex).length >= maxResponses"
         >
           ➕ Ajouter une réponse
         </button>

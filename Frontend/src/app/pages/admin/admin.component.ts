@@ -53,6 +53,8 @@ export class AdminComponent {
    * Détermine si la section Options est affichée.
    */
   showOption = false;
+  /** état pour le menu responsive */
+  isSidebarOpen = false;
 
   /**
    * Constructeur du composant.
@@ -87,6 +89,15 @@ export class AdminComponent {
    */
   toggleOption() {
     this.showOption = !this.showOption;
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+  closeSidebar() {
+    if (window.innerWidth <= 890) {
+      this.isSidebarOpen = false;
+    }
   }
 
   /**
