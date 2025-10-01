@@ -224,27 +224,33 @@ exports.getMaxMinAvgScoreByUser = async (req, res) => {
 };
 // Rang de l'utilisateur (dernier si aucun score)
 exports.getRangeByUser = async (req, res) => {
-  const { id_user } = req.params;
+  const { id_user } = req.params; // ou req.query selon comment tu passes l'id
   try {
     const result = await pool.query(
       `WITH user_scores AS (
          SELECT u.id_user,
+                u.name,
                 COALESCE(AVG(qa.score), 0) AS avg_score
          FROM users u
          LEFT JOIN quiz_attempts qa ON u.id_user = qa.id_user
          WHERE u.admin = false
-         GROUP BY u.id_user
+         GROUP BY u.id_user, u.name
+       ),
+       ranked_users AS (
+         SELECT id_user,
+                name,
+                avg_score,
+                RANK() OVER (ORDER BY avg_score DESC) AS rank
+         FROM user_scores
        )
-       SELECT avg_score,
-              RANK() OVER (ORDER BY avg_score DESC) AS rank
-       FROM user_scores
+       SELECT id_user, name, avg_score, rank
+       FROM ranked_users
        WHERE id_user = $1`,
       [id_user]
     );
 
-    // Si aucun résultat trouvé (user inexistant ou admin)
     if (result.rows.length === 0) {
-      return res.json({ avg_score: 0, rank: "dernier" });
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
     }
 
     res.json(result.rows[0]);

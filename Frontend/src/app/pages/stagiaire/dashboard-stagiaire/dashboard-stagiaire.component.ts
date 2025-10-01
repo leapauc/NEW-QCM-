@@ -109,7 +109,7 @@ export class DashboardStagiaireComponent {
     });
 
     this.statsService.getRangeByUser(currentUser.id_user).subscribe({
-      next: (res: any) => (this.range = res?.rank ?? 'dernier'),
+      next: (res: any) => (this.range = res?.rank ?? '-'),
     });
 
     this.statsService.getAvgTimeByUser(currentUser.id_user).subscribe({
