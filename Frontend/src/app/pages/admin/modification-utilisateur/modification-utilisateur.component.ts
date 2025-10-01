@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +18,7 @@ import { User } from '../../../models/user';
 import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
+import { TruncateEmailPipe } from '../../../pipes/truncate-email.pipe';
 
 /**
  * Composant responsable de la modification des utilisateurs (stagiaires ou admins).
@@ -50,6 +56,7 @@ import { ConfirmationModalComponent } from '../../../components/confirmation_mod
     SearchBarComponent,
     PaginationComponent,
     ConfirmationModalComponent,
+    TruncateEmailPipe,
   ],
   templateUrl: './modification-utilisateur.component.html',
 })
@@ -104,6 +111,8 @@ export class ModificationUtilisateurComponent implements OnInit {
   paginatedUsers: User[] = [];
   /** Etat chargement des données */
   isLoading = true;
+  SmallScreenSize = 787;
+  isSmallScreen = window.innerWidth < this.SmallScreenSize;
 
   /**
    * Constructeur du composant.
@@ -133,12 +142,17 @@ export class ModificationUtilisateurComponent implements OnInit {
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isSmallScreen = event.target.innerWidth < this.SmallScreenSize;
+  }
   /**
    * Cycle de vie Angular : Initialisation du composant.
    * Charge les utilisateurs depuis le backend.
    */
   ngOnInit() {
     this.loadUsers();
+    this.isSmallScreen = window.innerWidth < this.SmallScreenSize;
   }
 
   /**
