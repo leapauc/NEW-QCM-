@@ -143,3 +143,6 @@
   icon="❌"
   message="La modification de la Question a échoué !"
 ></app-modal>
+<div *ngIf="noQuestions" class="alert alert-danger mt-2">
+  ⚠️ Ce QCM ne contient aucune question.
+</div>

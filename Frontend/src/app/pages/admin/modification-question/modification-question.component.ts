@@ -64,6 +64,9 @@ export class ModificationQuestionComponent implements OnInit {
   /** Nombre minimum de réponses obligatoires par question */
   minResponses = 2;
 
+  /** Indique si le QCM sélectionné n'a aucune question */
+  noQuestions = false;
+
   /**
    * Constructeur
    *
@@ -167,10 +170,17 @@ export class ModificationQuestionComponent implements OnInit {
   /** Charge les questions d’un QCM spécifique */
   loadQuestionsByQcm(qcmId: number) {
     this.qcmService.getQcmQuestions(qcmId).subscribe({
-      next: (data) => (this.questions = data),
+      next: (data) => {
+        this.questions = data;
+        // Si aucune question, afficher le message
+        this.noQuestions = this.questions.length === 0;
+        // Réinitialiser la question sélectionnée si nécessaire
+        if (this.noQuestions) this.selectedQuestionId = null;
+      },
       error: (err) => {
         console.error('Erreur chargement questions', err);
         this.questions = [];
+        this.noQuestions = true;
       },
     });
   }
