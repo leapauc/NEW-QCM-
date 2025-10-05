@@ -132,19 +132,27 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-danger me-2" type="button" (click)="cancelEdit()">
-        Cancel
+      <button
+        class="btn btn-danger mt-3 me-2"
+        type="button"
+        (click)="cancelEdit()"
+      >
+        <i class="bi bi-x-circle me-2"></i> Annuler
       </button>
       <button
-        class="btn btn-secondary me-2"
+        class="btn btn-secondary mt-3 me-2"
         type="button"
         (click)="resetForm()"
       >
         <i class="bi bi-arrow-counterclockwise"></i>
         Réinitialiser
       </button>
-      <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
-        Valider
+      <button
+        class="btn btn-primary mt-3"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        <i class="bi bi-save"></i> Enregistrer
       </button>
     </form>
   </div>

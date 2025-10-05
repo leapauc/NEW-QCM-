@@ -503,7 +503,7 @@ export class AjoutQcmComponent {
   ) {
     this.form &#x3D; this.fb.group({
       title: [&#x27;&#x27;, Validators.required],
-      description: [&#x27;&#x27;],
+      description: [&#x27;&#x27;, Validators.required],
     });
   }
 
@@ -596,8 +596,22 @@ export class AjoutQcmComponent {
       placeholder&#x3D;&quot;Description&quot;
       class&#x3D;&quot;form-control mb-4&quot;
     &gt;&lt;/textarea&gt;
+    &lt;div
+      *ngIf&#x3D;&quot;
+        form.get(&#x27;description&#x27;)?.invalid &amp;&amp; form.get(&#x27;description&#x27;)?.touched
+      &quot;
+      class&#x3D;&quot;text-danger mb-2&quot;
+    &gt;
+      Une description est obligatoire.
+    &lt;/div&gt;
 
-    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary mt-3&quot;&gt;Enregistrer&lt;/button&gt;
+    &lt;button
+      type&#x3D;&quot;submit&quot;
+      class&#x3D;&quot;btn btn-primary mt-3&quot;
+      [disabled]&#x3D;&quot;form.invalid&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;bi bi-save&quot;&gt;&lt;/i&gt; Enregistrer
+    &lt;/button&gt;
   &lt;/form&gt;
 &lt;/div&gt;
 
@@ -641,7 +655,7 @@ export class AjoutQcmComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajouter un questionnaire</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter un questionnaire.</p>  <p>Elle est dédiée uniquement à l\'ajout d\'un questionnaire sans question.</p>  <br />  <!-- Formulaire réactif -->  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-l">    <h4 class="fw-bold">Nouveau QCM</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    />    <div      *ngIf="form.get(\'title\')?.invalid && form.get(\'title\')?.touched"      class="text-danger mb-2"    >      Le titre est obligatoire.    </div>    <label for="description">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>  </form></div><!-- Modal Bootstrap succès --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout QCM réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout du QCM a échoué !"></app-modal></div>'
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajouter un questionnaire</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter un questionnaire.</p>  <p>Elle est dédiée uniquement à l\'ajout d\'un questionnaire sans question.</p>  <br />  <!-- Formulaire réactif -->  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-l">    <h4 class="fw-bold">Nouveau QCM</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    />    <div      *ngIf="form.get(\'title\')?.invalid && form.get(\'title\')?.touched"      class="text-danger mb-2"    >      Le titre est obligatoire.    </div>    <label for="description">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <div      *ngIf="        form.get(\'description\')?.invalid && form.get(\'description\')?.touched      "      class="text-danger mb-2"    >      Une description est obligatoire.    </div>    <button      type="submit"      class="btn btn-primary mt-3"      [disabled]="form.invalid"    >      <i class="bi bi-save"></i> Enregistrer    </button>  </form></div><!-- Modal Bootstrap succès --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout QCM réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout du QCM a échoué !"></app-modal></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AjoutQcmComponent'};

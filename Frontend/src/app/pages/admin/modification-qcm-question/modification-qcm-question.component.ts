@@ -13,6 +13,7 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
 import { QCM } from '../../../models/qcm';
 import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { RouterLink } from '@angular/router';
 
 /**
  * @module ModificationQcmQuestionComponent
@@ -40,6 +41,7 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
     FormsModule,
     ModalComponent,
     PaginationComponent,
+    RouterLink,
   ],
   templateUrl: './modification-qcm-question.component.html',
 })
@@ -266,19 +268,5 @@ export class ModificationQcmQuestionComponent implements OnInit {
   cancelForm() {
     this.selectedQcm = null;
     this.qcmForm.reset();
-  }
-
-  // ---------- Pagination ----------
-  get paginatedQCM() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.qcms.slice(start, start + this.pageSize);
-  }
-
-  nextPage() {
-    if (this.currentPage * this.pageSize < this.qcms.length) this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
   }
 }

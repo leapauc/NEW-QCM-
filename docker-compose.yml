@@ -13,7 +13,7 @@ services:
       - ./Database:/docker-entrypoint-initdb.d:ro
     healthcheck: # Ajout : Vérifie si la DB est prête
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
 

@@ -3,7 +3,7 @@
   <h1>Ajouter un questionnaire</h1>
 
   <br /><br />
-  <p>Ce formulaire permet d'ajouter un questionnaire et ses question.</p>
+  <p>Ce formulaire permet d'ajouter un questionnaire et ses questions.</p>
   <br />
   <br />
 
@@ -28,6 +28,15 @@
       class="form-control mb-4"
       placeholder="Description"
     ></textarea>
+    <div
+      *ngIf="
+        qcmForm.get('description')?.touched &&
+        qcmForm.get('description')?.invalid
+      "
+      class="text-danger mb-2"
+    >
+      Une description est requise.
+    </div>
 
     <!-- Bouton pour ajouter une question -->
     <button type="button" class="btn btn-primary mb-3" (click)="addQuestion()">
@@ -103,7 +112,9 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success mt-3">Créer le QCM</button>
+    <button type="submit" class="btn btn-success mt-3">
+      <i class="bi bi-save"></i> Enregistrer
+    </button>
   </form>
 </div>
 

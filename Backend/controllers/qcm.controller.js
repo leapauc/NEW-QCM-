@@ -13,7 +13,7 @@ exports.getAllQCM = async (req, res) => {
   }
 };
 
-// Récupérer un QCM par son id
+// Récupérer un QCM par son ids
 exports.getQCMById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -35,19 +35,36 @@ exports.createQCM = async (req, res) => {
   try {
     const { title, description, created_by } = req.body;
 
-    if (!title) {
-      return res.status(400).json({ error: "Titre est obligatoire" });
+    // Vérification des champs obligatoires
+    if (!title || !description) {
+      return res
+        .status(400)
+        .json({ error: "Titre et Description sont obligatoires" });
     }
 
     await client.query("BEGIN");
 
-    // Insérer le QCM
+    // Vérifier si le titre existe déjà
+    const checkTitle = await client.query(
+      `SELECT id_qcm FROM qcm WHERE LOWER(title) = LOWER($1)`,
+      [title]
+    );
+
+    if (checkTitle.rows.length > 0) {
+      await client.query("ROLLBACK");
+      return res
+        .status(409) // 409 = Conflict
+        .json({ error: "Un QCM avec ce titre existe déjà." });
+    }
+
+    // Insérer le nouveau QCM
     const qcmResult = await client.query(
       `INSERT INTO qcm (title, description, created_by)
        VALUES ($1, $2, $3)
        RETURNING id_qcm`,
       [title, description, created_by]
     );
+
     const qcmId = qcmResult.rows[0].id_qcm;
 
     await client.query("COMMIT");
@@ -124,9 +141,30 @@ exports.updateQCM = async (req, res) => {
     const qcmId = req.params.id;
     const { title, description, questions } = req.body;
 
+    if (!title || !description) {
+      return res
+        .status(400)
+        .json({ error: "Titre et Description sont obligatoires" });
+    }
+
     await client.query("BEGIN");
 
-    // Update du QCM
+    // Vérifier si un autre QCM a déjà ce titre
+    const checkTitle = await client.query(
+      `SELECT id_qcm 
+       FROM qcm 
+       WHERE LOWER(title) = LOWER($1) AND id_qcm <> $2`,
+      [title, qcmId]
+    );
+
+    if (checkTitle.rows.length > 0) {
+      await client.query("ROLLBACK");
+      return res
+        .status(409)
+        .json({ error: "Un autre QCM avec ce titre existe déjà." });
+    }
+
+    // Mise à jour du QCM
     await client.query(
       `UPDATE qcm 
        SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP 
@@ -134,28 +172,8 @@ exports.updateQCM = async (req, res) => {
       [title, description, qcmId]
     );
 
-    // // Update des questions existantes
-    // for (const q of questions) {
-    //   await client.query(
-    //     `UPDATE question_qcm
-    //      SET question=$1, type=$2
-    //      WHERE id_question=$3 AND id_qcm=$4`,
-    //     [q.question, q.type, q.id_question, qcmId]
-    //   );
-
-    //   // Update des réponses existantes
-    //   for (const r of q.responses) {
-    //     await client.query(
-    //       `UPDATE response_question
-    //        SET response=$1, is_correct=$2, position=$3
-    //        WHERE id_response=$4 AND id_question=$5`,
-    //       [r.response, r.is_correct, r.position, r.id_response, q.id_question]
-    //     );
-    //   }
-    // }
-
     await client.query("COMMIT");
-    res.json({ message: "QCM et questions/réponses mis à jour avec succès" });
+    res.json({ message: "QCM mis à jour avec succès" });
   } catch (err) {
     await client.query("ROLLBACK");
     console.error(err);
@@ -178,7 +196,7 @@ exports.updateQCMWithQuestions = async (req, res) => {
 
     await client.query("BEGIN");
 
-    // 🔹 Mettre à jour le QCM
+    // Mettre à jour le QCM
     await client.query(
       `UPDATE qcm 
        SET title=$1, description=$2, updated_at=CURRENT_TIMESTAMP
@@ -186,7 +204,7 @@ exports.updateQCMWithQuestions = async (req, res) => {
       [title, description, qcmId]
     );
 
-    // 🔹 Parcourir les questions
+    // Parcourir les questions
     for (const q of questions) {
       // Mettre à jour la question
       await client.query(
@@ -286,10 +304,6 @@ exports.getQuestionResponseOfQCMById = async (req, res) => {
         responses: resps.rows, // Tableau d'objets complet
       });
     }
-
-    // ❌ Plus de 404, on renvoie juste un tableau vide
-    // if (questions.length === 0)
-    //   return res.status(404).json({ error: "Le QCM comporte aucune question." });
 
     res.json(questions); // renvoie [] si pas de question
   } catch (err) {

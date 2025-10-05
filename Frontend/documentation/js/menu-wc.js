@@ -273,6 +273,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <li class="link">
                                     <a href="pipes/TimeFormatPipe.html" data-type="entity-link" >TimeFormatPipe</a>
                                 </li>
+                                <li class="link">
+                                    <a href="pipes/TruncateEmailPipe.html" data-type="entity-link" >TruncateEmailPipe</a>
+                                </li>
                             </ul>
                         </li>
                     <li class="chapter">

@@ -32,7 +32,7 @@ export class AjoutQcmQuestionComponent implements OnInit {
   initForm() {
     this.qcmForm = this.fb.group({
       title: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       questions: this.fb.array([]),
     });
   }
@@ -108,7 +108,7 @@ export class AjoutQcmQuestionComponent implements OnInit {
       }
     }
 
-    // ✅ Construire un payload JSON pur (clone pour éviter metadata Angular)
+    // Construire un payload JSON pur (clone pour éviter metadata Angular)
     const payload = JSON.parse(
       JSON.stringify({
         ...this.qcmForm.value,

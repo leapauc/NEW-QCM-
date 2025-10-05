@@ -40,7 +40,7 @@
   <div class="table-responsive-custom" *ngIf="!isLoading && qcms.length > 0">
     <table
       class="table table-striped"
-      *ngIf="paginatedQCM.length > 0; else noSearchResult"
+      *ngIf="paginatedQcms.length > 0; else noSearchResult"
     >
       <thead>
         <tr>
@@ -101,7 +101,19 @@
     <br />
     <hr />
     <h5 for="title">Questions</h5>
-    <div formArrayName="questions">
+
+    <!-- ⚠️ Message si le QCM n’a aucune question -->
+    <div *ngIf="questions.length === 0" class="alert alert-warning mt-3">
+      ⚠️ Aucune question dans ce QCM !
+      <br />
+      Si tu veux en ajouter, va à la page
+      <a routerLink="/admin/admin/ajout_question" class="alert-link">
+        Ajout question.
+      </a>
+    </div>
+
+    <!-- Sinon, afficher la liste des questions -->
+    <div formArrayName="questions" *ngIf="questions.length > 0">
       <div
         *ngFor="let question of questions.controls; let qIndex = index"
         [formGroupName]="qIndex"
@@ -160,7 +172,7 @@
       class="btn btn-danger mt-3 me-2"
       (click)="cancelForm()"
     >
-      Annuler
+      <i class="bi bi-x-circle me-2"></i> Annuler
     </button>
     <button
       type="button"
@@ -169,7 +181,9 @@
     >
       <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
     </button>
-    <button type="submit" class="btn btn-success mt-3">Enregistrer</button>
+    <button type="submit" class="btn btn-success mt-3">
+      <i class="bi bi-save"></i> Enregistrer
+    </button>
   </form>
 </div>
 <!-- MODALS -->

@@ -111,17 +111,21 @@
     </button>
 
     <div class="mt-4 text-center">
-      <button type="button" class="btn btn-danger me-2" (click)="cancelForm()">
-        Annuler
+      <button
+        type="button"
+        class="btn btn-danger mt-3 me-2"
+        (click)="cancelForm()"
+      >
+        <i class="bi bi-x-circle me-2"></i> Annuler
       </button>
       <button
         type="button"
-        class="btn btn-secondary me-2"
+        class="btn btn-secondary mt-3 me-2"
         (click)="resetForm()"
       >
         <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
       </button>
-      <button type="submit" class="btn btn-success">
+      <button type="submit" class="btn btn-primary mt-3">
         <i class="bi bi-save"></i> Enregistrer
       </button>
     </div>

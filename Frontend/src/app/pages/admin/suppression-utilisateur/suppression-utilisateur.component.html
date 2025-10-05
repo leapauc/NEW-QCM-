@@ -65,7 +65,9 @@
           </td>
           <td>{{ user.name }}</td>
           <td>{{ user.firstname }}</td>
-          <td>{{ user.email }}</td>
+          <td class="email-truncate">
+            {{ isSmallScreen ? (user.email | truncateEmail : 10) : user.email }}
+          </td>
           <td>{{ user.society }}</td>
           <td>{{ user.admin ? "Oui" : "Non" }}</td>
         </tr>

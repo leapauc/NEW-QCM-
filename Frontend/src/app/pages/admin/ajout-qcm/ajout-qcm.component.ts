@@ -57,7 +57,7 @@ export class AjoutQcmComponent {
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
     });
   }
 

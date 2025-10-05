@@ -31,8 +31,22 @@
       placeholder="Description"
       class="form-control mb-4"
     ></textarea>
+    <div
+      *ngIf="
+        form.get('description')?.invalid && form.get('description')?.touched
+      "
+      class="text-danger mb-2"
+    >
+      Une description est obligatoire.
+    </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="form.invalid"
+    >
+      <i class="bi bi-save"></i> Enregistrer
+    </button>
   </form>
 </div>
 

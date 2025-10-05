@@ -138,6 +138,22 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant pour modifier les QCM et leurs questions/réponses.</p>
+<p>Fonctionnalités principales :</p>
+<ul>
+<li>Liste les QCM existants avec pagination.</li>
+<li>Permet de sélectionner un QCM pour éditer ses questions et réponses.</li>
+<li>Gestion dynamique des réponses (ajout/suppression) avec contraintes min/max.</li>
+<li>Validation avant soumission : chaque question doit avoir au moins une réponse correcte.</li>
+<li>Soumission des modifications au backend via QcmService.</li>
+<li>Affichage des modals Bootstrap pour succès/échec.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-modification-qcm-question&gt;&lt;/app-modification-qcm-question&gt;</code></pre></div>
+    </p>
 
 
     <p class="comment">
@@ -176,6 +192,9 @@
                             <code>CommonModule</code>
                             <code>ReactiveFormsModule</code>
                             <code>FormsModule</code>
+                                <code><a href="../components/ModalComponent.html" target="_self" >ModalComponent</a></code>
+                                <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
+                            <code>RouterLink</code>
                 </td>
             </tr>
 
@@ -214,6 +233,9 @@
                                 <a href="#currentPage" >currentPage</a>
                             </li>
                             <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
                                 <a href="#maxResponses" >maxResponses</a>
                             </li>
                             <li>
@@ -221,6 +243,9 @@
                             </li>
                             <li>
                                 <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#paginatedQcms" >paginatedQcms</a>
                             </li>
                             <li>
                                 <a href="#qcmForm" >qcmForm</a>
@@ -247,6 +272,9 @@
                                 <a href="#addResponse" >addResponse</a>
                             </li>
                             <li>
+                                <a href="#cancelForm" >cancelForm</a>
+                            </li>
+                            <li>
                                 <a href="#editQCM" >editQCM</a>
                             </li>
                             <li>
@@ -259,16 +287,13 @@
                                 <a href="#loadQCMs" >loadQCMs</a>
                             </li>
                             <li>
-                                <a href="#nextPage" >nextPage</a>
-                            </li>
-                            <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                             <li>
-                                <a href="#prevPage" >prevPage</a>
+                                <a href="#removeResponse" >removeResponse</a>
                             </li>
                             <li>
-                                <a href="#removeResponse" >removeResponse</a>
+                                <a href="#resetForm" >resetForm</a>
                             </li>
                             <li>
                                 <a href="#submitForm" >submitForm</a>
@@ -292,9 +317,6 @@
                                 <li>
                                     <a href="#questions" >questions</a>
                                 </li>
-                                <li>
-                                    <a href="#paginatedQCM" >paginatedQCM</a>
-                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -308,17 +330,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(qcmService: <a href="../injectables/QcmService.html" target="_self">QcmService</a>, fb: FormBuilder)</code>
+<code>constructor(qcmService: <a href="../injectables/QcmService.html" target="_self">QcmService</a>, fb: FormBuilder, cdr: ChangeDetectorRef)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:82</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Constructeur du composant</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -327,6 +351,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -341,6 +366,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Service pour récupérer et modifier les QCM</p>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>fb</td>
@@ -353,6 +382,26 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>FormBuilder pour créer les formulaires réactifs</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ChangeDetectorRef pour déclencher manuellement la détection des changements</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -392,14 +441,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="95"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:95</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:191</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une réponse à une question</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -410,6 +461,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -424,6 +476,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Index de la question</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -435,6 +491,45 @@
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelForm"></a>
+                    <span class="name">
+                        <span ><b>cancelForm</b></span>
+                        <a href="#cancelForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="268"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:268</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Annule la modification et réinitialise le formulaire</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -459,14 +554,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="44"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:44</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:131</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Sélectionne un QCM pour modification
+Récupère les questions et réponses associées</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -477,6 +575,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -491,6 +590,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>QCM sélectionné</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -526,14 +629,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="90"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:90</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="183"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:183</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Retourne le FormArray des réponses d’une question donnée</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -593,14 +698,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="55"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:55</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:146</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Initialise le formulaire réactif pour le QCM sélectionné
+Crée les FormArray pour questions et réponses</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -630,51 +738,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:107</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="nextPage"></a>
-                    <span class="name">
-                        <span ><b>nextPage</b></span>
-                        <a href="#nextPage"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>nextPage()</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="152"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:152</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
+                        <div class="io-description"><p>Charge tous les QCM depuis le backend et met à jour l&#39;état de chargement</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -704,51 +777,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:100</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="prevPage"></a>
-                    <span class="name">
-                        <span ><b>prevPage</b></span>
-                        <a href="#prevPage"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>prevPage()</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="156"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:156</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook : appelé après l&#39;initialisation du composant
+Charge tous les QCM</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -778,14 +817,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="109"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:109</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="209"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:209</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Supprime une réponse d’une question</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -796,6 +837,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -810,6 +852,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Index de la question</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>responseIndex</td>
@@ -822,6 +868,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Index de la réponse</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -833,6 +883,45 @@
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetForm"></a>
+                    <span class="name">
+                        <span ><b>resetForm</b></span>
+                        <a href="#resetForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="261"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:261</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Réinitialise le formulaire pour le QCM sélectionné</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -857,14 +946,18 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="117"
-                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:117</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="222"
+                                    class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:222</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Valide et soumet le formulaire au backend
+Vérifie que chaque question a au moins une réponse correcte
+Affiche les modals de succès/échec</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -904,10 +997,47 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:66</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Page actuelle pour la pagination</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indique si les données sont en cours de chargement</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -935,10 +1065,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:74</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre maximum de réponses par question</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -966,10 +1102,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:78</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre minimum de réponses par question</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -997,10 +1139,53 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:70</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre d’éléments par page pour la pagination</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginatedQcms"></a>
+                    <span class="name">
+                        <span ><b>paginatedQcms</b></span>
+                        <a href="#paginatedQcms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/QCM.html" target="_self" >QCM[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Pagination</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1023,10 +1208,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:60</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulaire réactif pour la modification des questions et réponses</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1054,10 +1245,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:52</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liste complète des QCM récupérés depuis le backend</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1085,10 +1282,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:56</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>QCM actuellement sélectionné pour modification</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1114,31 +1317,20 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:86</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="178" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:178</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Retourne le FormArray des questions</p>
+</div>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="paginatedQCM"></a>
-                        <span class="name"><b>paginatedQCM</b><a href="#paginatedQCM"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>FormArray</code>
 
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>get</b><code>paginatedQCM()</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts:147</a></div>
-                                </td>
-                            </tr>
+                                </div>
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1147,7 +1339,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, OnInit } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import {
   ReactiveFormsModule,
@@ -1160,36 +1352,123 @@ import {
 import { QcmService } from &#x27;../../../services/qcm.service&#x27;;
 import * as bootstrap from &#x27;bootstrap&#x27;; // importer Bootstrap JS
 import { QCM } from &#x27;../../../models/qcm&#x27;;
+import { ModalComponent } from &#x27;../../../components/modal_success_failure/modal.component&#x27;;
+import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
 
+/**
+ * @module ModificationQcmQuestionComponent
+ * @description
+ * Composant pour modifier les QCM et leurs questions/réponses.
+ *
+ * Fonctionnalités principales :
+ * - Liste les QCM existants avec pagination.
+ * - Permet de sélectionner un QCM pour éditer ses questions et réponses.
+ * - Gestion dynamique des réponses (ajout/suppression) avec contraintes min/max.
+ * - Validation avant soumission : chaque question doit avoir au moins une réponse correcte.
+ * - Soumission des modifications au backend via QcmService.
+ * - Affichage des modals Bootstrap pour succès/échec.
+ *
+ * @example
+ * &#x60;&#x60;&#x60;html
+ * &lt;app-modification-qcm-question&gt;&lt;/app-modification-qcm-question&gt;
+ * &#x60;&#x60;&#x60;
+ */
 @Component({
   selector: &#x27;app-modification-qcm-question&#x27;,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ModalComponent,
+    PaginationComponent,
+    RouterLink,
+  ],
   templateUrl: &#x27;./modification-qcm-question.component.html&#x27;,
 })
 export class ModificationQcmQuestionComponent implements OnInit {
+  /**
+   * Liste complète des QCM récupérés depuis le backend
+   */
   qcms: QCM[] &#x3D; [];
+  /**
+   * QCM actuellement sélectionné pour modification
+   */
   selectedQcm: QCM | null &#x3D; null;
+  /**
+   * Formulaire réactif pour la modification des questions et réponses
+   */
   qcmForm!: FormGroup;
+  /** Pagination */
+  paginatedQcms: QCM[] &#x3D; [];
+  /**
+   * Page actuelle pour la pagination
+   */
   currentPage &#x3D; 1;
+  /**
+   * Nombre d’éléments par page pour la pagination
+   */
   pageSize &#x3D; 5;
+  /**
+   * Nombre maximum de réponses par question
+   */
   maxResponses &#x3D; 5;
+  /**
+   * Nombre minimum de réponses par question
+   */
   minResponses &#x3D; 2;
+  /**
+   * Indique si les données sont en cours de chargement
+   */
+  isLoading &#x3D; true;
 
-  constructor(private qcmService: QcmService, private fb: FormBuilder) {}
+  /**
+   * Constructeur du composant
+   * @param qcmService Service pour récupérer et modifier les QCM
+   * @param fb FormBuilder pour créer les formulaires réactifs
+   * @param cdr ChangeDetectorRef pour déclencher manuellement la détection des changements
+   */
+  constructor(
+    private qcmService: QcmService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {}
 
+  /**
+   * Lifecycle hook : appelé après l&#x27;initialisation du composant
+   * Charge tous les QCM
+   */
   ngOnInit(): void {
     this.loadQCMs();
   }
 
-  // 🔹 Charger tous les QCM
+  /**
+   * Charge tous les QCM depuis le backend et met à jour l&#x27;état de chargement
+   */
   loadQCMs() {
+    this.isLoading &#x3D; true;
     this.qcmService.getAllQCM().subscribe({
-      next: (data) &#x3D;&gt; (this.qcms &#x3D; data),
-      error: (err) &#x3D;&gt; console.error(&#x27;Erreur chargement QCM&#x27;, err),
+      next: (data) &#x3D;&gt; {
+        this.qcms &#x3D; data;
+
+        Promise.resolve().then(() &#x3D;&gt; {
+          this.paginatedQcms &#x3D; this.qcms.slice(0, 5);
+          this.cdr.detectChanges();
+        });
+        this.isLoading &#x3D; false; // ✅ fin du chargement
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Erreur chargement QCM&#x27;, err);
+        this.isLoading &#x3D; false;
+      },
     });
   }
 
-  // 🔹 Editer un QCM : récupérer les questions + réponses
+  /**
+   * Sélectionne un QCM pour modification
+   * Récupère les questions et réponses associées
+   * @param qcm QCM sélectionné
+   */
   editQCM(qcm: QCM) {
     this.qcmService.getQcmQuestionsWithResponses(qcm.id_qcm!).subscribe({
       next: (questions) &#x3D;&gt; {
@@ -1201,6 +1480,10 @@ export class ModificationQcmQuestionComponent implements OnInit {
   }
 
   // ---------- Formulaire réactif ----------
+  /**
+   * Initialise le formulaire réactif pour le QCM sélectionné
+   * Crée les FormArray pour questions et réponses
+   */
   initForm() {
     this.qcmForm &#x3D; this.fb.group({
       title: [this.selectedQcm?.title, Validators.required],
@@ -1232,15 +1515,20 @@ export class ModificationQcmQuestionComponent implements OnInit {
     });
   }
 
+  /** Retourne le FormArray des questions */
   get questions(): FormArray {
     return this.qcmForm.get(&#x27;questions&#x27;) as FormArray;
   }
 
+  /** Retourne le FormArray des réponses d’une question donnée */
   getResponses(questionIndex: number): FormArray {
     return this.questions.at(questionIndex).get(&#x27;responses&#x27;) as FormArray;
   }
 
-  // Ajouter une réponse
+  /**
+   * Ajoute une réponse à une question
+   * @param questionIndex Index de la question
+   */
   addResponse(questionIndex: number) {
     const responses &#x3D; this.getResponses(questionIndex);
     if (responses.length &lt; this.maxResponses) {
@@ -1254,7 +1542,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
     }
   }
 
-  // Supprimer une réponse
+  /**
+   * Supprime une réponse d’une question
+   * @param questionIndex Index de la question
+   * @param responseIndex Index de la réponse
+   */
   removeResponse(questionIndex: number, responseIndex: number) {
     const responses &#x3D; this.getResponses(questionIndex);
     if (responses.length &gt; this.minResponses) {
@@ -1263,6 +1555,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
   }
 
   // ---------- Sauvegarde ----------
+  /**
+   * Valide et soumet le formulaire au backend
+   * Vérifie que chaque question a au moins une réponse correcte
+   * Affiche les modals de succès/échec
+   */
   submitForm() {
     if (this.qcmForm.invalid || !this.selectedQcm) {
       this.qcmForm.markAllAsTouched();
@@ -1271,39 +1568,47 @@ export class ModificationQcmQuestionComponent implements OnInit {
 
     const formValue &#x3D; this.qcmForm.value;
 
+    // ✅ Vérifier que chaque question a au moins une réponse correcte
+    for (const q of formValue.questions) {
+      const hasCorrect &#x3D; q.responses.some((r: any) &#x3D;&gt; r.is_correct);
+      if (!hasCorrect) {
+        const modalEl &#x3D; document.getElementById(&#x27;unvalidModal&#x27;);
+        if (modalEl) new bootstrap.Modal(modalEl).show();
+        return; // arrêter la soumission
+      }
+    }
+
+    // ✅ Soumission au backend
     this.qcmService
       .updateQCM_Question(this.selectedQcm.id_qcm!, formValue)
       .subscribe({
         next: (res) &#x3D;&gt; {
           const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
-          const modal &#x3D; new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
 
-          // Réinitialiser le formulaire et la sélection
+          // Réinitialiser formulaire et sélection
           this.selectedQcm &#x3D; null;
           this.qcmForm.reset();
           this.loadQCMs();
         },
         error: (err) &#x3D;&gt; {
           const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
-          const modal &#x3D; new bootstrap.Modal(modalEl!);
-          modal.show();
+          if (modalEl) new bootstrap.Modal(modalEl).show();
         },
       });
   }
 
-  // ---------- Pagination ----------
-  get paginatedQCM() {
-    const start &#x3D; (this.currentPage - 1) * this.pageSize;
-    return this.qcms.slice(start, start + this.pageSize);
+  /** Réinitialise le formulaire pour le QCM sélectionné */
+  resetForm() {
+    if (this.selectedQcm) {
+      this.initForm();
+    }
   }
 
-  nextPage() {
-    if (this.currentPage * this.pageSize &lt; this.qcms.length) this.currentPage++;
-  }
-
-  prevPage() {
-    if (this.currentPage &gt; 1) this.currentPage--;
+  /** Annule la modification et réinitialise le formulaire */
+  cancelForm() {
+    this.selectedQcm &#x3D; null;
+    this.qcmForm.reset();
   }
 }
 </code></pre>
@@ -1325,9 +1630,35 @@ export class ModificationQcmQuestionComponent implements OnInit {
     existant.
   &lt;/p&gt;
   &lt;br /&gt;
-  &lt;!-- Tableau des qcm --&gt;
-  &lt;div class&#x3D;&quot;table-responsive-custom&quot;&gt;
-    &lt;table class&#x3D;&quot;table table-striped&quot;&gt;
+  &lt;!-- Spinner pendant le chargement --&gt;
+  &lt;div *ngIf&#x3D;&quot;isLoading&quot; class&#x3D;&quot;text-center p-4&quot;&gt;
+    &lt;div class&#x3D;&quot;spinner-border text-primary&quot; role&#x3D;&quot;status&quot;&gt;
+      &lt;span class&#x3D;&quot;visually-hidden&quot;&gt;Chargement...&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Message si aucun QCM après chargement --&gt;
+  &lt;ng-template #noQcm&gt;
+    &lt;div
+      *ngIf&#x3D;&quot;!isLoading&quot;
+      class&#x3D;&quot;alert alert-warning text-center&quot;
+      role&#x3D;&quot;alert&quot;
+    &gt;
+      Aucun QCM n&#x27;a encore été créé. Veuillez créer des QCM pour tester vos
+      stagiaires !
+    &lt;/div&gt;
+  &lt;/ng-template&gt;
+  &lt;!-- Message si recherche/pagination sans résultat --&gt;
+  &lt;ng-template #noSearchResult&gt;
+    &lt;div *ngIf&#x3D;&quot;!isLoading&quot; class&#x3D;&quot;alert alert-info text-center&quot; role&#x3D;&quot;alert&quot;&gt;
+      Aucun QCM ne correspond à votre recherche.
+    &lt;/div&gt;
+  &lt;/ng-template&gt;
+  &lt;!-- Tableau affiché uniquement si des QCM sont présents --&gt;
+  &lt;div class&#x3D;&quot;table-responsive-custom&quot; *ngIf&#x3D;&quot;!isLoading &amp;&amp; qcms.length &gt; 0&quot;&gt;
+    &lt;table
+      class&#x3D;&quot;table table-striped&quot;
+      *ngIf&#x3D;&quot;paginatedQcms.length &gt; 0; else noSearchResult&quot;
+    &gt;
       &lt;thead&gt;
         &lt;tr&gt;
           &lt;th&gt;&lt;/th&gt;
@@ -1338,7 +1669,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
         &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
-        &lt;tr *ngFor&#x3D;&quot;let qcm of paginatedQCM&quot;&gt;
+        &lt;tr *ngFor&#x3D;&quot;let qcm of paginatedQcms&quot;&gt;
           &lt;td class&#x3D;&quot;text-center&quot;&gt;
             &lt;i
               class&#x3D;&quot;bi bi-pencil-square text-primary fs-5&quot;
@@ -1354,12 +1685,16 @@ export class ModificationQcmQuestionComponent implements OnInit {
       &lt;/tbody&gt;
     &lt;/table&gt;
   &lt;/div&gt;
+
   &lt;!-- Pagination --&gt;
-  &lt;div class&#x3D;&quot;d-flex justify-content-between&quot;&gt;
-    &lt;button class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;prevPage()&quot;&gt;&amp;lt;&lt;/button&gt;
-    &lt;button class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;nextPage()&quot;&gt;&amp;gt;&lt;/button&gt;
-  &lt;/div&gt;
+  &lt;app-pagination
+    [items]&#x3D;&quot;qcms&quot;
+    [pageSize]&#x3D;&quot;5&quot;
+    (pageChange)&#x3D;&quot;paginatedQcms &#x3D; $event&quot;
+  &gt;
+  &lt;/app-pagination&gt;
   &lt;br /&gt;&lt;br /&gt;
+  &lt;!--Forms de modification--&gt;
   &lt;form
     [formGroup]&#x3D;&quot;qcmForm&quot;
     (ngSubmit)&#x3D;&quot;submitForm()&quot;
@@ -1380,9 +1715,22 @@ export class ModificationQcmQuestionComponent implements OnInit {
       placeholder&#x3D;&quot;Description&quot;
       class&#x3D;&quot;form-control mb-4&quot;
     &gt;&lt;/textarea&gt;
-    &lt;br /&gt;&lt;br /&gt;
-    &lt;label for&#x3D;&quot;title&quot;&gt;Questions&lt;/label&gt;
-    &lt;div formArrayName&#x3D;&quot;questions&quot;&gt;
+    &lt;br /&gt;
+    &lt;hr /&gt;
+    &lt;h5 for&#x3D;&quot;title&quot;&gt;Questions&lt;/h5&gt;
+
+    &lt;!-- ⚠️ Message si le QCM n’a aucune question --&gt;
+    &lt;div *ngIf&#x3D;&quot;questions.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;alert alert-warning mt-3&quot;&gt;
+      ⚠️ Aucune question dans ce QCM !
+      &lt;br /&gt;
+      Si tu veux en ajouter, va à la page
+      &lt;a routerLink&#x3D;&quot;/admin/admin/ajout_question&quot; class&#x3D;&quot;alert-link&quot;&gt;
+        Ajout question.
+      &lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Sinon, afficher la liste des questions --&gt;
+    &lt;div formArrayName&#x3D;&quot;questions&quot; *ngIf&#x3D;&quot;questions.length &gt; 0&quot;&gt;
       &lt;div
         *ngFor&#x3D;&quot;let question of questions.controls; let qIndex &#x3D; index&quot;
         [formGroupName]&#x3D;&quot;qIndex&quot;
@@ -1393,8 +1741,6 @@ export class ModificationQcmQuestionComponent implements OnInit {
           placeholder&#x3D;&quot;Intitulé de la question&quot;
           class&#x3D;&quot;form-control mb-2&quot;
         /&gt;
-
-        &lt;h5&gt;Réponses :&lt;/h5&gt;
         &lt;div formArrayName&#x3D;&quot;responses&quot;&gt;
           &lt;div
             *ngFor&#x3D;&quot;
@@ -1419,6 +1765,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
                 type&#x3D;&quot;button&quot;
                 class&#x3D;&quot;btn btn-outline-danger btn-sm&quot;
                 (click)&#x3D;&quot;removeResponse(qIndex, rIndex)&quot;
+                [disabled]&#x3D;&quot;getResponses(qIndex).length &lt;&#x3D; minResponses&quot;
               &gt;
                 ❌
               &lt;/button&gt;
@@ -1430,13 +1777,30 @@ export class ModificationQcmQuestionComponent implements OnInit {
           type&#x3D;&quot;button&quot;
           class&#x3D;&quot;btn btn-outline-primary btn-sm mt-2&quot;
           (click)&#x3D;&quot;addResponse(qIndex)&quot;
+          [disabled]&#x3D;&quot;getResponses(qIndex).length &gt;&#x3D; maxResponses&quot;
         &gt;
-          ➕ Ajouter une réponse
+          &lt;i class&#x3D;&quot;bi bi-plus-circle&quot;&gt;&lt;/i&gt; Ajouter une réponse
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 
-    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-success mt-3&quot;&gt;Enregistrer&lt;/button&gt;
+    &lt;button
+      type&#x3D;&quot;button&quot;
+      class&#x3D;&quot;btn btn-danger mt-3 me-2&quot;
+      (click)&#x3D;&quot;cancelForm()&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;bi bi-x-circle me-2&quot;&gt;&lt;/i&gt; Annuler
+    &lt;/button&gt;
+    &lt;button
+      type&#x3D;&quot;button&quot;
+      class&#x3D;&quot;btn btn-secondary mt-3 me-2&quot;
+      (click)&#x3D;&quot;resetForm()&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;bi bi-arrow-counterclockwise&quot;&gt;&lt;/i&gt; Réinitialiser
+    &lt;/button&gt;
+    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-success mt-3&quot;&gt;
+      &lt;i class&#x3D;&quot;bi bi-save&quot;&gt;&lt;/i&gt; Enregistrer
+    &lt;/button&gt;
   &lt;/form&gt;
 &lt;/div&gt;
 &lt;!-- MODALS --&gt;
@@ -1463,6 +1827,11 @@ export class ModificationQcmQuestionComponent implements OnInit {
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;unvalidModal&quot;
+  icon&#x3D;&quot;❌&quot;
+  message&#x3D;&quot;Le formulaire ne peut pas être validé : au moins une réponse doit être correcte pour chaque question.&quot;
+&gt;&lt;/app-modal&gt;
 &lt;div
   class&#x3D;&quot;modal fade&quot;
   id&#x3D;&quot;failedModal&quot;
@@ -1515,7 +1884,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Modifier d\'un questionnaire et ses questions/responses</h1>  <br /><br />  <p>    Ce formulaire permet de modifier un questionnaire et ses questions ainsi que    les réponses pour chaque question.  </p>  <p>    Elle est dédiée uniquement à la modification du contenu d\'un questionnaire    existant.  </p>  <br />  <!-- Tableau des qcm -->  <div class="table-responsive-custom">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Titre</th>          <th>Description</th>          <th>Créé par</th>          <th>Créé le</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let qcm of paginatedQCM">          <td class="text-center">            <i              class="bi bi-pencil-square text-primary fs-5"              style="cursor: pointer"              (click)="editQCM(qcm)"            ></i>          </td>          <td>{{ qcm.title }}</td>          <td>{{ qcm.description }}</td>          <td>{{ qcm.user }}</td>          <td>{{ qcm.created_at | date : "short" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <div class="d-flex justify-content-between">    <button class="btn btn-secondary" (click)="prevPage()">&lt;</button>    <button class="btn btn-secondary" (click)="nextPage()">&gt;</button>  </div>  <br /><br />  <form    [formGroup]="qcmForm"    (ngSubmit)="submitForm()"    *ngIf="selectedQcm"    class="form-l"  >    <h4 class="fw-bold">MODIFICATION</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    /><br />    <label for="title">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <br /><br />    <label for="title">Questions</label>    <div formArrayName="questions">      <div        *ngFor="let question of questions.controls; let qIndex = index"        [formGroupName]="qIndex"        class="mb-4"      >        <input          formControlName="question"          placeholder="Intitulé de la question"          class="form-control mb-2"        />        <h5>Réponses :</h5>        <div formArrayName="responses">          <div            *ngFor="              let response of getResponses(qIndex).controls;              let rIndex = index            "            [formGroupName]="rIndex"            class="row g-2 align-items-center mb-2"          >            <div class="col-8">              <input formControlName="response" class="form-control" />            </div>            <div class="col-2 text-center">              <input                type="checkbox"                formControlName="is_correct"                class="form-check-input"              />            </div>            <div class="col-2 text-end">              <button                type="button"                class="btn btn-outline-danger btn-sm"                (click)="removeResponse(qIndex, rIndex)"              >                ❌              </button>            </div>          </div>        </div>        <button          type="button"          class="btn btn-outline-primary btn-sm mt-2"          (click)="addResponse(qIndex)"        >          ➕ Ajouter une réponse        </button>      </div>    </div>    <button type="submit" class="btn btn-success mt-3">Enregistrer</button>  </form></div><!-- MODALS --><div  class="modal fade"  id="successModal"  tabindex="-1"  aria-labelledby="successModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content text-center p-3">      <div class="modal-body">        <div class="mb-3">          <span style="font-size: 3rem">✔️</span>        </div>        <h5 class="modal-title mb-3" id="successModalLabel">          Modification QCM et ses questions réalisée avec succès !        </h5>        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">          Fermer        </button>      </div>    </div>  </div></div><div  class="modal fade"  id="failedModal"  tabindex="-1"  aria-labelledby="failedModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content text-center p-3">      <div class="modal-body">        <div class="mb-3">          <span style="font-size: 3rem">❌</span>        </div>        <h5 class="modal-title mb-3" id="failedModalLabel">          La modification a échoué !        </h5>        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">          Fermer        </button>      </div>    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Modifier d\'un questionnaire et ses questions/responses</h1>  <br /><br />  <p>    Ce formulaire permet de modifier un questionnaire et ses questions ainsi que    les réponses pour chaque question.  </p>  <p>    Elle est dédiée uniquement à la modification du contenu d\'un questionnaire    existant.  </p>  <br />  <!-- Spinner pendant le chargement -->  <div *ngIf="isLoading" class="text-center p-4">    <div class="spinner-border text-primary" role="status">      <span class="visually-hidden">Chargement...</span>    </div>  </div>  <!-- Message si aucun QCM après chargement -->  <ng-template #noQcm>    <div      *ngIf="!isLoading"      class="alert alert-warning text-center"      role="alert"    >      Aucun QCM n\'a encore été créé. Veuillez créer des QCM pour tester vos      stagiaires !    </div>  </ng-template>  <!-- Message si recherche/pagination sans résultat -->  <ng-template #noSearchResult>    <div *ngIf="!isLoading" class="alert alert-info text-center" role="alert">      Aucun QCM ne correspond à votre recherche.    </div>  </ng-template>  <!-- Tableau affiché uniquement si des QCM sont présents -->  <div class="table-responsive-custom" *ngIf="!isLoading && qcms.length > 0">    <table      class="table table-striped"      *ngIf="paginatedQcms.length > 0; else noSearchResult"    >      <thead>        <tr>          <th></th>          <th>Titre</th>          <th>Description</th>          <th>Créé par</th>          <th>Créé le</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let qcm of paginatedQcms">          <td class="text-center">            <i              class="bi bi-pencil-square text-primary fs-5"              style="cursor: pointer"              (click)="editQCM(qcm)"            ></i>          </td>          <td>{{ qcm.title }}</td>          <td>{{ qcm.description }}</td>          <td>{{ qcm.user }}</td>          <td>{{ qcm.created_at | date : "short" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="qcms"    [pageSize]="5"    (pageChange)="paginatedQcms = $event"  >  </app-pagination>  <br /><br />  <!--Forms de modification-->  <form    [formGroup]="qcmForm"    (ngSubmit)="submitForm()"    *ngIf="selectedQcm"    class="form-l"  >    <h4 class="fw-bold">MODIFICATION</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    /><br />    <label for="title">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <br />    <hr />    <h5 for="title">Questions</h5>    <!-- ⚠️ Message si le QCM n’a aucune question -->    <div *ngIf="questions.length === 0" class="alert alert-warning mt-3">      ⚠️ Aucune question dans ce QCM !      <br />      Si tu veux en ajouter, va à la page      <a routerLink="/admin/admin/ajout_question" class="alert-link">        Ajout question.      </a>    </div>    <!-- Sinon, afficher la liste des questions -->    <div formArrayName="questions" *ngIf="questions.length > 0">      <div        *ngFor="let question of questions.controls; let qIndex = index"        [formGroupName]="qIndex"        class="mb-4"      >        <input          formControlName="question"          placeholder="Intitulé de la question"          class="form-control mb-2"        />        <div formArrayName="responses">          <div            *ngFor="              let response of getResponses(qIndex).controls;              let rIndex = index            "            [formGroupName]="rIndex"            class="row g-2 align-items-center mb-2"          >            <div class="col-8">              <input formControlName="response" class="form-control" />            </div>            <div class="col-2 text-center">              <input                type="checkbox"                formControlName="is_correct"                class="form-check-input"              />            </div>            <div class="col-2 text-end">              <button                type="button"                class="btn btn-outline-danger btn-sm"                (click)="removeResponse(qIndex, rIndex)"                [disabled]="getResponses(qIndex).length <= minResponses"              >                ❌              </button>            </div>          </div>        </div>        <button          type="button"          class="btn btn-outline-primary btn-sm mt-2"          (click)="addResponse(qIndex)"          [disabled]="getResponses(qIndex).length >= maxResponses"        >          <i class="bi bi-plus-circle"></i> Ajouter une réponse        </button>      </div>    </div>    <button      type="button"      class="btn btn-danger mt-3 me-2"      (click)="cancelForm()"    >      <i class="bi bi-x-circle me-2"></i> Annuler    </button>    <button      type="button"      class="btn btn-secondary mt-3 me-2"      (click)="resetForm()"    >      <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser    </button>    <button type="submit" class="btn btn-success mt-3">      <i class="bi bi-save"></i> Enregistrer    </button>  </form></div><!-- MODALS --><div  class="modal fade"  id="successModal"  tabindex="-1"  aria-labelledby="successModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content text-center p-3">      <div class="modal-body">        <div class="mb-3">          <span style="font-size: 3rem">✔️</span>        </div>        <h5 class="modal-title mb-3" id="successModalLabel">          Modification QCM et ses questions réalisée avec succès !        </h5>        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">          Fermer        </button>      </div>    </div>  </div></div><app-modal  modalId="unvalidModal"  icon="❌"  message="Le formulaire ne peut pas être validé : au moins une réponse doit être correcte pour chaque question."></app-modal><div  class="modal fade"  id="failedModal"  tabindex="-1"  aria-labelledby="failedModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered">    <div class="modal-content text-center p-3">      <div class="modal-body">        <div class="mb-3">          <span style="font-size: 3rem">❌</span>        </div>        <h5 class="modal-title mb-3" id="failedModalLabel">          La modification a échoué !        </h5>        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">          Fermer        </button>      </div>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ModificationQcmQuestionComponent'};

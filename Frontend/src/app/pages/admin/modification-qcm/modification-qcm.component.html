@@ -109,13 +109,22 @@
     ></textarea>
     <br />
     <button
+      class="btn btn-danger mt-3 me-2"
+      type="button"
+      (click)="cancelEdit()"
+    >
+      <i class="bi bi-x-circle me-2"></i> Annuler
+    </button>
+    <button
       type="button"
       class="btn btn-secondary mt-3 me-2"
       (click)="resetForm()"
     >
-      Réinitialiser
+      <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
     </button>
-    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+    <button type="submit" class="btn btn-primary mt-3">
+      <i class="bi bi-save"></i> Enregistrer
+    </button>
   </form>
 </div>
 <!-- MODALS -->

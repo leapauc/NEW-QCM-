@@ -200,6 +200,7 @@
                                 <code><a href="../components/SearchBarComponent.html" target="_self" >SearchBarComponent</a></code>
                                 <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
                                 <code><a href="../components/ConfirmationModalComponent.html" target="_self" >ConfirmationModalComponent</a></code>
+                            <code>TruncateEmailPipe</code>
                 </td>
             </tr>
 
@@ -235,10 +236,20 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currentUserId" >currentUserId</a>
+                            </li>
+                            <li>
                                 <a href="#filteredUsers" >filteredUsers</a>
                             </li>
                             <li>
                                 <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <a href="#isSmallScreen" >isSmallScreen</a>
                             </li>
                             <li>
                                 <a href="#message" >message</a>
@@ -254,6 +265,9 @@
                             </li>
                             <li>
                                 <a href="#selectedUser" >selectedUser</a>
+                            </li>
+                            <li>
+                                <a href="#SmallScreenSize" >SmallScreenSize</a>
                             </li>
                             <li>
                                 <a href="#users" >users</a>
@@ -283,6 +297,10 @@
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#onResize" >onResize</a>
+                            </li>
+                            <li>
                                 <a href="#openConfirmModal" >openConfirmModal</a>
                             </li>
                             <li>
@@ -295,6 +313,20 @@
 
 
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:resize" >window:resize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
         </tbody>
     </table>
@@ -306,12 +338,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, fb: FormBuilder, cdr: ChangeDetectorRef)</code>
+<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, fb: FormBuilder, cdr: ChangeDetectorRef, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:99</a></div>
                             </td>
                         </tr>
 
@@ -379,6 +411,22 @@
 
                                                         </td>
                                                 </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>AuthService pour pouvoir récupérer les informations de d&#39;administrateur connecté.</p>
+
+                                                        </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -391,7 +439,41 @@
 
 
 
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:resize"></a>
+                    <span class="name">
+                        <span ><b>window:resize</b></span>
+                        <a href="#window:resize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:resize(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
 
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <section data-compodoc="block-methods">
     
     <h3 id="methods">
@@ -417,8 +499,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="168"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:168</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="199"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:199</a></div>
                         </td>
                     </tr>
 
@@ -456,8 +538,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="192"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:192</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="223"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:223</a></div>
                         </td>
                     </tr>
 
@@ -496,15 +578,16 @@ Affiche un message de succès ou d&#39;erreur et recharge la liste des utilisate
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="119"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:119</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:144</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Charge tous les utilisateurs depuis le service et initialise la pagination.</p>
+                        <div class="io-description"><p>Charge tous les utilisateurs depuis le service et initialise la pagination,
+en excluant l’administrateur connecté.</p>
 </div>
 
                         <div class="io-description">
@@ -535,8 +618,8 @@ Affiche un message de succès ou d&#39;erreur et recharge la liste des utilisate
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="112"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:112</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:132</a></div>
                         </td>
                     </tr>
 
@@ -551,6 +634,82 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onResize"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>onResize</b></span>
+                        <a href="#onResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onResize(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -575,8 +734,8 @@ Charge les utilisateurs dès l&#39;affichage.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="138"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:138</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:169</a></div>
                         </td>
                     </tr>
 
@@ -614,8 +773,8 @@ Charge les utilisateurs dès l&#39;affichage.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="150"
-                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:150</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:181</a></div>
                         </td>
                     </tr>
 
@@ -678,6 +837,44 @@ Charge les utilisateurs dès l&#39;affichage.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="currentUserId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>currentUserId</b></span>
+                        <a href="#currentUserId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:95</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stocke l&#39;id de l&#39;utilisateur courant</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="filteredUsers"></a>
                     <span class="name">
                         <span ><b>filteredUsers</b></span>
@@ -698,7 +895,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:69</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -730,7 +927,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -740,6 +937,62 @@ Charge les utilisateurs dès l&#39;affichage.</p>
 </div>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Etat chargement des données</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSmallScreen"></a>
+                    <span class="name">
+                        <span ><b>isSmallScreen</b></span>
+                        <a href="#isSmallScreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>window.innerWidth &lt; this.SmallScreenSize</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:99</a></div>
+                        </td>
+                    </tr>
+
 
         </tbody>
     </table>
@@ -767,7 +1020,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:89</a></div>
                         </td>
                     </tr>
 
@@ -804,7 +1057,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:93</a></div>
                         </td>
                     </tr>
 
@@ -841,7 +1094,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:77</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:85</a></div>
                         </td>
                     </tr>
 
@@ -878,7 +1131,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:73</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:81</a></div>
                         </td>
                     </tr>
 
@@ -915,7 +1168,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:61</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -925,6 +1178,37 @@ Charge les utilisateurs dès l&#39;affichage.</p>
 </div>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SmallScreenSize"></a>
+                    <span class="name">
+                        <span ><b>SmallScreenSize</b></span>
+                        <a href="#SmallScreenSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>787</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:98</a></div>
+                        </td>
+                    </tr>
+
 
         </tbody>
     </table>
@@ -952,7 +1236,7 @@ Charge les utilisateurs dès l&#39;affichage.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -971,7 +1255,12 @@ Charge les utilisateurs dès l&#39;affichage.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from &#x27;@angular/core&#x27;;
 import { UserService } from &#x27;../../../services/user.service&#x27;;
 import {
   FormBuilder,
@@ -985,6 +1274,8 @@ import { User } from &#x27;../../../models/user&#x27;;
 import { SearchBarComponent } from &#x27;../../../components/search_bar/search_bar.component&#x27;;
 import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
 import { ConfirmationModalComponent } from &#x27;../../../components/confirmation_modal/confirmation_modal.component&#x27;;
+import { AuthService } from &#x27;../../../services/auth.service&#x27;;
+import { TruncateEmailPipe } from &#x27;../../../pipes/truncate-email.pipe&#x27;;
 
 /**
  * Composant responsable de la suppression des utilisateurs.
@@ -1020,6 +1311,7 @@ import { ConfirmationModalComponent } from &#x27;../../../components/confirmatio
     SearchBarComponent,
     PaginationComponent,
     ConfirmationModalComponent,
+    TruncateEmailPipe,
   ],
   templateUrl: &#x27;./suppression-utilisateur.component.html&#x27;,
 })
@@ -1056,17 +1348,25 @@ export class SuppressionUtilisateurComponent implements OnInit {
    * Classe CSS appliquée au message (ex. &quot;alert-success&quot;, &quot;alert-danger&quot;).
    */
   messageClass: string &#x3D; &#x27;&#x27;;
+  /** Stocke l&#x27;id de l&#x27;utilisateur courant*/
+  private currentUserId: number | null &#x3D; null;
+  /** Etat chargement des données */
+  isLoading &#x3D; true;
+  SmallScreenSize &#x3D; 787;
+  isSmallScreen &#x3D; window.innerWidth &lt; this.SmallScreenSize;
 
   /**
    * Constructeur du composant.
    * @param userService Service pour récupérer et supprimer les utilisateurs.
    * @param fb FormBuilder pour créer et gérer le formulaire.
    * @param cdr ChangeDetectorRef pour forcer la détection des changements après mises à jour asynchrones.
+   * @param authService AuthService pour pouvoir récupérer les informations de d&#x27;administrateur connecté.
    */
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.form &#x3D; this.fb.group({
       name: [&#x27;&#x27;, Validators.required],
@@ -1077,31 +1377,46 @@ export class SuppressionUtilisateurComponent implements OnInit {
       admin: [false],
     });
   }
+  @HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])
+  onResize(event: any) {
+    this.isSmallScreen &#x3D; event.target.innerWidth &lt; this.SmallScreenSize;
+  }
 
   /**
    * Cycle de vie Angular : Initialisation du composant.
    * Charge les utilisateurs dès l&#x27;affichage.
    */
   ngOnInit() {
+    const currentUser &#x3D; this.authService.getUser();
+    this.currentUserId &#x3D; currentUser ? currentUser.id_user : null;
+
     this.loadUsers();
+    this.isSmallScreen &#x3D; window.innerWidth &lt; this.SmallScreenSize;
   }
 
   /**
-   * Charge tous les utilisateurs depuis le service et initialise la pagination.
+   * Charge tous les utilisateurs depuis le service et initialise la pagination,
+   * en excluant l’administrateur connecté.
    */
   loadUsers() {
+    this.isLoading &#x3D; true;
+
     this.userService.getAllUsers().subscribe({
       next: (data) &#x3D;&gt; {
-        this.users &#x3D; data;
-        this.filteredUsers &#x3D; [...this.users];
+        this.users &#x3D; this.currentUserId
+          ? data.filter((u) &#x3D;&gt; u.id_user !&#x3D;&#x3D; this.currentUserId)
+          : data;
 
-        Promise.resolve().then(() &#x3D;&gt; {
-          this.paginatedUsers &#x3D; this.filteredUsers.slice(0, 5);
-          this.cdr.detectChanges();
-        });
+        this.filteredUsers &#x3D; [...this.users];
+        this.paginatedUsers &#x3D; this.filteredUsers.slice(0, 5);
+
+        this.isLoading &#x3D; false; // ✅ fin du chargement
+        this.cdr.detectChanges();
       },
-      error: (err) &#x3D;&gt;
-        console.error(&quot;Erreur chargement de l&#x27;utilisateurs :&quot;, err),
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Erreur chargement des utilisateurs :&#x27;, err);
+        this.isLoading &#x3D; false;
+      },
     });
   }
 
@@ -1209,8 +1524,33 @@ export class SuppressionUtilisateurComponent implements OnInit {
     [(value)]&#x3D;&quot;searchTerm&quot;
     (valueChange)&#x3D;&quot;applyFilter()&quot;
   &gt;&lt;/app-search-bar&gt;
-  &lt;!-- Tableau des utilisateurs --&gt;
-  &lt;div class&#x3D;&quot;table-responsive-custom&quot;&gt;
+  &lt;!-- Message ou spinner pendant le chargement --&gt;
+  &lt;div *ngIf&#x3D;&quot;isLoading&quot; class&#x3D;&quot;text-center p-4&quot;&gt;
+    &lt;div class&#x3D;&quot;spinner-border text-primary&quot; role&#x3D;&quot;status&quot;&gt;
+      &lt;span class&#x3D;&quot;visually-hidden&quot;&gt;Chargement...&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Message si aucun utilisateur après chargement --&gt;
+  &lt;div
+    *ngIf&#x3D;&quot;!isLoading &amp;&amp; users.length &#x3D;&#x3D;&#x3D; 0&quot;
+    class&#x3D;&quot;alert alert-warning text-center&quot;
+    role&#x3D;&quot;alert&quot;
+  &gt;
+    Aucun utilisateur n’a été trouvé dans la base de données.
+  &lt;/div&gt;
+  &lt;!-- Message si recherche mais aucun résultat --&gt;
+  &lt;div
+    *ngIf&#x3D;&quot;!isLoading &amp;&amp; users.length &gt; 0 &amp;&amp; filteredUsers.length &#x3D;&#x3D;&#x3D; 0&quot;
+    class&#x3D;&quot;alert alert-info text-center&quot;
+    role&#x3D;&quot;alert&quot;
+  &gt;
+    Aucun utilisateur ne correspond à votre recherche.
+  &lt;/div&gt;
+  &lt;!-- Tableau affiché uniquement si filteredUsers contient des éléments --&gt;
+  &lt;div
+    class&#x3D;&quot;table-responsive-custom&quot;
+    *ngIf&#x3D;&quot;!isLoading &amp;&amp; filteredUsers.length &gt; 0&quot;
+  &gt;
     &lt;table class&#x3D;&quot;table table-striped&quot;&gt;
       &lt;thead&gt;
         &lt;tr&gt;
@@ -1233,7 +1573,9 @@ export class SuppressionUtilisateurComponent implements OnInit {
           &lt;/td&gt;
           &lt;td&gt;{{ user.name }}&lt;/td&gt;
           &lt;td&gt;{{ user.firstname }}&lt;/td&gt;
-          &lt;td&gt;{{ user.email }}&lt;/td&gt;
+          &lt;td class&#x3D;&quot;email-truncate&quot;&gt;
+            {{ isSmallScreen ? (user.email | truncateEmail : 10) : user.email }}
+          &lt;/td&gt;
           &lt;td&gt;{{ user.society }}&lt;/td&gt;
           &lt;td&gt;{{ user.admin ? &quot;Oui&quot; : &quot;Non&quot; }}&lt;/td&gt;
         &lt;/tr&gt;
@@ -1344,7 +1686,7 @@ export class SuppressionUtilisateurComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Suppression d\'utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet de supprimer des utilisateurs aussi bien    administrateurs que stagiaire.  </p>  <br />  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher une question..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Tableau des utilisateurs -->  <div class="table-responsive-custom">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Nom</th>          <th>Prénom</th>          <th>Email</th>          <th>Société</th>          <th>Admin</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let user of paginatedUsers">          <td class="text-center">            <i              class="bi bi-trash text-danger fs-5"              style="cursor: pointer"              (click)="selectUser(user)"            ></i>          </td>          <td>{{ user.name }}</td>          <td>{{ user.firstname }}</td>          <td>{{ user.email }}</td>          <td>{{ user.society }}</td>          <td>{{ user.admin ? "Oui" : "Non" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredUsers"    [pageSize]="5"    (pageChange)="paginatedUsers = $event"  >  </app-pagination></div><!-- Modal de confirmation --><div  class="modal fade"  id="confirmModal"  tabindex="-1"  aria-labelledby="confirmModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-lg">    <div class="modal-content p-3">      <div class="modal-header">        <h5 class="modal-title" id="confirmModalLabel">          Confirmer la suppression        </h5>        <button          type="button"          class="btn-close"          data-bs-dismiss="modal"        ></button>      </div>      <div class="modal-body">        <h6>Utilisateur sélectionné :</h6>        <pre>          Nom: {{ selectedUser?.name }}          Prénom: {{ selectedUser?.firstname }}          Email: {{ selectedUser?.email }}          Société: {{ selectedUser?.society }}          Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}        </pre>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">          Annuler        </button>        <button          type="button"          class="btn btn-danger"          (click)="deleteUser()"          data-bs-dismiss="modal"        >          Supprimer        </button>      </div>    </div>  </div></div><app-confirmation-modal  [title]="\'Confirmer la suppression d\\'un Utilisateur\'"  [actionType]="\'delete\'"  [message]="\'Êtes-vous sûr de vouloir supprimer cet Utilisateur ?\'"  (confirm)="deleteUser()">  <!-- Contenu personnalisé pour le corps du modal -->  <h6>Question sélectionnée :</h6>  <pre>  Nom: {{ selectedUser?.name }}  Prénom: {{ selectedUser?.firstname }}  Email: {{ selectedUser?.email }}  Société: {{ selectedUser?.society }}  Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}  </pre></app-confirmation-modal><div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">  {{ message }}</div></div>'
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Suppression d\'utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet de supprimer des utilisateurs aussi bien    administrateurs que stagiaire.  </p>  <br />  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher une question..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Message ou spinner pendant le chargement -->  <div *ngIf="isLoading" class="text-center p-4">    <div class="spinner-border text-primary" role="status">      <span class="visually-hidden">Chargement...</span>    </div>  </div>  <!-- Message si aucun utilisateur après chargement -->  <div    *ngIf="!isLoading && users.length === 0"    class="alert alert-warning text-center"    role="alert"  >    Aucun utilisateur n’a été trouvé dans la base de données.  </div>  <!-- Message si recherche mais aucun résultat -->  <div    *ngIf="!isLoading && users.length > 0 && filteredUsers.length === 0"    class="alert alert-info text-center"    role="alert"  >    Aucun utilisateur ne correspond à votre recherche.  </div>  <!-- Tableau affiché uniquement si filteredUsers contient des éléments -->  <div    class="table-responsive-custom"    *ngIf="!isLoading && filteredUsers.length > 0"  >    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Nom</th>          <th>Prénom</th>          <th>Email</th>          <th>Société</th>          <th>Admin</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let user of paginatedUsers">          <td class="text-center">            <i              class="bi bi-trash text-danger fs-5"              style="cursor: pointer"              (click)="selectUser(user)"            ></i>          </td>          <td>{{ user.name }}</td>          <td>{{ user.firstname }}</td>          <td class="email-truncate">            {{ isSmallScreen ? (user.email | truncateEmail : 10) : user.email }}          </td>          <td>{{ user.society }}</td>          <td>{{ user.admin ? "Oui" : "Non" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredUsers"    [pageSize]="5"    (pageChange)="paginatedUsers = $event"  >  </app-pagination></div><!-- Modal de confirmation --><div  class="modal fade"  id="confirmModal"  tabindex="-1"  aria-labelledby="confirmModalLabel"  aria-hidden="true">  <div class="modal-dialog modal-dialog-centered modal-lg">    <div class="modal-content p-3">      <div class="modal-header">        <h5 class="modal-title" id="confirmModalLabel">          Confirmer la suppression        </h5>        <button          type="button"          class="btn-close"          data-bs-dismiss="modal"        ></button>      </div>      <div class="modal-body">        <h6>Utilisateur sélectionné :</h6>        <pre>          Nom: {{ selectedUser?.name }}          Prénom: {{ selectedUser?.firstname }}          Email: {{ selectedUser?.email }}          Société: {{ selectedUser?.society }}          Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}        </pre>      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">          Annuler        </button>        <button          type="button"          class="btn btn-danger"          (click)="deleteUser()"          data-bs-dismiss="modal"        >          Supprimer        </button>      </div>    </div>  </div></div><app-confirmation-modal  [title]="\'Confirmer la suppression d\\'un Utilisateur\'"  [actionType]="\'delete\'"  [message]="\'Êtes-vous sûr de vouloir supprimer cet Utilisateur ?\'"  (confirm)="deleteUser()">  <!-- Contenu personnalisé pour le corps du modal -->  <h6>Question sélectionnée :</h6>  <pre>  Nom: {{ selectedUser?.name }}  Prénom: {{ selectedUser?.firstname }}  Email: {{ selectedUser?.email }}  Société: {{ selectedUser?.society }}  Admin: {{ selectedUser?.admin ? "Oui" : "Non" }}  </pre></app-confirmation-modal><div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">  {{ message }}</div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SuppressionUtilisateurComponent'};

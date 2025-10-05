@@ -159,7 +159,7 @@ exports.updateQuestionForAQCM = async (req, res) => {
 
     await client.query("BEGIN");
 
-    // 1. Modifier la question
+    // Modifier la question
     const questionResult = await client.query(
       `UPDATE question_qcm
       SET question = COALESCE($1, question),
@@ -175,7 +175,7 @@ exports.updateQuestionForAQCM = async (req, res) => {
       return res.status(404).json({ error: "Question non trouvée" });
     }
 
-    // 2. Supprimer et réinsérer les réponses si fournies
+    // Supprimer et réinsérer les réponses si fournies
     if (Array.isArray(responses)) {
       await client.query(
         "DELETE FROM response_question WHERE id_question = $1",

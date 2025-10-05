@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import {
   FormBuilder,
@@ -13,6 +18,7 @@ import { SearchBarComponent } from '../../../components/search_bar/search_bar.co
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
 import { AuthService } from '../../../services/auth.service';
+import { TruncateEmailPipe } from '../../../pipes/truncate-email.pipe';
 
 /**
  * Composant responsable de la suppression des utilisateurs.
@@ -48,6 +54,7 @@ import { AuthService } from '../../../services/auth.service';
     SearchBarComponent,
     PaginationComponent,
     ConfirmationModalComponent,
+    TruncateEmailPipe,
   ],
   templateUrl: './suppression-utilisateur.component.html',
 })
@@ -88,6 +95,8 @@ export class SuppressionUtilisateurComponent implements OnInit {
   private currentUserId: number | null = null;
   /** Etat chargement des données */
   isLoading = true;
+  SmallScreenSize = 787;
+  isSmallScreen = window.innerWidth < this.SmallScreenSize;
 
   /**
    * Constructeur du composant.
@@ -111,6 +120,10 @@ export class SuppressionUtilisateurComponent implements OnInit {
       admin: [false],
     });
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isSmallScreen = event.target.innerWidth < this.SmallScreenSize;
+  }
 
   /**
    * Cycle de vie Angular : Initialisation du composant.
@@ -121,6 +134,7 @@ export class SuppressionUtilisateurComponent implements OnInit {
     this.currentUserId = currentUser ? currentUser.id_user : null;
 
     this.loadUsers();
+    this.isSmallScreen = window.innerWidth < this.SmallScreenSize;
   }
 
   /**

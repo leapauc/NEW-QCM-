@@ -231,6 +231,9 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
                                 <a href="#avgTime" >avgTime</a>
                             </li>
                             <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
                                 <a href="#nbQuestionnairesRealises" >nbQuestionnairesRealises</a>
                             </li>
                             <li>
@@ -301,7 +304,7 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:59</a></div>
                             </td>
                         </tr>
 
@@ -423,8 +426,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="142"
-                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:142</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:138</a></div>
                         </td>
                     </tr>
 
@@ -497,8 +500,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="85"
-                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:85</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:87</a></div>
                         </td>
                     </tr>
 
@@ -538,8 +541,8 @@ et la liste des tentatives via les services.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="75"
-                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:75</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -668,6 +671,37 @@ et la liste des tentatives via les services.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Temps moyen passé sur les questionnaires</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Etat chargement des données</p>
 </div>
                 </td>
             </tr>
@@ -1064,6 +1098,8 @@ export class DashboardStagiaireComponent {
   /** Liste complète des tentatives de l&#x27;utilisateur */
   allAttemptsOfMyUser: any[] &#x3D; [];
   pageSize &#x3D; 5;
+  /** Etat chargement des données */
+  isLoading &#x3D; true;
 
   /**
    * Constructeur du composant.
@@ -1095,53 +1131,47 @@ export class DashboardStagiaireComponent {
     const currentUser: AuthUser | null &#x3D; this.authService.getUser();
     if (!currentUser) return;
 
+    this.isLoading &#x3D; true;
     this.authNameUser &#x3D; currentUser.name;
 
-    // Nombre de questionnaires réalisés
-    this.statsService
-      .getNbQuestionnaireByUser(currentUser.id_user)
-      .subscribe((res: any) &#x3D;&gt; {
-        this.nbQuestionnairesRealises &#x3D; parseInt(
+    // Récupérer toutes les données de manière combinée
+    this.statsService.getNbQuestionnaireByUser(currentUser.id_user).subscribe({
+      next: (res: any) &#x3D;&gt;
+        (this.nbQuestionnairesRealises &#x3D; parseInt(
           res?.nb_questionnaires ?? 0,
           10
-        );
-      });
+        )),
+    });
 
-    // Scores min / max / avg
-    this.statsService
-      .getMaxMinAvgScoreByUser(currentUser.id_user)
-      .subscribe((res: any) &#x3D;&gt; {
+    this.statsService.getMaxMinAvgScoreByUser(currentUser.id_user).subscribe({
+      next: (res: any) &#x3D;&gt; {
         this.scoreMax &#x3D; res?.max_score ?? &#x27;-&#x27;;
         this.scoreMin &#x3D; res?.min_score ?? &#x27;-&#x27;;
         this.scoreAvg &#x3D; res?.avg_score ?? &#x27;-&#x27;;
-      });
-
-    // Rang
-    this.statsService
-      .getRangeByUser(currentUser.id_user)
-      .subscribe((res: any) &#x3D;&gt; {
-        this.range &#x3D; res?.rank ?? &#x27;dernier&#x27;;
-      });
-
-    // Temps moyen
-    this.statsService
-      .getAvgTimeByUser(currentUser.id_user)
-      .subscribe((res: any) &#x3D;&gt; {
-        this.avgTime &#x3D; res?.avg_time_minutes ?? &#x27;-&#x27;;
-      });
-
-    // Questionnaire le plus populaire
-    this.statsService.getQuestionnairePopulaire().subscribe((res: any) &#x3D;&gt; {
-      this.questionnairePopulaire &#x3D; res?.[0]?.title ?? &#x27;&#x27;;
+      },
     });
 
-    // Récupérer les tentatives de l&#x27;utilisateur
-    this.quizAttempts
-      .getAttemptsByUser(currentUser.id_user)
-      .subscribe((res: any[]) &#x3D;&gt; {
+    this.statsService.getRangeByUser(currentUser.id_user).subscribe({
+      next: (res: any) &#x3D;&gt; (this.range &#x3D; res?.rank ?? &#x27;-&#x27;),
+    });
+
+    this.statsService.getAvgTimeByUser(currentUser.id_user).subscribe({
+      next: (res: any) &#x3D;&gt; (this.avgTime &#x3D; res?.avg_time_minutes ?? &#x27;-&#x27;),
+    });
+
+    this.statsService.getQuestionnairePopulaire().subscribe({
+      next: (res: any) &#x3D;&gt; (this.questionnairePopulaire &#x3D; res?.[0]?.title ?? &#x27;&#x27;),
+    });
+
+    this.quizAttempts.getAttemptsByUser(currentUser.id_user).subscribe({
+      next: (res: any[]) &#x3D;&gt; {
         this.allAttemptsOfMyUser &#x3D; res;
         this.paginatedAttempts &#x3D; res.slice(0, this.pageSize);
-      });
+        this.isLoading &#x3D; false; // ✅ chargement terminé
+        this.cdr.detectChanges();
+      },
+      error: () &#x3D;&gt; (this.isLoading &#x3D; false),
+    });
   }
 
   /**
@@ -1167,7 +1197,7 @@ export class DashboardStagiaireComponent {
 
   &lt;br /&gt;&lt;br /&gt;
   &lt;div class&#x3D;&quot;row&quot;&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/icon_2_dashboard_admin.jpg&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ nbQuestionnairesRealises }}&lt;/h2&gt;
@@ -1176,21 +1206,21 @@ export class DashboardStagiaireComponent {
         &lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/happy_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMax }}&lt;/h2&gt;
         &lt;h4&gt;score max&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/sad_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMin }}&lt;/h2&gt;
         &lt;h4&gt;score min&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/average_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreAvg | number : &quot;1.2-2&quot; }}&lt;/h2&gt;
@@ -1200,7 +1230,7 @@ export class DashboardStagiaireComponent {
   &lt;/div&gt;
   &lt;hr /&gt;
   &lt;div class&#x3D;&quot;row text-center&quot;&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/ranking_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ range }}&lt;/h2&gt;
@@ -1208,7 +1238,7 @@ export class DashboardStagiaireComponent {
         &lt;h4&gt;place&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-4 col-sm-6 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/time_last.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ avgTime | timeFormat }}&lt;/h2&gt;
@@ -1239,7 +1269,24 @@ export class DashboardStagiaireComponent {
   &lt;!-- Tableau statistique sur les tentatives de réponses des utilisateurs --&gt;
   &lt;div class&#x3D;&quot;center&quot;&gt;
     &lt;h3&gt;Statistiques par tentatives de réponses au QCM&lt;/h3&gt;
-    &lt;table class&#x3D;&quot;table table-bordered table-striped align-middle text-center&quot;&gt;
+    &lt;!-- Spinner pendant le chargement --&gt;
+    &lt;div *ngIf&#x3D;&quot;isLoading&quot; class&#x3D;&quot;text-center my-4&quot;&gt;
+      &lt;div class&#x3D;&quot;spinner-border text-primary&quot; role&#x3D;&quot;status&quot;&gt;
+        &lt;span class&#x3D;&quot;visually-hidden&quot;&gt;Chargement...&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Message si aucune tentative --&gt;
+    &lt;div
+      *ngIf&#x3D;&quot;!isLoading &amp;&amp; allAttemptsOfMyUser.length &#x3D;&#x3D;&#x3D; 0&quot;
+      class&#x3D;&quot;alert alert-info text-center my-4&quot;
+    &gt;
+      Aucune tentative disponible.
+    &lt;/div&gt;
+    &lt;!-- Table uniquement si données présentes --&gt;
+    &lt;table
+      *ngIf&#x3D;&quot;!isLoading &amp;&amp; allAttemptsOfMyUser.length &gt; 0&quot;
+      class&#x3D;&quot;table table-bordered table-striped align-middle text-center&quot;
+    &gt;
       &lt;thead&gt;
         &lt;tr&gt;
           &lt;th&gt;Nom QCM&lt;/th&gt;
@@ -1350,7 +1397,7 @@ export class DashboardStagiaireComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>  <br /><br />  <div class="row">    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>        <h4>          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}        </h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/happy_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMax }}</h2>        <h4>score max</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/sad_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMin }}</h2>        <h4>score min</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/average_icon.png" /><br /><br />        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>        <h4>de moyenne</h4>      </div>    </div>  </div>  <hr />  <div class="row text-center">    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/ranking_icon.png" /><br /><br />        <h2 class="fw-bold">{{ range }}</h2>        <!-- 1 ? "ème" : "ère"-->        <h4>place</h4>      </div>    </div>    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">      <div class="card_3">        <img src="img/time_last.png" /><br /><br />        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>        <h4>durée moyenne QCM</h4>      </div>    </div>    <div class="col-6 d-flex justify-content-center">      <div        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"      >        <div class="row w-100">          <div class="col-5 d-flex justify-content-center align-items-center">            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />          </div>          <div            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"          >            <h4>Questionnaire le plus populaire :</h4>            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>          </div>        </div>      </div>    </div>  </div>  <br />  <hr />  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->  <div class="center">    <h3>Statistiques par tentatives de réponses au QCM</h3>    <table class="table table-bordered table-striped align-middle text-center">      <thead>        <tr>          <th>Nom QCM</th>          <th>Finie à</th>          <th>Durée</th>          <th>Score</th>          <th>Progression</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let attempt of paginatedAttempts">          <td>{{ attempt.title }}</td>          <td>{{ attempt.ended_at | date : "short" }}</td>          <td *ngIf="attempt.duration.minutes">            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s          </td>          <td *ngIf="!attempt.duration.minutes">            {{ attempt.duration.seconds }} s          </td>          <td style="width: 200px">            <div class="position-relative" style="height: 20px">              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.score + \'%\',                    backgroundColor: getCompletionColor(attempt.score)                  }"                  [attr.aria-valuenow]="attempt.score"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.score | number : "1.0-0" }}%              </span>            </div>          </td>          <td>            <!-- Conteneur de la jauge -->            <div class="position-relative" style="height: 20px">              <!-- Barre de progression -->              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.completed + \'%\',                    backgroundColor: getCompletionColor(attempt.completed)                  }"                  [attr.aria-valuenow]="attempt.completed"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <!-- Texte centré -->              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.completed | number : "1.0-0" }}%              </span>            </div>          </td>        </tr>      </tbody>    </table>    <!-- Pagination -->    <app-pagination      [items]="allAttemptsOfMyUser"      [pageSize]="pageSize"      (pageChange)="paginatedAttempts = $event"    >    </app-pagination>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>  <br /><br />  <div class="row">    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>        <h4>          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}        </h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/happy_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMax }}</h2>        <h4>score max</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/sad_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMin }}</h2>        <h4>score min</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/average_icon.png" /><br /><br />        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>        <h4>de moyenne</h4>      </div>    </div>  </div>  <hr />  <div class="row text-center">    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/ranking_icon.png" /><br /><br />        <h2 class="fw-bold">{{ range }}</h2>        <!-- 1 ? "ème" : "ère"-->        <h4>place</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/time_last.png" /><br /><br />        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>        <h4>durée moyenne QCM</h4>      </div>    </div>    <div class="col-6 d-flex justify-content-center">      <div        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"      >        <div class="row w-100">          <div class="col-5 d-flex justify-content-center align-items-center">            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />          </div>          <div            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"          >            <h4>Questionnaire le plus populaire :</h4>            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>          </div>        </div>      </div>    </div>  </div>  <br />  <hr />  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->  <div class="center">    <h3>Statistiques par tentatives de réponses au QCM</h3>    <!-- Spinner pendant le chargement -->    <div *ngIf="isLoading" class="text-center my-4">      <div class="spinner-border text-primary" role="status">        <span class="visually-hidden">Chargement...</span>      </div>    </div>    <!-- Message si aucune tentative -->    <div      *ngIf="!isLoading && allAttemptsOfMyUser.length === 0"      class="alert alert-info text-center my-4"    >      Aucune tentative disponible.    </div>    <!-- Table uniquement si données présentes -->    <table      *ngIf="!isLoading && allAttemptsOfMyUser.length > 0"      class="table table-bordered table-striped align-middle text-center"    >      <thead>        <tr>          <th>Nom QCM</th>          <th>Finie à</th>          <th>Durée</th>          <th>Score</th>          <th>Progression</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let attempt of paginatedAttempts">          <td>{{ attempt.title }}</td>          <td>{{ attempt.ended_at | date : "short" }}</td>          <td *ngIf="attempt.duration.minutes">            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s          </td>          <td *ngIf="!attempt.duration.minutes">            {{ attempt.duration.seconds }} s          </td>          <td style="width: 200px">            <div class="position-relative" style="height: 20px">              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.score + \'%\',                    backgroundColor: getCompletionColor(attempt.score)                  }"                  [attr.aria-valuenow]="attempt.score"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.score | number : "1.0-0" }}%              </span>            </div>          </td>          <td>            <!-- Conteneur de la jauge -->            <div class="position-relative" style="height: 20px">              <!-- Barre de progression -->              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.completed + \'%\',                    backgroundColor: getCompletionColor(attempt.completed)                  }"                  [attr.aria-valuenow]="attempt.completed"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <!-- Texte centré -->              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.completed | number : "1.0-0" }}%              </span>            </div>          </td>        </tr>      </tbody>    </table>    <!-- Pagination -->    <app-pagination      [items]="allAttemptsOfMyUser"      [pageSize]="pageSize"      (pageChange)="paginatedAttempts = $event"    >    </app-pagination>  </div></div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DashboardStagiaireComponent'};

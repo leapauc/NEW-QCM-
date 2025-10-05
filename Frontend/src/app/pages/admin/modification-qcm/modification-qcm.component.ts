@@ -226,4 +226,12 @@ export class ModificationQcmComponent implements OnInit {
     this.selectedQcm = null;
     this.loadQCMs();
   }
+
+  /**
+   * Annule la modification en cours et vide le formulaire.
+   */
+  cancelEdit() {
+    this.selectedQcm = null;
+    this.qcmForm.reset(); // (optionnel) pour vider les champs du formulaire
+  }
 }

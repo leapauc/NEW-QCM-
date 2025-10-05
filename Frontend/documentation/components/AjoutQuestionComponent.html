@@ -1215,6 +1215,16 @@ export class AjoutQuestionComponent implements OnInit {
     }
 
     const formValue &#x3D; this.questionForm.value;
+
+    // Vérifier qu&#x27;au moins une réponse est correcte
+    const hasCorrectAnswer &#x3D; formValue.responses.some((r: any) &#x3D;&gt; r.isCorrect);
+    if (!hasCorrectAnswer) {
+      const modalEl &#x3D; document.getElementById(&#x27;unvalidModal&#x27;);
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    // Filtrer les réponses non vides
     const validResponses &#x3D; formValue.responses
       .filter((r: any) &#x3D;&gt; r.text.trim() !&#x3D;&#x3D; &#x27;&#x27;)
       .map((r: any, index: number) &#x3D;&gt; ({
@@ -1236,13 +1246,12 @@ export class AjoutQuestionComponent implements OnInit {
     } &#x3D; {
       id_qcm: this.selectedQcmId,
       question: formValue.question,
-      type: &#x27;single&#x27;, // littéral compatible
+      type: &#x27;single&#x27;,
       responses: validResponses,
     };
 
     this.questionService.createQuestion(dataToSave).subscribe({
-      next: (res) &#x3D;&gt; {
-        // Afficher le modal Bootstrap
+      next: () &#x3D;&gt; {
         const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
         if (modalEl) new bootstrap.Modal(modalEl).show();
         this.questionForm.reset();
@@ -1250,7 +1259,7 @@ export class AjoutQuestionComponent implements OnInit {
         this.addResponse();
         this.addResponse();
       },
-      error: (err) &#x3D;&gt; {
+      error: () &#x3D;&gt; {
         const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
         if (modalEl) new bootstrap.Modal(modalEl).show();
       },
@@ -1339,13 +1348,19 @@ export class AjoutQuestionComponent implements OnInit {
         (click)&#x3D;&quot;addResponse()&quot;
         [disabled]&#x3D;&quot;responses.length &gt;&#x3D; maxResponses&quot;
       &gt;
-        ➕ Ajouter une réponse
+        &lt;i class&#x3D;&quot;bi bi-plus-circle&quot;&gt;&lt;/i&gt; Ajouter une réponse
       &lt;/button&gt;
     &lt;/div&gt;
 
     &lt;!-- Submit --&gt;
     &lt;div class&#x3D;&quot;mt-4 text-center&quot;&gt;
-      &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Enregistrer&lt;/button&gt;
+      &lt;button
+        type&#x3D;&quot;submit&quot;
+        class&#x3D;&quot;btn btn-primary&quot;
+        [disabled]&#x3D;&quot;questionForm.invalid&quot;
+      &gt;
+        &lt;i class&#x3D;&quot;bi bi-save&quot;&gt;&lt;/i&gt; Enregistrer
+      &lt;/button&gt;
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/div&gt;
@@ -1354,6 +1369,11 @@ export class AjoutQuestionComponent implements OnInit {
   modalId&#x3D;&quot;successModal&quot;
   icon&#x3D;&quot;✔️&quot;
   message&#x3D;&quot;Ajout de la Question réalisée avec succès !&quot;
+&gt;&lt;/app-modal&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;unvalidModal&quot;
+  icon&#x3D;&quot;❌&quot;
+  message&#x3D;&quot;Le formulaire ne peut pas être validé : au moins une réponse doit être correcte.&quot;
 &gt;&lt;/app-modal&gt;
 &lt;app-modal
   modalId&#x3D;&quot;failedModal&quot;
@@ -1389,7 +1409,7 @@ export class AjoutQuestionComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="center">  <br /><br />  <h1>Ajout question</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter une/des question/s à un questionnaire.</p>  <br />  <!-- Formulaire question -->  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="form">    <!-- Sélection QCM -->    <div class="mb-3">      <label for="id_qcm" class="form-label">QCM</label>      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">        <option value="" disabled selected>-- Sélectionner un QCM --</option>        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">          {{ qcm.title }}        </option>      </select>    </div>    <div class="mb-3">      <label for="question" class="form-label">Question</label>      <textarea        id="question"        class="form-control"        formControlName="question"      ></textarea>      <div        *ngIf="          questionForm.get(\'question\')?.touched &&          questionForm.get(\'question\')?.invalid        "        class="text-danger"      >        Le titre est requis.      </div>    </div>    <!-- Réponses -->    <div formArrayName="responses">      <h5>Réponses :</h5>      <div        *ngFor="let response of responses.controls; let i = index"        [formGroupName]="i"        class="row g-2 align-items-center mb-2"      >        <div class="col-8">          <input            type="text"            class="form-control"            placeholder="Réponse {{ i + 1 }}"            formControlName="text"          />        </div>        <div class="col-2 text-center">          <input            type="checkbox"            class="form-check-input"            formControlName="isCorrect"          />          <label class="form-check-label">Correct</label>        </div>        <div class="col-2 text-end">          <button            type="button"            class="btn btn-outline-danger btn-sm"            (click)="removeResponse(i)"            [disabled]="responses.length <= minResponses"          >            ❌          </button>        </div>      </div>      <button        type="button"        class="btn btn-outline-primary btn-sm"        (click)="addResponse()"        [disabled]="responses.length >= maxResponses"      >        ➕ Ajouter une réponse      </button>    </div>    <!-- Submit -->    <div class="mt-4 text-center">      <button type="submit" class="btn btn-primary">Enregistrer</button>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout de la Question réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout de la Question a échoué !"></app-modal></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="center">  <br /><br />  <h1>Ajout question</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter une/des question/s à un questionnaire.</p>  <br />  <!-- Formulaire question -->  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" class="form">    <!-- Sélection QCM -->    <div class="mb-3">      <label for="id_qcm" class="form-label">QCM</label>      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">        <option value="" disabled selected>-- Sélectionner un QCM --</option>        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">          {{ qcm.title }}        </option>      </select>    </div>    <div class="mb-3">      <label for="question" class="form-label">Question</label>      <textarea        id="question"        class="form-control"        formControlName="question"      ></textarea>      <div        *ngIf="          questionForm.get(\'question\')?.touched &&          questionForm.get(\'question\')?.invalid        "        class="text-danger"      >        Le titre est requis.      </div>    </div>    <!-- Réponses -->    <div formArrayName="responses">      <h5>Réponses :</h5>      <div        *ngFor="let response of responses.controls; let i = index"        [formGroupName]="i"        class="row g-2 align-items-center mb-2"      >        <div class="col-8">          <input            type="text"            class="form-control"            placeholder="Réponse {{ i + 1 }}"            formControlName="text"          />        </div>        <div class="col-2 text-center">          <input            type="checkbox"            class="form-check-input"            formControlName="isCorrect"          />          <label class="form-check-label">Correct</label>        </div>        <div class="col-2 text-end">          <button            type="button"            class="btn btn-outline-danger btn-sm"            (click)="removeResponse(i)"            [disabled]="responses.length <= minResponses"          >            ❌          </button>        </div>      </div>      <button        type="button"        class="btn btn-outline-primary btn-sm"        (click)="addResponse()"        [disabled]="responses.length >= maxResponses"      >        <i class="bi bi-plus-circle"></i> Ajouter une réponse      </button>    </div>    <!-- Submit -->    <div class="mt-4 text-center">      <button        type="submit"        class="btn btn-primary"        [disabled]="questionForm.invalid"      >        <i class="bi bi-save"></i> Enregistrer      </button>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout de la Question réalisée avec succès !"></app-modal><app-modal  modalId="unvalidModal"  icon="❌"  message="Le formulaire ne peut pas être validé : au moins une réponse doit être correcte."></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout de la Question a échoué !"></app-modal></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AjoutQuestionComponent'};
