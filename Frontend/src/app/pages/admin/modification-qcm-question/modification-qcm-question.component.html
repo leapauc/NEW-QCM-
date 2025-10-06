@@ -13,6 +13,12 @@
     existant.
   </p>
   <br />
+  <!-- Search bar -->
+  <app-search-bar
+    placeholder="Rechercher un QCM..."
+    [(value)]="searchTerm"
+    (valueChange)="applyFilter()"
+  ></app-search-bar>
   <!-- Spinner pendant le chargement -->
   <div *ngIf="isLoading" class="text-center p-4">
     <div class="spinner-border text-primary" role="status">
@@ -22,7 +28,7 @@
   <!-- Message si aucun QCM après chargement -->
   <ng-template #noQcm>
     <div
-      *ngIf="!isLoading"
+      *ngIf="!isLoading && qcms.length === 0"
       class="alert alert-warning text-center"
       role="alert"
     >
@@ -32,16 +38,20 @@
   </ng-template>
   <!-- Message si recherche/pagination sans résultat -->
   <ng-template #noSearchResult>
-    <div *ngIf="!isLoading" class="alert alert-info text-center" role="alert">
+    <div
+      *ngIf="!isLoading && qcms.length > 0 && filteredQcms.length === 0"
+      class="alert alert-info text-center"
+      role="alert"
+    >
       Aucun QCM ne correspond à votre recherche.
     </div>
   </ng-template>
   <!-- Tableau affiché uniquement si des QCM sont présents -->
-  <div class="table-responsive-custom" *ngIf="!isLoading && qcms.length > 0">
-    <table
-      class="table table-striped"
-      *ngIf="paginatedQcms.length > 0; else noSearchResult"
-    >
+  <div
+    class="table-responsive-custom"
+    *ngIf="!isLoading && filteredQcms.length > 0"
+  >
+    <table class="table table-striped">
       <thead>
         <tr>
           <th></th>
@@ -71,7 +81,7 @@
 
   <!-- Pagination -->
   <app-pagination
-    [items]="qcms"
+    [items]="filteredQcms"
     [pageSize]="5"
     (pageChange)="paginatedQcms = $event"
   >

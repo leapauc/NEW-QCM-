@@ -194,3 +194,8 @@ Admin : {{ selectedUserAfter.admin }}
 <div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">
   {{ message }}
 </div>
+<app-modal
+  modalId="conflictModal"
+  icon="⚠️"
+  message="Impossible d'ajouter l'utilisateur : un compte avec ce nom et ce mot de passe existe déjà."
+></app-modal>

@@ -14,6 +14,7 @@ import { QCM } from '../../../models/qcm';
 import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { RouterLink } from '@angular/router';
+import { SearchBarComponent } from '../../../components/search_bar/search_bar.component';
 
 /**
  * @module ModificationQcmQuestionComponent
@@ -42,6 +43,7 @@ import { RouterLink } from '@angular/router';
     ModalComponent,
     PaginationComponent,
     RouterLink,
+    SearchBarComponent,
   ],
   templateUrl: './modification-qcm-question.component.html',
 })
@@ -80,6 +82,14 @@ export class ModificationQcmQuestionComponent implements OnInit {
    * Indique si les données sont en cours de chargement
    */
   isLoading = true;
+  /**
+   * Liste des QCM filtrés après recherche.
+   */
+  filteredQcms: QCM[] = [];
+  /**
+   * Terme de recherche saisi dans la barre de recherche.
+   */
+  searchTerm = '';
 
   /**
    * Constructeur du composant
@@ -108,13 +118,15 @@ export class ModificationQcmQuestionComponent implements OnInit {
     this.isLoading = true;
     this.qcmService.getAllQCM().subscribe({
       next: (data) => {
-        this.qcms = data;
+        this.qcms = data; // ✅ garder la liste complète ici
+        this.filteredQcms = [...this.qcms]; // ✅ copie pour affichage/filtrage
 
         Promise.resolve().then(() => {
-          this.paginatedQcms = this.qcms.slice(0, 5);
+          this.paginatedQcms = this.filteredQcms.slice(0, this.pageSize);
           this.cdr.detectChanges();
         });
-        this.isLoading = false; // ✅ fin du chargement
+
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Erreur chargement QCM', err);
@@ -211,6 +223,26 @@ export class ModificationQcmQuestionComponent implements OnInit {
     if (responses.length > this.minResponses) {
       responses.removeAt(responseIndex);
     }
+  }
+
+  /**
+   * Applique un filtre sur la liste des QCM en fonction du terme de recherche.
+   */
+  applyFilter() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredQcms = [...this.qcms];
+    } else {
+      this.filteredQcms = this.qcms.filter((qcm) =>
+        (qcm.title + qcm.description + qcm.user).toLowerCase().includes(term)
+      );
+    }
+
+    Promise.resolve().then(() => {
+      this.paginatedQcms = this.filteredQcms.slice(0, 5);
+      this.cdr.detectChanges();
+    });
   }
 
   // ---------- Sauvegarde ----------

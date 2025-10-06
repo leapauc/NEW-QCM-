@@ -90,7 +90,8 @@ export class AjoutUtilisateurComponent {
   onSubmit() {
     if (this.form.valid) {
       const { confirmPassword, ...userData } = this.form.value;
-      // Forcer admin à false si vide
+
+      // Forcer admin à false si non coché
       if (!userData.admin) {
         userData.admin = false;
       }
@@ -100,13 +101,23 @@ export class AjoutUtilisateurComponent {
           console.log('Utilisateur créé', user);
           this.form.reset();
 
-          // Afficher le modal Bootstrap
+          // ✅ Modal de succès
           const modalEl = document.getElementById('successModal');
           if (modalEl) new bootstrap.Modal(modalEl).show();
         },
         error: (err) => {
-          const modalEl = document.getElementById('failedModal');
-          if (modalEl) new bootstrap.Modal(modalEl).show();
+          console.error('Erreur création utilisateur :', err);
+
+          // 🟡 Vérifie le code d’erreur HTTP
+          if (err.status === 409) {
+            // ⚠️ Conflit : nom/mot de passe déjà existants
+            const modalEl = document.getElementById('conflictModal');
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          } else {
+            // ❌ Erreur générique
+            const modalEl = document.getElementById('failedModal');
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          }
         },
       });
     } else {

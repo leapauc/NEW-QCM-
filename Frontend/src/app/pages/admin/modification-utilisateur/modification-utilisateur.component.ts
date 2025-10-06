@@ -19,6 +19,7 @@ import { SearchBarComponent } from '../../../components/search_bar/search_bar.co
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { ConfirmationModalComponent } from '../../../components/confirmation_modal/confirmation_modal.component';
 import { TruncateEmailPipe } from '../../../pipes/truncate-email.pipe';
+import { ModalComponent } from '../../../components/modal_success_failure/modal.component';
 
 /**
  * Composant responsable de la modification des utilisateurs (stagiaires ou admins).
@@ -57,6 +58,7 @@ import { TruncateEmailPipe } from '../../../pipes/truncate-email.pipe';
     PaginationComponent,
     ConfirmationModalComponent,
     TruncateEmailPipe,
+    ModalComponent,
   ],
   templateUrl: './modification-utilisateur.component.html',
 })
@@ -198,19 +200,41 @@ export class ModificationUtilisateurComponent implements OnInit {
    * Affiche le modal de confirmation avant validation des changements.
    */
   onSubmit() {
-    if (!this.selectedUser) return;
-
     if (this.form.valid) {
-      const updatedData = { ...this.form.value };
-      updatedData.admin = updatedData.admin || false;
+      const { confirmPassword, ...userData } = this.form.value;
+      if (!userData.admin) userData.admin = false;
 
-      const modalEl = document.getElementById('confirmationModal');
-      const modal = new bootstrap.Modal(modalEl!);
+      if (this.selectedUser) {
+        // 🔄 Cas modification → appel PUT
+        this.userService
+          .updateUser(this.selectedUser.id_user!, userData)
+          .subscribe({
+            next: (user) => {
+              console.log('Utilisateur modifié', user);
+              this.loadUsers();
+              this.selectedUser = null;
+              this.form.reset();
 
-      this.selectedUserBefore = { ...this.selectedUser };
-      this.selectedUserAfter = { ...this.selectedUser, ...updatedData };
+              this.message = `Utilisateur "${user.name}" modifié avec succès !`;
+              this.messageClass = 'alert alert-success';
+              setTimeout(() => (this.message = null), 2000);
+            },
+            error: (err) => {
+              console.error('Erreur modification utilisateur :', err);
 
-      modal.show();
+              if (err.status === 409) {
+                // ⚠️ Conflit nom/mot de passe
+                const modalEl = document.getElementById('conflictModal');
+                if (modalEl) new bootstrap.Modal(modalEl).show();
+              } else {
+                const modalEl = document.getElementById('failedModal');
+                if (modalEl) new bootstrap.Modal(modalEl).show();
+              }
+            },
+          });
+      }
+    } else {
+      console.log('Form invalid');
     }
   }
 

@@ -30,12 +30,27 @@ exports.getUserById = async (req, res) => {
 // Créer un utilisateur
 exports.createUser = async (req, res) => {
   const { name, firstname, society, password, email, admin } = req.body;
+
   try {
     const finalSociety = admin === true ? "LECLIENT" : society;
 
+    // Vérifier si le couple name/password existe déjà
+    const existingUser = await pool.query(
+      `SELECT * FROM users WHERE name = $1 AND password = crypt($2, password)`,
+      [name, password]
+    );
+
+    if (existingUser.rows.length > 0) {
+      return res.status(409).json({
+        error: "Un utilisateur avec le même nom et mot de passe existe déjà.",
+      });
+    }
+
+    // Si pas de conflit, insérer
     const result = await pool.query(
-      `INSERT INTO users (name, firstname, society, password, email, admin) 
-       VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5, $6) RETURNING *`,
+      `INSERT INTO users (name, firstname, society, password, email, admin)
+       VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5, $6)
+       RETURNING *`,
       [name, firstname, finalSociety, password, email, admin]
     );
 
