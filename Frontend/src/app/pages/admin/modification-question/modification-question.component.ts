@@ -272,10 +272,17 @@ export class ModificationQuestionComponent implements OnInit {
 
     const formValue = this.questionForm.value;
 
-    // Vérifier qu'au moins une réponse est correcte
+    // Vérifier qu'au moins une réponse ou pas toute est correcte
     const hasCorrectAnswer = formValue.responses.some((r: any) => r.isCorrect);
+    const allCorrect = formValue.responses.every((r: any) => r.isCorrect);
     if (!hasCorrectAnswer) {
       const modalEl = document.getElementById('unvalidModal');
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    if (allCorrect) {
+      const modalEl = document.getElementById('allCorrectModal');
       if (modalEl) new bootstrap.Modal(modalEl).show();
       return;
     }

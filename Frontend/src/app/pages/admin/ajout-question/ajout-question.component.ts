@@ -162,7 +162,7 @@ export class AjoutQuestionComponent implements OnInit {
    * - Vérifie que le formulaire est valide.
    * - Filtre les réponses non vides.
    * - Prépare les données et appelle QuestionService pour créer la question.
-   * - Affiche un modal Bootstrap en cas de succès.
+   * - Affiche un modal Bootstrap en cas de formulaire non valide (aucune ou toutes les réponses cochées)  ou de succès.
    * - Réinitialise le formulaire et les réponses après création.
    */
   submitForm() {
@@ -180,8 +180,15 @@ export class AjoutQuestionComponent implements OnInit {
 
     // Vérifier qu'au moins une réponse est correcte
     const hasCorrectAnswer = formValue.responses.some((r: any) => r.isCorrect);
+    const allCorrect = formValue.responses.every((r: any) => r.isCorrect);
     if (!hasCorrectAnswer) {
       const modalEl = document.getElementById('unvalidModal');
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    if (allCorrect) {
+      const modalEl = document.getElementById('allCorrectModal');
       if (modalEl) new bootstrap.Modal(modalEl).show();
       return;
     }

@@ -139,7 +139,7 @@
 ></app-modal>
 <app-modal
   modalId="unvalidModal"
-  icon="❌"
+  icon="⚠️"
   message="Le formulaire ne peut pas être validé : au moins une réponse doit être correcte."
 ></app-modal>
 <app-modal
@@ -150,3 +150,8 @@
 <div *ngIf="noQuestions" class="alert alert-danger mt-2">
   ⚠️ Ce QCM ne contient aucune question.
 </div>
+<app-modal
+  modalId="allCorrectModal"
+  icon="⚠️"
+  message="Le formulaire ne peut pas être validé : toutes les réponses ne peuvent pas être correctes."
+></app-modal>

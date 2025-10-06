@@ -213,12 +213,22 @@ export class ModificationQcmComponent implements OnInit {
         const modalEl = document.getElementById('successModal');
         if (modalEl) new bootstrap.Modal(modalEl).show();
       },
-      error: () => {
-        const modalEl = document.getElementById('failedModal');
-        if (modalEl) new bootstrap.Modal(modalEl).show();
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour du QCM :', err);
+
+        if (err.status === 409) {
+          // 🟡 Cas du titre déjà existant
+          const modalEl = document.getElementById('conflictModal');
+          if (modalEl) new bootstrap.Modal(modalEl).show();
+        } else {
+          // 🔴 Autres erreurs
+          const modalEl = document.getElementById('failedModal');
+          if (modalEl) new bootstrap.Modal(modalEl).show();
+        }
       },
     });
   }
+
   /**
    * Callback exécuté après la mise à jour d'un QCM pour recharger la liste.
    */

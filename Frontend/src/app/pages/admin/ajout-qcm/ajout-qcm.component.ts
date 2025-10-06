@@ -68,44 +68,44 @@ export class AjoutQcmComponent {
    * 2. Récupère l’utilisateur connecté via AuthService.
    * 3. Prépare les données du QCM à envoyer au backend.
    * 4. Appelle le service `qcmService.createQCM`.
-   * 5. Affiche un modal Bootstrap en cas de succès et réinitialise le formulaire.
+   * 5. Affiche un modal Bootstrap en cas de conflit et de succès puis réinitialise le formulaire.
    * 6. Log des erreurs en cas de problème.
    */
   onSubmit() {
     if (this.form.valid) {
-      // Récupérer l'utilisateur connecté via AuthService
       const currentUser = this.authService.getUser();
       if (!currentUser) {
         console.error('Utilisateur non connecté');
         return;
       }
 
-      // Préparer les données à envoyer au backend
       const qcmData = {
         ...this.form.value,
-        created_by: currentUser.id_user || currentUser.id_user, // selon la structure du user
+        created_by: currentUser.id_user || currentUser.id_user,
       };
-
-      console.log('Données envoyées au backend:', qcmData); // pour debug
 
       this.qcmService.createQCM(qcmData).subscribe({
         next: (res: any) => {
-          console.log('Réponse serveur:', res);
-
-          // Afficher le modal Bootstrap uniquement si insertion réussie
           if (res && res.qcmId) {
             const modalEl = document.getElementById('successModal');
             if (modalEl) new bootstrap.Modal(modalEl).show();
-
-            // Réinitialiser le formulaire
             this.form.reset();
           } else {
             console.error('Erreur : QCM non créé correctement');
           }
         },
         error: (err) => {
-          const modalEl = document.getElementById('failedModal');
-          if (modalEl) new bootstrap.Modal(modalEl).show();
+          console.error('Erreur API:', err);
+
+          // Vérifie si c’est un conflit (titre déjà existant)
+          if (err.status === 409) {
+            const modalEl = document.getElementById('conflictModal');
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          } else {
+            // Erreur générique (500, 400, etc.)
+            const modalEl = document.getElementById('failedModal');
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          }
         },
       });
     } else {

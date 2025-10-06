@@ -382,7 +382,7 @@ Fonctionnement :</p>
 <li>Récupère l’utilisateur connecté via AuthService.</li>
 <li>Prépare les données du QCM à envoyer au backend.</li>
 <li>Appelle le service <code>qcmService.createQCM</code>.</li>
-<li>Affiche un modal Bootstrap en cas de succès et réinitialise le formulaire.</li>
+<li>Affiche un modal Bootstrap en cas de conflit et de succès puis réinitialise le formulaire.</li>
 <li>Log des erreurs en cas de problème.</li>
 </ol>
 </div>
@@ -514,44 +514,44 @@ export class AjoutQcmComponent {
    * 2. Récupère l’utilisateur connecté via AuthService.
    * 3. Prépare les données du QCM à envoyer au backend.
    * 4. Appelle le service &#x60;qcmService.createQCM&#x60;.
-   * 5. Affiche un modal Bootstrap en cas de succès et réinitialise le formulaire.
+   * 5. Affiche un modal Bootstrap en cas de conflit et de succès puis réinitialise le formulaire.
    * 6. Log des erreurs en cas de problème.
    */
   onSubmit() {
     if (this.form.valid) {
-      // Récupérer l&#x27;utilisateur connecté via AuthService
       const currentUser &#x3D; this.authService.getUser();
       if (!currentUser) {
         console.error(&#x27;Utilisateur non connecté&#x27;);
         return;
       }
 
-      // Préparer les données à envoyer au backend
       const qcmData &#x3D; {
         ...this.form.value,
-        created_by: currentUser.id_user || currentUser.id_user, // selon la structure du user
+        created_by: currentUser.id_user || currentUser.id_user,
       };
-
-      console.log(&#x27;Données envoyées au backend:&#x27;, qcmData); // pour debug
 
       this.qcmService.createQCM(qcmData).subscribe({
         next: (res: any) &#x3D;&gt; {
-          console.log(&#x27;Réponse serveur:&#x27;, res);
-
-          // Afficher le modal Bootstrap uniquement si insertion réussie
           if (res &amp;&amp; res.qcmId) {
             const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
             if (modalEl) new bootstrap.Modal(modalEl).show();
-
-            // Réinitialiser le formulaire
             this.form.reset();
           } else {
             console.error(&#x27;Erreur : QCM non créé correctement&#x27;);
           }
         },
         error: (err) &#x3D;&gt; {
-          const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
-          if (modalEl) new bootstrap.Modal(modalEl).show();
+          console.error(&#x27;Erreur API:&#x27;, err);
+
+          // Vérifie si c’est un conflit (titre déjà existant)
+          if (err.status &#x3D;&#x3D;&#x3D; 409) {
+            const modalEl &#x3D; document.getElementById(&#x27;conflictModal&#x27;);
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          } else {
+            // Erreur générique (500, 400, etc.)
+            const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          }
         },
       });
     } else {
@@ -626,6 +626,11 @@ export class AjoutQcmComponent {
   icon&#x3D;&quot;❌&quot;
   message&#x3D;&quot;L&#x27;ajout du QCM a échoué !&quot;
 &gt;&lt;/app-modal&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;conflictModal&quot;
+  icon&#x3D;&quot;⚠️&quot;
+  message&#x3D;&quot;Impossible d&#x27;ajouter ce QCM : un QCM avec ce titre existe déjà.&quot;
+&gt;&lt;/app-modal&gt;
 </code></pre>
     </div>
 
@@ -655,7 +660,7 @@ export class AjoutQcmComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajouter un questionnaire</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter un questionnaire.</p>  <p>Elle est dédiée uniquement à l\'ajout d\'un questionnaire sans question.</p>  <br />  <!-- Formulaire réactif -->  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-l">    <h4 class="fw-bold">Nouveau QCM</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    />    <div      *ngIf="form.get(\'title\')?.invalid && form.get(\'title\')?.touched"      class="text-danger mb-2"    >      Le titre est obligatoire.    </div>    <label for="description">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <div      *ngIf="        form.get(\'description\')?.invalid && form.get(\'description\')?.touched      "      class="text-danger mb-2"    >      Une description est obligatoire.    </div>    <button      type="submit"      class="btn btn-primary mt-3"      [disabled]="form.invalid"    >      <i class="bi bi-save"></i> Enregistrer    </button>  </form></div><!-- Modal Bootstrap succès --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout QCM réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout du QCM a échoué !"></app-modal></div>'
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajouter un questionnaire</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter un questionnaire.</p>  <p>Elle est dédiée uniquement à l\'ajout d\'un questionnaire sans question.</p>  <br />  <!-- Formulaire réactif -->  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-l">    <h4 class="fw-bold">Nouveau QCM</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    />    <div      *ngIf="form.get(\'title\')?.invalid && form.get(\'title\')?.touched"      class="text-danger mb-2"    >      Le titre est obligatoire.    </div>    <label for="description">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <div      *ngIf="        form.get(\'description\')?.invalid && form.get(\'description\')?.touched      "      class="text-danger mb-2"    >      Une description est obligatoire.    </div>    <button      type="submit"      class="btn btn-primary mt-3"      [disabled]="form.invalid"    >      <i class="bi bi-save"></i> Enregistrer    </button>  </form></div><!-- Modal Bootstrap succès --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout QCM réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout du QCM a échoué !"></app-modal><app-modal  modalId="conflictModal"  icon="⚠️"  message="Impossible d\'ajouter ce QCM : un QCM avec ce titre existe déjà."></app-modal></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AjoutQcmComponent'};
