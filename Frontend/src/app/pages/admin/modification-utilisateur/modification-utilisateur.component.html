@@ -109,26 +109,39 @@
           <input formControlName="society" class="form-control" />
         </div>
       </div>
+      <!-- Mot de passe et confirmation -->
       <div class="row mb-3">
         <div class="col-lg-5 offset-lg-1">
-          <label>Mot de passe (laisser vide pour ne pas changer)</label>
+          <label for="password">Mot de passe</label>
           <input
             type="password"
+            id="password"
             formControlName="password"
             class="form-control"
           />
+          <div
+            *ngIf="
+          form.get('password')?.touched &&
+          form.get('password')?.errors?.['minlength']
+        "
+            class="text-danger"
+          >
+            Le mot de passe doit contenir au moins 8 caractères.
+          </div>
         </div>
-        <div class="col-3 d-flex align-items-center">
-          <div class="form-check mt-4">
-            <input
-              type="checkbox"
-              formControlName="admin"
-              class="form-check-input"
-              id="adminCheck"
-            />
-            <label for="adminCheck" class="form-check-label"
-              >Administrateur</label
-            >
+        <div class="col-lg-5">
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="form-control"
+          />
+          <div
+            *ngIf="form.errors?.['notMatching'] && form.get('confirmPassword')?.touched"
+            class="text-danger"
+          >
+            Les mots de passe ne correspondent pas.
           </div>
         </div>
       </div>

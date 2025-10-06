@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -127,14 +128,18 @@ export class ModificationUtilisateurComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      firstname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      society: ['', Validators.required],
-      password: [''],
-      admin: [false],
-    });
+    this.form = this.fb.group(
+      {
+        name: ['', Validators.required],
+        firstname: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        society: [''],
+        password: ['', [Validators.required, Validators.minLength(8)]], // obligatoire
+        confirmPassword: ['', Validators.required], // obligatoire
+        admin: [false],
+      },
+      { validator: this.passwordMatchValidator }
+    );
 
     // Ajout : écoute les changements sur admin
     this.form.get('admin')?.valueChanges.subscribe((isAdmin: boolean) => {
@@ -142,6 +147,16 @@ export class ModificationUtilisateurComponent implements OnInit {
         this.form.patchValue({ society: 'LECLIENT' });
       }
     });
+  }
+  /**
+   * Validator personnalisé pour vérifier que le mot de passe et la confirmation correspondent.
+   * @param group AbstractControl représentant le formulaire.
+   * @returns null si les mots de passe correspondent, sinon { notMatching: true }.
+   */
+  passwordMatchValidator(group: AbstractControl) {
+    const password = group.get('password')?.value;
+    const confirm = group.get('confirmPassword')?.value;
+    return password === confirm ? null : { notMatching: true };
   }
 
   @HostListener('window:resize', ['$event'])

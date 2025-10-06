@@ -21,6 +21,7 @@ docker exec -it my-postgres psql -U postgres -d webdev
 
 npm install express pg dotenv body-parser cors
 npm install swagger-jsdoc swagger-ui-express
+npm install bcrypt
 
 ## Frontend
 
