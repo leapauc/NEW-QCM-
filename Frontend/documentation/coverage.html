@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -114,10 +100,6 @@
 
 
 
-
-
-
-
 <ol class="breadcrumb">
     <li class="breadcrumb-item">Documentation coverage</li>
 </ol>
@@ -136,130 +118,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./injectables/HbsRenderService.html">documentation/template-playground/hbs-render.service.ts</a>
-            </td>
-            <td>injectable</td>
-            <td>HbsRenderService</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./miscellaneous/variables.html#Handlebars">documentation/template-playground/hbs-render.service.ts</a>
-            </td>
-            <td>variable</td>
-            <td>Handlebars</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./injectables/TemplateEditorService.html">documentation/template-playground/template-editor.service.ts</a>
-            </td>
-            <td>injectable</td>
-            <td>TemplateEditorService</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./miscellaneous/variables.html#monaco">documentation/template-playground/template-editor.service.ts</a>
-            </td>
-            <td>variable</td>
-            <td>monaco</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./components/TemplatePlaygroundComponent.html">documentation/template-playground/template-playground.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>TemplatePlaygroundComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/28)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./interfaces/CompoDocConfig.html">documentation/template-playground/template-playground.component.ts</a>
-            </td>
-            <td>interface</td>
-            <td>CompoDocConfig</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/25)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./interfaces/Session.html">documentation/template-playground/template-playground.component.ts</a>
-            </td>
-            <td>interface</td>
-            <td>Session</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./interfaces/Template.html">documentation/template-playground/template-playground.component.ts</a>
-            </td>
-            <td>interface</td>
-            <td>Template</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./injectables/ZipExportService.html">documentation/template-playground/zip-export.service.ts</a>
-            </td>
-            <td>injectable</td>
-            <td>ZipExportService</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./miscellaneous/variables.html#JSZip">documentation/template-playground/zip-export.service.ts</a>
-            </td>
-            <td>variable</td>
-            <td>JSZip</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AppComponent.html">src/app/app.component.ts</a>
+                <a href="./components/AppComponent.html">src/app/app.component.ts</a>
             </td>
             <td>component</td>
             <td>AppComponent</td>
@@ -280,22 +142,10 @@
                 <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                        <a href="./miscellaneous/variables.html#routes">src/app/app.routes.ts</a>
-            </td>
-            <td>variable</td>
-            <td>routes</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ConfirmationModalComponent.html">src/app/components/confirmation_modal/confirmation_modal.component.ts</a>
+                <a href="./components/ConfirmationModalComponent.html">src/app/components/confirmation_modal/confirmation_modal.component.ts</a>
             </td>
             <td>component</td>
             <td>ConfirmationModalComponent</td>
@@ -307,7 +157,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ModalComponent.html">src/app/components/modal_success_failure/modal.component.ts</a>
+                <a href="./components/ModalComponent.html">src/app/components/modal_success_failure/modal.component.ts</a>
             </td>
             <td>component</td>
             <td>ModalComponent</td>
@@ -319,7 +169,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/PaginationComponent.html">src/app/components/pagination/pagination.component.ts</a>
+                <a href="./components/PaginationComponent.html">src/app/components/pagination/pagination.component.ts</a>
             </td>
             <td>component</td>
             <td>PaginationComponent</td>
@@ -331,7 +181,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/SearchBarComponent.html">src/app/components/search_bar/search_bar.component.ts</a>
+                <a href="./components/SearchBarComponent.html">src/app/components/search_bar/search_bar.component.ts</a>
             </td>
             <td>component</td>
             <td>SearchBarComponent</td>
@@ -343,7 +193,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/AttemptPayload.html">src/app/models/attemptPayload.ts</a>
+                <a href="./interfaces/AttemptPayload.html">src/app/models/attemptPayload.ts</a>
             </td>
             <td>interface</td>
             <td>AttemptPayload</td>
@@ -355,7 +205,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/AttemptQuestion.html">src/app/models/attemptQuestion.ts</a>
+                <a href="./interfaces/AttemptQuestion.html">src/app/models/attemptQuestion.ts</a>
             </td>
             <td>interface</td>
             <td>AttemptQuestion</td>
@@ -367,7 +217,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/AttemptResponse.html">src/app/models/attemptResponse.ts</a>
+                <a href="./interfaces/AttemptResponse.html">src/app/models/attemptResponse.ts</a>
             </td>
             <td>interface</td>
             <td>AttemptResponse</td>
@@ -379,7 +229,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/AuthUser.html">src/app/models/authUser.ts</a>
+                <a href="./interfaces/AuthUser.html">src/app/models/authUser.ts</a>
             </td>
             <td>interface</td>
             <td>AuthUser</td>
@@ -391,7 +241,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/QCM.html">src/app/models/qcm.ts</a>
+                <a href="./interfaces/QCM.html">src/app/models/qcm.ts</a>
             </td>
             <td>interface</td>
             <td>QCM</td>
@@ -403,7 +253,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/Question.html">src/app/models/question.ts</a>
+                <a href="./interfaces/Question.html">src/app/models/question.ts</a>
             </td>
             <td>interface</td>
             <td>Question</td>
@@ -415,7 +265,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/QuestionResponse.html">src/app/models/questionResponse.ts</a>
+                <a href="./interfaces/QuestionResponse.html">src/app/models/questionResponse.ts</a>
             </td>
             <td>interface</td>
             <td>QuestionResponse</td>
@@ -427,7 +277,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/ResponseOption.html">src/app/models/responseOption.ts</a>
+                <a href="./interfaces/ResponseOption.html">src/app/models/responseOption.ts</a>
             </td>
             <td>interface</td>
             <td>ResponseOption</td>
@@ -439,7 +289,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/User.html">src/app/models/user.ts</a>
+                <a href="./interfaces/User.html">src/app/models/user.ts</a>
             </td>
             <td>interface</td>
             <td>User</td>
@@ -451,7 +301,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./interfaces/UserAnswer.html">src/app/models/userAnswer.ts</a>
+                <a href="./interfaces/UserAnswer.html">src/app/models/userAnswer.ts</a>
             </td>
             <td>interface</td>
             <td>UserAnswer</td>
@@ -463,7 +313,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AdminComponent.html">src/app/pages/admin/admin.component.ts</a>
+                <a href="./components/AdminComponent.html">src/app/pages/admin/admin.component.ts</a>
             </td>
             <td>component</td>
             <td>AdminComponent</td>
@@ -475,7 +325,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AjoutQcmQuestionComponent.html">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts</a>
+                <a href="./components/AjoutQcmQuestionComponent.html">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts</a>
             </td>
             <td>component</td>
             <td>AjoutQcmQuestionComponent</td>
@@ -487,7 +337,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AjoutQcmComponent.html">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts</a>
+                <a href="./components/AjoutQcmComponent.html">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts</a>
             </td>
             <td>component</td>
             <td>AjoutQcmComponent</td>
@@ -499,7 +349,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AjoutQuestionComponent.html">src/app/pages/admin/ajout-question/ajout-question.component.ts</a>
+                <a href="./components/AjoutQuestionComponent.html">src/app/pages/admin/ajout-question/ajout-question.component.ts</a>
             </td>
             <td>component</td>
             <td>AjoutQuestionComponent</td>
@@ -511,7 +361,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AjoutUtilisateurComponent.html">src/app/pages/admin/ajout-utilisateur/ajout-utilisateur.component.ts</a>
+                <a href="./components/AjoutUtilisateurComponent.html">src/app/pages/admin/ajout-utilisateur/ajout-utilisateur.component.ts</a>
             </td>
             <td>component</td>
             <td>AjoutUtilisateurComponent</td>
@@ -523,7 +373,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/DashboardAdminComponent.html">src/app/pages/admin/dashboard-admin/dashboard-admin.component.ts</a>
+                <a href="./components/DashboardAdminComponent.html">src/app/pages/admin/dashboard-admin/dashboard-admin.component.ts</a>
             </td>
             <td>component</td>
             <td>DashboardAdminComponent</td>
@@ -535,19 +385,19 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ModificationQcmQuestionComponent.html">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts</a>
+                <a href="./components/ModificationQcmQuestionComponent.html">src/app/pages/admin/modification-qcm-question/modification-qcm-question.component.ts</a>
             </td>
             <td>component</td>
             <td>ModificationQcmQuestionComponent</td>
             <td align="right" data-sort="100">
                 <span class="coverage-percent">100 %</span>
-                <span class="coverage-count">(21/21)</span>
+                <span class="coverage-count">(24/24)</span>
             </td>
         </tr>
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ModificationQcmComponent.html">src/app/pages/admin/modification-qcm/modification-qcm.component.ts</a>
+                <a href="./components/ModificationQcmComponent.html">src/app/pages/admin/modification-qcm/modification-qcm.component.ts</a>
             </td>
             <td>component</td>
             <td>ModificationQcmComponent</td>
@@ -559,7 +409,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ModificationQuestionComponent.html">src/app/pages/admin/modification-question/modification-question.component.ts</a>
+                <a href="./components/ModificationQuestionComponent.html">src/app/pages/admin/modification-question/modification-question.component.ts</a>
             </td>
             <td>component</td>
             <td>ModificationQuestionComponent</td>
@@ -571,19 +421,19 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ModificationUtilisateurComponent.html">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts</a>
+                <a href="./components/ModificationUtilisateurComponent.html">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts</a>
             </td>
             <td>component</td>
             <td>ModificationUtilisateurComponent</td>
             <td align="right" data-sort="85">
                 <span class="coverage-percent">85 %</span>
-                <span class="coverage-count">(23/27)</span>
+                <span class="coverage-count">(24/28)</span>
             </td>
         </tr>
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/SuppressionQcmComponent.html">src/app/pages/admin/suppression-qcm/suppression-qcm.component.ts</a>
+                <a href="./components/SuppressionQcmComponent.html">src/app/pages/admin/suppression-qcm/suppression-qcm.component.ts</a>
             </td>
             <td>component</td>
             <td>SuppressionQcmComponent</td>
@@ -595,7 +445,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/SuppressionQuestionComponent.html">src/app/pages/admin/suppression-question/suppression-question.component.ts</a>
+                <a href="./components/SuppressionQuestionComponent.html">src/app/pages/admin/suppression-question/suppression-question.component.ts</a>
             </td>
             <td>component</td>
             <td>SuppressionQuestionComponent</td>
@@ -607,7 +457,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/SuppressionUtilisateurComponent.html">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts</a>
+                <a href="./components/SuppressionUtilisateurComponent.html">src/app/pages/admin/suppression-utilisateur/suppression-utilisateur.component.ts</a>
             </td>
             <td>component</td>
             <td>SuppressionUtilisateurComponent</td>
@@ -619,7 +469,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/LoginComponent.html">src/app/pages/login/login.component.ts</a>
+                <a href="./components/LoginComponent.html">src/app/pages/login/login.component.ts</a>
             </td>
             <td>component</td>
             <td>LoginComponent</td>
@@ -631,7 +481,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/AffichageResultsComponent.html">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts</a>
+                <a href="./components/AffichageResultsComponent.html">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts</a>
             </td>
             <td>component</td>
             <td>AffichageResultsComponent</td>
@@ -643,7 +493,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/ChoixQcmComponent.html">src/app/pages/stagiaire/choix-qcm/choix-qcm.component.ts</a>
+                <a href="./components/ChoixQcmComponent.html">src/app/pages/stagiaire/choix-qcm/choix-qcm.component.ts</a>
             </td>
             <td>component</td>
             <td>ChoixQcmComponent</td>
@@ -655,7 +505,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/DashboardStagiaireComponent.html">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts</a>
+                <a href="./components/DashboardStagiaireComponent.html">src/app/pages/stagiaire/dashboard-stagiaire/dashboard-stagiaire.component.ts</a>
             </td>
             <td>component</td>
             <td>DashboardStagiaireComponent</td>
@@ -667,7 +517,7 @@
         <tr class="good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./components/StagiaireComponent.html">src/app/pages/stagiaire/stagiaire.component.ts</a>
+                <a href="./components/StagiaireComponent.html">src/app/pages/stagiaire/stagiaire.component.ts</a>
             </td>
             <td>component</td>
             <td>StagiaireComponent</td>
@@ -679,7 +529,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./pipes/TimeFormatPipe.html">src/app/pipes/format-Time.pipe.ts</a>
+                <a href="./pipes/TimeFormatPipe.html">src/app/pipes/format-Time.pipe.ts</a>
             </td>
             <td>pipe</td>
             <td>TimeFormatPipe</td>
@@ -691,7 +541,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./pipes/TruncateEmailPipe.html">src/app/pipes/truncate-email.pipe.ts</a>
+                <a href="./pipes/TruncateEmailPipe.html">src/app/pipes/truncate-email.pipe.ts</a>
             </td>
             <td>pipe</td>
             <td>TruncateEmailPipe</td>
@@ -703,7 +553,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/AuthService.html">src/app/services/auth.service.ts</a>
+                <a href="./injectables/AuthService.html">src/app/services/auth.service.ts</a>
             </td>
             <td>injectable</td>
             <td>AuthService</td>
@@ -715,7 +565,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/QcmService.html">src/app/services/qcm.service.ts</a>
+                <a href="./injectables/QcmService.html">src/app/services/qcm.service.ts</a>
             </td>
             <td>injectable</td>
             <td>QcmService</td>
@@ -727,7 +577,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/QuestionService.html">src/app/services/question.service.ts</a>
+                <a href="./injectables/QuestionService.html">src/app/services/question.service.ts</a>
             </td>
             <td>injectable</td>
             <td>QuestionService</td>
@@ -739,7 +589,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/QuizAttemptsService.html">src/app/services/quiz_attempts.service.ts</a>
+                <a href="./injectables/QuizAttemptsService.html">src/app/services/quiz_attempts.service.ts</a>
             </td>
             <td>injectable</td>
             <td>QuizAttemptsService</td>
@@ -751,7 +601,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/StatsService.html">src/app/services/stats.service.ts</a>
+                <a href="./injectables/StatsService.html">src/app/services/stats.service.ts</a>
             </td>
             <td>injectable</td>
             <td>StatsService</td>
@@ -763,7 +613,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                        <a href="./injectables/UserService.html">src/app/services/user.service.ts</a>
+                <a href="./injectables/UserService.html">src/app/services/user.service.ts</a>
             </td>
             <td>injectable</td>
             <td>UserService</td>

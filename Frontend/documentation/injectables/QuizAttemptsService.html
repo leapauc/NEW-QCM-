@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -285,7 +267,8 @@ une nouvelle tentative.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère toutes les tentatives (tous utilisateurs confondus).</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
@@ -329,7 +312,8 @@ une nouvelle tentative.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère les détails d&#39;une tentative spécifique,
 y compris les questions et les réponses associées.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(details.questions));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(details.questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -406,7 +390,8 @@ y compris les questions et les réponses associées.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère toutes les tentatives effectuées par un utilisateur donné.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(attempts));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(attempts));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -483,13 +468,14 @@ y compris les questions et les réponses associées.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Enregistre une nouvelle tentative dans la base de données.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">const attempt: AttemptPayload = {
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+const attempt: AttemptPayload = {
   userId: 12,
   qcmId: 5,
   score: 8,
   responses: [...]
 };
-quizAttemptsService.saveAttempt(attempt).subscribe(result =&gt; console.log(result));</code></pre></div></div>
+quizAttemptsService.saveAttempt(attempt).subscribe(result =&gt; console.log(result));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>

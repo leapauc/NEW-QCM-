@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -160,7 +142,8 @@
 <li><code>QuestionService</code> : pour récupérer et mettre à jour les questions et leurs réponses</li>
 </ul>
 <p>Le formulaire est un formulaire réactif (<code>ReactiveFormsModule</code>) avec un <code>FormArray</code> pour les réponses.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-modification-question&gt;&lt;/app-modification-question&gt;</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
+&lt;app-modification-question&gt;&lt;/app-modification-question&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
     </p>
 
 
@@ -1834,10 +1817,17 @@ export class ModificationQuestionComponent implements OnInit {
 
     const formValue &#x3D; this.questionForm.value;
 
-    // Vérifier qu&#x27;au moins une réponse est correcte
+    // Vérifier qu&#x27;au moins une réponse ou pas toute est correcte
     const hasCorrectAnswer &#x3D; formValue.responses.some((r: any) &#x3D;&gt; r.isCorrect);
+    const allCorrect &#x3D; formValue.responses.every((r: any) &#x3D;&gt; r.isCorrect);
     if (!hasCorrectAnswer) {
       const modalEl &#x3D; document.getElementById(&#x27;unvalidModal&#x27;);
+      if (modalEl) new bootstrap.Modal(modalEl).show();
+      return;
+    }
+
+    if (allCorrect) {
+      const modalEl &#x3D; document.getElementById(&#x27;allCorrectModal&#x27;);
       if (modalEl) new bootstrap.Modal(modalEl).show();
       return;
     }
@@ -2027,7 +2017,7 @@ export class ModificationQuestionComponent implements OnInit {
 &gt;&lt;/app-modal&gt;
 &lt;app-modal
   modalId&#x3D;&quot;unvalidModal&quot;
-  icon&#x3D;&quot;❌&quot;
+  icon&#x3D;&quot;⚠️&quot;
   message&#x3D;&quot;Le formulaire ne peut pas être validé : au moins une réponse doit être correcte.&quot;
 &gt;&lt;/app-modal&gt;
 &lt;app-modal
@@ -2038,6 +2028,11 @@ export class ModificationQuestionComponent implements OnInit {
 &lt;div *ngIf&#x3D;&quot;noQuestions&quot; class&#x3D;&quot;alert alert-danger mt-2&quot;&gt;
   ⚠️ Ce QCM ne contient aucune question.
 &lt;/div&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;allCorrectModal&quot;
+  icon&#x3D;&quot;⚠️&quot;
+  message&#x3D;&quot;Le formulaire ne peut pas être validé : toutes les réponses ne peuvent pas être correctes.&quot;
+&gt;&lt;/app-modal&gt;
 </code></pre>
     </div>
 
@@ -2067,8 +2062,8 @@ export class ModificationQuestionComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="center">  <br /><br />  <h1 class="text-center my-4">Modification question</h1>  <br /><br />  <p>Ce formulaire permet de modifier une question d\'un questionnaire.</p>  <br />  <!-- Sélection QCM et Question -->  <div class="row mb-4 form">    <div class="col-5 offset-1">      <label for="id_qcm" class="form-label">QCM</label>      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">        <option value="" disabled selected>-- Sélectionner un QCM --</option>        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">          {{ qcm.title }}        </option>      </select>    </div>    <div class="col-5">      <label for="id_question" class="form-label">Question</label>      <select        class="form-select"        id="id_question"        [(ngModel)]="selectedQuestionId"        (change)="onQuestionChange($event)"      >        <option          *ngFor="let question of questions"          [value]="question.id_question"        >          {{ question.question }}        </option>      </select>    </div>  </div>  <!-- Formulaire affiché seulement si une question est sélectionnée -->  <form    *ngIf="selectedQuestionId"    [formGroup]="questionForm"    (ngSubmit)="submitForm()"    class="form"  >    <div class="mb-3">      <h4 class="fw-bold">MODIFICATION</h4>      <br />      <label for="question" class="form-label fw-bold"        >Intitulé de la question</label      >      <textarea        id="question"        class="form-control"        formControlName="question"      ></textarea>      <div        *ngIf="          questionForm.get(\'question\')?.touched &&          questionForm.get(\'question\')?.invalid        "        class="text-danger"      >        Le titre est requis.      </div>    </div>    <!-- Réponses -->    <h5 class="mt-4">Réponses :</h5>    <div formArrayName="responses">      <div        *ngFor="let response of responses.controls; let i = index"        [formGroupName]="i"        class="row g-2 align-items-center mb-2"      >        <div class="col-8">          <input            type="text"            class="form-control"            placeholder="Réponse {{ i + 1 }}"            formControlName="text"          />        </div>        <div class="col-2 text-center">          <input            type="checkbox"            class="form-check-input"            formControlName="isCorrect"          />          <label class="form-check-label">Correct</label>        </div>        <div class="col-2 text-end">          <button            type="button"            class="btn btn-outline-danger btn-sm"            (click)="removeResponse(i)"            [disabled]="responses.length <= minResponses"          >            ❌          </button>        </div>      </div>    </div>    <!-- Ajouter une réponse -->    <button      type="button"      class="btn btn-outline-primary btn-sm"      (click)="addResponse()"      [disabled]="responses.length >= maxResponses"    >      <i class="bi bi-plus-circle"></i> Ajouter une réponse    </button>    <div class="mt-4 text-center">      <button        type="button"        class="btn btn-danger mt-3 me-2"        (click)="cancelForm()"      >        <i class="bi bi-x-circle me-2"></i> Annuler      </button>      <button        type="button"        class="btn btn-secondary mt-3 me-2"        (click)="resetForm()"      >        <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser      </button>      <button type="submit" class="btn btn-primary mt-3">        <i class="bi bi-save"></i> Enregistrer      </button>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Modification de la Question réalisée avec succès !"></app-modal><app-modal  modalId="unvalidModal"  icon="❌"  message="Le formulaire ne peut pas être validé : au moins une réponse doit être correcte."></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="La modification de la Question a échoué !"></app-modal><div *ngIf="noQuestions" class="alert alert-danger mt-2">  ⚠️ Ce QCM ne contient aucune question.</div></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+        var COMPONENT_TEMPLATE = '<div><div class="center">  <br /><br />  <h1 class="text-center my-4">Modification question</h1>  <br /><br />  <p>Ce formulaire permet de modifier une question d\'un questionnaire.</p>  <br />  <!-- Sélection QCM et Question -->  <div class="row mb-4 form">    <div class="col-5 offset-1">      <label for="id_qcm" class="form-label">QCM</label>      <select class="form-select" id="id_qcm" (change)="onQcmChange($event)">        <option value="" disabled selected>-- Sélectionner un QCM --</option>        <option *ngFor="let qcm of qcms" [value]="qcm.id_qcm">          {{ qcm.title }}        </option>      </select>    </div>    <div class="col-5">      <label for="id_question" class="form-label">Question</label>      <select        class="form-select"        id="id_question"        [(ngModel)]="selectedQuestionId"        (change)="onQuestionChange($event)"      >        <option          *ngFor="let question of questions"          [value]="question.id_question"        >          {{ question.question }}        </option>      </select>    </div>  </div>  <!-- Formulaire affiché seulement si une question est sélectionnée -->  <form    *ngIf="selectedQuestionId"    [formGroup]="questionForm"    (ngSubmit)="submitForm()"    class="form"  >    <div class="mb-3">      <h4 class="fw-bold">MODIFICATION</h4>      <br />      <label for="question" class="form-label fw-bold"        >Intitulé de la question</label      >      <textarea        id="question"        class="form-control"        formControlName="question"      ></textarea>      <div        *ngIf="          questionForm.get(\'question\')?.touched &&          questionForm.get(\'question\')?.invalid        "        class="text-danger"      >        Le titre est requis.      </div>    </div>    <!-- Réponses -->    <h5 class="mt-4">Réponses :</h5>    <div formArrayName="responses">      <div        *ngFor="let response of responses.controls; let i = index"        [formGroupName]="i"        class="row g-2 align-items-center mb-2"      >        <div class="col-8">          <input            type="text"            class="form-control"            placeholder="Réponse {{ i + 1 }}"            formControlName="text"          />        </div>        <div class="col-2 text-center">          <input            type="checkbox"            class="form-check-input"            formControlName="isCorrect"          />          <label class="form-check-label">Correct</label>        </div>        <div class="col-2 text-end">          <button            type="button"            class="btn btn-outline-danger btn-sm"            (click)="removeResponse(i)"            [disabled]="responses.length <= minResponses"          >            ❌          </button>        </div>      </div>    </div>    <!-- Ajouter une réponse -->    <button      type="button"      class="btn btn-outline-primary btn-sm"      (click)="addResponse()"      [disabled]="responses.length >= maxResponses"    >      <i class="bi bi-plus-circle"></i> Ajouter une réponse    </button>    <div class="mt-4 text-center">      <button        type="button"        class="btn btn-danger mt-3 me-2"        (click)="cancelForm()"      >        <i class="bi bi-x-circle me-2"></i> Annuler      </button>      <button        type="button"        class="btn btn-secondary mt-3 me-2"        (click)="resetForm()"      >        <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser      </button>      <button type="submit" class="btn btn-primary mt-3">        <i class="bi bi-save"></i> Enregistrer      </button>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Modification de la Question réalisée avec succès !"></app-modal><app-modal  modalId="unvalidModal"  icon="⚠️"  message="Le formulaire ne peut pas être validé : au moins une réponse doit être correcte."></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="La modification de la Question a échoué !"></app-modal><div *ngIf="noQuestions" class="alert alert-danger mt-2">  ⚠️ Ce QCM ne contient aucune question.</div><app-modal  modalId="allCorrectModal"  icon="⚠️"  message="Le formulaire ne peut pas être validé : toutes les réponses ne peuvent pas être correctes."></app-modal></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ModificationQuestionComponent'};
 </script>

@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content pipe">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -167,9 +149,9 @@ elle est tronquée et terminée par <code>...</code></li>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-html">**Entrée :**
 ```typescript
 &#39;exemple.longemail&#64;domaine.com&#39;</code></pre></div><p><strong>Sortie avec limite par défaut (10) :</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.lo...&#39;</code></pre></div><p><strong>Sortie avec limite personnalisée (20) :</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.longemail&#64;d...&#39;</code></pre></div><hr>
-
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.lo...&#39;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none">**Sortie avec limite personnalisée (20) :**</code></pre></div><p>&#39;exemple.longemail@d...&#39;</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">
+---</code></pre></div>
             </p>
 
 

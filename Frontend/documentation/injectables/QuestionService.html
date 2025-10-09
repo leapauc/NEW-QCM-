@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -290,7 +272,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Crée une nouvelle question.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.createQuestion({ text: &#39;Nouvelle question&#39;, qcmId: 1 }).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.createQuestion({ text: &#39;Nouvelle question&#39;, qcmId: 1 }).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -367,7 +350,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Supprime une question existante.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.deleteQuestion(42).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.deleteQuestion(42).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -444,7 +428,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère toutes les questions (tous QCM confondus).</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.getAllQuestions().subscribe(questions =&gt; console.log(questions));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.getAllQuestions().subscribe(questions =&gt; console.log(questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/Question.html" target="_self" >Observable&lt;Question[]&gt;</a></code>
@@ -487,7 +472,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère une question spécifique par son identifiant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.getQuestionById(42).subscribe(q =&gt; console.log(q));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.getQuestionById(42).subscribe(q =&gt; console.log(q));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -564,7 +550,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère une question et ses réponses associées par son identifiant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.getQuestionReponseById(42).subscribe(responses =&gt; console.log(responses));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.getQuestionReponseById(42).subscribe(responses =&gt; console.log(responses));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -641,7 +628,8 @@ ainsi que de récupérer les réponses associées à une question spécifique.</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour une question existante.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">questionService.updateQuestion(42, updatedQuestion).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+questionService.updateQuestion(42, updatedQuestion).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>

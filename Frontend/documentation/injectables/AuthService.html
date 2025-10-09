@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -418,10 +400,11 @@ l&#39;utilisateur est connecté ou administrateur.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Effectue la connexion d&#39;un utilisateur.</p>
 <p>Si la connexion réussit, l&#39;utilisateur est enregistré dans le <code>localStorage</code>.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
   next: res =&gt; console.log(&#39;Connecté&#39;, res.user),
   error: err =&gt; console.error(&#39;Erreur&#39;, err)
-});</code></pre></div></div>
+});</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -518,7 +501,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Déconnecte l&#39;utilisateur en cours.</p>
 <p>Supprime le token et l&#39;utilisateur du <code>localStorage</code>.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">authService.logout();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+authService.logout();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>

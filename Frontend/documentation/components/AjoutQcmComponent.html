@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -152,7 +134,8 @@
 <li>Affichage d’un modal Bootstrap en cas de succès.</li>
 <li>Réinitialisation automatique du formulaire après création.</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-ajout-qcm&gt;&lt;/app-ajout-qcm&gt;</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
+&lt;app-ajout-qcm&gt;&lt;/app-ajout-qcm&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
     </p>
 
 
@@ -661,7 +644,7 @@ export class AjoutQcmComponent {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajouter un questionnaire</h1>  <br /><br />  <p>Ce formulaire permet d\'ajouter un questionnaire.</p>  <p>Elle est dédiée uniquement à l\'ajout d\'un questionnaire sans question.</p>  <br />  <!-- Formulaire réactif -->  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-l">    <h4 class="fw-bold">Nouveau QCM</h4>    <br />    <label for="title">Titre</label>    <input      formControlName="title"      placeholder="Titre QCM"      class="form-control mb-2"    />    <div      *ngIf="form.get(\'title\')?.invalid && form.get(\'title\')?.touched"      class="text-danger mb-2"    >      Le titre est obligatoire.    </div>    <label for="description">Description</label>    <textarea      formControlName="description"      placeholder="Description"      class="form-control mb-4"    ></textarea>    <div      *ngIf="        form.get(\'description\')?.invalid && form.get(\'description\')?.touched      "      class="text-danger mb-2"    >      Une description est obligatoire.    </div>    <button      type="submit"      class="btn btn-primary mt-3"      [disabled]="form.invalid"    >      <i class="bi bi-save"></i> Enregistrer    </button>  </form></div><!-- Modal Bootstrap succès --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout QCM réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout du QCM a échoué !"></app-modal><app-modal  modalId="conflictModal"  icon="⚠️"  message="Impossible d\'ajouter ce QCM : un QCM avec ce titre existe déjà."></app-modal></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AjoutQcmComponent'};
 </script>

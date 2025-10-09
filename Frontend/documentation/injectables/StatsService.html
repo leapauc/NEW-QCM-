@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -847,7 +829,8 @@ Idéal pour alimenter des tableaux de bord et visualisations.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère le nombre total de stagiaires.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">statsService.getNbStagiaire().subscribe(nb =&gt; console.log(&#39;Stagiaires :&#39;, nb));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+statsService.getNbStagiaire().subscribe(nb =&gt; console.log(&#39;Stagiaires :&#39;, nb));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Observable&lt;any&gt;</code>

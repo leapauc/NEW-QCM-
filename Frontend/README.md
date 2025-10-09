@@ -46,10 +46,10 @@ Différentes urls sont disponibles et permettent de réaliser de nombreuses requ
 
 ## Documentation
 
-La documentation est disponible dans le dossier documentation, mais également à l'url suivante :
+La documentation Angular est disponible dans le dossier documentation, mais également à l'url suivante :
 
 ```
-http://127.0.0.1:3001
+http://localhost:8081
 ```
 
 ## Contenerisation
@@ -59,5 +59,5 @@ Il suffira donc de lancer le conteneur docker pour pouvoir accéder à l'applica
 La commande à executer est la suivante :
 
 ```
-docker compose up
+docker compose up --build
 ```

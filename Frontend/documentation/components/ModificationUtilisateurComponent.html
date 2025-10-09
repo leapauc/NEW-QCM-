@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -159,7 +141,8 @@
 <li><code>PaginationComponent</code> pour la pagination</li>
 <li><code>ConfirmationModalComponent</code> pour afficher une confirmation avant mise à jour</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-utilisateur-stagiaire&gt;&lt;/app-utilisateur-stagiaire&gt;</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
+&lt;app-utilisateur-stagiaire&gt;&lt;/app-utilisateur-stagiaire&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
     </p>
 
 
@@ -203,6 +186,7 @@
                                 <code><a href="../components/PaginationComponent.html" target="_self" >PaginationComponent</a></code>
                                 <code><a href="../components/ConfirmationModalComponent.html" target="_self" >ConfirmationModalComponent</a></code>
                             <code>TruncateEmailPipe</code>
+                                <code><a href="../components/ModalComponent.html" target="_self" >ModalComponent</a></code>
                 </td>
             </tr>
 
@@ -317,6 +301,9 @@
                                 <a href="#onSubmit" >onSubmit</a>
                             </li>
                             <li>
+                                <a href="#passwordMatchValidator" >passwordMatchValidator</a>
+                            </li>
+                            <li>
                                 <a href="#resetForm" >resetForm</a>
                             </li>
                             <li>
@@ -359,7 +346,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:115</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -465,8 +452,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="146"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:146</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="163"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:163</a></div>
                         </td>
                     </tr>
 
@@ -499,8 +486,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="220"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:220</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:259</a></div>
                         </td>
                     </tr>
 
@@ -538,8 +525,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="242"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:242</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="281"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:281</a></div>
                         </td>
                     </tr>
 
@@ -577,8 +564,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="251"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:251</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="290"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:290</a></div>
                         </td>
                     </tr>
 
@@ -617,8 +604,8 @@ Met à jour l&#39;utilisateur via le service puis recharge la liste.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="161"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:161</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="178"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:178</a></div>
                         </td>
                     </tr>
 
@@ -656,8 +643,8 @@ Met à jour l&#39;utilisateur via le service puis recharge la liste.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="153"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:153</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="170"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:170</a></div>
                         </td>
                     </tr>
 
@@ -705,8 +692,8 @@ Charge les utilisateurs depuis le backend.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="146"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:146</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="163"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:163</a></div>
                         </td>
                     </tr>
 
@@ -772,8 +759,8 @@ Charge les utilisateurs depuis le backend.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="200"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:200</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="217"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:217</a></div>
                         </td>
                     </tr>
 
@@ -787,6 +774,81 @@ Charge les utilisateurs depuis le backend.</p>
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordMatchValidator"></a>
+                    <span class="name">
+                        <span ><b>passwordMatchValidator</b></span>
+                        <a href="#passwordMatchValidator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>passwordMatchValidator(group: AbstractControl)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validator personnalisé pour vérifier que le mot de passe et la confirmation correspondent.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>group</td>
+                                            <td>
+                                                        <code>AbstractControl</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>AbstractControl représentant le formulaire.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ notMatching: boolean; }</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>null si les mots de passe correspondent, sinon { notMatching: true }.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -811,8 +873,8 @@ Charge les utilisateurs depuis le backend.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="285"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:285</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="324"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:324</a></div>
                         </td>
                     </tr>
 
@@ -851,8 +913,8 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="184"
-                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:184</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:201</a></div>
                         </td>
                     </tr>
 
@@ -935,7 +997,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:79</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -972,7 +1034,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:103</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:106</a></div>
                         </td>
                     </tr>
 
@@ -1004,7 +1066,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:75</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:78</a></div>
                         </td>
                     </tr>
 
@@ -1035,7 +1097,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:113</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:116</a></div>
                         </td>
                     </tr>
 
@@ -1066,7 +1128,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:115</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:118</a></div>
                         </td>
                     </tr>
 
@@ -1097,7 +1159,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:95</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:98</a></div>
                         </td>
                     </tr>
 
@@ -1134,7 +1196,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:99</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -1171,7 +1233,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -1208,7 +1270,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:111</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:114</a></div>
                         </td>
                     </tr>
 
@@ -1245,7 +1307,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:107</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:110</a></div>
                         </td>
                     </tr>
 
@@ -1282,7 +1344,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:71</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -1314,7 +1376,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:91</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:94</a></div>
                         </td>
                     </tr>
 
@@ -1346,7 +1408,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:87</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:90</a></div>
                         </td>
                     </tr>
 
@@ -1383,7 +1445,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:114</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:117</a></div>
                         </td>
                     </tr>
 
@@ -1414,7 +1476,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:67</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/pages/admin/modification-utilisateur/modification-utilisateur.component.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -1440,6 +1502,7 @@ ou vide complètement les champs si aucun utilisateur n&#39;est sélectionné.</
   OnInit,
 } from &#x27;@angular/core&#x27;;
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -1454,6 +1517,7 @@ import { SearchBarComponent } from &#x27;../../../components/search_bar/search_b
 import { PaginationComponent } from &#x27;../../../components/pagination/pagination.component&#x27;;
 import { ConfirmationModalComponent } from &#x27;../../../components/confirmation_modal/confirmation_modal.component&#x27;;
 import { TruncateEmailPipe } from &#x27;../../../pipes/truncate-email.pipe&#x27;;
+import { ModalComponent } from &#x27;../../../components/modal_success_failure/modal.component&#x27;;
 
 /**
  * Composant responsable de la modification des utilisateurs (stagiaires ou admins).
@@ -1492,6 +1556,7 @@ import { TruncateEmailPipe } from &#x27;../../../pipes/truncate-email.pipe&#x27;
     PaginationComponent,
     ConfirmationModalComponent,
     TruncateEmailPipe,
+    ModalComponent,
   ],
   templateUrl: &#x27;./modification-utilisateur.component.html&#x27;,
 })
@@ -1560,14 +1625,18 @@ export class ModificationUtilisateurComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
-    this.form &#x3D; this.fb.group({
-      name: [&#x27;&#x27;, Validators.required],
-      firstname: [&#x27;&#x27;, Validators.required],
-      email: [&#x27;&#x27;, [Validators.required, Validators.email]],
-      society: [&#x27;&#x27;, Validators.required],
-      password: [&#x27;&#x27;],
-      admin: [false],
-    });
+    this.form &#x3D; this.fb.group(
+      {
+        name: [&#x27;&#x27;, Validators.required],
+        firstname: [&#x27;&#x27;, Validators.required],
+        email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+        society: [&#x27;&#x27;],
+        password: [&#x27;&#x27;, [Validators.required, Validators.minLength(8)]], // obligatoire
+        confirmPassword: [&#x27;&#x27;, Validators.required], // obligatoire
+        admin: [false],
+      },
+      { validator: this.passwordMatchValidator }
+    );
 
     // Ajout : écoute les changements sur admin
     this.form.get(&#x27;admin&#x27;)?.valueChanges.subscribe((isAdmin: boolean) &#x3D;&gt; {
@@ -1575,6 +1644,16 @@ export class ModificationUtilisateurComponent implements OnInit {
         this.form.patchValue({ society: &#x27;LECLIENT&#x27; });
       }
     });
+  }
+  /**
+   * Validator personnalisé pour vérifier que le mot de passe et la confirmation correspondent.
+   * @param group AbstractControl représentant le formulaire.
+   * @returns null si les mots de passe correspondent, sinon { notMatching: true }.
+   */
+  passwordMatchValidator(group: AbstractControl) {
+    const password &#x3D; group.get(&#x27;password&#x27;)?.value;
+    const confirm &#x3D; group.get(&#x27;confirmPassword&#x27;)?.value;
+    return password &#x3D;&#x3D;&#x3D; confirm ? null : { notMatching: true };
   }
 
   @HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])
@@ -1633,19 +1712,41 @@ export class ModificationUtilisateurComponent implements OnInit {
    * Affiche le modal de confirmation avant validation des changements.
    */
   onSubmit() {
-    if (!this.selectedUser) return;
-
     if (this.form.valid) {
-      const updatedData &#x3D; { ...this.form.value };
-      updatedData.admin &#x3D; updatedData.admin || false;
+      const { confirmPassword, ...userData } &#x3D; this.form.value;
+      if (!userData.admin) userData.admin &#x3D; false;
 
-      const modalEl &#x3D; document.getElementById(&#x27;confirmationModal&#x27;);
-      const modal &#x3D; new bootstrap.Modal(modalEl!);
+      if (this.selectedUser) {
+        // 🔄 Cas modification → appel PUT
+        this.userService
+          .updateUser(this.selectedUser.id_user!, userData)
+          .subscribe({
+            next: (user) &#x3D;&gt; {
+              console.log(&#x27;Utilisateur modifié&#x27;, user);
+              this.loadUsers();
+              this.selectedUser &#x3D; null;
+              this.form.reset();
 
-      this.selectedUserBefore &#x3D; { ...this.selectedUser };
-      this.selectedUserAfter &#x3D; { ...this.selectedUser, ...updatedData };
+              this.message &#x3D; &#x60;Utilisateur &quot;${user.name}&quot; modifié avec succès !&#x60;;
+              this.messageClass &#x3D; &#x27;alert alert-success&#x27;;
+              setTimeout(() &#x3D;&gt; (this.message &#x3D; null), 2000);
+            },
+            error: (err) &#x3D;&gt; {
+              console.error(&#x27;Erreur modification utilisateur :&#x27;, err);
 
-      modal.show();
+              if (err.status &#x3D;&#x3D;&#x3D; 409) {
+                // ⚠️ Conflit nom/mot de passe
+                const modalEl &#x3D; document.getElementById(&#x27;conflictModal&#x27;);
+                if (modalEl) new bootstrap.Modal(modalEl).show();
+              } else {
+                const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
+                if (modalEl) new bootstrap.Modal(modalEl).show();
+              }
+            },
+          });
+      }
+    } else {
+      console.log(&#x27;Form invalid&#x27;);
     }
   }
 
@@ -1856,26 +1957,39 @@ export class ModificationUtilisateurComponent implements OnInit {
           &lt;input formControlName&#x3D;&quot;society&quot; class&#x3D;&quot;form-control&quot; /&gt;
         &lt;/div&gt;
       &lt;/div&gt;
+      &lt;!-- Mot de passe et confirmation --&gt;
       &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
         &lt;div class&#x3D;&quot;col-lg-5 offset-lg-1&quot;&gt;
-          &lt;label&gt;Mot de passe (laisser vide pour ne pas changer)&lt;/label&gt;
+          &lt;label for&#x3D;&quot;password&quot;&gt;Mot de passe&lt;/label&gt;
           &lt;input
             type&#x3D;&quot;password&quot;
+            id&#x3D;&quot;password&quot;
             formControlName&#x3D;&quot;password&quot;
             class&#x3D;&quot;form-control&quot;
           /&gt;
+          &lt;div
+            *ngIf&#x3D;&quot;
+          form.get(&#x27;password&#x27;)?.touched &amp;&amp;
+          form.get(&#x27;password&#x27;)?.errors?.[&#x27;minlength&#x27;]
+        &quot;
+            class&#x3D;&quot;text-danger&quot;
+          &gt;
+            Le mot de passe doit contenir au moins 8 caractères.
+          &lt;/div&gt;
         &lt;/div&gt;
-        &lt;div class&#x3D;&quot;col-3 d-flex align-items-center&quot;&gt;
-          &lt;div class&#x3D;&quot;form-check mt-4&quot;&gt;
-            &lt;input
-              type&#x3D;&quot;checkbox&quot;
-              formControlName&#x3D;&quot;admin&quot;
-              class&#x3D;&quot;form-check-input&quot;
-              id&#x3D;&quot;adminCheck&quot;
-            /&gt;
-            &lt;label for&#x3D;&quot;adminCheck&quot; class&#x3D;&quot;form-check-label&quot;
-              &gt;Administrateur&lt;/label
-            &gt;
+        &lt;div class&#x3D;&quot;col-lg-5&quot;&gt;
+          &lt;label for&#x3D;&quot;confirmPassword&quot;&gt;Confirmer le mot de passe&lt;/label&gt;
+          &lt;input
+            type&#x3D;&quot;password&quot;
+            id&#x3D;&quot;confirmPassword&quot;
+            formControlName&#x3D;&quot;confirmPassword&quot;
+            class&#x3D;&quot;form-control&quot;
+          /&gt;
+          &lt;div
+            *ngIf&#x3D;&quot;form.errors?.[&#x27;notMatching&#x27;] &amp;&amp; form.get(&#x27;confirmPassword&#x27;)?.touched&quot;
+            class&#x3D;&quot;text-danger&quot;
+          &gt;
+            Les mots de passe ne correspondent pas.
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -1941,6 +2055,11 @@ Admin : {{ selectedUserAfter.admin }}
 &lt;div *ngIf&#x3D;&quot;message&quot; class&#x3D;&quot;alert&quot; [ngClass]&#x3D;&quot;messageClass&quot; role&#x3D;&quot;alert&quot;&gt;
   {{ message }}
 &lt;/div&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;conflictModal&quot;
+  icon&#x3D;&quot;⚠️&quot;
+  message&#x3D;&quot;Impossible d&#x27;ajouter l&#x27;utilisateur : un compte avec ce nom et ce mot de passe existe déjà.&quot;
+&gt;&lt;/app-modal&gt;
 </code></pre>
     </div>
 
@@ -1970,8 +2089,8 @@ Admin : {{ selectedUserAfter.admin }}
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Modifier un utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet de modifier des utilisateurs aussi bien administrateurs    que stagiaire.  </p>  <br />  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher un utilisateur..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Spinner pendant le chargement -->  <div *ngIf="isLoading" class="text-center p-4">    <div class="spinner-border text-primary" role="status">      <span class="visually-hidden">Chargement...</span>    </div>  </div>  <!-- Message si aucun utilisateur après chargement -->  <div    *ngIf="!isLoading && users.length === 0"    class="alert alert-warning text-center"    role="alert"  >    Aucun utilisateur n\'a encore été créé. Veuillez en ajouter pour pouvoir les    modifier !  </div>  <!-- Message si recherche mais aucun résultat -->  <div    *ngIf="!isLoading && users.length > 0 && filteredUsers.length === 0"    class="alert alert-info text-center"    role="alert"  >    Aucun utilisateur ne correspond à votre recherche.  </div>  <!-- Tableau affiché uniquement si filteredUsers contient des éléments -->  <div *ngIf="!isLoading && filteredUsers.length > 0">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Nom</th>          <th>Prénom</th>          <th>Email</th>          <th>Société</th>          <th>Admin</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let user of paginatedUsers">          <td class="text-center">            <i              class="bi bi-pencil-square text-primary fs-5"              style="cursor: pointer"              (click)="selectUser(user)"            ></i>          </td>          <td>{{ user.name }}</td>          <td>{{ user.firstname }}</td>          <td class="email-truncate">            {{ isSmallScreen ? (user.email | truncateEmail : 10) : user.email }}          </td>          <td>{{ user.society }}</td>          <td>{{ user.admin ? "Oui" : "Non" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredUsers"    [pageSize]="5"    (pageChange)="paginatedUsers = $event"  >  </app-pagination>  <!-- Formulaire d\'édition -->  <div *ngIf="selectedUser" class="mt-4 form">    <h4>      Modifier l\'utilisateur : {{ selectedUser.name }}      {{ selectedUser.firstname }}    </h4>    <br />    <form [formGroup]="form" (ngSubmit)="onSubmit()">      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label>Nom</label>          <input formControlName="name" class="form-control" />        </div>        <div class="col-lg-5">          <label>Prénom</label>          <input formControlName="firstname" class="form-control" />        </div>      </div>      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label>Email</label>          <input formControlName="email" class="form-control" />        </div>        <div class="col-lg-5">          <label>Société</label>          <input formControlName="society" class="form-control" />        </div>      </div>      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label>Mot de passe (laisser vide pour ne pas changer)</label>          <input            type="password"            formControlName="password"            class="form-control"          />        </div>        <div class="col-3 d-flex align-items-center">          <div class="form-check mt-4">            <input              type="checkbox"              formControlName="admin"              class="form-check-input"              id="adminCheck"            />            <label for="adminCheck" class="form-check-label"              >Administrateur</label            >          </div>        </div>      </div>      <button        class="btn btn-danger mt-3 me-2"        type="button"        (click)="cancelEdit()"      >        <i class="bi bi-x-circle me-2"></i> Annuler      </button>      <button        class="btn btn-secondary mt-3 me-2"        type="button"        (click)="resetForm()"      >        <i class="bi bi-arrow-counterclockwise"></i>        Réinitialiser      </button>      <button        class="btn btn-primary mt-3"        type="submit"        [disabled]="form.invalid"      >        <i class="bi bi-save"></i> Enregistrer      </button>    </form>  </div></div><!-- Modal de confirmation --><app-confirmation-modal  [title]="\'Confirmer la mise à jour\'"  [actionType]="\'update\'"  [message]="\'Confirmez-vous la modification de cet utilisateur ?\'"  (confirm)="confirmUpdate()">  <!-- Contenu personnalisé si besoin -->  <div *ngIf="selectedUserBefore && selectedUserAfter">    <div class="row mb-3">      <div class="col-6">        <h6>Avant :</h6>        <pre>  Nom : {{ selectedUserBefore.name }}  Prénom : {{ selectedUserBefore.firstname }}  Société : {{ selectedUserBefore.society }}  Email : {{ selectedUserBefore.email }}  Admin : {{ selectedUserBefore.admin }}        </pre>      </div>      <div class="col-6">        <h6>Après :</h6>        <pre>Nom : {{ selectedUserAfter.name }}Prénom : {{ selectedUserAfter.firstname }}Société : {{ selectedUserAfter.society }}Email : {{ selectedUserAfter.email }}Admin : {{ selectedUserAfter.admin }}        </pre>      </div>    </div>  </div></app-confirmation-modal><div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">  {{ message }}</div></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Modifier un utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet de modifier des utilisateurs aussi bien administrateurs    que stagiaire.  </p>  <br />  <br />  <!-- Search bar -->  <app-search-bar    placeholder="Rechercher un utilisateur..."    [(value)]="searchTerm"    (valueChange)="applyFilter()"  ></app-search-bar>  <!-- Spinner pendant le chargement -->  <div *ngIf="isLoading" class="text-center p-4">    <div class="spinner-border text-primary" role="status">      <span class="visually-hidden">Chargement...</span>    </div>  </div>  <!-- Message si aucun utilisateur après chargement -->  <div    *ngIf="!isLoading && users.length === 0"    class="alert alert-warning text-center"    role="alert"  >    Aucun utilisateur n\'a encore été créé. Veuillez en ajouter pour pouvoir les    modifier !  </div>  <!-- Message si recherche mais aucun résultat -->  <div    *ngIf="!isLoading && users.length > 0 && filteredUsers.length === 0"    class="alert alert-info text-center"    role="alert"  >    Aucun utilisateur ne correspond à votre recherche.  </div>  <!-- Tableau affiché uniquement si filteredUsers contient des éléments -->  <div *ngIf="!isLoading && filteredUsers.length > 0">    <table class="table table-striped">      <thead>        <tr>          <th></th>          <th>Nom</th>          <th>Prénom</th>          <th>Email</th>          <th>Société</th>          <th>Admin</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let user of paginatedUsers">          <td class="text-center">            <i              class="bi bi-pencil-square text-primary fs-5"              style="cursor: pointer"              (click)="selectUser(user)"            ></i>          </td>          <td>{{ user.name }}</td>          <td>{{ user.firstname }}</td>          <td class="email-truncate">            {{ isSmallScreen ? (user.email | truncateEmail : 10) : user.email }}          </td>          <td>{{ user.society }}</td>          <td>{{ user.admin ? "Oui" : "Non" }}</td>        </tr>      </tbody>    </table>  </div>  <!-- Pagination -->  <app-pagination    [items]="filteredUsers"    [pageSize]="5"    (pageChange)="paginatedUsers = $event"  >  </app-pagination>  <!-- Formulaire d\'édition -->  <div *ngIf="selectedUser" class="mt-4 form">    <h4>      Modifier l\'utilisateur : {{ selectedUser.name }}      {{ selectedUser.firstname }}    </h4>    <br />    <form [formGroup]="form" (ngSubmit)="onSubmit()">      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label>Nom</label>          <input formControlName="name" class="form-control" />        </div>        <div class="col-lg-5">          <label>Prénom</label>          <input formControlName="firstname" class="form-control" />        </div>      </div>      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label>Email</label>          <input formControlName="email" class="form-control" />        </div>        <div class="col-lg-5">          <label>Société</label>          <input formControlName="society" class="form-control" />        </div>      </div>      <!-- Mot de passe et confirmation -->      <div class="row mb-3">        <div class="col-lg-5 offset-lg-1">          <label for="password">Mot de passe</label>          <input            type="password"            id="password"            formControlName="password"            class="form-control"          />          <div            *ngIf="          form.get(\'password\')?.touched &&          form.get(\'password\')?.errors?.[\'minlength\']        "            class="text-danger"          >            Le mot de passe doit contenir au moins 8 caractères.          </div>        </div>        <div class="col-lg-5">          <label for="confirmPassword">Confirmer le mot de passe</label>          <input            type="password"            id="confirmPassword"            formControlName="confirmPassword"            class="form-control"          />          <div            *ngIf="form.errors?.[\'notMatching\'] && form.get(\'confirmPassword\')?.touched"            class="text-danger"          >            Les mots de passe ne correspondent pas.          </div>        </div>      </div>      <button        class="btn btn-danger mt-3 me-2"        type="button"        (click)="cancelEdit()"      >        <i class="bi bi-x-circle me-2"></i> Annuler      </button>      <button        class="btn btn-secondary mt-3 me-2"        type="button"        (click)="resetForm()"      >        <i class="bi bi-arrow-counterclockwise"></i>        Réinitialiser      </button>      <button        class="btn btn-primary mt-3"        type="submit"        [disabled]="form.invalid"      >        <i class="bi bi-save"></i> Enregistrer      </button>    </form>  </div></div><!-- Modal de confirmation --><app-confirmation-modal  [title]="\'Confirmer la mise à jour\'"  [actionType]="\'update\'"  [message]="\'Confirmez-vous la modification de cet utilisateur ?\'"  (confirm)="confirmUpdate()">  <!-- Contenu personnalisé si besoin -->  <div *ngIf="selectedUserBefore && selectedUserAfter">    <div class="row mb-3">      <div class="col-6">        <h6>Avant :</h6>        <pre>  Nom : {{ selectedUserBefore.name }}  Prénom : {{ selectedUserBefore.firstname }}  Société : {{ selectedUserBefore.society }}  Email : {{ selectedUserBefore.email }}  Admin : {{ selectedUserBefore.admin }}        </pre>      </div>      <div class="col-6">        <h6>Après :</h6>        <pre>Nom : {{ selectedUserAfter.name }}Prénom : {{ selectedUserAfter.firstname }}Société : {{ selectedUserAfter.society }}Email : {{ selectedUserAfter.email }}Admin : {{ selectedUserAfter.admin }}        </pre>      </div>    </div>  </div></app-confirmation-modal><div *ngIf="message" class="alert" [ngClass]="messageClass" role="alert">  {{ message }}</div><app-modal  modalId="conflictModal"  icon="⚠️"  message="Impossible d\'ajouter l\'utilisateur : un compte avec ce nom et ce mot de passe existe déjà."></app-modal></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ModificationUtilisateurComponent'};
 </script>

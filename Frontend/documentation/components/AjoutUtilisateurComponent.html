@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -160,7 +142,8 @@
 <li>Affichage de modals Bootstrap en cas de succès ou d’échec.</li>
 <li>Réinitialisation du formulaire après création réussie.</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-ajout-utilisateur&gt;&lt;/app-ajout-utilisateur&gt;</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
+&lt;app-ajout-utilisateur&gt;&lt;/app-ajout-utilisateur&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
     </p>
 
 
@@ -600,7 +583,8 @@ export class AjoutUtilisateurComponent {
   onSubmit() {
     if (this.form.valid) {
       const { confirmPassword, ...userData } &#x3D; this.form.value;
-      // Forcer admin à false si vide
+
+      // Forcer admin à false si non coché
       if (!userData.admin) {
         userData.admin &#x3D; false;
       }
@@ -610,13 +594,23 @@ export class AjoutUtilisateurComponent {
           console.log(&#x27;Utilisateur créé&#x27;, user);
           this.form.reset();
 
-          // Afficher le modal Bootstrap
+          // ✅ Modal de succès
           const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
           if (modalEl) new bootstrap.Modal(modalEl).show();
         },
         error: (err) &#x3D;&gt; {
-          const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
-          if (modalEl) new bootstrap.Modal(modalEl).show();
+          console.error(&#x27;Erreur création utilisateur :&#x27;, err);
+
+          // 🟡 Vérifie le code d’erreur HTTP
+          if (err.status &#x3D;&#x3D;&#x3D; 409) {
+            // ⚠️ Conflit : nom/mot de passe déjà existants
+            const modalEl &#x3D; document.getElementById(&#x27;conflictModal&#x27;);
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          } else {
+            // ❌ Erreur générique
+            const modalEl &#x3D; document.getElementById(&#x27;failedModal&#x27;);
+            if (modalEl) new bootstrap.Modal(modalEl).show();
+          }
         },
       });
     } else {
@@ -790,6 +784,11 @@ export class AjoutUtilisateurComponent {
   icon&#x3D;&quot;❌&quot;
   message&#x3D;&quot;L&#x27;ajout de l&#x27;Utilisateur a échoué !&quot;
 &gt;&lt;/app-modal&gt;
+&lt;app-modal
+  modalId&#x3D;&quot;conflictModal&quot;
+  icon&#x3D;&quot;⚠️&quot;
+  message&#x3D;&quot;Impossible d&#x27;ajouter l&#x27;utilisateur : un compte avec ce nom et ce mot de passe existe déjà.&quot;
+&gt;&lt;/app-modal&gt;
 </code></pre>
     </div>
 
@@ -819,8 +818,8 @@ export class AjoutUtilisateurComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajout d\'un utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet d\'ajouter des utilisateurs aussi bien administrateurs    que stagiaire.  </p>  <br />  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">    <!-- Nom et Prénom -->    <div class="row g-3 mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="name" class="form-label">Nom</label>        <input          type="text"          id="name"          formControlName="name"          class="form-control"        />        <div          *ngIf="form.get(\'name\')?.touched && form.get(\'name\')?.invalid"          class="text-danger mt-1"        >          Le nom est requis.        </div>      </div>      <div class="col-lg-5">        <label for="firstname" class="form-label">Prénom</label>        <input          type="text"          id="firstname"          formControlName="firstname"          class="form-control"        />        <div          *ngIf="            form.get(\'firstname\')?.touched && form.get(\'firstname\')?.invalid          "          class="text-danger mt-1"        >          Le prénom est requis.        </div>      </div>    </div>    <!-- Email et Society -->    <div class="row mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="email">Email</label>        <input          type="email"          id="email"          formControlName="email"          class="form-control"        />        <div          *ngIf="form.get(\'email\')?.touched && form.get(\'email\')?.invalid"          class="text-danger"        >          <div *ngIf="form.get(\'email\')?.errors?.[\'required\']">            Email requis.          </div>          <div *ngIf="form.get(\'email\')?.errors?.[\'email\']">            Email invalide.          </div>        </div>      </div>      <div class="col-lg-5">        <label for="society">Société</label>        <input          type="text"          id="society"          formControlName="society"          class="form-control"        />        <div          *ngIf="form.get(\'society\')?.touched && form.get(\'society\')?.invalid"          class="text-danger"        >          La société est requise.        </div>      </div>    </div>    <!-- Mot de passe et confirmation -->    <div class="row mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="password">Mot de passe</label>        <input          type="password"          id="password"          formControlName="password"          class="form-control"        />        <div          *ngIf="          form.get(\'password\')?.touched &&          form.get(\'password\')?.errors?.[\'minlength\']        "          class="text-danger"        >          Le mot de passe doit contenir au moins 8 caractères.        </div>      </div>      <div class="col-lg-5">        <label for="confirmPassword">Confirmer le mot de passe</label>        <input          type="password"          id="confirmPassword"          formControlName="confirmPassword"          class="form-control"        />        <div          *ngIf="form.errors?.[\'notMatching\'] && form.get(\'confirmPassword\')?.touched"          class="text-danger"        >          Les mots de passe ne correspondent pas.        </div>      </div>    </div>    <!-- Case à cocher Admin -->    <div class="row mb-3">      <div class="col-1 offset-1">        <div class="form-check">          <input            type="checkbox"            id="admin"            formControlName="admin"            class="form-check-input"          />          <label for="admin" class="form-check-label">Administrateur</label>        </div>      </div>    </div>    <br />    <!-- Bouton submit -->    <div class="row">      <div class="col-m-6 offset-m-3 col-sm-10 offset-sm-1">        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">          <i class="bi bi-save"></i>          Enregistrer        </button>      </div>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout d\'un Utilisateur réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout de l\'Utilisateur a échoué !"></app-modal></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>Ajout d\'un utilisateur</h1>  <br /><br />  <p>    Ce formulaire permet d\'ajouter des utilisateurs aussi bien administrateurs    que stagiaire.  </p>  <br />  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">    <!-- Nom et Prénom -->    <div class="row g-3 mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="name" class="form-label">Nom</label>        <input          type="text"          id="name"          formControlName="name"          class="form-control"        />        <div          *ngIf="form.get(\'name\')?.touched && form.get(\'name\')?.invalid"          class="text-danger mt-1"        >          Le nom est requis.        </div>      </div>      <div class="col-lg-5">        <label for="firstname" class="form-label">Prénom</label>        <input          type="text"          id="firstname"          formControlName="firstname"          class="form-control"        />        <div          *ngIf="            form.get(\'firstname\')?.touched && form.get(\'firstname\')?.invalid          "          class="text-danger mt-1"        >          Le prénom est requis.        </div>      </div>    </div>    <!-- Email et Society -->    <div class="row mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="email">Email</label>        <input          type="email"          id="email"          formControlName="email"          class="form-control"        />        <div          *ngIf="form.get(\'email\')?.touched && form.get(\'email\')?.invalid"          class="text-danger"        >          <div *ngIf="form.get(\'email\')?.errors?.[\'required\']">            Email requis.          </div>          <div *ngIf="form.get(\'email\')?.errors?.[\'email\']">            Email invalide.          </div>        </div>      </div>      <div class="col-lg-5">        <label for="society">Société</label>        <input          type="text"          id="society"          formControlName="society"          class="form-control"        />        <div          *ngIf="form.get(\'society\')?.touched && form.get(\'society\')?.invalid"          class="text-danger"        >          La société est requise.        </div>      </div>    </div>    <!-- Mot de passe et confirmation -->    <div class="row mb-3">      <div class="col-lg-5 offset-lg-1">        <label for="password">Mot de passe</label>        <input          type="password"          id="password"          formControlName="password"          class="form-control"        />        <div          *ngIf="          form.get(\'password\')?.touched &&          form.get(\'password\')?.errors?.[\'minlength\']        "          class="text-danger"        >          Le mot de passe doit contenir au moins 8 caractères.        </div>      </div>      <div class="col-lg-5">        <label for="confirmPassword">Confirmer le mot de passe</label>        <input          type="password"          id="confirmPassword"          formControlName="confirmPassword"          class="form-control"        />        <div          *ngIf="form.errors?.[\'notMatching\'] && form.get(\'confirmPassword\')?.touched"          class="text-danger"        >          Les mots de passe ne correspondent pas.        </div>      </div>    </div>    <!-- Case à cocher Admin -->    <div class="row mb-3">      <div class="col-1 offset-1">        <div class="form-check">          <input            type="checkbox"            id="admin"            formControlName="admin"            class="form-check-input"          />          <label for="admin" class="form-check-label">Administrateur</label>        </div>      </div>    </div>    <br />    <!-- Bouton submit -->    <div class="row">      <div class="col-m-6 offset-m-3 col-sm-10 offset-sm-1">        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">          <i class="bi bi-save"></i>          Enregistrer        </button>      </div>    </div>  </form></div><!-- MODALS --><app-modal  modalId="successModal"  icon="✔️"  message="Ajout d\'un Utilisateur réalisée avec succès !"></app-modal><app-modal  modalId="failedModal"  icon="❌"  message="L\'ajout de l\'Utilisateur a échoué !"></app-modal><app-modal  modalId="conflictModal"  icon="⚠️"  message="Impossible d\'ajouter l\'utilisateur : un compte avec ce nom et ce mot de passe existe déjà."></app-modal></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AjoutUtilisateurComponent'};
 </script>

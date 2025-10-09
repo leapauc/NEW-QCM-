@@ -11,7 +11,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./Database:/docker-entrypoint-initdb.d:ro
-    healthcheck: # Ajout : Vérifie si la DB est prête
+    healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
@@ -22,18 +22,48 @@ services:
     container_name: my-web-dev
     working_dir: /app
     ports:
-      - "3000:3000" # Changez en "3001:3000" si port occupé
+      - "3000:3000"
     volumes:
       - ./Backend:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://postgres:0zaIySyzZro1qeSbe8aQ@postgres:5432/webdev
-      - PORT=3000 # Ajout : Pour que votre app utilise ce port
+      - PORT=3000
     depends_on:
       postgres:
-        condition: service_healthy # Attends que Postgres soit prêt (Docker Compose v3+)
-    command: sh -c "sleep 10 && npm install && npm start" # Ajout : Délai de 10s pour laisser la DB s'initialiser
+        condition: service_healthy
+    command: sh -c "sleep 10 && npm install && npm start"
+
+  frontend:
+    image: node:18
+    container_name: my-frontend
+    working_dir: /usr/src/app
+    volumes:
+      - ./Frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4200:4200"
+    environment:
+      - NODE_ENV=development
+    # 👇 IMPORTANT : Angular doit écouter sur 0.0.0.0 pour être accessible
+    command: sh -c "npm install && npm run start -- --host 0.0.0.0 --poll 2000"
+    depends_on:
+      - web-dev
+
+  compodoc:
+    image: node:18
+    container_name: my-compodoc
+    working_dir: /usr/src/app
+    volumes:
+      - ./Frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8081:8080"
+    command: sh -c "npm install -g @compodoc/compodoc &&
+      compodoc -p tsconfig.app.json -d documentation -s --host 0.0.0.0 --port 8080"
+    depends_on:
+      - frontend
 
 volumes:
   pgdata:

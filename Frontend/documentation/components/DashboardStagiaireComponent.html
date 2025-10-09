@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -153,7 +135,8 @@
 </ul>
 <p>Utilise <code>StatsService</code> et <code>QuizAttemptsService</code> pour récupérer les données
 et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-dashboard-stagiaire&gt;&lt;/app-dashboard-stagiaire&gt;</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
+&lt;app-dashboard-stagiaire&gt;&lt;/app-dashboard-stagiaire&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
     </p>
 
 
@@ -1197,7 +1180,7 @@ export class DashboardStagiaireComponent {
 
   &lt;br /&gt;&lt;br /&gt;
   &lt;div class&#x3D;&quot;row&quot;&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/icon_2_dashboard_admin.jpg&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ nbQuestionnairesRealises }}&lt;/h2&gt;
@@ -1206,21 +1189,21 @@ export class DashboardStagiaireComponent {
         &lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/happy_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMax }}&lt;/h2&gt;
         &lt;h4&gt;score max&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/sad_emoji.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreMin }}&lt;/h2&gt;
         &lt;h4&gt;score min&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/average_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ scoreAvg | number : &quot;1.2-2&quot; }}&lt;/h2&gt;
@@ -1230,7 +1213,7 @@ export class DashboardStagiaireComponent {
   &lt;/div&gt;
   &lt;hr /&gt;
   &lt;div class&#x3D;&quot;row text-center&quot;&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/ranking_icon.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ range }}&lt;/h2&gt;
@@ -1238,7 +1221,7 @@ export class DashboardStagiaireComponent {
         &lt;h4&gt;place&lt;/h4&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-10 col-xs-12&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-3 col-md-6 col-sm-12&quot;&gt;
       &lt;div class&#x3D;&quot;card_3&quot;&gt;
         &lt;img src&#x3D;&quot;img/time_last.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;
         &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ avgTime | timeFormat }}&lt;/h2&gt;
@@ -1246,7 +1229,7 @@ export class DashboardStagiaireComponent {
       &lt;/div&gt;
     &lt;/div&gt;
 
-    &lt;div class&#x3D;&quot;col-6 d-flex justify-content-center&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-6 col-md-12 d-flex justify-content-center&quot;&gt;
       &lt;div
         class&#x3D;&quot;card_6 p-3 w-100 d-flex align-items-center justify-content-center&quot;
       &gt;
@@ -1255,7 +1238,7 @@ export class DashboardStagiaireComponent {
             &lt;img src&#x3D;&quot;img/icon_5_dashboard_admin.png&quot; class&#x3D;&quot;img-fluid&quot; /&gt;
           &lt;/div&gt;
           &lt;div
-            class&#x3D;&quot;col-5 offset-1 d-flex flex-column justify-content-center align-items-center&quot;
+            class&#x3D;&quot;col-lg-5 offset-lg-1 col-md-12 d-flex flex-column justify-content-center align-items-center&quot;
           &gt;
             &lt;h4&gt;Questionnaire le plus populaire :&lt;/h4&gt;
             &lt;h2 class&#x3D;&quot;fw-bold&quot;&gt;{{ questionnairePopulaire }}&lt;/h2&gt;
@@ -1397,8 +1380,8 @@ export class DashboardStagiaireComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>  <br /><br />  <div class="row">    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>        <h4>          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}        </h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/happy_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMax }}</h2>        <h4>score max</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/sad_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMin }}</h2>        <h4>score min</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/average_icon.png" /><br /><br />        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>        <h4>de moyenne</h4>      </div>    </div>  </div>  <hr />  <div class="row text-center">    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/ranking_icon.png" /><br /><br />        <h2 class="fw-bold">{{ range }}</h2>        <!-- 1 ? "ème" : "ère"-->        <h4>place</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">      <div class="card_3">        <img src="img/time_last.png" /><br /><br />        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>        <h4>durée moyenne QCM</h4>      </div>    </div>    <div class="col-6 d-flex justify-content-center">      <div        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"      >        <div class="row w-100">          <div class="col-5 d-flex justify-content-center align-items-center">            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />          </div>          <div            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"          >            <h4>Questionnaire le plus populaire :</h4>            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>          </div>        </div>      </div>    </div>  </div>  <br />  <hr />  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->  <div class="center">    <h3>Statistiques par tentatives de réponses au QCM</h3>    <!-- Spinner pendant le chargement -->    <div *ngIf="isLoading" class="text-center my-4">      <div class="spinner-border text-primary" role="status">        <span class="visually-hidden">Chargement...</span>      </div>    </div>    <!-- Message si aucune tentative -->    <div      *ngIf="!isLoading && allAttemptsOfMyUser.length === 0"      class="alert alert-info text-center my-4"    >      Aucune tentative disponible.    </div>    <!-- Table uniquement si données présentes -->    <table      *ngIf="!isLoading && allAttemptsOfMyUser.length > 0"      class="table table-bordered table-striped align-middle text-center"    >      <thead>        <tr>          <th>Nom QCM</th>          <th>Finie à</th>          <th>Durée</th>          <th>Score</th>          <th>Progression</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let attempt of paginatedAttempts">          <td>{{ attempt.title }}</td>          <td>{{ attempt.ended_at | date : "short" }}</td>          <td *ngIf="attempt.duration.minutes">            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s          </td>          <td *ngIf="!attempt.duration.minutes">            {{ attempt.duration.seconds }} s          </td>          <td style="width: 200px">            <div class="position-relative" style="height: 20px">              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.score + \'%\',                    backgroundColor: getCompletionColor(attempt.score)                  }"                  [attr.aria-valuenow]="attempt.score"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.score | number : "1.0-0" }}%              </span>            </div>          </td>          <td>            <!-- Conteneur de la jauge -->            <div class="position-relative" style="height: 20px">              <!-- Barre de progression -->              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.completed + \'%\',                    backgroundColor: getCompletionColor(attempt.completed)                  }"                  [attr.aria-valuenow]="attempt.completed"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <!-- Texte centré -->              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.completed | number : "1.0-0" }}%              </span>            </div>          </td>        </tr>      </tbody>    </table>    <!-- Pagination -->    <app-pagination      [items]="allAttemptsOfMyUser"      [pageSize]="pageSize"      (pageChange)="paginatedAttempts = $event"    >    </app-pagination>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+        var COMPONENT_TEMPLATE = '<div><br /><br /><div class="center">  <h1>DASHBOARD - Stagiaire {{ authNameUser }}</h1>  <br /><br />  <div class="row">    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />        <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>        <h4>          {{ 1 > 2 ? "questionnaires réalisés" : "questionnaire réalisé" }}        </h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/happy_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMax }}</h2>        <h4>score max</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/sad_emoji.png" /><br /><br />        <h2 class="fw-bold">{{ scoreMin }}</h2>        <h4>score min</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/average_icon.png" /><br /><br />        <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>        <h4>de moyenne</h4>      </div>    </div>  </div>  <hr />  <div class="row text-center">    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/ranking_icon.png" /><br /><br />        <h2 class="fw-bold">{{ range }}</h2>        <!-- 1 ? "ème" : "ère"-->        <h4>place</h4>      </div>    </div>    <div class="col-lg-3 col-md-6 col-sm-12">      <div class="card_3">        <img src="img/time_last.png" /><br /><br />        <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>        <h4>durée moyenne QCM</h4>      </div>    </div>    <div class="col-lg-6 col-md-12 d-flex justify-content-center">      <div        class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"      >        <div class="row w-100">          <div class="col-5 d-flex justify-content-center align-items-center">            <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />          </div>          <div            class="col-lg-5 offset-lg-1 col-md-12 d-flex flex-column justify-content-center align-items-center"          >            <h4>Questionnaire le plus populaire :</h4>            <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>          </div>        </div>      </div>    </div>  </div>  <br />  <hr />  <!-- Tableau statistique sur les tentatives de réponses des utilisateurs -->  <div class="center">    <h3>Statistiques par tentatives de réponses au QCM</h3>    <!-- Spinner pendant le chargement -->    <div *ngIf="isLoading" class="text-center my-4">      <div class="spinner-border text-primary" role="status">        <span class="visually-hidden">Chargement...</span>      </div>    </div>    <!-- Message si aucune tentative -->    <div      *ngIf="!isLoading && allAttemptsOfMyUser.length === 0"      class="alert alert-info text-center my-4"    >      Aucune tentative disponible.    </div>    <!-- Table uniquement si données présentes -->    <table      *ngIf="!isLoading && allAttemptsOfMyUser.length > 0"      class="table table-bordered table-striped align-middle text-center"    >      <thead>        <tr>          <th>Nom QCM</th>          <th>Finie à</th>          <th>Durée</th>          <th>Score</th>          <th>Progression</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let attempt of paginatedAttempts">          <td>{{ attempt.title }}</td>          <td>{{ attempt.ended_at | date : "short" }}</td>          <td *ngIf="attempt.duration.minutes">            {{ attempt.duration.minutes }} min {{ attempt.duration.seconds }} s          </td>          <td *ngIf="!attempt.duration.minutes">            {{ attempt.duration.seconds }} s          </td>          <td style="width: 200px">            <div class="position-relative" style="height: 20px">              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.score + \'%\',                    backgroundColor: getCompletionColor(attempt.score)                  }"                  [attr.aria-valuenow]="attempt.score"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.score | number : "1.0-0" }}%              </span>            </div>          </td>          <td>            <!-- Conteneur de la jauge -->            <div class="position-relative" style="height: 20px">              <!-- Barre de progression -->              <div class="progress h-100">                <div                  class="progress-bar"                  role="progressbar"                  [ngStyle]="{                    width: attempt.completed + \'%\',                    backgroundColor: getCompletionColor(attempt.completed)                  }"                  [attr.aria-valuenow]="attempt.completed"                  aria-valuemin="0"                  aria-valuemax="100"                ></div>              </div>              <!-- Texte centré -->              <span                class="position-absolute top-50 start-50 translate-middle fw-bold"                style="color: black"              >                {{ attempt.completed | number : "1.0-0" }}%              </span>            </div>          </td>        </tr>      </tbody>    </table>    <!-- Pagination -->    <app-pagination      [items]="allAttemptsOfMyUser"      [pageSize]="pageSize"      (pageChange)="paginatedAttempts = $event"    >    </app-pagination>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AffichageResultsComponent', 'selector': 'app-affichage-results'},{'name': 'AjoutQcmComponent', 'selector': 'app-ajout-qcm'},{'name': 'AjoutQcmQuestionComponent', 'selector': 'app-ajout-qcm-question'},{'name': 'AjoutQuestionComponent', 'selector': 'app-ajout-question'},{'name': 'AjoutUtilisateurComponent', 'selector': 'app-ajout-utilisateur'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChoixQcmComponent', 'selector': 'app-choix-qcm'},{'name': 'ConfirmationModalComponent', 'selector': 'app-confirmation-modal'},{'name': 'DashboardAdminComponent', 'selector': 'app-dashboard-admin'},{'name': 'DashboardStagiaireComponent', 'selector': 'app-dashboard-stagiaire'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ModalComponent', 'selector': 'app-modal'},{'name': 'ModificationQcmComponent', 'selector': 'app-modification-qcm'},{'name': 'ModificationQcmQuestionComponent', 'selector': 'app-modification-qcm-question'},{'name': 'ModificationQuestionComponent', 'selector': 'app-modification-question'},{'name': 'ModificationUtilisateurComponent', 'selector': 'app-utilisateur-stagiaire'},{'name': 'PaginationComponent', 'selector': 'app-pagination'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'StagiaireComponent', 'selector': 'app-stagiaire'},{'name': 'SuppressionQcmComponent', 'selector': 'app-suppression-qcm'},{'name': 'SuppressionQuestionComponent', 'selector': 'app-suppression-question'},{'name': 'SuppressionUtilisateurComponent', 'selector': 'app-suppression-utilisateur'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DashboardStagiaireComponent'};
 </script>

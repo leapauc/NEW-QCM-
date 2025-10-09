@@ -227,7 +227,7 @@ router.get("/firstActivStagiaire", getFirstStagiaireActif);
  *     summary: Récupérer le nombre de questionnaires par utilisateur
  *     description: Retourne la liste des utilisateurs (hors administrateurs) avec le nombre de questionnaires qu'ils ont réalisés.
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     responses:
  *       200:
  *         description: Liste des utilisateurs avec leur nombre de questionnaires complétés
@@ -266,7 +266,7 @@ router.get("/nbQuestionnaireList", getNbQuestionnaireList);
  *     summary: Récupérer le nombre de questionnaires d'un utilisateur
  *     description: Retourne le nombre de questionnaires réalisés par un utilisateur spécifique (hors administrateurs).
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     parameters:
  *       - in: path
  *         name: id_user
@@ -305,7 +305,7 @@ router.get("/nbQuestionnaireByUser/:id_user", getNbQuestionnaireByUser);
  *     summary: Récupérer les scores max, min et moyen pour chaque utilisateur
  *     description: Retourne la liste des utilisateurs (hors administrateurs) avec leur score maximum, minimum et moyen sur l'ensemble de leurs tentatives.
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     responses:
  *       200:
  *         description: Liste des utilisateurs avec leurs statistiques de scores
@@ -353,7 +353,7 @@ router.get("/maxMinAvgScoreList", getMaxMinAvgScoreList);
  *     summary: Récupérer les scores max, min et moyen d'un utilisateur
  *     description: Retourne les statistiques (score maximum, minimum et moyen) pour un utilisateur spécifique (hors administrateurs).
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     parameters:
  *       - in: path
  *         name: id_user
@@ -398,7 +398,7 @@ router.get("/maxMinAvgScoreByUser/:id_user", getMaxMinAvgScoreByUser);
  *     summary: Récupérer le classement des utilisateurs par score moyen
  *     description: Retourne la liste des utilisateurs (hors administrateurs) avec leur score moyen et leur rang dans le classement.
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     responses:
  *       200:
  *         description: Liste classée des utilisateurs par score moyen
@@ -441,7 +441,7 @@ router.get("/rangeList", getRangeList);
  *     summary: Récupérer le rang et le score moyen d'un utilisateur
  *     description: Retourne le score moyen et le rang dans le classement pour un utilisateur spécifique (hors administrateurs).
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     parameters:
  *       - in: path
  *         name: id_user
@@ -488,7 +488,7 @@ router.get("/rangeByUser/:id_user", getRangeByUser);
  *     description: Retourne la liste des utilisateurs (hors administrateurs) avec le temps moyen (en minutes) qu'ils mettent pour compléter un quiz.
  *                  Si un utilisateur n'a pas de tentatives, la valeur renvoyée est "-".
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     responses:
  *       200:
  *         description: Liste des utilisateurs avec leur temps moyen par quiz
@@ -528,7 +528,7 @@ router.get("/avgTimeList", getMoyenneTimeList);
  *     description: Retourne le temps moyen (en minutes) qu'un utilisateur spécifique met pour compléter un quiz (hors administrateurs).
  *                  Si l'utilisateur n'a pas de tentatives, la valeur renvoyée est "-".
  *     tags:
- *       - Stats
+ *       - Statistiques
  *     parameters:
  *       - in: path
  *         name: id_user

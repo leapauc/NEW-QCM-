@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -296,7 +278,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Crée un nouveau QCM.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -373,7 +356,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Supprime un QCM existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.deleteQCM(1).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.deleteQCM(1).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -450,7 +434,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère l&#39;ensemble des QCM disponibles.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/QCM.html" target="_self" >Observable&lt;QCM[]&gt;</a></code>
@@ -493,7 +478,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère un QCM spécifique par son identifiant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -570,7 +556,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère uniquement les questions d&#39;un QCM (sans réponses).</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -647,7 +634,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère les questions d&#39;un QCM avec leurs réponses associées.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log(questions));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log(questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -724,7 +712,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour un QCM existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -819,7 +808,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour un QCM en y ajoutant une question.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">qcmService.updateQCM_Question(1, updatedQcm).subscribe();</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+qcmService.updateQCM_Question(1, updatedQcm).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>

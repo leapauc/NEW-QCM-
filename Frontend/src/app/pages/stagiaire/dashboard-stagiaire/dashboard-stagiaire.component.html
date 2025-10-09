@@ -5,7 +5,7 @@
 
   <br /><br />
   <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/icon_2_dashboard_admin.jpg" /><br /><br />
         <h2 class="fw-bold">{{ nbQuestionnairesRealises }}</h2>
@@ -14,21 +14,21 @@
         </h4>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/happy_emoji.png" /><br /><br />
         <h2 class="fw-bold">{{ scoreMax }}</h2>
         <h4>score max</h4>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/sad_emoji.png" /><br /><br />
         <h2 class="fw-bold">{{ scoreMin }}</h2>
         <h4>score min</h4>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/average_icon.png" /><br /><br />
         <h2 class="fw-bold">{{ scoreAvg | number : "1.2-2" }}</h2>
@@ -38,7 +38,7 @@
   </div>
   <hr />
   <div class="row text-center">
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/ranking_icon.png" /><br /><br />
         <h2 class="fw-bold">{{ range }}</h2>
@@ -46,7 +46,7 @@
         <h4>place</h4>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-10 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card_3">
         <img src="img/time_last.png" /><br /><br />
         <h2 class="fw-bold">{{ avgTime | timeFormat }}</h2>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="col-6 d-flex justify-content-center">
+    <div class="col-lg-6 col-md-12 d-flex justify-content-center">
       <div
         class="card_6 p-3 w-100 d-flex align-items-center justify-content-center"
       >
@@ -63,7 +63,7 @@
             <img src="img/icon_5_dashboard_admin.png" class="img-fluid" />
           </div>
           <div
-            class="col-5 offset-1 d-flex flex-column justify-content-center align-items-center"
+            class="col-lg-5 offset-lg-1 col-md-12 d-flex flex-column justify-content-center align-items-center"
           >
             <h4>Questionnaire le plus populaire :</h4>
             <h2 class="fw-bold">{{ questionnairePopulaire }}</h2>

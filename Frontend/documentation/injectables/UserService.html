@@ -61,20 +61,6 @@
                }
                toggleDarkMode(darkModeState);
           </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -95,10 +81,6 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
-
-
-
-
 
 
 
@@ -287,8 +269,9 @@ Idéal pour l&#39;administration et la gestion des comptes.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Créé un nouvel utilisateur.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">const newUser: User = { name: &#39;Alice&#39;, email: &#39;alice&#64;mail.com&#39;, admin: false };
-userService.createUser(newUser).subscribe(created =&gt; console.log(created));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+const newUser: User = { name: &#39;Alice&#39;, email: &#39;alice&#64;mail.com&#39;, admin: false };
+userService.createUser(newUser).subscribe(created =&gt; console.log(created));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -365,7 +348,8 @@ userService.createUser(newUser).subscribe(created =&gt; console.log(created));</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Supprime un utilisateur existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">userService.deleteUser(1).subscribe(res =&gt; console.log(res.message));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+userService.deleteUser(1).subscribe(res =&gt; console.log(res.message));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -442,7 +426,8 @@ userService.createUser(newUser).subscribe(created =&gt; console.log(created));</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère la liste de tous les utilisateurs.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">userService.getAllUsers().subscribe(users =&gt; console.log(users));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+userService.getAllUsers().subscribe(users =&gt; console.log(users));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Observable&lt;User[]&gt;</a></code>
@@ -485,7 +470,8 @@ userService.createUser(newUser).subscribe(created =&gt; console.log(created));</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère un utilisateur spécifique par son identifiant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">userService.getUserById(1).subscribe(user =&gt; console.log(user));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+userService.getUserById(1).subscribe(user =&gt; console.log(user));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -562,7 +548,8 @@ userService.createUser(newUser).subscribe(created =&gt; console.log(created));</
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour un utilisateur existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">userService.updateUser(1, { ...user, name: &#39;Nouveau nom&#39; }).subscribe(updated =&gt; console.log(updated));</code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+userService.updateUser(1, { ...user, name: &#39;Nouveau nom&#39; }).subscribe(updated =&gt; console.log(updated));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
