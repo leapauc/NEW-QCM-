@@ -204,6 +204,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Crée une instance de  AuthService.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -212,6 +214,7 @@ l&#39;utilisateur est connecté ou administrateur.</p>
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -226,6 +229,10 @@ l&#39;utilisateur est connecté ou administrateur.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Service Angular pour effectuer des requêtes HTTP.</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -261,8 +268,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/app/services/auth.service.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/services/auth.service.ts:83</a></div>
                         </td>
                     </tr>
 
@@ -304,8 +311,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="89"
-                                    class="link-to-prism">src/app/services/auth.service.ts:89</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/services/auth.service.ts:93</a></div>
                         </td>
                     </tr>
 
@@ -347,8 +354,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="98"
-                                    class="link-to-prism">src/app/services/auth.service.ts:98</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/services/auth.service.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -390,8 +397,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="41"
-                                    class="link-to-prism">src/app/services/auth.service.ts:41</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/services/auth.service.ts:45</a></div>
                         </td>
                     </tr>
 
@@ -491,8 +498,8 @@ authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="69"
-                                    class="link-to-prism">src/app/services/auth.service.ts:69</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/services/auth.service.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -586,6 +593,10 @@ export class AuthService {
    */
   private apiUrl &#x3D; &#x27;http://localhost:3000&#x27;;
 
+  /**
+   * Crée une instance de  AuthService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

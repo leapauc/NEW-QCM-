@@ -18,6 +18,10 @@ export class UserService {
    */
   private apiUrl = 'http://localhost:3000/users'; // URL de ton backend Node.js
 
+  /**
+   * Crée une instance de UserService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

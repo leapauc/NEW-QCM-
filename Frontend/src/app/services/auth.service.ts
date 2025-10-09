@@ -19,6 +19,10 @@ export class AuthService {
    */
   private apiUrl = 'http://localhost:3000';
 
+  /**
+   * Crée une instance de  AuthService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

@@ -91,9 +91,15 @@ export class AdminComponent {
     this.showOption = !this.showOption;
   }
 
+  /**
+   * Afficher/Désafficher la barre de navigation latérale.
+   */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+  /**
+   * Réduit la barre de navigation latérale quand la fenêtre est de petite taille.
+   */
   closeSidebar() {
     if (window.innerWidth <= 890) {
       this.isSidebarOpen = false;

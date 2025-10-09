@@ -47,9 +47,15 @@ export class StagiaireComponent {
     this.router.navigate(['/login']); // redirige vers la page de login
   }
 
+  /**
+   * Afficher/Désafficher la barre de navigation latérale.
+   */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+  /**
+   * Réduit la barre de navigation latérale quand la fenêtre est de petite taille.
+   */
   closeSidebar() {
     if (window.innerWidth <= 890) {
       this.isSidebarOpen = false;

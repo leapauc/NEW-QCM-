@@ -17,7 +17,7 @@ const router = express.Router();
  *       Retourne la liste complète des tentatives de QCM,
  *       incluant les informations sur l'utilisateur (nom) et le QCM (titre).
  *     tags:
- *       - Quiz Attempts
+ *       - QuizAttempts
  *     responses:
  *       200:
  *         description: Liste des tentatives de QCM

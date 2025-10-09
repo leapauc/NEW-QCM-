@@ -19,6 +19,10 @@ export class QcmService {
    */
   private apiUrl = 'http://localhost:3000/qcm'; // adapte si ton backend a un autre port
 
+  /**
+   * Crée une instance de QcmService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

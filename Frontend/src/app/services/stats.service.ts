@@ -19,6 +19,10 @@ export class StatsService {
    */
   private apiUrl = 'http://localhost:3000/stats'; // adapter si nécessaire
 
+  /**
+   * Crée une instance de UserService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

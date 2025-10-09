@@ -64,6 +64,25 @@ export class AffichageResultsComponent {
     this.loadAttempts();
   }
 
+  /**
+   * Charge les tentatives de quiz de l'utilisateur connecté.
+   *
+   * Cette méthode :
+   * - Active l’indicateur de chargement (`isLoading = true`)
+   * - Récupère l’utilisateur courant via le service `AuthService`
+   * - Si un utilisateur est connecté, appelle `QuizAttemptsService.getAttemptsByUser()`
+   *   pour récupérer ses tentatives depuis l’API
+   * - Met à jour la liste des tentatives (`attempts` et `filteredAttempts`)
+   * - Met à jour la vue en forçant la détection de changements avec `ChangeDetectorRef`
+   *
+   * @returns {void} Ne retourne rien directement, mais met à jour l’état du composant.
+   * @example
+   * // Exemple d’appel typique :
+   * this.loadAttempts();
+   *
+   * @see AuthService#getUser
+   * @see QuizAttemptsService#getAttemptsByUser
+   */
   loadAttempts() {
     this.isLoading = true;
     this.currentUser = this.authService.getUser();

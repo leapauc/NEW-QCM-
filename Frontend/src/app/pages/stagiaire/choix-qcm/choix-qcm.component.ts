@@ -79,6 +79,7 @@ export class ChoixQcmComponent implements OnInit {
   selectedAnswers: { id_question: number; id_response: number }[] = [];
   /** Etat chargement des données */
   isLoading = true;
+  /** Message dans le cas où le questionnaire n'a aucune question */
   noQuestionsMessage = '';
 
   /**

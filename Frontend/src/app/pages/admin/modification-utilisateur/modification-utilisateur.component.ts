@@ -114,7 +114,9 @@ export class ModificationUtilisateurComponent implements OnInit {
   paginatedUsers: User[] = [];
   /** Etat chargement des données */
   isLoading = true;
+  /** Taille à partir de laquelle on considère l'écran comme petit */
   SmallScreenSize = 787;
+  /** Boolean pour savoir si l'écran est petit ou non */
   isSmallScreen = window.innerWidth < this.SmallScreenSize;
 
   /**
@@ -148,6 +150,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       }
     });
   }
+
   /**
    * Validator personnalisé pour vérifier que le mot de passe et la confirmation correspondent.
    * @param group AbstractControl représentant le formulaire.
@@ -159,10 +162,26 @@ export class ModificationUtilisateurComponent implements OnInit {
     return password === confirm ? null : { notMatching: true };
   }
 
+  /**
+   * Écoute les événements de redimensionnement de la fenêtre (`window:resize`).
+   *
+   * À chaque redimensionnement, cette méthode met à jour la propriété `isSmallScreen`
+   * selon la largeur actuelle de la fenêtre.
+   *
+   * @param {Event} event - L'événement de redimensionnement du navigateur.
+   *
+   * @example
+   * // Déclenché automatiquement quand la fenêtre est redimensionnée
+   * // Si la largeur est inférieure à `SmallScreenSize`, la vue s’adapte :
+   * this.isSmallScreen === true;
+   *
+   * @hostlistener window:resize
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen = event.target.innerWidth < this.SmallScreenSize;
   }
+
   /**
    * Cycle de vie Angular : Initialisation du composant.
    * Charge les utilisateurs depuis le backend.
@@ -220,7 +239,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       if (!userData.admin) userData.admin = false;
 
       if (this.selectedUser) {
-        // 🔄 Cas modification → appel PUT
+        // Cas modification → appel PUT
         this.userService
           .updateUser(this.selectedUser.id_user!, userData)
           .subscribe({
@@ -238,7 +257,7 @@ export class ModificationUtilisateurComponent implements OnInit {
               console.error('Erreur modification utilisateur :', err);
 
               if (err.status === 409) {
-                // ⚠️ Conflit nom/mot de passe
+                // Conflit nom/mot de passe
                 const modalEl = document.getElementById('conflictModal');
                 if (modalEl) new bootstrap.Modal(modalEl).show();
               } else {

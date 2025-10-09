@@ -21,6 +21,10 @@ export class QuizAttemptsService {
    */
   private apiUrl = 'http://localhost:3000/quizAttempts'; // Adapter selon ton API
 
+  /**
+   * Crée une instance de QuizAttemptsService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

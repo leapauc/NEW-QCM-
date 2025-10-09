@@ -54,6 +54,7 @@ export class DashboardStagiaireComponent {
   paginatedAttempts: any[] = [];
   /** Liste complète des tentatives de l'utilisateur */
   allAttemptsOfMyUser: any[] = [];
+  /** Nombre maximum d'items par page du tableau */
   pageSize = 5;
   /** Etat chargement des données */
   isLoading = true;

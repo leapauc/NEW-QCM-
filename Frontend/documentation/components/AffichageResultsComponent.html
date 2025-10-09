@@ -384,8 +384,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="126"
-                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:126</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:145</a></div>
                         </td>
                     </tr>
 
@@ -423,8 +423,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="104"
-                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:104</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:123</a></div>
                         </td>
                     </tr>
 
@@ -462,8 +462,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="117"
-                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:117</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:136</a></div>
                         </td>
                     </tr>
 
@@ -536,19 +536,37 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="67"
-                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:67</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:86</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Charge les tentatives de quiz de l&#39;utilisateur connecté.</p>
+<p>Cette méthode :</p>
+<ul>
+<li>Active l’indicateur de chargement (<code>isLoading = true</code>)</li>
+<li>Récupère l’utilisateur courant via le service <code>AuthService</code></li>
+<li>Si un utilisateur est connecté, appelle <code>QuizAttemptsService.getAttemptsByUser()</code>
+pour récupérer ses tentatives depuis l’API</li>
+<li>Met à jour la liste des tentatives (<code>attempts</code> et <code>filteredAttempts</code>)</li>
+<li>Met à jour la vue en forçant la détection de changements avec <code>ChangeDetectorRef</code></li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">// Exemple d’appel typique :
+this.loadAttempts();</code></pre></div><p>See AuthService#getUser
+See QuizAttemptsService#getAttemptsByUser</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Ne retourne rien directement, mais met à jour l’état du composant.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -612,8 +630,8 @@ et <code>AuthService</code> pour obtenir l&#39;utilisateur courant.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="92"
-                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:92</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/app/pages/stagiaire/affichage-results/affichage-results.component.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -997,6 +1015,25 @@ export class AffichageResultsComponent {
     this.loadAttempts();
   }
 
+  /**
+   * Charge les tentatives de quiz de l&#x27;utilisateur connecté.
+   *
+   * Cette méthode :
+   * - Active l’indicateur de chargement (&#x60;isLoading &#x3D; true&#x60;)
+   * - Récupère l’utilisateur courant via le service &#x60;AuthService&#x60;
+   * - Si un utilisateur est connecté, appelle &#x60;QuizAttemptsService.getAttemptsByUser()&#x60;
+   *   pour récupérer ses tentatives depuis l’API
+   * - Met à jour la liste des tentatives (&#x60;attempts&#x60; et &#x60;filteredAttempts&#x60;)
+   * - Met à jour la vue en forçant la détection de changements avec &#x60;ChangeDetectorRef&#x60;
+   *
+   * @returns {void} Ne retourne rien directement, mais met à jour l’état du composant.
+   * @example
+   * // Exemple d’appel typique :
+   * this.loadAttempts();
+   *
+   * @see AuthService#getUser
+   * @see QuizAttemptsService#getAttemptsByUser
+   */
   loadAttempts() {
     this.isLoading &#x3D; true;
     this.currentUser &#x3D; this.authService.getUser();

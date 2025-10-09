@@ -19,6 +19,10 @@ export class QuestionService {
    */
   private apiUrl = 'http://localhost:3000/questions';
 
+  /**
+   * Crée une instance de QuestionService.
+   * @param http Service Angular pour effectuer des requêtes HTTP.
+   */
   constructor(private http: HttpClient) {}
 
   /**

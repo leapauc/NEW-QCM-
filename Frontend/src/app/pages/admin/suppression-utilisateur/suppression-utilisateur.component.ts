@@ -95,7 +95,9 @@ export class SuppressionUtilisateurComponent implements OnInit {
   private currentUserId: number | null = null;
   /** Etat chargement des données */
   isLoading = true;
+  /** Taille à partir de laquelle on considère l'écran comme petit */
   SmallScreenSize = 787;
+  /** Boolean pour savoir si l'écran est petit ou non */
   isSmallScreen = window.innerWidth < this.SmallScreenSize;
 
   /**
@@ -120,6 +122,22 @@ export class SuppressionUtilisateurComponent implements OnInit {
       admin: [false],
     });
   }
+
+  /**
+   * Écoute les événements de redimensionnement de la fenêtre (`window:resize`).
+   *
+   * À chaque redimensionnement, cette méthode met à jour la propriété `isSmallScreen`
+   * selon la largeur actuelle de la fenêtre.
+   *
+   * @param {Event} event - L'événement de redimensionnement du navigateur.
+   *
+   * @example
+   * // Déclenché automatiquement quand la fenêtre est redimensionnée
+   * // Si la largeur est inférieure à `SmallScreenSize`, la vue s’adapte :
+   * this.isSmallScreen === true;
+   *
+   * @hostlistener window:resize
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen = event.target.innerWidth < this.SmallScreenSize;
