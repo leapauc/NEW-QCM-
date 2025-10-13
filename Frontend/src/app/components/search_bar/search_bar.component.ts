@@ -16,13 +16,11 @@ import { FormsModule } from '@angular/forms';
  * - `FormsModule` pour la liaison ngModel
  *
  * @example
- * ```html
  * <app-search-bar
  *   placeholder="Rechercher un élément..."
  *   [(value)]="searchTerm"
  *   (valueChange)="applyFilter()"
  * ></app-search-bar>
- * ```
  *
  * @selector app-search-bar
  * @component

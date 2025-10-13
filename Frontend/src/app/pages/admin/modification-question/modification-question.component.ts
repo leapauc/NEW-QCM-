@@ -37,9 +37,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * Le formulaire est un formulaire réactif (`ReactiveFormsModule`) avec un `FormArray` pour les réponses.
  *
  * @example
- * ```html
  * <app-modification-question></app-modification-question>
- * ```
  */
 @Component({
   selector: 'app-modification-question',

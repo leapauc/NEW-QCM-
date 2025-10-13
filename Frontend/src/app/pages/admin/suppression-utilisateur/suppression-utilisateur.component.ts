@@ -39,9 +39,7 @@ import { TruncateEmailPipe } from '../../../pipes/truncate-email.pipe';
  * - `ConfirmationModalComponent` pour afficher le dialogue de confirmation avant suppression
  *
  * @example
- * ```html
  * <app-suppression-utilisateur></app-suppression-utilisateur>
- * ```
  *
  * @selector app-suppression-utilisateur
  * @component
@@ -171,7 +169,7 @@ export class SuppressionUtilisateurComponent implements OnInit {
         this.filteredUsers = [...this.users];
         this.paginatedUsers = this.filteredUsers.slice(0, 5);
 
-        this.isLoading = false; // ✅ fin du chargement
+        this.isLoading = false; // fin du chargement
         this.cdr.detectChanges();
       },
       error: (err) => {

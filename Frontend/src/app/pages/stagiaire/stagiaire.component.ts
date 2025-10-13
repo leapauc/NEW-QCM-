@@ -14,9 +14,7 @@ import { AuthService } from '../../services/auth.service';
  * et inclut la possibilité de se déconnecter via la méthode `logout`.
  *
  * @example
- * ```html
  * <app-stagiaire></app-stagiaire>
- * ```
  */
 @Component({
   selector: 'app-stagiaire',

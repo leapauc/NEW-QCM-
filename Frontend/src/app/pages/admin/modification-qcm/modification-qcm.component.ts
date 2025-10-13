@@ -35,9 +35,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * - `ModalComponent` pour afficher le succès ou l'échec
  *
  * @example
- * ```html
  * <app-modification-qcm></app-modification-qcm>
- * ```
  *
  * @selector app-modification-qcm
  * @component

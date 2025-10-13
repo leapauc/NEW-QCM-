@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
  * Le type d'action (`update` ou `delete`) peut être utilisé pour adapter le style ou le comportement.
  *
  * @example
- * ```html
  * <app-confirmation-modal
  *   [title]="'Confirmer la suppression'"
  *   [message]="'Êtes-vous sûr de vouloir supprimer cet élément ?'"
@@ -17,7 +16,6 @@ import { CommonModule } from '@angular/common';
  *   (confirm)="handleConfirm()"
  *   (cancel)="handleCancel()">
  * </app-confirmation-modal>
- * ```
  *
  * @selector app-confirmation-modal
  * @component

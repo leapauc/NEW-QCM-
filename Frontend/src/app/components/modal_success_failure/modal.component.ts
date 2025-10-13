@@ -9,14 +9,12 @@ import { CommonModule } from '@angular/common';
  * Il utilise Bootstrap 5 pour le rendu et la gestion de l'ouverture/fermeture.
  *
  * @example
- * ```html
  * <app-modal
  *   [modalId]="'successModal'"
  *   [message]="'Opération réussie !'"
  *   [icon]="'✅'"
  *   (onClose)="handleClose()">
  * </app-modal>
- * ```
  *
  * @selector app-modal
  * @component

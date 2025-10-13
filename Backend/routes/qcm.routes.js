@@ -94,6 +94,9 @@ router.get("/", getAllQCM);
  *                 title:
  *                   type: string
  *                   example: "Introduction à JavaScript"
+ *                 description:
+ *                   type: string
+ *                   example: "QCM pour débutant en JavaScript"
  *                 created_by:
  *                   type: integer
  *                   example: 2
@@ -197,12 +200,17 @@ router.get("/:id", getQCMById);
  *                   example: "Message d'erreur détaillé"
  */
 router.post("/", createQCM);
+
 /**
  * @swagger
- * /qcm/plusQuestion:
+ * /qcm/plusQuestions:
  *   post:
- *     summary: Créer un nouveau QCM
- *     description: Permet de créer un QCM avec ses questions et réponses.
+ *     summary: Créer un QCM avec ses questions et réponses
+ *     description: >
+ *       Permet de créer un QCM complet avec plusieurs questions,
+ *       chacune ayant plusieurs propositions de réponses.
+ *       Chaque question peut être de type `single` (une seule bonne réponse)
+ *       ou `multiple` (plusieurs bonnes réponses).
  *     tags:
  *       - QCM
  *     requestBody:
@@ -211,39 +219,83 @@ router.post("/", createQCM);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - title
+ *               - questions
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Introduction à JavaScript"
+ *                 description: Titre du QCM
+ *                 example: "QCM de culture générale"
  *               description:
  *                 type: string
- *                 example: "QCM pour débutants sur JavaScript"
+ *                 description: Description du QCM
+ *                 example: "Testez vos connaissances sur différents domaines."
  *               created_by:
  *                 type: integer
+ *                 description: ID de l'utilisateur créateur
  *                 example: 1
  *               questions:
  *                 type: array
+ *                 description: Liste des questions du QCM
  *                 items:
  *                   type: object
+ *                   required:
+ *                     - question
+ *                     - responses
  *                   properties:
  *                     question:
  *                       type: string
- *                       example: "JavaScript est un langage ..."
+ *                       description: Texte de la question
+ *                       example: "Quelle est la capitale de la France ?"
  *                     type:
  *                       type: string
  *                       enum: [single, multiple]
+ *                       description: Type de question (une seule ou plusieurs réponses correctes)
  *                       example: "single"
  *                     responses:
  *                       type: array
+ *                       description: Liste des réponses possibles
  *                       items:
  *                         type: object
+ *                         required:
+ *                           - response
+ *                           - is_correct
  *                         properties:
  *                           response:
  *                             type: string
- *                             example: "interprété"
+ *                             description: Texte de la réponse
+ *                             example: "Paris"
  *                           is_correct:
  *                             type: boolean
+ *                             description: Indique si la réponse est correcte
  *                             example: true
+ *           examples:
+ *             QCMCultureGenerale:
+ *               summary: Exemple complet de création d'un QCM
+ *               value:
+ *                 title: "QCM de culture générale"
+ *                 description: "Testez vos connaissances sur différents domaines."
+ *                 created_by: 1
+ *                 questions:
+ *                   - question: "Quelle est la capitale de la France ?"
+ *                     type: "single"
+ *                     responses:
+ *                       - response: "Paris"
+ *                         is_correct: true
+ *                       - response: "Lyon"
+ *                         is_correct: false
+ *                       - response: "Marseille"
+ *                         is_correct: false
+ *                   - question: "Lesquels de ces animaux sont des mammifères ?"
+ *                     type: "multiple"
+ *                     responses:
+ *                       - response: "Dauphin"
+ *                         is_correct: true
+ *                       - response: "Serpent"
+ *                         is_correct: false
+ *                       - response: "Chauve-souris"
+ *                         is_correct: true
  *     responses:
  *       201:
  *         description: QCM créé avec succès
@@ -259,7 +311,7 @@ router.post("/", createQCM);
  *                   type: integer
  *                   example: 42
  *       400:
- *         description: Données invalides
+ *         description: Données invalides (titre ou questions manquants)
  *         content:
  *           application/json:
  *             schema:
@@ -269,7 +321,7 @@ router.post("/", createQCM);
  *                   type: string
  *                   example: "Titre et questions sont obligatoires"
  *       500:
- *         description: Erreur serveur
+ *         description: Erreur interne du serveur
  *         content:
  *           application/json:
  *             schema:
@@ -288,7 +340,7 @@ router.post("/plusQuestion", createQCMWithQuestion);
  * /qcm/{id}:
  *   put:
  *     summary: Met à jour un QCM existant
- *     description: Met à jour le titre et la description d'un QCM spécifique. Les questions et réponses ne sont pas modifiées pour le moment.
+ *     description: Met à jour le titre et la description d'un QCM spécifique.
  *     tags:
  *       - QCM
  *     parameters:
@@ -313,32 +365,6 @@ router.post("/plusQuestion", createQCMWithQuestion);
  *                 type: string
  *                 example: "Description mise à jour"
  *                 description: Nouvelle description du QCM
- *               questions:
- *                 type: array
- *                 description: Liste des questions avec leurs réponses (non utilisée actuellement)
- *                 items:
- *                   type: object
- *                   properties:
- *                     id_question:
- *                       type: integer
- *                     question:
- *                       type: string
- *                     type:
- *                       type: string
- *                       example: "single"
- *                     responses:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id_response:
- *                             type: integer
- *                           response:
- *                             type: string
- *                           is_correct:
- *                             type: boolean
- *                           position:
- *                             type: integer
  *     responses:
  *       200:
  *         description: QCM mis à jour avec succès
@@ -387,13 +413,12 @@ router.post("/plusQuestion", createQCMWithQuestion);
 router.put("/:id", updateQCM);
 /**
  * @swagger
- * /qcm/plusQuestion/{id}:
+ * /qcm/{id}/withQuestions:
  *   put:
- *     summary: Mettre à jour un QCM avec ses questions et réponses
+ *     summary: Mettre à jour un QCM existant avec ses questions et réponses
  *     description: >
- *       Met à jour un QCM existant (titre et description),
- *       puis parcourt les questions et leurs réponses pour les mettre à jour.
- *       Les réponses existantes sont supprimées avant de réinsérer celles envoyées dans la requête.
+ *       Ce point d'entrée permet de modifier un QCM existant, incluant ses questions et les réponses associées.
+ *       Toutes les réponses d'une question sont supprimées puis recréées selon les données envoyées.
  *     tags:
  *       - QCM
  *     parameters:
@@ -403,7 +428,7 @@ router.put("/:id", updateQCM);
  *         description: ID du QCM à mettre à jour
  *         schema:
  *           type: integer
- *           example: 3
+ *           example: 42
  *     requestBody:
  *       required: true
  *       content:
@@ -412,15 +437,16 @@ router.put("/:id", updateQCM);
  *             type: object
  *             required:
  *               - title
- *               - description
  *               - questions
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Nouveau titre QCM"
+ *                 description: Nouveau titre du QCM
+ *                 example: "QCM sur l’histoire mondiale"
  *               description:
  *                 type: string
- *                 example: "Description mise à jour du QCM"
+ *                 description: Nouvelle description du QCM
+ *                 example: "Mise à jour du QCM d’histoire avec de nouvelles questions"
  *               questions:
  *                 type: array
  *                 description: Liste des questions à mettre à jour
@@ -433,16 +459,20 @@ router.put("/:id", updateQCM);
  *                   properties:
  *                     id_question:
  *                       type: integer
- *                       example: 10
+ *                       description: ID de la question existante
+ *                       example: 101
  *                     question:
  *                       type: string
- *                       example: "Quelle est la capitale de la France ?"
+ *                       description: Texte de la question
+ *                       example: "En quelle année la Première Guerre mondiale a-t-elle débuté ?"
  *                     type:
  *                       type: string
  *                       enum: [single, multiple]
+ *                       description: Type de question (une seule ou plusieurs réponses correctes)
  *                       example: "single"
  *                     responses:
  *                       type: array
+ *                       description: Liste complète des réponses à recréer
  *                       items:
  *                         type: object
  *                         required:
@@ -452,16 +482,19 @@ router.put("/:id", updateQCM);
  *                         properties:
  *                           response:
  *                             type: string
- *                             example: "Paris"
+ *                             description: Proposition de réponse
+ *                             example: "1914"
  *                           is_correct:
  *                             type: boolean
+ *                             description: Indique si la réponse est correcte
  *                             example: true
  *                           position:
  *                             type: integer
+ *                             description: Position d'affichage de la réponse
  *                             example: 1
  *     responses:
  *       200:
- *         description: QCM mis à jour avec succès
+ *         description: QCM, questions et réponses mis à jour avec succès
  *         content:
  *           application/json:
  *             schema:
@@ -471,7 +504,7 @@ router.put("/:id", updateQCM);
  *                   type: string
  *                   example: "QCM, questions et réponses mis à jour avec succès"
  *       400:
- *         description: Mauvaise requête (ID ou données invalides)
+ *         description: Requête invalide (ID ou données manquantes)
  *         content:
  *           application/json:
  *             schema:
@@ -481,7 +514,7 @@ router.put("/:id", updateQCM);
  *                   type: string
  *                   example: "ID QCM invalide"
  *       500:
- *         description: Erreur interne du serveur lors de la mise à jour du QCM ou des questions
+ *         description: Erreur interne du serveur
  *         content:
  *           application/json:
  *             schema:
@@ -492,7 +525,39 @@ router.put("/:id", updateQCM);
  *                   example: "Erreur serveur"
  *                 details:
  *                   type: string
- *                   example: "duplicate key value violates unique constraint « response_question_pkey »"
+ *                   example: "Détails de l'erreur côté serveur"
+ *     examples:
+ *       Exemple de requête:
+ *         value:
+ *           title: "QCM sur l’histoire mondiale"
+ *           description: "Mise à jour du QCM d’histoire"
+ *           questions:
+ *             - id_question: 101
+ *               question: "En quelle année la Première Guerre mondiale a-t-elle débuté ?"
+ *               type: "single"
+ *               responses:
+ *                 - response: "1914"
+ *                   is_correct: true
+ *                   position: 1
+ *                 - response: "1939"
+ *                   is_correct: false
+ *                   position: 2
+ *                 - response: "1918"
+ *                   is_correct: false
+ *                   position: 3
+ *             - id_question: 102
+ *               question: "Quels pays faisaient partie de la Triple Entente ?"
+ *               type: "multiple"
+ *               responses:
+ *                 - response: "France"
+ *                   is_correct: true
+ *                   position: 1
+ *                 - response: "Royaume-Uni"
+ *                   is_correct: true
+ *                   position: 2
+ *                 - response: "Allemagne"
+ *                   is_correct: false
+ *                   position: 3
  */
 router.put("/plusQuestion/:id", updateQCMWithQuestions);
 /**

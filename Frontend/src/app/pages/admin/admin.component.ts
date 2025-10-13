@@ -23,9 +23,7 @@ import { CommonModule } from '@angular/common';
  * - `CommonModule` pour les directives Angular communes
  *
  * @example
- * ```html
  * <app-admin></app-admin>
- * ```
  *
  * @selector app-admin
  * @component

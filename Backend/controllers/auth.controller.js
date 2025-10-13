@@ -5,9 +5,16 @@ exports.login = async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    const result = await pool.query("SELECT * FROM users WHERE name = $1", [
-      name,
-    ]);
+    // Vérifie directement le couple name + mot de passe
+    const result = await pool.query(
+      `
+      SELECT * 
+      FROM users
+      WHERE name = $1 
+        AND password = crypt($2, password)
+      `,
+      [name, password]
+    );
 
     if (result.rows.length === 0) {
       return res.status(401).json({ error: "Identifiants incorrects" });
@@ -15,22 +22,14 @@ exports.login = async (req, res) => {
 
     const user = result.rows[0];
 
-    const verify = await pool.query(
-      "SELECT crypt($2, password) = $2 AS match",
-      [password, user.password]
-    );
-
-    if (!verify.rows[0].match) {
-      return res.status(401).json({ error: "Mot de passe incorrects" });
-    }
-
-    const update = await pool.query(
-      `UPDATE users SET last_conn = CURRENT_TIMESTAMP
-        WHERE name = $1`,
-      [name]
+    // Met à jour la dernière connexion
+    await pool.query(
+      "UPDATE users SET last_conn = CURRENT_TIMESTAMP WHERE id_user = $1",
+      [user.id_user]
     );
 
     delete user.password;
+
     res.json({ message: "Connexion réussie", user });
   } catch (err) {
     console.error("Erreur lors de la connexion :", err);

@@ -273,7 +273,7 @@ router.get("/nbQuestionnaireList", getNbQuestionnaireList);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *         description: ID de l'utilisateur dont on veut connaître le nombre de questionnaires
  *     responses:
  *       200:
@@ -360,7 +360,7 @@ router.get("/maxMinAvgScoreList", getMaxMinAvgScoreList);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *         description: ID de l'utilisateur dont on veut connaître les statistiques de scores
  *     responses:
  *       200:
@@ -448,7 +448,7 @@ router.get("/rangeList", getRangeList);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *         description: ID de l'utilisateur dont on veut connaître le rang et le score moyen
  *     responses:
  *       200:
@@ -535,7 +535,7 @@ router.get("/avgTimeList", getMoyenneTimeList);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *         description: ID de l'utilisateur dont on veut connaître le temps moyen
  *     responses:
  *       200:

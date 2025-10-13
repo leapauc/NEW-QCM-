@@ -26,9 +26,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * - Réinitialisation automatique du formulaire après création.
  *
  * @example
- * ```html
  * <app-ajout-qcm></app-ajout-qcm>
- * ```
  */
 @Component({
   selector: 'app-ajout-qcm',
@@ -40,7 +38,7 @@ export class AjoutQcmComponent {
    * Formulaire réactif pour la création d’un QCM.
    * Contient :
    * - title: Titre du QCM (champ obligatoire)
-   * - description: Description du QCM (facultatif)
+   * - description: Description du QCM (champ obligatoire)
    */
   form: FormGroup;
 

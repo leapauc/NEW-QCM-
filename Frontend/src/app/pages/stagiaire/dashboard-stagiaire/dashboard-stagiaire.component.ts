@@ -22,9 +22,7 @@ import { SearchBarComponent } from '../../../components/search_bar/search_bar.co
  * et `AuthService` pour obtenir l'utilisateur courant.
  *
  * @example
- * ```html
  * <app-dashboard-stagiaire></app-dashboard-stagiaire>
- * ```
  */
 @Component({
   selector: 'app-dashboard-stagiaire',

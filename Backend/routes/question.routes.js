@@ -98,9 +98,14 @@ router.get("/", getAllQuestion);
  *                 nullable: true
  *                 example: 1
  *                 description: Position de la question dans le QCM
+ *               created_by:
+ *                 type: integer
+ *                 example: 1
+ *                 description: id de l'utilisateur qui a créé la question
  *               responses:
  *                 type: array
  *                 minItems: 2
+ *                 description: Liste des réponses possibles
  *                 items:
  *                   type: object
  *                   properties:
@@ -145,6 +150,16 @@ router.get("/", getAllQuestion);
  *                       type: integer
  *                       nullable: true
  *                       example: 1
+ *                     created_by:
+ *                       type: integer
+ *                       example: 1
+ *                     created_at:
+ *                       type: string
+ *                       example: "2025-10-13T13:18:53.512Z"
+ *                     updated_at:
+ *                       type: string
+ *                       nullable: true
+ *                       example: null
  *       400:
  *         description: Requête invalide (champs manquants ou réponses incorrectes)
  *         content:
@@ -244,7 +259,7 @@ router.post("/", createQuestionForAQCM);
 router.get("/:id_question", getQuestionById);
 /**
  * @swagger
- * /response/{id_question}:
+ * /questions/response/{id_question}:
  *   get:
  *     summary: Récupérer une question et ses réponses
  *     description: Retourne toutes les réponses associées à une question spécifique d'un QCM.
@@ -399,6 +414,16 @@ router.get("/response/:id_question", getQuestionResponseById);
  *                       type: integer
  *                       nullable: true
  *                       example: 1
+ *                     created_by:
+ *                       type: integer
+ *                       example: 1
+ *                     created_at:
+ *                       type: string
+ *                       example: "2025-10-13T13:18:53.512Z"
+ *                     updated_at:
+ *                       type: string
+ *                       nullable: true
+ *                       example: null
  *       400:
  *         description: Requête invalide (moins de 2 réponses ou texte manquant)
  *         content:

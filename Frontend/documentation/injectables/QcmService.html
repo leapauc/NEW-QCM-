@@ -357,14 +357,53 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="57"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:57</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:106</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Crée un nouveau QCM complet incluant ses questions et leurs réponses.</p>
+<p>Cette méthode envoie une requête HTTP POST vers l&#39;API backend
+afin d&#39;enregistrer un questionnaire (QCM) avec toutes ses questions et options de réponse associées.</p>
+<p>L’API ciblée correspond à l’endpoint :
+<code>POST {apiUrl}/plusQuestion</code></p>
+<ul>
+<li>les informations générales du QCM (titre, description, auteur)</li>
+<li>la liste des questions (<code>questions[]</code>)</li>
+<li>pour chaque question, la liste des réponses (<code>responses[]</code>)</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
+const newQCM: QCM = {
+  title: &#39;QCM sur Perl&#39;,
+  description: &#39;Testez vos connaissances sur Perl&#39;,
+  created_by: 1,
+  questions: [
+    {
+      question: &#39;Quel symbole est utilisé pour déclarer une variable scalaire ?&#39;,
+      type: &#39;single&#39;,
+      responses: [
+        { response: &#39;$&#39;, is_correct: true },
+        { response: &#39;&#64;&#39;, is_correct: false },
+        { response: &#39;%&#39;, is_correct: false }
+      ]
+    },
+    {
+      question: &#39;Quelle fonction affiche du texte en Perl ?&#39;,
+      type: &#39;single&#39;,
+      responses: [
+        { response: &#39;print&#39;, is_correct: true },
+        { response: &#39;echo&#39;, is_correct: false }
+      ]
+    }
+  ]
+};</code></pre></div><p>qcmService.createQCMQuestionsWithResponses(newQCM).subscribe({
+  next: (res) =&gt; console.log(&#39;✅ QCM créé avec succès&#39;, res),
+  error: (err) =&gt; console.error(&#39;❌ Erreur lors de la création du QCM&#39;, err)
+});</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -375,6 +414,7 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -389,6 +429,15 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Objet conforme à l’interface <a href="../interfaces/QCM.html">QCM</a> contenant :</li>
+<li>les informations générales du QCM (titre, description, auteur)</li>
+<li>la liste des questions (<code>questions[]</code>)</li>
+<li>pour chaque question, la liste des réponses (<code>responses[]</code>)</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -398,7 +447,8 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Observable contenant la réponse HTTP du serveur (par exemple <code>{ message: string, qcmId: number }</code>)</p>
+
                             </div>
                 </td>
             </tr>
@@ -424,8 +474,8 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="103"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:103</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:152</a></div>
                         </td>
                     </tr>
 
@@ -546,8 +596,8 @@ qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></di
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="72"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:72</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:121</a></div>
                         </td>
                     </tr>
 
@@ -624,8 +674,8 @@ qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></di
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="135"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:135</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="184"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:184</a></div>
                         </td>
                     </tr>
 
@@ -702,8 +752,8 @@ qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="118"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:118</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="167"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:167</a></div>
                         </td>
                     </tr>
 
@@ -780,8 +830,8 @@ qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="88"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:88</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:137</a></div>
                         </td>
                     </tr>
 
@@ -876,8 +926,8 @@ qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div><b>Example :<
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="151"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:151</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="200"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:200</a></div>
                         </td>
                     </tr>
 
@@ -1058,6 +1108,55 @@ export class QcmService {
     return this.http.post(&#x60;${this.apiUrl}&#x60;, qcm);
   }
 
+  /**
+   * Crée un nouveau QCM complet incluant ses questions et leurs réponses.
+   *
+   * Cette méthode envoie une requête HTTP POST vers l&#x27;API backend
+   * afin d&#x27;enregistrer un questionnaire (QCM) avec toutes ses questions et options de réponse associées.
+   *
+   * L’API ciblée correspond à l’endpoint :
+   * &#x60;POST {apiUrl}/plusQuestion&#x60;
+   *
+   * @param qcm - Objet conforme à l’interface {@link QCM} contenant :
+   *  - les informations générales du QCM (titre, description, auteur)
+   *  - la liste des questions (&#x60;questions[]&#x60;)
+   *  - pour chaque question, la liste des réponses (&#x60;responses[]&#x60;)
+   *
+   * @returns Observable contenant la réponse HTTP du serveur (par exemple &#x60;{ message: string, qcmId: number }&#x60;)
+   *
+   * @example
+   * &#x60;&#x60;&#x60;ts
+   * const newQCM: QCM &#x3D; {
+   *   title: &#x27;QCM sur Perl&#x27;,
+   *   description: &#x27;Testez vos connaissances sur Perl&#x27;,
+   *   created_by: 1,
+   *   questions: [
+   *     {
+   *       question: &#x27;Quel symbole est utilisé pour déclarer une variable scalaire ?&#x27;,
+   *       type: &#x27;single&#x27;,
+   *       responses: [
+   *         { response: &#x27;$&#x27;, is_correct: true },
+   *         { response: &#x27;@&#x27;, is_correct: false },
+   *         { response: &#x27;%&#x27;, is_correct: false }
+   *       ]
+   *     },
+   *     {
+   *       question: &#x27;Quelle fonction affiche du texte en Perl ?&#x27;,
+   *       type: &#x27;single&#x27;,
+   *       responses: [
+   *         { response: &#x27;print&#x27;, is_correct: true },
+   *         { response: &#x27;echo&#x27;, is_correct: false }
+   *       ]
+   *     }
+   *   ]
+   * };
+   *
+   * qcmService.createQCMQuestionsWithResponses(newQCM).subscribe({
+   *   next: (res) &#x3D;&gt; console.log(&#x27;✅ QCM créé avec succès&#x27;, res),
+   *   error: (err) &#x3D;&gt; console.error(&#x27;❌ Erreur lors de la création du QCM&#x27;, err)
+   * });
+   * &#x60;&#x60;&#x60;
+   */
   createQCMQuestionsWithResponses(qcm: QCM): Observable&lt;any&gt; {
     return this.http.post(&#x60;${this.apiUrl}/plusQuestion&#x60;, qcm);
   }

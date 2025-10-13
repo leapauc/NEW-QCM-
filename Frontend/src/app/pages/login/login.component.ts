@@ -21,9 +21,7 @@ import * as bootstrap from 'bootstrap'; // importer Bootstrap JS
  * vers l'interface appropriée selon le rôle de l'utilisateur.
  *
  * @example
- * ```html
  * <app-login></app-login>
- * ```
  */
 @Component({
   selector: 'app-login',

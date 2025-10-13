@@ -42,9 +42,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * - `ConfirmationModalComponent` pour afficher une confirmation avant mise à jour
  *
  * @example
- * ```html
  * <app-utilisateur-stagiaire></app-utilisateur-stagiaire>
- * ```
  *
  * @selector app-utilisateur-stagiaire
  * @component

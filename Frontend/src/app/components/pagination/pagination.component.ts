@@ -9,13 +9,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  * Il gère le changement de page et émet les éléments de la page courante via l'événement `pageChange`.
  *
  * @example
- * ```html
  * <app-pagination
  *   [items]="filteredAttempts"
  *   [pageSize]="10"
  *   (pageChange)="onPageChange($event)">
  * </app-pagination>
- * ```
  *
  * @selector app-pagination
  * @component

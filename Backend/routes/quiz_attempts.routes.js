@@ -87,7 +87,7 @@ router.get("", getAllAttempts);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *         description: ID de l'utilisateur dont on veut récupérer les tentatives
  *     responses:
  *       200:
@@ -104,7 +104,7 @@ router.get("", getAllAttempts);
  *                     example: 1
  *                   id_user:
  *                     type: integer
- *                     example: 42
+ *                     example: 4
  *                   quiz_id:
  *                     type: integer
  *                     example: 10
@@ -142,7 +142,7 @@ router.get("/:id_user", getAttemptsByUser);
  *         required: true
  *         schema:
  *           type: integer
- *           example: 123
+ *           example: 2
  *         description: ID de la tentative dont on veut récupérer les détails
  *     responses:
  *       200:
@@ -216,7 +216,7 @@ router.get("/attempt_details/:id_attempt", getAttemptDetailsById);
  *             properties:
  *               id_qcm:
  *                 type: integer
- *                 example: 42
+ *                 example: 1
  *                 description: ID du QCM sur lequel la tentative est effectuée
  *               id_user:
  *                 type: integer
@@ -230,10 +230,10 @@ router.get("/attempt_details/:id_attempt", getAttemptDetailsById);
  *                   properties:
  *                     id_question:
  *                       type: integer
- *                       example: 12
+ *                       example: 1
  *                     id_response:
  *                       type: integer
- *                       example: 55
+ *                       example: 2
  *               started_at:
  *                 type: string
  *                 format: date-time

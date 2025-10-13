@@ -44,9 +44,21 @@ http://localhost:3000
 
 Différentes urls sont disponibles et permettent de réaliser de nombreuses requêtes dans la base de données.
 
+La documentation de l'API est disponible à l'url suivante :
+
+```
+http://localhost:3000/api-docs/
+```
+
 ## Documentation
 
-La documentation Angular est disponible dans le dossier documentation, mais également à l'url suivante :
+La documentation Angular est disponible dans le dossier documentation sur le github suivant :
+
+```
+https://github.com/leapauc/NEW-QCM-
+```
+
+mais également à l'url suivante :
 
 ```
 http://localhost:8081
@@ -54,7 +66,8 @@ http://localhost:8081
 
 ## Contenerisation
 
-L'ensemble du projet est contenu dans un conteneur docker.
+L'ensemble du projet (backend, base de données et frontend) est contenu dans un conteneur docker.
+
 Il suffira donc de lancer le conteneur docker pour pouvoir accéder à l'application.
 La commande à executer est la suivante :
 

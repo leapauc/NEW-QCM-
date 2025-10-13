@@ -23,10 +23,9 @@ import { QCM } from '../../../models/qcm';
  * - pour chaque question, une liste de réponses possibles
  *
  * À la soumission du formulaire, les données sont envoyées au backend via
- * {@link QcmService.createQCMQuestionsWithResponses}.
+ * `QcmService`.
  *
  * @example
- * // Utilisation dans un template Angular :
  * <app-ajout-qcm-question></app-ajout-qcm-question>
  */
 @Component({
@@ -60,7 +59,7 @@ export class AjoutQcmQuestionComponent implements OnInit {
 
   /**
    * Cycle de vie Angular : initialisation du composant.
-   * Appelle {@link initForm} pour construire la structure du formulaire.
+   * Appelle `initForm` pour construire la structure du formulaire.
    */
   ngOnInit(): void {
     this.initForm();
@@ -171,8 +170,8 @@ export class AjoutQcmQuestionComponent implements OnInit {
    *
    * - Valide le formulaire
    * - Vérifie qu'au moins une réponse correcte existe par question
-   * - Construit le `payload` conforme à l’interface {@link QCM}
-   * - Envoie la requête via {@link QcmService.createQCMQuestionsWithResponses}
+   * - Construit le `payload` conforme à l’interface `QCM`
+   * - Envoie la requête via `QcmService.createQCMQuestionsWithResponses`
    * - Affiche une modale de succès ou d'échec
    */
   submitForm() {
@@ -198,7 +197,7 @@ export class AjoutQcmQuestionComponent implements OnInit {
 
     console.log('📤 Payload envoyé au backend :', payload);
 
-    // ✅ Appel API vers le backend
+    // Appel API vers le backend
     this.qcmService.createQCMQuestionsWithResponses(payload).subscribe({
       next: (res) => {
         console.log('✅ QCM créé avec succès', res);

@@ -33,9 +33,7 @@ import { SearchBarComponent } from '../../../components/search_bar/search_bar.co
  * et `AuthService` pour obtenir l'utilisateur courant.
  *
  * @example
- * ```html
  * <app-choix-qcm></app-choix-qcm>
- * ```
  */
 @Component({
   selector: 'app-choix-qcm',

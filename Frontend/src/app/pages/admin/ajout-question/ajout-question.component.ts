@@ -32,9 +32,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * - Réinitialisation du formulaire et des réponses après soumission.
  *
  * @example
- * ```html
  * <app-ajout-question></app-ajout-question>
- * ```
  */
 @Component({
   selector: 'app-ajout-question',
@@ -161,7 +159,7 @@ export class AjoutQuestionComponent implements OnInit {
    * - Vérifie que le QCM est sélectionné.
    * - Vérifie que le formulaire est valide.
    * - Filtre les réponses non vides.
-   * - Prépare les données et appelle QuestionService pour créer la question.
+   * - Prépare les données et appelle `QuestionService` pour créer la question.
    * - Affiche un modal Bootstrap en cas de formulaire non valide (aucune ou toutes les réponses cochées)  ou de succès.
    * - Réinitialise le formulaire et les réponses après création.
    */

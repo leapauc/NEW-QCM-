@@ -28,9 +28,7 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
  * - Coloration dynamique des taux de complétion via la méthode `getCompletionColor()`.
  *
  * @example
- * ```html
  * <app-dashboard-admin></app-dashboard-admin>
- * ```
  */
 @Component({
   selector: 'app-dashboard-admin',

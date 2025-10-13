@@ -33,9 +33,7 @@ import { ConfirmationModalComponent } from '../../../components/confirmation_mod
  * - `ConfirmationModalComponent` pour afficher un dialogue de confirmation avant suppression
  *
  * @example
- * ```html
  * <app-suppression-qcm></app-suppression-qcm>
- * ```
  *
  * @selector app-suppression-qcm
  * @component

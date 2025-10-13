@@ -30,9 +30,7 @@ import { SearchBarComponent } from '../../../components/search_bar/search_bar.co
  * - Affichage des modals Bootstrap pour succès/échec.
  *
  * @example
- * ```html
  * <app-modification-qcm-question></app-modification-qcm-question>
- * ```
  */
 @Component({
   selector: 'app-modification-qcm-question',
@@ -136,7 +134,7 @@ export class ModificationQcmQuestionComponent implements OnInit {
   }
 
   /**
-   * Sélectionne un QCM pour modification
+   * Sélectionne un QCM pour modification.
    * Récupère les questions et réponses associées
    * @param qcm QCM sélectionné
    */
@@ -247,9 +245,9 @@ export class ModificationQcmQuestionComponent implements OnInit {
 
   // ---------- Sauvegarde ----------
   /**
-   * Valide et soumet le formulaire au backend
-   * Vérifie que chaque question a au moins une réponse correcte
-   * Affiche les modals de succès/échec
+   * Valide et soumet le formulaire au backend.
+   * Vérifie que chaque question a au moins une réponse correcte.
+   * Affiche les modals de succès/échec.
    */
   submitForm() {
     if (this.qcmForm.invalid || !this.selectedQcm) {

@@ -32,9 +32,7 @@ import { ModalComponent } from '../../../components/modal_success_failure/modal.
  * - Réinitialisation du formulaire après création réussie.
  *
  * @example
- * ```html
  * <app-ajout-utilisateur></app-ajout-utilisateur>
- * ```
  */
 @Component({
   selector: 'app-ajout-utilisateur',

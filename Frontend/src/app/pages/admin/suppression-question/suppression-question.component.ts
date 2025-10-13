@@ -33,9 +33,7 @@ import { ConfirmationModalComponent } from '../../../components/confirmation_mod
  * - `ConfirmationModalComponent` pour afficher le dialogue de confirmation avant suppression
  *
  * @example
- * ```html
  * <app-suppression-question></app-suppression-question>
- * ```
  *
  * @selector app-suppression-question
  * @component
@@ -126,7 +124,7 @@ export class SuppressionQuestionComponent implements OnInit {
         this.filteredQuestions = [...this.questions];
         this.paginatedQuestions = this.filteredQuestions.slice(0, 5);
 
-        this.isLoading = false; // ✅ fin du chargement
+        this.isLoading = false; // fin du chargement
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -134,15 +132,6 @@ export class SuppressionQuestionComponent implements OnInit {
         this.isLoading = false;
       },
     });
-  }
-
-  /**
-   * Parse les réponses d'une question (si elles sont sous forme de chaîne séparée par `|`).
-   * @param question Objet question à analyser.
-   * @returns Liste des réponses individuelles.
-   */
-  parseResponses(question: any): string[] {
-    return question.response ? question.response.split('|') : [];
   }
 
   /**
