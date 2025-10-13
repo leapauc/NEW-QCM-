@@ -120,6 +120,23 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Composant permettant l’ajout d’un QCM (Questionnaire à Choix Multiples)
+ainsi que ses questions et réponses associées.</p>
+<p>Ce composant repose sur un formulaire réactif Angular permettant de créer dynamiquement :</p>
+<ul>
+<li>le titre et la description du QCM</li>
+<li>un ensemble de questions</li>
+<li>pour chaque question, une liste de réponses possibles</li>
+</ul>
+<p>À la soumission du formulaire, les données sont envoyées au backend via
+<a href="QcmService.createQCMQuestionsWithResponses">QcmService.createQCMQuestionsWithResponses</a>.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">// Utilisation dans un template Angular :
+&lt;app-ajout-qcm-question&gt;&lt;/app-ajout-qcm-question&gt;</code></pre></div>
+    </p>
 
 
     <p class="comment">
@@ -275,12 +292,14 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:51</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Crée une instance du composant et injecte les dépendances nécessaires.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -289,6 +308,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -303,6 +323,12 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <ul>
+<li>Service Angular pour la création de formulaires réactifs.</li>
+</ul>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>qcmService</td>
@@ -315,6 +341,12 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <ul>
+<li>Service gérant les appels API relatifs aux QCM.</li>
+</ul>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -354,14 +386,22 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="51"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:51</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:112</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une nouvelle question au formulaire.</p>
+<p>Chaque question comprend :</p>
+<ul>
+<li><code>question</code> : texte de la question</li>
+<li><code>type</code> : type de question (&quot;single&quot; ou &quot;multiple&quot;)</li>
+<li><code>responses</code> : liste des réponses possibles (2 par défaut)</li>
+</ul>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -391,14 +431,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="72"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:72</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:137</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute une réponse supplémentaire à une question donnée.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -409,6 +451,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -423,6 +466,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Index de la question concernée</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -458,14 +507,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="46"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:46</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:100</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Récupère le <code>FormArray</code> des réponses d&#39;une question spécifique.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -476,6 +527,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -490,6 +542,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Index de la question dans le tableau <code>questions</code></li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -499,7 +557,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Le tableau de réponses (<code>FormArray</code>)</p>
+
                             </div>
                 </td>
             </tr>
@@ -525,14 +584,22 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:77</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Initialise la structure du formulaire de création de QCM.</p>
+<p>Le formulaire comprend :</p>
+<ul>
+<li><code>title</code> : titre du QCM (obligatoire)</li>
+<li><code>description</code> : description du QCM (obligatoire)</li>
+<li><code>questions</code> : tableau de questions</li>
+</ul>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -562,14 +629,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="27"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:27</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:65</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Cycle de vie Angular : initialisation du composant.
+Appelle <a href="initForm">initForm</a> pour construire la structure du formulaire.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -599,14 +669,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="91"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:91</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:165</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Supprime une question entière du formulaire.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -617,6 +689,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -631,6 +704,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Index de la question à retirer</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -666,14 +745,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="85"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:85</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:155</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Supprime une réponse d&#39;une question donnée.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -684,6 +765,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -698,6 +780,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Index de la question</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>rIndex</td>
@@ -710,6 +798,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Index de la réponse à supprimer</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -745,14 +839,23 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="178"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:178</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Soumet le formulaire pour créer un nouveau QCM complet (titre, description, questions et réponses).</p>
+<ul>
+<li>Valide le formulaire</li>
+<li>Vérifie qu&#39;au moins une réponse correcte existe par question</li>
+<li>Construit le <code>payload</code> conforme à l’interface <a href="../interfaces/QCM.html">QCM</a></li>
+<li>Envoie la requête via <a href="QcmService.createQCMQuestionsWithResponses">QcmService.createQCMQuestionsWithResponses</a></li>
+<li>Affiche une modale de succès ou d&#39;échec</li>
+</ul>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -792,10 +895,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:47</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre maximum de réponses autorisées par question.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -823,10 +932,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:51</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre minimum de réponses par question (2 par défaut).</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -849,10 +964,17 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:42</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulaire réactif principal du QCM.
+Contient les champs : <code>title</code>, <code>description</code>, <code>questions[]</code>.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -878,9 +1000,22 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/pages/admin/ajout-qcm-question/ajout-qcm-question.component.ts:90</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Getter pour accéder au <code>FormArray</code> des questions du QCM.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>FormArray</code>
+
+                                </div>
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -902,24 +1037,69 @@ import {
 import { QcmService } from &#x27;../../../services/qcm.service&#x27;;
 import * as bootstrap from &#x27;bootstrap&#x27;;
 import { ModalComponent } from &#x27;../../../components/modal_success_failure/modal.component&#x27;;
+import { QCM } from &#x27;../../../models/qcm&#x27;;
 
+/**
+ * Composant permettant l’ajout d’un QCM (Questionnaire à Choix Multiples)
+ * ainsi que ses questions et réponses associées.
+ *
+ * Ce composant repose sur un formulaire réactif Angular permettant de créer dynamiquement :
+ * - le titre et la description du QCM
+ * - un ensemble de questions
+ * - pour chaque question, une liste de réponses possibles
+ *
+ * À la soumission du formulaire, les données sont envoyées au backend via
+ * {@link QcmService.createQCMQuestionsWithResponses}.
+ *
+ * @example
+ * // Utilisation dans un template Angular :
+ * &lt;app-ajout-qcm-question&gt;&lt;/app-ajout-qcm-question&gt;
+ */
 @Component({
   selector: &#x27;app-ajout-qcm-question&#x27;,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, ModalComponent],
   templateUrl: &#x27;./ajout-qcm-question.component.html&#x27;,
 })
 export class AjoutQcmQuestionComponent implements OnInit {
+  /**
+   * Formulaire réactif principal du QCM.
+   * Contient les champs : &#x60;title&#x60;, &#x60;description&#x60;, &#x60;questions[]&#x60;.
+   */
   qcmForm!: FormGroup;
+
+  /**
+   * Nombre maximum de réponses autorisées par question.
+   */
   maxResponses &#x3D; 5;
+  /**
+   * Nombre minimum de réponses par question (2 par défaut).
+   */
   minResponses &#x3D; 2;
 
+  /**
+   * Crée une instance du composant et injecte les dépendances nécessaires.
+   *
+   * @param fb - Service Angular pour la création de formulaires réactifs.
+   * @param qcmService - Service gérant les appels API relatifs aux QCM.
+   */
   constructor(private fb: FormBuilder, private qcmService: QcmService) {}
 
+  /**
+   * Cycle de vie Angular : initialisation du composant.
+   * Appelle {@link initForm} pour construire la structure du formulaire.
+   */
   ngOnInit(): void {
     this.initForm();
   }
 
-  // Initialisation formulaire
+  /**
+   * Initialise la structure du formulaire de création de QCM.
+   *
+   * Le formulaire comprend :
+   * - &#x60;title&#x60; : titre du QCM (obligatoire)
+   * - &#x60;description&#x60; : description du QCM (obligatoire)
+   * - &#x60;questions&#x60; : tableau de questions
+   */
   initForm() {
     this.qcmForm &#x3D; this.fb.group({
       title: [&#x27;&#x27;, Validators.required],
@@ -928,17 +1108,33 @@ export class AjoutQcmQuestionComponent implements OnInit {
     });
   }
 
-  // Récupérer FormArray questions
+  /**
+   * Getter pour accéder au &#x60;FormArray&#x60; des questions du QCM.
+   *
+   * @returns Le tableau de questions (&#x60;FormArray&#x60;)
+   */
   get questions(): FormArray {
     return this.qcmForm.get(&#x27;questions&#x27;) as FormArray;
   }
 
-  // Récupérer FormArray réponses d’une question
+  /**
+   * Récupère le &#x60;FormArray&#x60; des réponses d&#x27;une question spécifique.
+   *
+   * @param qIndex - Index de la question dans le tableau &#x60;questions&#x60;
+   * @returns Le tableau de réponses (&#x60;FormArray&#x60;)
+   */
   getResponses(qIndex: number): FormArray {
     return this.questions.at(qIndex).get(&#x27;responses&#x27;) as FormArray;
   }
 
-  // Ajouter une question
+  /**
+   * Ajoute une nouvelle question au formulaire.
+   *
+   * Chaque question comprend :
+   * - &#x60;question&#x60; : texte de la question
+   * - &#x60;type&#x60; : type de question (&quot;single&quot; ou &quot;multiple&quot;)
+   * - &#x60;responses&#x60; : liste des réponses possibles (2 par défaut)
+   */
   addQuestion() {
     const questionGroup &#x3D; this.fb.group({
       question: [&#x27;&#x27;, Validators.required],
@@ -959,7 +1155,11 @@ export class AjoutQcmQuestionComponent implements OnInit {
     this.questions.push(questionGroup);
   }
 
-  // Ajouter une réponse
+  /**
+   * Ajoute une réponse supplémentaire à une question donnée.
+   *
+   * @param qIndex - Index de la question concernée
+   */
   addResponse(qIndex: number) {
     const responses &#x3D; this.getResponses(qIndex);
     if (responses.length &lt; this.maxResponses) {
@@ -972,18 +1172,35 @@ export class AjoutQcmQuestionComponent implements OnInit {
     }
   }
 
-  // Supprimer une réponse
+  /**
+   * Supprime une réponse d&#x27;une question donnée.
+   *
+   * @param qIndex - Index de la question
+   * @param rIndex - Index de la réponse à supprimer
+   */
   removeResponse(qIndex: number, rIndex: number) {
     const responses &#x3D; this.getResponses(qIndex);
     if (responses.length &gt; this.minResponses) responses.removeAt(rIndex);
   }
 
-  // Supprimer une question
+  /**
+   * Supprime une question entière du formulaire.
+   *
+   * @param qIndex - Index de la question à retirer
+   */
   removeQuestion(qIndex: number) {
     this.questions.removeAt(qIndex);
   }
 
-  // Soumettre le formulaire
+  /**
+   * Soumet le formulaire pour créer un nouveau QCM complet (titre, description, questions et réponses).
+   *
+   * - Valide le formulaire
+   * - Vérifie qu&#x27;au moins une réponse correcte existe par question
+   * - Construit le &#x60;payload&#x60; conforme à l’interface {@link QCM}
+   * - Envoie la requête via {@link QcmService.createQCMQuestionsWithResponses}
+   * - Affiche une modale de succès ou d&#x27;échec
+   */
   submitForm() {
     if (this.qcmForm.invalid) {
       this.qcmForm.markAllAsTouched();
@@ -999,20 +1216,22 @@ export class AjoutQcmQuestionComponent implements OnInit {
       }
     }
 
-    // Construire un payload JSON pur (clone pour éviter metadata Angular)
-    const payload &#x3D; JSON.parse(
-      JSON.stringify({
-        ...this.qcmForm.value,
-        created_by: 1,
-      })
-    );
+    // Construire le payload conforme à ton interface QCM
+    const payload: QCM &#x3D; {
+      ...this.qcmForm.value,
+      created_by: &#x27;1&#x27;, // ou number selon ton backend (string ici dans l’interface)
+    };
 
-    console.log(&#x27;📤 Payload envoyé :&#x27;, payload);
+    console.log(&#x27;📤 Payload envoyé au backend :&#x27;, payload);
 
-    this.qcmService.createQCM(payload).subscribe({
-      next: () &#x3D;&gt; {
+    // ✅ Appel API vers le backend
+    this.qcmService.createQCMQuestionsWithResponses(payload).subscribe({
+      next: (res) &#x3D;&gt; {
+        console.log(&#x27;✅ QCM créé avec succès&#x27;, res);
         const modalEl &#x3D; document.getElementById(&#x27;successModal&#x27;);
         if (modalEl) new bootstrap.Modal(modalEl).show();
+
+        // Réinitialiser le formulaire après succès
         this.qcmForm.reset();
         this.questions.clear();
       },

@@ -15,10 +15,10 @@ exports.login = async (req, res) => {
 
     const user = result.rows[0];
 
-    const verify = await pool.query("SELECT crypt($1, $2) = $2 AS match", [
-      password,
-      user.password,
-    ]);
+    const verify = await pool.query(
+      "SELECT crypt($2, password) = $2 AS match",
+      [password, user.password]
+    );
 
     if (!verify.rows[0].match) {
       return res.status(401).json({ error: "Mot de passe incorrects" });

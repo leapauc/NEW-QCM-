@@ -337,14 +337,16 @@ et inclut la possibilité de se déconnecter via la méthode <code>logout</code>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/app/pages/stagiaire/stagiaire.component.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/pages/stagiaire/stagiaire.component.ts:59</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Réduit la barre de navigation latérale quand la fenêtre est de petite taille.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -415,14 +417,16 @@ utilise le <code>Router</code> pour naviguer vers <code>/login</code>.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/app/pages/stagiaire/stagiaire.component.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/pages/stagiaire/stagiaire.component.ts:53</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Afficher/Désafficher la barre de navigation latérale.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -524,9 +528,15 @@ export class StagiaireComponent {
     this.router.navigate([&#x27;/login&#x27;]); // redirige vers la page de login
   }
 
+  /**
+   * Afficher/Désafficher la barre de navigation latérale.
+   */
   toggleSidebar() {
     this.isSidebarOpen &#x3D; !this.isSidebarOpen;
   }
+  /**
+   * Réduit la barre de navigation latérale quand la fenêtre est de petite taille.
+   */
   closeSidebar() {
     if (window.innerWidth &lt;&#x3D; 890) {
       this.isSidebarOpen &#x3D; false;

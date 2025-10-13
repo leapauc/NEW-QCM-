@@ -369,14 +369,16 @@ Il permet également la déconnexion de l&#39;utilisateur administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="97"
-                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:97</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:103</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Réduit la barre de navigation latérale quand la fenêtre est de petite taille.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -406,8 +408,8 @@ Il permet également la déconnexion de l&#39;utilisateur administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="106"
-                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:106</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:112</a></div>
                         </td>
                     </tr>
 
@@ -562,14 +564,16 @@ Il permet également la déconnexion de l&#39;utilisateur administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="94"
-                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:94</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/pages/admin/admin.component.ts:97</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Afficher/Désafficher la barre de navigation latérale.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -878,9 +882,15 @@ export class AdminComponent {
     this.showOption &#x3D; !this.showOption;
   }
 
+  /**
+   * Afficher/Désafficher la barre de navigation latérale.
+   */
   toggleSidebar() {
     this.isSidebarOpen &#x3D; !this.isSidebarOpen;
   }
+  /**
+   * Réduit la barre de navigation latérale quand la fenêtre est de petite taille.
+   */
   closeSidebar() {
     if (window.innerWidth &lt;&#x3D; 890) {
       this.isSidebarOpen &#x3D; false;

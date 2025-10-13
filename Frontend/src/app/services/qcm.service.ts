@@ -55,6 +55,59 @@ export class QcmService {
   }
 
   /**
+   * Crée un nouveau QCM complet incluant ses questions et leurs réponses.
+   *
+   * Cette méthode envoie une requête HTTP POST vers l'API backend
+   * afin d'enregistrer un questionnaire (QCM) avec toutes ses questions et options de réponse associées.
+   *
+   * L’API ciblée correspond à l’endpoint :
+   * `POST {apiUrl}/plusQuestion`
+   *
+   * @param qcm - Objet conforme à l’interface {@link QCM} contenant :
+   *  - les informations générales du QCM (titre, description, auteur)
+   *  - la liste des questions (`questions[]`)
+   *  - pour chaque question, la liste des réponses (`responses[]`)
+   *
+   * @returns Observable contenant la réponse HTTP du serveur (par exemple `{ message: string, qcmId: number }`)
+   *
+   * @example
+   * ```ts
+   * const newQCM: QCM = {
+   *   title: 'QCM sur Perl',
+   *   description: 'Testez vos connaissances sur Perl',
+   *   created_by: 1,
+   *   questions: [
+   *     {
+   *       question: 'Quel symbole est utilisé pour déclarer une variable scalaire ?',
+   *       type: 'single',
+   *       responses: [
+   *         { response: '$', is_correct: true },
+   *         { response: '@', is_correct: false },
+   *         { response: '%', is_correct: false }
+   *       ]
+   *     },
+   *     {
+   *       question: 'Quelle fonction affiche du texte en Perl ?',
+   *       type: 'single',
+   *       responses: [
+   *         { response: 'print', is_correct: true },
+   *         { response: 'echo', is_correct: false }
+   *       ]
+   *     }
+   *   ]
+   * };
+   *
+   * qcmService.createQCMQuestionsWithResponses(newQCM).subscribe({
+   *   next: (res) => console.log('✅ QCM créé avec succès', res),
+   *   error: (err) => console.error('❌ Erreur lors de la création du QCM', err)
+   * });
+   * ```
+   */
+  createQCMQuestionsWithResponses(qcm: QCM): Observable<any> {
+    return this.http.post(`${this.apiUrl}/plusQuestion`, qcm);
+  }
+
+  /**
    * Récupère un QCM spécifique par son identifiant.
    *
    * @param id - Identifiant unique du QCM.

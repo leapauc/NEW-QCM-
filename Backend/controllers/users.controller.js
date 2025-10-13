@@ -71,7 +71,7 @@ exports.updateUser = async (req, res) => {
   }
 
   try {
-    // 1️⃣ Vérifier que l'utilisateur existe
+    // Vérifier que l'utilisateur existe
     const { rows: currentUserRows } = await pool.query(
       `SELECT * FROM users WHERE id_user = $1`,
       [id]
@@ -79,7 +79,7 @@ exports.updateUser = async (req, res) => {
     if (currentUserRows.length === 0)
       return res.status(404).json({ error: "Utilisateur non trouvé." });
 
-    // 2️⃣ Vérifier le conflit sur name + password
+    // Vérifier le conflit sur name + password
     const { rows: conflictUsers } = await pool.query(
       `SELECT id_user FROM users
        WHERE name = $1
@@ -95,7 +95,7 @@ exports.updateUser = async (req, res) => {
       });
     }
 
-    // 3️⃣ Mise à jour avec hash du nouveau mot de passe
+    // Mise à jour avec hash du nouveau mot de passe
     const result = await pool.query(
       `UPDATE users
        SET name=$1, firstname=$2, society=$3, password=crypt($4, gen_salt('bf')),

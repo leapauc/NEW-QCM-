@@ -28,6 +28,10 @@ export interface QCM {
    */
   user?: string;
   /**
+   * Id du créateur du QCM.
+   */
+  created_by?: string;
+  /**
    * ⏱ Date de création du QCM au format ISO.
    * Optionnel, fourni par la base de données.
    */
