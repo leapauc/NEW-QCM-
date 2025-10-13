@@ -134,8 +134,7 @@
 <li>Affichage d’un modal Bootstrap en cas de succès.</li>
 <li>Réinitialisation automatique du formulaire après création.</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
-&lt;app-ajout-qcm&gt;&lt;/app-ajout-qcm&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-ajout-qcm&gt;&lt;/app-ajout-qcm&gt;</code></pre></div>
     </p>
 
 
@@ -244,7 +243,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:43</a></div>
                             </td>
                         </tr>
 
@@ -350,8 +349,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="74"
-                                    class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:74</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -403,7 +402,7 @@ Fonctionnement :</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/admin/ajout-qcm/ajout-qcm.component.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -413,7 +412,7 @@ Fonctionnement :</p>
 Contient :</p>
 <ul>
 <li>title: Titre du QCM (champ obligatoire)</li>
-<li>description: Description du QCM (facultatif)</li>
+<li>description: Description du QCM (champ obligatoire)</li>
 </ul>
 </div>
                 </td>
@@ -455,9 +454,7 @@ import { ModalComponent } from &#x27;../../../components/modal_success_failure/m
  * - Réinitialisation automatique du formulaire après création.
  *
  * @example
- * &#x60;&#x60;&#x60;html
  * &lt;app-ajout-qcm&gt;&lt;/app-ajout-qcm&gt;
- * &#x60;&#x60;&#x60;
  */
 @Component({
   selector: &#x27;app-ajout-qcm&#x27;,
@@ -469,7 +466,7 @@ export class AjoutQcmComponent {
    * Formulaire réactif pour la création d’un QCM.
    * Contient :
    * - title: Titre du QCM (champ obligatoire)
-   * - description: Description du QCM (facultatif)
+   * - description: Description du QCM (champ obligatoire)
    */
   form: FormGroup;
 

@@ -129,12 +129,11 @@ Il émet un événement à chaque modification de la valeur de recherche.</p>
 <li><code>CommonModule</code> pour les directives Angular communes</li>
 <li><code>FormsModule</code> pour la liaison ngModel</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
-&lt;app-search-bar
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-search-bar
   placeholder=&quot;Rechercher un élément...&quot;
   [(value)]=&quot;searchTerm&quot;
   (valueChange)=&quot;applyFilter()&quot;
-&gt;&lt;/app-search-bar&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
+&gt;&lt;/app-search-bar&gt;</code></pre></div>
     </p>
 
 
@@ -285,7 +284,7 @@ Il émet un événement à chaque modification de la valeur de recherche.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:51</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:49</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -317,7 +316,7 @@ Il émet un événement à chaque modification de la valeur de recherche.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:55</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -348,7 +347,7 @@ Peut être utilisée avec un <code>two-way binding</code> via [(value)].</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:61</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:59</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -387,8 +386,8 @@ Peut être utilisée avec un <code>two-way binding</code> via [(value)].</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="67"
-                                    class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:67</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/components/search_bar/search_bar.component.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -431,13 +430,11 @@ import { FormsModule } from &#x27;@angular/forms&#x27;;
  * - &#x60;FormsModule&#x60; pour la liaison ngModel
  *
  * @example
- * &#x60;&#x60;&#x60;html
  * &lt;app-search-bar
  *   placeholder&#x3D;&quot;Rechercher un élément...&quot;
  *   [(value)]&#x3D;&quot;searchTerm&quot;
  *   (valueChange)&#x3D;&quot;applyFilter()&quot;
  * &gt;&lt;/app-search-bar&gt;
- * &#x60;&#x60;&#x60;
  *
  * @selector app-search-bar
  * @component

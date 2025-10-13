@@ -127,14 +127,13 @@
         <p>Composant de modal de confirmation réutilisable.</p>
 <p>Ce composant affiche une modal avec un titre, un message et des boutons pour confirmer ou annuler une action.
 Le type d&#39;action (<code>update</code> ou <code>delete</code>) peut être utilisé pour adapter le style ou le comportement.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```html
-&lt;app-confirmation-modal
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;app-confirmation-modal
   [title]=&quot;&#39;Confirmer la suppression&#39;&quot;
   [message]=&quot;&#39;Êtes-vous sûr de vouloir supprimer cet élément ?&#39;&quot;
   [actionType]=&quot;&#39;delete&#39;&quot;
   (confirm)=&quot;handleConfirm()&quot;
   (cancel)=&quot;handleCancel()&quot;&gt;
-&lt;/app-confirmation-modal&gt;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div>
+&lt;/app-confirmation-modal&gt;</code></pre></div>
     </p>
 
 
@@ -284,7 +283,7 @@ Le type d&#39;action (<code>update</code> ou <code>delete</code>) peut être uti
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:46</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -317,7 +316,7 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:40</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -349,7 +348,7 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:36</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -379,7 +378,7 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:55</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -406,7 +405,7 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:53</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:51</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -445,8 +444,8 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="69"
-                                    class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:69</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -484,8 +483,8 @@ Peut influencer le style ou l&#39;icône de la modal.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="62"
-                                    class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:62</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/components/confirmation_modal/confirmation_modal.component.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -520,7 +519,6 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
  * Le type d&#x27;action (&#x60;update&#x60; ou &#x60;delete&#x60;) peut être utilisé pour adapter le style ou le comportement.
  *
  * @example
- * &#x60;&#x60;&#x60;html
  * &lt;app-confirmation-modal
  *   [title]&#x3D;&quot;&#x27;Confirmer la suppression&#x27;&quot;
  *   [message]&#x3D;&quot;&#x27;Êtes-vous sûr de vouloir supprimer cet élément ?&#x27;&quot;
@@ -528,7 +526,6 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
  *   (confirm)&#x3D;&quot;handleConfirm()&quot;
  *   (cancel)&#x3D;&quot;handleCancel()&quot;&gt;
  * &lt;/app-confirmation-modal&gt;
- * &#x60;&#x60;&#x60;
  *
  * @selector app-confirmation-modal
  * @component
