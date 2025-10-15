@@ -253,7 +253,7 @@ création, la récupération et la mise à jour des QCM.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>⏱ Date de création du QCM au format ISO.
+                                    <div class="io-description"><p>Date de création du QCM au format ISO.
 Optionnel, fourni par la base de données.</p>
 </div>
                                 </td>
@@ -342,7 +342,7 @@ Optionnel, fourni par la base de données.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Description du QCM.
+                                    <div class="io-description"><p>Description du QCM.
 Optionnel, peut contenir des informations sur le contenu ou l&#39;objectif.</p>
 </div>
                                 </td>
@@ -387,7 +387,7 @@ Optionnel, peut contenir des informations sur le contenu ou l&#39;objectif.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant unique du QCM (généré par la base de données).
+                                    <div class="io-description"><p>Identifiant unique du QCM (généré par la base de données).
 Optionnel lors de la création d&#39;un nouveau QCM.</p>
 </div>
                                 </td>
@@ -432,7 +432,7 @@ Optionnel lors de la création d&#39;un nouveau QCM.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📋 Liste des questions appartenant à ce QCM.
+                                    <div class="io-description"><p>Liste des questions appartenant à ce QCM.
 Chaque élément est un objet <code>Question</code>.</p>
 </div>
                                 </td>
@@ -472,7 +472,7 @@ Chaque élément est un objet <code>Question</code>.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Titre du QCM.
+                                    <div class="io-description"><p>Titre du QCM.
 Exemple : &quot;Java&quot;, &quot;Python débutant&quot;, &quot;Angular&quot;.</p>
 </div>
                                 </td>
@@ -517,7 +517,7 @@ Exemple : &quot;Java&quot;, &quot;Python débutant&quot;, &quot;Angular&quot;.</
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>⏱ Date de dernière mise à jour du QCM au format ISO.
+                                    <div class="io-description"><p>Date de dernière mise à jour du QCM au format ISO.
 Optionnel, fourni par la base de données.</p>
 </div>
                                 </td>
@@ -562,7 +562,7 @@ Optionnel, fourni par la base de données.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>👤 Nom de l&#39;utilisateur qui a créé le QCM.
+                                    <div class="io-description"><p>Nom de l&#39;utilisateur qui a créé le QCM.
 Optionnel, peut être utilisé pour l&#39;affichage dans l&#39;UI.</p>
 </div>
                                 </td>
@@ -584,22 +584,22 @@ Optionnel, peut être utilisé pour l&#39;affichage dans l&#39;UI.</p>
  */
 export interface QCM {
   /**
-   * 🔑 Identifiant unique du QCM (généré par la base de données).
+   * Identifiant unique du QCM (généré par la base de données).
    * Optionnel lors de la création d&#x27;un nouveau QCM.
    */
   id_qcm?: number;
   /**
-   * 📝 Titre du QCM.
+   * Titre du QCM.
    * Exemple : &quot;Java&quot;, &quot;Python débutant&quot;, &quot;Angular&quot;.
    */
   title: string;
   /**
-   * 📝 Description du QCM.
+   * Description du QCM.
    * Optionnel, peut contenir des informations sur le contenu ou l&#x27;objectif.
    */
   description?: string;
   /**
-   * 👤 Nom de l&#x27;utilisateur qui a créé le QCM.
+   * Nom de l&#x27;utilisateur qui a créé le QCM.
    * Optionnel, peut être utilisé pour l&#x27;affichage dans l&#x27;UI.
    */
   user?: string;
@@ -608,17 +608,17 @@ export interface QCM {
    */
   created_by?: string;
   /**
-   * ⏱ Date de création du QCM au format ISO.
+   * Date de création du QCM au format ISO.
    * Optionnel, fourni par la base de données.
    */
   created_at?: string;
   /**
-   * ⏱ Date de dernière mise à jour du QCM au format ISO.
+   * Date de dernière mise à jour du QCM au format ISO.
    * Optionnel, fourni par la base de données.
    */
   updated_at?: string;
   /**
-   * 📋 Liste des questions appartenant à ce QCM.
+   * Liste des questions appartenant à ce QCM.
    * Chaque élément est un objet &#x60;Question&#x60;.
    */
   questions?: Question[];

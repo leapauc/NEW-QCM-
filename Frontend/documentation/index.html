@@ -97,6 +97,16 @@ les ressources nécessaires</li>
 <li>de conserver et d&#39;afficher le dernier résultat d&#39;un stagiaire</li>
 <li>de gérer les différents niveaux d&#39;accès (droits)</li>
 </ul>
+<hr>
+<h2>Contenerisation</h2>
+<p>L&#39;ensemble du projet (backend, base de données et frontend) est contenu dans un conteneur docker.</p>
+<p>Il suffira donc de lancer le conteneur docker pour pouvoir accéder à l&#39;application.
+La commande à executer est la suivante :</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">docker compose up --build</code></pre></div><hr>
+<h2>Documentation</h2>
+<p>La documentation Angular est disponible dans le dossier documentation sur le github suivant :</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">https://github.com/leapauc/NEW-QCM-</code></pre></div><p>mais également à l&#39;url suivante :</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:8081</code></pre></div><hr>
 <h2>Prérequis</h2>
 <h3>Angular prérequis :</h3>
 <p>Le projet Angular nécessite l&#39;installation de quelques librairies indispensables à son bon fonctionnement :</p>
@@ -105,22 +115,17 @@ les ressources nécessaires</li>
 <li>bootstrap-icons</li>
 <li>@compodoc/compodoc</li>
 </ul>
-<p>L&#39;installation peut se faire avec les commandes suivantes :</p>
+<p>La tâche est réalisé au cours de la création du conteneur docker.</p>
+<p>En local, l&#39;installation peut se faire avec les commandes suivantes :</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-none">npm install bootstrap
 npm i --save-dev &#64;types/bootstrap
 npm install bootstrap-icons
-npm install --save-dev &#64;compodoc/compodoc</code></pre></div><h3>Autre prérequis :</h3>
+npm install --save-dev &#64;compodoc/compodoc</code></pre></div><p>** ATTENTION : au préalable, il faudra installer nodeJS. **</p>
+<h3>Autre prérequis :</h3>
 <p>Le frontend Angular communique avec un backend NodeJS qui répond sur :</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:3000</code></pre></div><p>Différentes urls sont disponibles et permettent de réaliser de nombreuses requêtes dans la base de données.</p>
 <p>La documentation de l&#39;API est disponible à l&#39;url suivante :</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:3000/api-docs/</code></pre></div><h2>Documentation</h2>
-<p>La documentation Angular est disponible dans le dossier documentation sur le github suivant :</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">https://github.com/leapauc/NEW-QCM-</code></pre></div><p>mais également à l&#39;url suivante :</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:8081</code></pre></div><h2>Contenerisation</h2>
-<p>L&#39;ensemble du projet (backend, base de données et frontend) est contenu dans un conteneur docker.</p>
-<p>Il suffira donc de lancer le conteneur docker pour pouvoir accéder à l&#39;application.
-La commande à executer est la suivante :</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">docker compose up --build</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:3000/api-docs/</code></pre></div>
 
 
 

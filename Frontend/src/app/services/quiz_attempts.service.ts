@@ -34,9 +34,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un tableau de tentatives.
    *
    * @example
-   * ```ts
    * quizAttemptsService.getAttemptsByUser(12).subscribe(attempts => console.log(attempts));
-   * ```
    */
   getAttemptsByUser(id_user: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${id_user}`);
@@ -48,9 +46,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un tableau de toutes les tentatives.
    *
    * @example
-   * ```ts
    * quizAttemptsService.getAllAttempts().subscribe(all => console.log(all));
-   * ```
    */
   getAllAttempts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
@@ -64,9 +60,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un objet contenant la liste des questions de la tentative.
    *
    * @example
-   * ```ts
    * quizAttemptsService.getAttemptDetails(101).subscribe(details => console.log(details.questions));
-   * ```
    */
   getAttemptDetails(
     id_attempt: number
@@ -83,7 +77,6 @@ export class QuizAttemptsService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * const attempt: AttemptPayload = {
    *   userId: 12,
    *   qcmId: 5,
@@ -91,7 +84,6 @@ export class QuizAttemptsService {
    *   responses: [...]
    * };
    * quizAttemptsService.saveAttempt(attempt).subscribe(result => console.log(result));
-   * ```
    */
   saveAttempt(payload: AttemptPayload): Observable<any> {
     return this.http.post<any>(this.apiUrl, payload);

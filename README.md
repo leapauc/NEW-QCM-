@@ -1,5 +1,22 @@
 # Documentation
 
+## Besoins
+
+Dans le but de s’affranchir du format papier des questionnaires et d’éviter l’étape de numérisation des
+questionnaires papier, LECLIENT souhaite pouvoir disposer d’outils informatiques et multimédias
+permettant :
+
+- de récupérer la base de questions existantes dans l’application QCM PLUS.
+- de créer de nouvelles questions en ligne avec des protocoles d’activités de type QCM et d'importer
+  les ressources nécessaires
+- d'ajouter les questions dans des questionnaires
+- de créer/modifier/supprimer des questionnaires
+- d’effectuer en ligne et à distance le questionnaire
+- de conserver et d'afficher le dernier résultat d'un stagiaire
+- de gérer les différents niveaux d'accès (droits)
+
+---
+
 ## Conteneurisation
 
 Un conteneur docker permet de gérer l'ensemble du projet New QCM +.
@@ -20,6 +37,8 @@ docker compose up --build
 Dès lors que le front est opérationnel, l'API, la compodoc Angular, la base de données et le Frontend seront opérationnels.
 
 **NOTE : VEUILLEZ A CE QUE LES PORTS 8081 ou 8080, et 4200 soit disponible.**
+
+---
 
 ## Prerequis
 

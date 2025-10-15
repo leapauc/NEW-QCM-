@@ -9,33 +9,33 @@ import { ResponseOption } from './responseOption';
  */
 export interface Question {
   /**
-   * 🔑 Identifiant unique de la question (généré par la base de données).
+   * Identifiant unique de la question (généré par la base de données).
    * Optionnel lors de la création d’une nouvelle question.
    */
   id_question?: number;
   /**
-   * 🔑 Identifiant du QCM auquel cette question appartient.
+   * Identifiant du QCM auquel cette question appartient.
    * Optionnel si la question est manipulée indépendamment.
    */
   id_qcm?: number;
   /**
-   * 📝 Texte de la question.
+   * Texte de la question.
    * Exemple : "Quel mot-clé permet de définir une classe en Java ?"
    */
   question: string;
   /**
-   * 🎯 Type de question :
+   * Type de question :
    * - `"single"` → l'utilisateur ne peut sélectionner qu'une seule réponse
    * - `"multiple"` → plusieurs réponses peuvent être correctes
    */
   type: 'single' | 'multiple';
   /**
-   * 📌 Position de la question dans le QCM.
+   * Position de la question dans le QCM.
    * Optionnel, utilisé pour ordonner les questions lors de l’affichage.
    */
   position?: number;
   /**
-   * 📋 Liste des options de réponse associées à cette question.
+   * Liste des options de réponse associées à cette question.
    * Chaque élément est un objet `ResponseOption`.
    */
   responses: ResponseOption[];

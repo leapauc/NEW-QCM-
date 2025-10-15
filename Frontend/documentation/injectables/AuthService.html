@@ -268,8 +268,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="83"
-                                    class="link-to-prism">src/app/services/auth.service.ts:83</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/services/auth.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -311,8 +311,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="93"
-                                    class="link-to-prism">src/app/services/auth.service.ts:93</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/app/services/auth.service.ts:89</a></div>
                         </td>
                     </tr>
 
@@ -354,8 +354,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="102"
-                                    class="link-to-prism">src/app/services/auth.service.ts:102</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/app/services/auth.service.ts:98</a></div>
                         </td>
                     </tr>
 
@@ -397,8 +397,8 @@ l&#39;utilisateur est connecté ou administrateur.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="45"
-                                    class="link-to-prism">src/app/services/auth.service.ts:45</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/app/services/auth.service.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -407,11 +407,10 @@ l&#39;utilisateur est connecté ou administrateur.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Effectue la connexion d&#39;un utilisateur.</p>
 <p>Si la connexion réussit, l&#39;utilisateur est enregistré dans le <code>localStorage</code>.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
   next: res =&gt; console.log(&#39;Connecté&#39;, res.user),
   error: err =&gt; console.error(&#39;Erreur&#39;, err)
-});</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+});</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -498,8 +497,8 @@ authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="73"
-                                    class="link-to-prism">src/app/services/auth.service.ts:73</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/services/auth.service.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -508,8 +507,7 @@ authService.login(&#39;Dupond&#39;, &#39;mdp123456&#39;).subscribe({
                 <td class="col-md-4">
                         <div class="io-description"><p>Déconnecte l&#39;utilisateur en cours.</p>
 <p>Supprime le token et l&#39;utilisateur du <code>localStorage</code>.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-authService.logout();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">authService.logout();</code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -609,12 +607,10 @@ export class AuthService {
    * Si la connexion réussit, l&#x27;utilisateur est enregistré dans le &#x60;localStorage&#x60;.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * authService.login(&#x27;Dupond&#x27;, &#x27;mdp123456&#x27;).subscribe({
    *   next: res &#x3D;&gt; console.log(&#x27;Connecté&#x27;, res.user),
    *   error: err &#x3D;&gt; console.error(&#x27;Erreur&#x27;, err)
    * });
-   * &#x60;&#x60;&#x60;
    */
   login(
     name: string,
@@ -640,9 +636,7 @@ export class AuthService {
    * Supprime le token et l&#x27;utilisateur du &#x60;localStorage&#x60;.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * authService.logout();
-   * &#x60;&#x60;&#x60;
    */
   logout() {
     localStorage.removeItem(&#x27;token&#x27;);

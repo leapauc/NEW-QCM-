@@ -146,12 +146,11 @@ elle est tronquée et terminée par <code>...</code></li>
 
 &lt;!-- Exemple avec limite personnalisée --&gt;
 {{ user.email | truncateEmail:15 }}</code></pre></div><hr>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">**Entrée :**
-```typescript
-&#39;exemple.longemail&#64;domaine.com&#39;</code></pre></div><p><strong>Sortie avec limite par défaut (10) :</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.lo...&#39;</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none">**Sortie avec limite personnalisée (20) :**</code></pre></div><p>&#39;exemple.longemail@d...&#39;</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">
----</code></pre></div>
+<p><strong>Entrée :</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">&#39;exemple.longemail&#64;domaine.com&#39;</code></pre></div><p><strong>Sortie avec limite par défaut (10) :</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.lo...&#39;</code></pre></div><p><strong>Sortie avec limite personnalisée (20) :</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">&#39;exemple.longemail&#64;d...&#39;</code></pre></div><hr>
+
             </p>
 
 
@@ -192,8 +191,8 @@ elle est tronquée et terminée par <code>...</code></li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/app/pipes/truncate-email.pipe.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/app/pipes/truncate-email.pipe.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -293,7 +292,6 @@ elle est tronquée et terminée par <code>...</code></li>
  * &#x60;&#x60;&#x60;
  *
  * ---
- * @example
  * **Entrée :**
  * &#x60;&#x60;&#x60;typescript
  * &#x27;exemple.longemail@domaine.com&#x27;

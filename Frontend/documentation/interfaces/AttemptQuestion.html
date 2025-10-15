@@ -218,7 +218,7 @@ Elle contient l&#39;énoncé de la question, son type, et les réponses possible
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant unique de la question.
+                                    <div class="io-description"><p>Identifiant unique de la question.
 Sert à relier les réponses sélectionnées par l&#39;utilisateur.</p>
 </div>
                                 </td>
@@ -258,7 +258,7 @@ Sert à relier les réponses sélectionnées par l&#39;utilisateur.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Texte de la question posée à l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Texte de la question posée à l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -297,7 +297,7 @@ Sert à relier les réponses sélectionnées par l&#39;utilisateur.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📋 Liste des réponses associées à cette question,
+                                    <div class="io-description"><p>Liste des réponses associées à cette question,
 représentées par des objets <code>AttemptResponse</code>.
 Chaque élément contient le texte de la réponse et un indicateur de validité.</p>
 </div>
@@ -338,7 +338,7 @@ Chaque élément contient le texte de la réponse et un indicateur de validité.
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🎯 Type de question :</p>
+                                    <div class="io-description"><p>Type de question :</p>
 <ul>
 <li><code>&quot;single&quot;</code> → l&#39;utilisateur ne peut sélectionner qu&#39;une seule réponse</li>
 <li><code>&quot;multiple&quot;</code> → plusieurs réponses peuvent être correctes</li>
@@ -364,22 +364,22 @@ Chaque élément contient le texte de la réponse et un indicateur de validité.
  */
 export interface AttemptQuestion {
   /**
-   * 🔑 Identifiant unique de la question.
+   * Identifiant unique de la question.
    * Sert à relier les réponses sélectionnées par l&#x27;utilisateur.
    */
   id_question: number;
   /**
-   * 📝 Texte de la question posée à l&#x27;utilisateur.
+   * Texte de la question posée à l&#x27;utilisateur.
    */
   question: string;
   /**
-   * 🎯 Type de question :
+   * Type de question :
    * - &#x60;&quot;single&quot;&#x60; → l&#x27;utilisateur ne peut sélectionner qu&#x27;une seule réponse
    * - &#x60;&quot;multiple&quot;&#x60; → plusieurs réponses peuvent être correctes
    */
   type: &#x27;single&#x27; | &#x27;multiple&#x27;;
   /**
-   * 📋 Liste des réponses associées à cette question,
+   * Liste des réponses associées à cette question,
    * représentées par des objets &#x60;AttemptResponse&#x60;.
    * Chaque élément contient le texte de la réponse et un indicateur de validité.
    */

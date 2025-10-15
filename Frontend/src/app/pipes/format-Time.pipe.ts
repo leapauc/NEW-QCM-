@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
  * représentant un temps en **minutes décimales**, et renvoie une chaîne
  * lisible sous la forme `"X min Y s"`.
  *
- * Exemple :
  * ```ts
  * 90.5 | timeFormat => "90 min 30 s"
  * ```
@@ -25,8 +24,7 @@ export class TimeFormatPipe implements PipeTransform {
    * Transforme un nombre ou une chaîne représentant un temps en minutes décimales
    * en une chaîne formatée minutes + secondes.
    *
-   * @param value Le temps en minutes décimales (number ou string).
-   *              Si null, undefined ou '-', renvoie simplement '-'.
+   * @param value Le temps en minutes décimales (number ou string). Si null, undefined ou '-', renvoie simplement '-'.
    * @returns Une chaîne formatée sous la forme `"X min Y s"`.
    */
   transform(value: number | string): string {

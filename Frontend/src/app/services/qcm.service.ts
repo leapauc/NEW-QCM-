@@ -31,9 +31,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de QCM.
    *
    * @example
-   * ```ts
    * qcmService.getAllQCM().subscribe(qcms => console.log(qcms));
-   * ```
    */
   getAllQCM(): Observable<QCM[]> {
     return this.http.get<QCM[]>(`${this.apiUrl}`);
@@ -46,9 +44,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * qcmService.createQCM({ title: 'Nouveau QCM', questions: [] }).subscribe();
-   * ```
    */
   createQCM(qcm: QCM): Observable<any> {
     return this.http.post(`${this.apiUrl}`, qcm);
@@ -71,7 +67,6 @@ export class QcmService {
    * @returns Observable contenant la réponse HTTP du serveur (par exemple `{ message: string, qcmId: number }`)
    *
    * @example
-   * ```ts
    * const newQCM: QCM = {
    *   title: 'QCM sur Perl',
    *   description: 'Testez vos connaissances sur Perl',
@@ -101,7 +96,6 @@ export class QcmService {
    *   next: (res) => console.log('✅ QCM créé avec succès', res),
    *   error: (err) => console.error('❌ Erreur lors de la création du QCM', err)
    * });
-   * ```
    */
   createQCMQuestionsWithResponses(qcm: QCM): Observable<any> {
     return this.http.post(`${this.apiUrl}/plusQuestion`, qcm);
@@ -114,9 +108,7 @@ export class QcmService {
    * @returns Observable émettant le QCM correspondant.
    *
    * @example
-   * ```ts
    * qcmService.getQCMById(1).subscribe(qcm => console.log(qcm));
-   * ```
    */
   getQCMById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
@@ -130,9 +122,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * qcmService.updateQCM(1, updatedQcm).subscribe();
-   * ```
    */
   updateQCM(id: number, qcm: QCM): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, qcm);
@@ -145,9 +135,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * qcmService.deleteQCM(1).subscribe();
-   * ```
    */
   deleteQCM(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
@@ -160,9 +148,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de questions avec réponses.
    *
    * @example
-   * ```ts
    * qcmService.getQcmQuestionsWithResponses(1).subscribe(questions => console.log(questions));
-   * ```
    */
   getQcmQuestionsWithResponses(qcmId: number): Observable<Question[]> {
     return this.http.get<Question[]>(
@@ -177,9 +163,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de questions.
    *
    * @example
-   * ```ts
    * qcmService.getQcmQuestions(1).subscribe(questions => console.log(questions));
-   * ```
    */
   getQcmQuestions(qcmId: number): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}/QcmQuestions/${qcmId}`);
@@ -193,9 +177,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * qcmService.updateQCM_Question(1, updatedQcm).subscribe();
-   * ```
    */
   updateQCM_Question(id: number, qcm: QCM): Observable<any> {
     return this.http.put(`${this.apiUrl}/plusQuestion/${id}`, qcm);

@@ -9,22 +9,22 @@ import { AttemptResponse } from './attemptResponse';
  */
 export interface AttemptQuestion {
   /**
-   * 🔑 Identifiant unique de la question.
+   * Identifiant unique de la question.
    * Sert à relier les réponses sélectionnées par l'utilisateur.
    */
   id_question: number;
   /**
-   * 📝 Texte de la question posée à l'utilisateur.
+   * Texte de la question posée à l'utilisateur.
    */
   question: string;
   /**
-   * 🎯 Type de question :
+   * Type de question :
    * - `"single"` → l'utilisateur ne peut sélectionner qu'une seule réponse
    * - `"multiple"` → plusieurs réponses peuvent être correctes
    */
   type: 'single' | 'multiple';
   /**
-   * 📋 Liste des réponses associées à cette question,
+   * Liste des réponses associées à cette question,
    * représentées par des objets `AttemptResponse`.
    * Chaque élément contient le texte de la réponse et un indicateur de validité.
    */

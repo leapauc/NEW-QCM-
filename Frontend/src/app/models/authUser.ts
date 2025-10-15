@@ -6,15 +6,15 @@
  */
 export interface AuthUser {
   /**
-   * 🔑 Identifiant unique de l'utilisateur.
+   * Identifiant unique de l'utilisateur.
    */
   id_user: number;
   /**
-   * 📝 Nom complet ou identifiant de l'utilisateur.
+   * Nom complet ou identifiant de l'utilisateur.
    */
   name: string;
   /**
-   * ⚡ Indique si l'utilisateur possède les droits d'administration.
+   * Indique si l'utilisateur possède les droits d'administration.
    * - `true` → administrateur
    * - `false` → utilisateur classique
    */

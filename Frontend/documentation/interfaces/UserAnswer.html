@@ -205,7 +205,7 @@ lors de l’envoi du payload d’une tentative (<code>AttemptPayload</code>).</p
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant de la question à laquelle l&#39;utilisateur a répondu.</p>
+                                    <div class="io-description"><p>Identifiant de la question à laquelle l&#39;utilisateur a répondu.</p>
 </div>
                                 </td>
                             </tr>
@@ -244,7 +244,7 @@ lors de l’envoi du payload d’une tentative (<code>AttemptPayload</code>).</p
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant de la réponse sélectionnée par l&#39;utilisateur.
+                                    <div class="io-description"><p>Identifiant de la réponse sélectionnée par l&#39;utilisateur.
 Correspond à <code>response_question.id_response</code> en base de données.</p>
 </div>
                                 </td>
@@ -258,12 +258,12 @@ Correspond à <code>response_question.id_response</code> en base de données.</p
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface UserAnswer {
   /**
-   * 🔑 Identifiant de la question à laquelle l&#x27;utilisateur a répondu.
+   * Identifiant de la question à laquelle l&#x27;utilisateur a répondu.
    */
   id_question: number;
 
   /**
-   * 🔑 Identifiant de la réponse sélectionnée par l&#x27;utilisateur.
+   * Identifiant de la réponse sélectionnée par l&#x27;utilisateur.
    * Correspond à &#x60;response_question.id_response&#x60; en base de données.
    */
   id_response: number;

@@ -236,7 +236,7 @@ gestion des utilisateurs (création, mise à jour, récupération, suppression).
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>⚡ Indique si l&#39;utilisateur possède les droits d&#39;administration.</p>
+                                    <div class="io-description"><p>Indique si l&#39;utilisateur possède les droits d&#39;administration.</p>
 <ul>
 <li><code>true</code> → administrateur</li>
 <li><code>false</code> → utilisateur classique</li>
@@ -279,7 +279,7 @@ gestion des utilisateurs (création, mise à jour, récupération, suppression).
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📧 Adresse e-mail de l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Adresse e-mail de l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -318,7 +318,7 @@ gestion des utilisateurs (création, mise à jour, récupération, suppression).
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Prénom de l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Prénom de l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -362,7 +362,7 @@ gestion des utilisateurs (création, mise à jour, récupération, suppression).
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant unique de l&#39;utilisateur.
+                                    <div class="io-description"><p>Identifiant unique de l&#39;utilisateur.
 Optionnel lors de la création d&#39;un nouvel utilisateur.
 Créé automatiquement par le backend si création d&#39;un nouvel utilisateur</p>
 </div>
@@ -403,7 +403,7 @@ Créé automatiquement par le backend si création d&#39;un nouvel utilisateur</
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Nom de famille de l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Nom de famille de l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -442,7 +442,7 @@ Créé automatiquement par le backend si création d&#39;un nouvel utilisateur</
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔒 Mot de passe de l&#39;utilisateur.
+                                    <div class="io-description"><p>Mot de passe de l&#39;utilisateur.
 Il est conseillé de le stocker haché en base de données.</p>
 </div>
                                 </td>
@@ -482,7 +482,7 @@ Il est conseillé de le stocker haché en base de données.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🏢 Société ou organisation à laquelle appartient l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Société ou organisation à laquelle appartient l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -495,34 +495,34 @@ Il est conseillé de le stocker haché en base de données.</p>
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface User {
   /**
-   * 🔑 Identifiant unique de l&#x27;utilisateur.
+   * Identifiant unique de l&#x27;utilisateur.
    * Optionnel lors de la création d&#x27;un nouvel utilisateur.
    * Créé automatiquement par le backend si création d&#x27;un nouvel utilisateur
    */
   id_user?: number;
   /**
-   * 📝 Nom de famille de l&#x27;utilisateur.
+   * Nom de famille de l&#x27;utilisateur.
    */
   name: string;
   /**
-   * 📝 Prénom de l&#x27;utilisateur.
+   * Prénom de l&#x27;utilisateur.
    */
   firstname: string;
   /**
-   * 📧 Adresse e-mail de l&#x27;utilisateur.
+   * Adresse e-mail de l&#x27;utilisateur.
    */
   email: string;
   /**
-   * 🏢 Société ou organisation à laquelle appartient l&#x27;utilisateur.
+   * Société ou organisation à laquelle appartient l&#x27;utilisateur.
    */
   society: string;
   /**
-   * 🔒 Mot de passe de l&#x27;utilisateur.
+   * Mot de passe de l&#x27;utilisateur.
    * Il est conseillé de le stocker haché en base de données.
    */
   password: string;
   /**
-   * ⚡ Indique si l&#x27;utilisateur possède les droits d&#x27;administration.
+   * Indique si l&#x27;utilisateur possède les droits d&#x27;administration.
    * - &#x60;true&#x60; → administrateur
    * - &#x60;false&#x60; → utilisateur classique
    */

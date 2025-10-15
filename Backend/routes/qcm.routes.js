@@ -203,7 +203,7 @@ router.post("/", createQCM);
 
 /**
  * @swagger
- * /qcm/plusQuestions:
+ * /qcm/plusQuestion:
  *   post:
  *     summary: Créer un QCM avec ses questions et réponses
  *     description: >
@@ -413,12 +413,12 @@ router.post("/plusQuestion", createQCMWithQuestion);
 router.put("/:id", updateQCM);
 /**
  * @swagger
- * /qcm/{id}/withQuestions:
+ * /qcm/plusQuestion/{id}:
  *   put:
  *     summary: Mettre à jour un QCM existant avec ses questions et réponses
  *     description: >
- *       Ce point d'entrée permet de modifier un QCM existant, incluant ses questions et les réponses associées.
- *       Toutes les réponses d'une question sont supprimées puis recréées selon les données envoyées.
+ *       Permet de mettre à jour un QCM existant, y compris ses questions et leurs réponses associées.
+ *       Chaque question peut être de type `single` (une seule bonne réponse) ou `multiple` (plusieurs bonnes réponses).
  *     tags:
  *       - QCM
  *     parameters:
@@ -428,7 +428,7 @@ router.put("/:id", updateQCM);
  *         description: ID du QCM à mettre à jour
  *         schema:
  *           type: integer
- *           example: 42
+ *           example: 4
  *     requestBody:
  *       required: true
  *       content:
@@ -442,14 +442,14 @@ router.put("/:id", updateQCM);
  *               title:
  *                 type: string
  *                 description: Nouveau titre du QCM
- *                 example: "QCM sur l’histoire mondiale"
+ *                 example: "QCM de culture générale - Version révisée"
  *               description:
  *                 type: string
  *                 description: Nouvelle description du QCM
- *                 example: "Mise à jour du QCM d’histoire avec de nouvelles questions"
+ *                 example: "Version mise à jour du QCM de culture générale."
  *               questions:
  *                 type: array
- *                 description: Liste des questions à mettre à jour
+ *                 description: Liste des questions du QCM à mettre à jour
  *                 items:
  *                   type: object
  *                   required:
@@ -459,31 +459,30 @@ router.put("/:id", updateQCM);
  *                   properties:
  *                     id_question:
  *                       type: integer
- *                       description: ID de la question existante
- *                       example: 101
+ *                       description: ID unique de la question à mettre à jour
+ *                       example: 32
  *                     question:
  *                       type: string
- *                       description: Texte de la question
- *                       example: "En quelle année la Première Guerre mondiale a-t-elle débuté ?"
+ *                       description: Texte mis à jour de la question
+ *                       example: "Quelle est la capitale de la France ?"
  *                     type:
  *                       type: string
  *                       enum: [single, multiple]
- *                       description: Type de question (une seule ou plusieurs réponses correctes)
+ *                       description: Type de la question
  *                       example: "single"
  *                     responses:
  *                       type: array
- *                       description: Liste complète des réponses à recréer
+ *                       description: Liste des réponses à mettre à jour pour la question
  *                       items:
  *                         type: object
  *                         required:
  *                           - response
  *                           - is_correct
- *                           - position
  *                         properties:
  *                           response:
  *                             type: string
- *                             description: Proposition de réponse
- *                             example: "1914"
+ *                             description: Texte de la réponse
+ *                             example: "Paris"
  *                           is_correct:
  *                             type: boolean
  *                             description: Indique si la réponse est correcte
@@ -492,6 +491,36 @@ router.put("/:id", updateQCM);
  *                             type: integer
  *                             description: Position d'affichage de la réponse
  *                             example: 1
+ *           examples:
+ *             UpdateQCMExample:
+ *               summary: Exemple complet de mise à jour d’un QCM
+ *               value:
+ *                 title: "QCM de culture générale - Version révisée"
+ *                 description: "Version mise à jour du QCM de culture générale."
+ *                 questions:
+ *                   - id_question: 33
+ *                     question: "Quelle est la capitale de la France ?"
+ *                     type: "single"
+ *                     responses:
+ *                       - response: "Paris"
+ *                         is_correct: true
+ *                         position: 1
+ *                       - response: "Lyon"
+ *                         is_correct: false
+ *                         position: 2
+ *                   - id_question: 34
+ *                     question: "Lesquels de ces animaux sont des mammifères ?"
+ *                     type: "multiple"
+ *                     responses:
+ *                       - response: "Dauphin"
+ *                         is_correct: true
+ *                         position: 1
+ *                       - response: "Serpent"
+ *                         is_correct: false
+ *                         position: 2
+ *                       - response: "Chauve-souris"
+ *                         is_correct: true
+ *                         position: 3
  *     responses:
  *       200:
  *         description: QCM, questions et réponses mis à jour avec succès
@@ -504,7 +533,7 @@ router.put("/:id", updateQCM);
  *                   type: string
  *                   example: "QCM, questions et réponses mis à jour avec succès"
  *       400:
- *         description: Requête invalide (ID ou données manquantes)
+ *         description: ID QCM invalide ou données manquantes
  *         content:
  *           application/json:
  *             schema:
@@ -513,6 +542,16 @@ router.put("/:id", updateQCM);
  *                 error:
  *                   type: string
  *                   example: "ID QCM invalide"
+ *       404:
+ *         description: QCM non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "QCM non trouvé"
  *       500:
  *         description: Erreur interne du serveur
  *         content:
@@ -526,38 +565,6 @@ router.put("/:id", updateQCM);
  *                 details:
  *                   type: string
  *                   example: "Détails de l'erreur côté serveur"
- *     examples:
- *       Exemple de requête:
- *         value:
- *           title: "QCM sur l’histoire mondiale"
- *           description: "Mise à jour du QCM d’histoire"
- *           questions:
- *             - id_question: 101
- *               question: "En quelle année la Première Guerre mondiale a-t-elle débuté ?"
- *               type: "single"
- *               responses:
- *                 - response: "1914"
- *                   is_correct: true
- *                   position: 1
- *                 - response: "1939"
- *                   is_correct: false
- *                   position: 2
- *                 - response: "1918"
- *                   is_correct: false
- *                   position: 3
- *             - id_question: 102
- *               question: "Quels pays faisaient partie de la Triple Entente ?"
- *               type: "multiple"
- *               responses:
- *                 - response: "France"
- *                   is_correct: true
- *                   position: 1
- *                 - response: "Royaume-Uni"
- *                   is_correct: true
- *                   position: 2
- *                 - response: "Allemagne"
- *                   is_correct: false
- *                   position: 3
  */
 router.put("/plusQuestion/:id", updateQCMWithQuestions);
 /**

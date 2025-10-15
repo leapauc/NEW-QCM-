@@ -31,9 +31,7 @@ export class StatsService {
    * @returns Observable émettant le nombre de stagiaires.
    *
    * @example
-   * ```ts
    * statsService.getNbStagiaire().subscribe(nb => console.log('Stagiaires :', nb));
-   * ```
    */
   getNbStagiaire(): Observable<any> {
     return this.http.get(`${this.apiUrl}/nbStagiaire`);

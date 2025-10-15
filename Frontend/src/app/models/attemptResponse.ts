@@ -6,15 +6,15 @@
  */
 export interface AttemptResponse {
   /**
-   * 🔑 Identifiant unique de la réponse (correspond à `response_question.id_response` en base).
+   * Identifiant unique de la réponse (correspond à `response_question.id_response` en base).
    */
   id_response: number;
   /**
-   * 📝 Texte de la réponse affiché à l'utilisateur.
+   * Texte de la réponse affiché à l'utilisateur.
    */
   response: string;
   /**
-   * ✅ Indique si l'utilisateur a sélectionné cette réponse lors de sa tentative.
+   * Indique si l'utilisateur a sélectionné cette réponse lors de sa tentative.
    * - `true` → réponse choisie par l'utilisateur
    * - `false` → réponse non choisie
    */

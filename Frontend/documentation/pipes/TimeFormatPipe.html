@@ -131,7 +131,6 @@
 <p>Ce pipe prend en entrée un nombre (ou une chaîne convertible en nombre)
 représentant un temps en <strong>minutes décimales</strong>, et renvoie une chaîne
 lisible sous la forme <code>&quot;X min Y s&quot;</code>.</p>
-<p>Exemple :</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-ts">90.5 | timeFormat =&gt; &quot;90 min 30 s&quot;</code></pre></div><p>Usage typique dans un template :</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;span&gt;{{ 12.75 | timeFormat }}&lt;/span&gt; &lt;!-- Affiche &quot;12 min 45 s&quot; --&gt;</code></pre></div>
             </p>
@@ -174,8 +173,8 @@ lisible sous la forme <code>&quot;X min Y s&quot;</code>.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/app/pipes/format-Time.pipe.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="30"
+                                    class="link-to-prism">src/app/pipes/format-Time.pipe.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -184,7 +183,7 @@ lisible sous la forme <code>&quot;X min Y s&quot;</code>.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Transforme un nombre ou une chaîne représentant un temps en minutes décimales
 en une chaîne formatée minutes + secondes.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none">         Si null, undefined ou &#39;-&#39;, renvoie simplement &#39;-&#39;.</code></pre></div></div>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -211,8 +210,7 @@ en une chaîne formatée minutes + secondes.</p>
 
 
                                             <td>
-                                                    <p>Le temps en minutes décimales (number ou string).
-Si null, undefined ou &#39;-&#39;, renvoie simplement &#39;-&#39;.</p>
+                                                    <p>Le temps en minutes décimales (number ou string). Si null, undefined ou &#39;-&#39;, renvoie simplement &#39;-&#39;.</p>
 
                                             </td>
                                         </tr>
@@ -246,7 +244,6 @@ Si null, undefined ou &#39;-&#39;, renvoie simplement &#39;-&#39;.</p>
  * représentant un temps en **minutes décimales**, et renvoie une chaîne
  * lisible sous la forme &#x60;&quot;X min Y s&quot;&#x60;.
  *
- * Exemple :
  * &#x60;&#x60;&#x60;ts
  * 90.5 | timeFormat &#x3D;&gt; &quot;90 min 30 s&quot;
  * &#x60;&#x60;&#x60;
@@ -264,8 +261,7 @@ export class TimeFormatPipe implements PipeTransform {
    * Transforme un nombre ou une chaîne représentant un temps en minutes décimales
    * en une chaîne formatée minutes + secondes.
    *
-   * @param value Le temps en minutes décimales (number ou string).
-   *              Si null, undefined ou &#x27;-&#x27;, renvoie simplement &#x27;-&#x27;.
+   * @param value Le temps en minutes décimales (number ou string). Si null, undefined ou &#x27;-&#x27;, renvoie simplement &#x27;-&#x27;.
    * @returns Une chaîne formatée sous la forme &#x60;&quot;X min Y s&quot;&#x60;.
    */
   transform(value: number | string): string {

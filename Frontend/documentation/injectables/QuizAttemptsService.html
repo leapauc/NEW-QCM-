@@ -265,8 +265,8 @@ une nouvelle tentative.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="55"
-                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:55</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -274,8 +274,7 @@ une nouvelle tentative.</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère toutes les tentatives (tous utilisateurs confondus).</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
@@ -309,8 +308,8 @@ quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</cod
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="71"
-                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:71</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -319,8 +318,7 @@ quizAttemptsService.getAllAttempts().subscribe(all =&gt; console.log(all));</cod
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère les détails d&#39;une tentative spécifique,
 y compris les questions et les réponses associées.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(details.questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(details.questions));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -388,8 +386,8 @@ quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(d
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="41"
-                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:41</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="39"
+                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:39</a></div>
                         </td>
                     </tr>
 
@@ -397,8 +395,7 @@ quizAttemptsService.getAttemptDetails(101).subscribe(details =&gt; console.log(d
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère toutes les tentatives effectuées par un utilisateur donné.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(attempts));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(attempts));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -466,8 +463,8 @@ quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(a
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/services/quiz_attempts.service.ts:88</a></div>
                         </td>
                     </tr>
 
@@ -475,14 +472,13 @@ quizAttemptsService.getAttemptsByUser(12).subscribe(attempts =&gt; console.log(a
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Enregistre une nouvelle tentative dans la base de données.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-const attempt: AttemptPayload = {
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const attempt: AttemptPayload = {
   userId: 12,
   qcmId: 5,
   score: 8,
   responses: [...]
 };
-quizAttemptsService.saveAttempt(attempt).subscribe(result =&gt; console.log(result));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+quizAttemptsService.saveAttempt(attempt).subscribe(result =&gt; console.log(result));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -615,9 +611,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un tableau de tentatives.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * quizAttemptsService.getAttemptsByUser(12).subscribe(attempts &#x3D;&gt; console.log(attempts));
-   * &#x60;&#x60;&#x60;
    */
   getAttemptsByUser(id_user: number): Observable&lt;any[]&gt; {
     return this.http.get&lt;any[]&gt;(&#x60;${this.apiUrl}/${id_user}&#x60;);
@@ -629,9 +623,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un tableau de toutes les tentatives.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * quizAttemptsService.getAllAttempts().subscribe(all &#x3D;&gt; console.log(all));
-   * &#x60;&#x60;&#x60;
    */
   getAllAttempts(): Observable&lt;any[]&gt; {
     return this.http.get&lt;any[]&gt;(&#x60;${this.apiUrl}&#x60;);
@@ -645,9 +637,7 @@ export class QuizAttemptsService {
    * @returns Observable émettant un objet contenant la liste des questions de la tentative.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * quizAttemptsService.getAttemptDetails(101).subscribe(details &#x3D;&gt; console.log(details.questions));
-   * &#x60;&#x60;&#x60;
    */
   getAttemptDetails(
     id_attempt: number
@@ -664,7 +654,6 @@ export class QuizAttemptsService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * const attempt: AttemptPayload &#x3D; {
    *   userId: 12,
    *   qcmId: 5,
@@ -672,7 +661,6 @@ export class QuizAttemptsService {
    *   responses: [...]
    * };
    * quizAttemptsService.saveAttempt(attempt).subscribe(result &#x3D;&gt; console.log(result));
-   * &#x60;&#x60;&#x60;
    */
   saveAttempt(payload: AttemptPayload): Observable&lt;any&gt; {
     return this.http.post&lt;any&gt;(this.apiUrl, payload);

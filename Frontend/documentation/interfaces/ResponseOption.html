@@ -231,7 +231,7 @@ l&#39;interface <code>Question</code> pour définir les réponses possibles à c
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant de la question à laquelle cette réponse appartient.
+                                    <div class="io-description"><p>Identifiant de la question à laquelle cette réponse appartient.
 Optionnel si la réponse est manipulée indépendamment.</p>
 </div>
                                 </td>
@@ -276,7 +276,7 @@ Optionnel si la réponse est manipulée indépendamment.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant unique de la réponse (correspond à <code>response_question.id_response</code> en base).
+                                    <div class="io-description"><p>Identifiant unique de la réponse (correspond à <code>response_question.id_response</code> en base).
 Optionnel lors de la création d’une nouvelle réponse.</p>
 </div>
                                 </td>
@@ -316,7 +316,7 @@ Optionnel lors de la création d’une nouvelle réponse.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>✅ Indique si la réponse est correcte ou non.</p>
+                                    <div class="io-description"><p>Indique si la réponse est correcte ou non.</p>
 <ul>
 <li><code>true</code> → réponse correcte</li>
 <li><code>false</code> → réponse incorrecte</li>
@@ -364,7 +364,7 @@ Optionnel lors de la création d’une nouvelle réponse.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📌 Position de la réponse dans la liste des réponses pour la question.
+                                    <div class="io-description"><p>Position de la réponse dans la liste des réponses pour la question.
 Optionnel, utile pour l&#39;affichage dans l&#39;ordre défini.</p>
 </div>
                                 </td>
@@ -404,7 +404,7 @@ Optionnel, utile pour l&#39;affichage dans l&#39;ordre défini.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📝 Texte de la réponse affiché à l&#39;utilisateur.</p>
+                                    <div class="io-description"><p>Texte de la réponse affiché à l&#39;utilisateur.</p>
 </div>
                                 </td>
                             </tr>
@@ -417,27 +417,27 @@ Optionnel, utile pour l&#39;affichage dans l&#39;ordre défini.</p>
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface ResponseOption {
   /**
-   * 🔑 Identifiant unique de la réponse (correspond à &#x60;response_question.id_response&#x60; en base).
+   * Identifiant unique de la réponse (correspond à &#x60;response_question.id_response&#x60; en base).
    * Optionnel lors de la création d’une nouvelle réponse.
    */
   id_response?: number;
   /**
-   * 🔑 Identifiant de la question à laquelle cette réponse appartient.
+   * Identifiant de la question à laquelle cette réponse appartient.
    * Optionnel si la réponse est manipulée indépendamment.
    */
   id_question?: number;
   /**
-   * 📝 Texte de la réponse affiché à l&#x27;utilisateur.
+   * Texte de la réponse affiché à l&#x27;utilisateur.
    */
   response: string;
   /**
-   * ✅ Indique si la réponse est correcte ou non.
+   * Indique si la réponse est correcte ou non.
    * - &#x60;true&#x60; → réponse correcte
    * - &#x60;false&#x60; → réponse incorrecte
    */
   is_correct: boolean;
   /**
-   * 📌 Position de la réponse dans la liste des réponses pour la question.
+   * Position de la réponse dans la liste des réponses pour la question.
    * Optionnel, utile pour l&#x27;affichage dans l&#x27;ordre défini.
    */
   position?: number;

@@ -35,12 +35,10 @@ export class AuthService {
    * Si la connexion réussit, l'utilisateur est enregistré dans le `localStorage`.
    *
    * @example
-   * ```ts
    * authService.login('Dupond', 'mdp123456').subscribe({
    *   next: res => console.log('Connecté', res.user),
    *   error: err => console.error('Erreur', err)
    * });
-   * ```
    */
   login(
     name: string,
@@ -66,9 +64,7 @@ export class AuthService {
    * Supprime le token et l'utilisateur du `localStorage`.
    *
    * @example
-   * ```ts
    * authService.logout();
-   * ```
    */
   logout() {
     localStorage.removeItem('token');

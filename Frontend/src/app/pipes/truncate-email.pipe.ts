@@ -28,7 +28,6 @@ import { Pipe, PipeTransform } from '@angular/core';
  * ```
  *
  * ---
- * @example
  * **Entrée :**
  * ```typescript
  * 'exemple.longemail@domaine.com'

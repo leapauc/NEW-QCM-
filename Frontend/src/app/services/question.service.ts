@@ -31,9 +31,7 @@ export class QuestionService {
    * @returns Observable émettant un tableau de toutes les questions disponibles.
    *
    * @example
-   * ```ts
    * questionService.getAllQuestions().subscribe(questions => console.log(questions));
-   * ```
    */
   getAllQuestions(): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}/`);
@@ -46,9 +44,7 @@ export class QuestionService {
    * @returns Observable émettant l'objet Question correspondant.
    *
    * @example
-   * ```ts
    * questionService.getQuestionById(42).subscribe(q => console.log(q));
-   * ```
    */
   getQuestionById(id_question: number): Observable<Question> {
     return this.http.get<Question>(`${this.apiUrl}/${id_question}`);
@@ -61,9 +57,7 @@ export class QuestionService {
    * @returns Observable émettant un tableau de réponses liées à la question.
    *
    * @example
-   * ```ts
    * questionService.getQuestionReponseById(42).subscribe(responses => console.log(responses));
-   * ```
    */
   getQuestionReponseById(id_question: number): Observable<QuestionResponse[]> {
     return this.http.get<QuestionResponse[]>(
@@ -78,9 +72,7 @@ export class QuestionService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * questionService.createQuestion({ text: 'Nouvelle question', qcmId: 1 }).subscribe();
-   * ```
    */
   createQuestion(question: Question): Observable<any> {
     return this.http.post(`${this.apiUrl}`, question);
@@ -94,9 +86,7 @@ export class QuestionService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * questionService.updateQuestion(42, updatedQuestion).subscribe();
-   * ```
    */
   updateQuestion(id_question: number, question: Question): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id_question}`, question);
@@ -109,9 +99,7 @@ export class QuestionService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * ```ts
    * questionService.deleteQuestion(42).subscribe();
-   * ```
    */
   deleteQuestion(id_question: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id_question}`);

@@ -279,8 +279,8 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -288,8 +288,7 @@ ainsi que de récupérer les questions associées (avec ou sans réponses).</p>
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Crée un nouveau QCM.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe();</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -357,8 +356,8 @@ qcmService.createQCM({ title: &#39;Nouveau QCM&#39;, questions: [] }).subscribe(
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="106"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:106</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:100</a></div>
                         </td>
                     </tr>
 
@@ -375,8 +374,7 @@ afin d&#39;enregistrer un questionnaire (QCM) avec toutes ses questions et optio
 <li>la liste des questions (<code>questions[]</code>)</li>
 <li>pour chaque question, la liste des réponses (<code>responses[]</code>)</li>
 </ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-const newQCM: QCM = {
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const newQCM: QCM = {
   title: &#39;QCM sur Perl&#39;,
   description: &#39;Testez vos connaissances sur Perl&#39;,
   created_by: 1,
@@ -403,7 +401,7 @@ const newQCM: QCM = {
   next: (res) =&gt; console.log(&#39;✅ QCM créé avec succès&#39;, res),
   error: (err) =&gt; console.error(&#39;❌ Erreur lors de la création du QCM&#39;, err)
 });</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -474,8 +472,8 @@ const newQCM: QCM = {
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="152"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:152</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:140</a></div>
                         </td>
                     </tr>
 
@@ -483,8 +481,7 @@ const newQCM: QCM = {
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Supprime un QCM existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.deleteQCM(1).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.deleteQCM(1).subscribe();</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -552,8 +549,8 @@ qcmService.deleteQCM(1).subscribe();</code></pre></div><b>Example :</b><div><pre
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="38"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:38</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:36</a></div>
                         </td>
                     </tr>
 
@@ -561,8 +558,7 @@ qcmService.deleteQCM(1).subscribe();</code></pre></div><b>Example :</b><div><pre
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère l&#39;ensemble des QCM disponibles.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/QCM.html" target="_self" >Observable&lt;QCM[]&gt;</a></code>
@@ -596,8 +592,8 @@ qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></di
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="121"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:121</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:113</a></div>
                         </td>
                     </tr>
 
@@ -605,8 +601,7 @@ qcmService.getAllQCM().subscribe(qcms =&gt; console.log(qcms));</code></pre></di
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère un QCM spécifique par son identifiant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -674,8 +669,8 @@ qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></di
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="184"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:184</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:168</a></div>
                         </td>
                     </tr>
 
@@ -683,8 +678,7 @@ qcmService.getQCMById(1).subscribe(qcm =&gt; console.log(qcm));</code></pre></di
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère uniquement les questions d&#39;un QCM (sans réponses).</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -752,8 +746,8 @@ qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="167"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:167</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:153</a></div>
                         </td>
                     </tr>
 
@@ -761,8 +755,7 @@ qcmService.getQcmQuestions(1).subscribe(questions =&gt; console.log(questions));
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Récupère les questions d&#39;un QCM avec leurs réponses associées.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log(questions));</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log(questions));</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -830,8 +823,8 @@ qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="137"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:137</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:127</a></div>
                         </td>
                     </tr>
 
@@ -839,8 +832,7 @@ qcmService.getQcmQuestionsWithResponses(1).subscribe(questions =&gt; console.log
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour un QCM existant.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -926,8 +918,8 @@ qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div><b>Example :<
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="200"
-                                    class="link-to-prism">src/app/services/qcm.service.ts:200</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">src/app/services/qcm.service.ts:182</a></div>
                         </td>
                     </tr>
 
@@ -935,8 +927,7 @@ qcmService.updateQCM(1, updatedQcm).subscribe();</code></pre></div><b>Example :<
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Met à jour un QCM en y ajoutant une question.</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-html">```ts
-qcmService.updateQCM_Question(1, updatedQcm).subscribe();</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-none"></code></pre></div></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">qcmService.updateQCM_Question(1, updatedQcm).subscribe();</code></pre></div></div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1085,9 +1076,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de QCM.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.getAllQCM().subscribe(qcms &#x3D;&gt; console.log(qcms));
-   * &#x60;&#x60;&#x60;
    */
   getAllQCM(): Observable&lt;QCM[]&gt; {
     return this.http.get&lt;QCM[]&gt;(&#x60;${this.apiUrl}&#x60;);
@@ -1100,9 +1089,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.createQCM({ title: &#x27;Nouveau QCM&#x27;, questions: [] }).subscribe();
-   * &#x60;&#x60;&#x60;
    */
   createQCM(qcm: QCM): Observable&lt;any&gt; {
     return this.http.post(&#x60;${this.apiUrl}&#x60;, qcm);
@@ -1125,7 +1112,6 @@ export class QcmService {
    * @returns Observable contenant la réponse HTTP du serveur (par exemple &#x60;{ message: string, qcmId: number }&#x60;)
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * const newQCM: QCM &#x3D; {
    *   title: &#x27;QCM sur Perl&#x27;,
    *   description: &#x27;Testez vos connaissances sur Perl&#x27;,
@@ -1155,7 +1141,6 @@ export class QcmService {
    *   next: (res) &#x3D;&gt; console.log(&#x27;✅ QCM créé avec succès&#x27;, res),
    *   error: (err) &#x3D;&gt; console.error(&#x27;❌ Erreur lors de la création du QCM&#x27;, err)
    * });
-   * &#x60;&#x60;&#x60;
    */
   createQCMQuestionsWithResponses(qcm: QCM): Observable&lt;any&gt; {
     return this.http.post(&#x60;${this.apiUrl}/plusQuestion&#x60;, qcm);
@@ -1168,9 +1153,7 @@ export class QcmService {
    * @returns Observable émettant le QCM correspondant.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.getQCMById(1).subscribe(qcm &#x3D;&gt; console.log(qcm));
-   * &#x60;&#x60;&#x60;
    */
   getQCMById(id: number): Observable&lt;any&gt; {
     return this.http.get(&#x60;${this.apiUrl}/${id}&#x60;);
@@ -1184,9 +1167,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.updateQCM(1, updatedQcm).subscribe();
-   * &#x60;&#x60;&#x60;
    */
   updateQCM(id: number, qcm: QCM): Observable&lt;any&gt; {
     return this.http.put(&#x60;${this.apiUrl}/${id}&#x60;, qcm);
@@ -1199,9 +1180,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.deleteQCM(1).subscribe();
-   * &#x60;&#x60;&#x60;
    */
   deleteQCM(id: number): Observable&lt;any&gt; {
     return this.http.delete(&#x60;${this.apiUrl}/${id}&#x60;);
@@ -1214,9 +1193,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de questions avec réponses.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.getQcmQuestionsWithResponses(1).subscribe(questions &#x3D;&gt; console.log(questions));
-   * &#x60;&#x60;&#x60;
    */
   getQcmQuestionsWithResponses(qcmId: number): Observable&lt;Question[]&gt; {
     return this.http.get&lt;Question[]&gt;(
@@ -1231,9 +1208,7 @@ export class QcmService {
    * @returns Observable émettant un tableau de questions.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.getQcmQuestions(1).subscribe(questions &#x3D;&gt; console.log(questions));
-   * &#x60;&#x60;&#x60;
    */
   getQcmQuestions(qcmId: number): Observable&lt;Question[]&gt; {
     return this.http.get&lt;Question[]&gt;(&#x60;${this.apiUrl}/QcmQuestions/${qcmId}&#x60;);
@@ -1247,9 +1222,7 @@ export class QcmService {
    * @returns Observable de la réponse HTTP.
    *
    * @example
-   * &#x60;&#x60;&#x60;ts
    * qcmService.updateQCM_Question(1, updatedQcm).subscribe();
-   * &#x60;&#x60;&#x60;
    */
   updateQCM_Question(id: number, qcm: QCM): Observable&lt;any&gt; {
     return this.http.put(&#x60;${this.apiUrl}/plusQuestion/${id}&#x60;, qcm);

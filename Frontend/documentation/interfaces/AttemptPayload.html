@@ -224,7 +224,7 @@ sauvegarder une tentative (<code>QuizAttemptsService.saveAttempt</code>).</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>📋 Liste des réponses de l&#39;utilisateur pour chaque question du QCM.
+                                    <div class="io-description"><p>Liste des réponses de l&#39;utilisateur pour chaque question du QCM.
 Chaque élément de ce tableau correspond à un <code>UserAnswer</code> (id_question + id_response).</p>
 </div>
                                 </td>
@@ -264,7 +264,7 @@ Chaque élément de ce tableau correspond à un <code>UserAnswer</code> (id_ques
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>⏱ Date/heure de fin de la tentative au format ISO (ex: <code>2025-09-16T17:27:17.145Z</code>).
+                                    <div class="io-description"><p>Date/heure de fin de la tentative au format ISO (ex: <code>2025-09-16T17:27:17.145Z</code>).
 Utilisé pour savoir quand l&#39;utilisateur a soumis ses réponses.</p>
 </div>
                                 </td>
@@ -344,7 +344,7 @@ Permet de lier la tentative au questionnaire correspondant.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>🔑 Identifiant unique de l&#39;utilisateur qui a tenté le QCM.
+                                    <div class="io-description"><p>Identifiant unique de l&#39;utilisateur qui a tenté le QCM.
 Sert à associer la tentative à un utilisateur dans la base de données.</p>
 </div>
                                 </td>
@@ -384,7 +384,7 @@ Sert à associer la tentative à un utilisateur dans la base de données.</p>
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-description"><p>⏱ Date/heure de début de la tentative au format ISO (ex: <code>2025-09-16T17:14:15.452Z</code>).
+                                    <div class="io-description"><p>Date/heure de début de la tentative au format ISO (ex: <code>2025-09-16T17:14:15.452Z</code>).
 Utilisé pour calculer la durée totale passée sur le QCM.</p>
 </div>
                                 </td>
@@ -407,7 +407,7 @@ Utilisé pour calculer la durée totale passée sur le QCM.</p>
  */
 export interface AttemptPayload {
   /**
-   * 🔑 Identifiant unique de l&#x27;utilisateur qui a tenté le QCM.
+   * Identifiant unique de l&#x27;utilisateur qui a tenté le QCM.
    * Sert à associer la tentative à un utilisateur dans la base de données.
    */
   id_user: number;
@@ -417,17 +417,17 @@ export interface AttemptPayload {
    */
   id_qcm: number;
   /**
-   * ⏱ Date/heure de début de la tentative au format ISO (ex: &#x60;2025-09-16T17:14:15.452Z&#x60;).
+   * Date/heure de début de la tentative au format ISO (ex: &#x60;2025-09-16T17:14:15.452Z&#x60;).
    * Utilisé pour calculer la durée totale passée sur le QCM.
    */
   started_at: string;
   /**
-   * ⏱ Date/heure de fin de la tentative au format ISO (ex: &#x60;2025-09-16T17:27:17.145Z&#x60;).
+   * Date/heure de fin de la tentative au format ISO (ex: &#x60;2025-09-16T17:27:17.145Z&#x60;).
    * Utilisé pour savoir quand l&#x27;utilisateur a soumis ses réponses.
    */
   ended_at: string;
   /**
-   * 📋 Liste des réponses de l&#x27;utilisateur pour chaque question du QCM.
+   * Liste des réponses de l&#x27;utilisateur pour chaque question du QCM.
    * Chaque élément de ce tableau correspond à un &#x60;UserAnswer&#x60; (id_question + id_response).
    */
   answers: UserAnswer[];
